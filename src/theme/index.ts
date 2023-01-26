@@ -15,7 +15,12 @@ export const theme: Record<string, any> = extendTheme({
   ...foundations,
   config,
   components: { ...components },
-  colors: { ...baseTheme.colors, brand: baseTheme.colors.blue },
+  colors: { 
+    ...baseTheme.colors, 
+    brand: baseTheme.colors.blue ,
+    boldgrey:"#9F9F9F",
+    thingrey:"#666666",
+  },
   space: {
     "4.5": "1.125rem",
   },
