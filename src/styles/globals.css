@@ -156,7 +156,7 @@ a {
 html,
 body {
   -webkit-overflow-scrolling: touch;
-  font-family: "BR Firma", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
   font-variant-ligatures: common-ligatures contextual discretionary-ligatures;
