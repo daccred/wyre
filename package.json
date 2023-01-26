@@ -1,0 +1,56 @@
+{
+  "name": "wyre",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format": "npx prettier --write src",
+    "postinstall": "prisma generate",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.3.7",
+    "@chakra-ui/theme-tools": "^2.0.12",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
+    "@next-auth/prisma-adapter": "^1.0.4",
+    "@prisma/client": "^4.5.0",
+    "@tanstack/react-query": "^4.10.0",
+    "@trpc/client": "10.0.0-rc.4",
+    "@trpc/next": "10.0.0-rc.4",
+    "@trpc/react-query": "10.0.0-rc.4",
+    "@trpc/server": "10.0.0-rc.4",
+    "framer-motion": "^7.6.5",
+    "next": "13.0.2",
+    "next-auth": "^4.15.1",
+    "nodemailer": "^6.8.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.39.1",
+    "react-icons": "^4.6.0",
+    "react-select": "^5.6.0",
+    "superjson": "1.9.1",
+    "trpc-playground": "^0.4.3",
+    "zod": "^3.18.0"
+  },
+  "devDependencies": {
+    "@hookform/devtools": "^4.2.3",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.26.0",
+    "eslint-config-next": "13.0.2",
+    "prisma": "^4.5.0",
+    "release-it": "^15.5.0",
+    "typescript": "^4.8.4"
+  },
+  "ct3aMetadata": {
+    "initVersion": "6.8.0"
+  }
+}
