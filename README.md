@@ -1,30 +1,58 @@
-# -wyre.rfc
+# `zayroll`
+Open source Payroll Infrastructure
 
-![image](./public/workflow.png)
 
-WYRE (ERC20) ApproveFor in Web2 &amp; Web3 &lt;
+## A Serverless Payroll infrastructure for African business
 
-- Next-PWA, ChakraUI Nextjs, Nativebase React Native, Nativebase v3 is heavily inspired by Chakra
+The open source Payroll automation alternative. You are in charge of your own data, workflow and appearance.
 
-This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
+There are a lot of awesome tools out there tailored to automating payroll for african focused businesses, however most of them are fragmented in which regions in Africa they can serve, thus we have limitations in control, customizations and options for which geo-graphical regions we can serve.
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with the most basic configuration and then move on to more advanced configuration.
+This is where `zayroll` comes in. A serverless, self-hosted and white label payroll system for your business, you can easily host on Vercel with a serverless database like Neon or Planetscale. API-driven and ready to be deployed on your domain `payroll.mydomain.com` 
 
-- [Next-Auth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [tRPC](https://trpc.io)
+Full control of your financial and employee data.
 
-We also [roll our own docs](https://beta.create.t3.gg) with some summary information and links to the respective documentation.
 
-Also checkout these awesome tutorials on `create-t3-app`.
 
-- [Build a Blog With the T3 Stack - tRPC, TypeScript, Next.js, Prisma & Zod](https://www.youtube.com/watch?v=syEWlxVFUrY)
-- [Build a Live Chat Application with the T3 Stack - TypeScript, Tailwind, tRPC](https://www.youtube.com/watch?v=dXRRY37MPuk)
-- [Build a full stack app with create-t3-app](https://www.nexxel.dev/blog/ct3a-guestbook)
-- [A first look at create-t3-app](https://dev.to/ajcwebdev/a-first-look-at-create-t3-app-1i8f)
+## Tech Proposal
 
-## How do I deploy this?
+- Database: Neon.dev (serverless postgres)
+- App stack: `Nextjs`
+- API layer: `tRPC`
+- ORM: `prisma`
+- Communication: Twilio & Sengrid
 
-Follow our deployment guides for [Vercel](https://beta.create.t3.gg/en/deployment/vercel) and [Docker](https://beta.create.t3.gg/en/deployment/docker) for more information.
+
+## Fintech Layers
+
+- Openbanking: `[mono, stitch.money, anchor, onepipe.com]`
+- Payment rails: `[paystack, ExpressPayGH, flutterwave]`
+- Crypto rails: `[fluidcoins, lazerpay, coinprofile]`
+- Momo: `[MTN Momo API, MPesa]`
+
+
+### Feature Proposals
+
+- [ ] Signup
+- [ ] Login
+- [ ] Invite Employee
+- [ ] Setup Payroll
+- [ ] Trigger Payroll execution
+- [ ] Manage Employees
+- [ ] Terminate Employees
+- [ ] Manage Active `fintech` Integrations
+- [ ] Fintech Routes (Enable business to use specific route for Employee)
+- [ ] Schedule Execution of Payroll
+- [ ] Manage & View Transactions (Log for all executions triggered by the system)
+
+
+### Inspirations & Future scope
+Nice to haves, but will not be included in the intial PoC
+
+- <https://www.branchapp.com>
+- <https://bento.africa>
+- Support Wages: Use case for contractors and weekly wages (e.g. construction, security, logistics type businesses);
+- Salary Advance: Enable employees request for salary advances
+
+
