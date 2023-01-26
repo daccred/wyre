@@ -1,3 +1,149 @@
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-BlackItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-Black.woff2') format('woff2'),
+      url('./fonts/BRFirma-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-BoldItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-BoldItalic.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-Bold.woff2') format('woff2'),
+      url('./fonts/BRFirma-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-ExtraLightItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-ExtraLightItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-ExtraLight.woff2') format('woff2'),
+      url('./fonts/BRFirma-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-LightItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-Light.woff2') format('woff2'),
+      url('./fonts/BRFirma-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-MediumItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-Medium.woff2') format('woff2'),
+      url('./fonts/BRFirma-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-RegularItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-RegularItalic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-Regular.woff2') format('woff2'),
+      url('./fonts/BRFirma-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-SemiBoldItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-SemiBold.woff2') format('woff2'),
+      url('./fonts/BRFirma-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-ThinItalic.woff2') format('woff2'),
+      url('./fonts/BRFirma-ThinItalic.woff') format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Firma';
+  src: url('./fonts/BRFirma-Thin.woff2') format('woff2'),
+      url('./fonts/BRFirma-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
 a {
   color: inherit;
   text-decoration: none;
@@ -10,7 +156,7 @@ a {
 html,
 body {
   -webkit-overflow-scrolling: touch;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: "BR Firma", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
   font-variant-ligatures: common-ligatures contextual discretionary-ligatures;
