@@ -6,7 +6,7 @@ const baseStyle = {
     boxShadow: "none",
   },
   colorScheme: "orange",
-  fontWeight: "400",
+  fontWeight: "medium",
   borderRadius: "lg",
 };
 
@@ -31,10 +31,6 @@ const variants = {
   }),
   gradient: () => ({
     color: "black",
-    height: "60px",
-    fontSize: "md",
-    borderRadius: "100px",
-    fontFamily: "heading",
     bgGradient: "linear(to-r, #78FFD6, #A8FF78)",
     _hover: {
       bgGradient: "linear(to-l, #78FFD6, #A8FF78)",
@@ -47,14 +43,7 @@ const variants = {
     }),
   outline: (props: StyleFunctionProps) => ({
     color: "emphasized",
-    bg: "#191E1B",
-    // height:"60px",
-    height: "60px",
-    fontFamily: "heading",
-    minWidth: "77px",
-    fontSize: "md",
-    borderRadius: "100px",
-    border: 0,
+    bg: mode("white", "gray.800")(props),
     _hover: {
       bg: mode(
         darken("gray.50", 1)(props.theme),

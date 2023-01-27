@@ -1,17 +1,15 @@
-import { Button, useColorMode } from "@chakra-ui/react";
-import { useEffect } from "react";
+import ViewLayout from "@/components/core/ViewLayout";
+import { Text } from "@chakra-ui/react";
 
 const Test =()=>{
-    const { colorMode, toggleColorMode } = useColorMode()
-  
-    useEffect(()=>{
-      console.log(colorMode)
-    },[colorMode])
+
     return(
         <>
-        <Button onClick={toggleColorMode}>
-            Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-        </Button>
+        <ViewLayout>
+            <Text>
+                This is a test page
+            </Text>
+        </ViewLayout>
         </>
     )
 }
