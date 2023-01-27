@@ -14,6 +14,11 @@ This is where `zayroll` comes in. A serverless, self-hosted and white label payr
 Full control of your financial and employee data.
 
 
+![zayroll_demo_1](https://res.cloudinary.com/peoray/image/upload/v1674737068/Zayroll_Prototype_-_I_afkdfg.gif)
+
+![zayroll_demo_2](https://res.cloudinary.com/peoray/image/upload/v1674737070/Zayroll_Prototype_II_zcysgr.gif)
+
+
 
 ## Tech Proposal
 
