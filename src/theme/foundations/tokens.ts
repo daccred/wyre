@@ -24,10 +24,10 @@ export default {
       default: "white",
       _dark: "gray.900",
     },
-    emphasized: {
-      default: "gray.700",
-      _dark: "gray.100",
-    },
+    // emphasized: {
+    //   default: "gray.700",
+    //   _dark: "gray.100",
+    // },
     muted: {
       default: "gray.600",
       _dark: "gray.300",

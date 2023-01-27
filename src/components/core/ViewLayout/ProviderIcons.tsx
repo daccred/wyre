@@ -86,21 +86,19 @@ export const ContractorsIcon = (props: HTMLChakraProps<"svg">) => (
     </chakra.svg>
 );
 
-export const TaxesIcon = (props: HTMLChakraProps<"svg">) => (
+export const ExpensesIcon = (props: HTMLChakraProps<"svg">) => (
     <chakra.svg
-    width={21}
-    height={21}
-    viewBox="0 0 20 21"
-    fill="boldgrey"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M5 2.5a2 2 0 00-2 2v14l3.5-2 3.5 2 3.5-2 3.5 2v-14a2 2 0 00-2-2H5zm2.5 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm6.207.293a1 1 0 00-1.414 0l-6 6a1 1 0 101.414 1.414l6-6a1 1 0 000-1.414zM12.5 10.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"
-      
-    />
+    width={25}
+      height={25}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M23 8v10c0 1.1-.9 2-2 2H5c-.55 0-1-.45-1-1s.45-1 1-1h16V8c0-.55.45-1 1-1s1 .45 1 1zM4 16c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h12c1.66 0 3 1.34 3 3v7c0 1.1-.9 2-2 2H4zm3-6c0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3-3 1.34-3 3z"
+        fill="#9F9F9F"
+      />
     </chakra.svg>
 );
 
@@ -189,5 +187,24 @@ export const EmployeesIcon = (props: HTMLChakraProps<"svg">) => (
 
     />
     </chakra.svg>
+);
+
+export const ChevronDownIcon = (props: HTMLChakraProps<"svg">) => (
+  <chakra.svg
+  width={25}
+  height={25}
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  {...props}
+>
+  <path
+    d="M6 9l6 6 6-6"
+    // stroke="#898787"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+  </chakra.svg>
 );
 
