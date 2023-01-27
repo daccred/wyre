@@ -195,6 +195,7 @@ export const ChevronDownIcon = (props: HTMLChakraProps<"svg">) => (
   height={25}
   viewBox="0 0 24 24"
   stroke="#9F9F9F"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   {...props}
 >
