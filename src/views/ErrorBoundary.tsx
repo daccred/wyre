@@ -1,7 +1,7 @@
 import type { ErrorInfo, ReactNode } from "react";
 import { Component } from "react";
 import { Flex, Heading, Button } from "@chakra-ui/react";
-import { WrapperInner } from "@/layouts";
+import { WrapperInner } from "../layouts";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

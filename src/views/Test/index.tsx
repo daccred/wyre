@@ -1,4 +1,4 @@
-import ViewLayout from "@/components/core/ViewLayout";
+import ViewLayout from "../../components/core/ViewLayout";
 import { Text, useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet} from 'react-device-detect';

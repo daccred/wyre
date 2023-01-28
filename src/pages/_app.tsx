@@ -4,15 +4,15 @@ import { SessionProvider } from "next-auth/react";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { trpc } from "../utils/trpc";
-import { theme } from "@/theme/index";
+import { theme } from "../theme/index";
 
 import "../styles/globals.css";
-import ErrorBoundary from "@/views/ErrorBoundary";
+import ErrorBoundary from "../views/ErrorBoundary";
 
 import { useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet} from 'react-device-detect';
-import MobilePrompt from "@/components/core/MobilePrompt";
+import MobilePrompt from "../components/core/MobilePrompt";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
