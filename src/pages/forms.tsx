@@ -1,5 +1,5 @@
 import React from "react";
-import { Meta } from "@/layouts";
+import { Meta } from "../layouts";
 import z from "zod";
 import {
   FormCheckbox,
@@ -7,10 +7,10 @@ import {
   FormInputArray,
   FormTextArea,
   useForm,
-} from "@/components/forms";
-import FormDateInput from "@/components/forms/components/FormDateInput";
+} from "../components/forms";
+import FormDateInput from "../components/forms/components/FormDateInput";
 import { Stack, HStack, Button } from "@chakra-ui/react";
-import * as Layout from "@/layouts";
+import * as Layout from "../layouts";
 
 const formValidationSchema = z.object({
   question: z.string(),
