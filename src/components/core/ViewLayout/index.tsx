@@ -78,6 +78,7 @@ const SidebarContent = ({ ...rest }) => {
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent={"center"}>
         <Image src='/wyre-logo.png' alt='' w={10} />
+        <Text fontWeight={"semibold"} fontSize="xl" ml="2">Wyre</Text>
       </Flex>
       <VStack mt="16">
        {DashboardLinkItems.map((link) => (
