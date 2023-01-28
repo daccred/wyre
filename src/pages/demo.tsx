@@ -7,11 +7,11 @@ import {
   FormUpload,
   FormNativeSelect,
   FormSelect,
-} from "@/components/forms";
+} from "../components/forms";
 
 import { useColorMode, IconButton } from "@chakra-ui/react";
 import { FaSun, FaMoon } from "react-icons/fa";
-import * as Layout from "@/layouts";
+import * as Layout from "../layouts";
 
 export const DarkModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();

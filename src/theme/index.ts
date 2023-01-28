@@ -15,13 +15,13 @@ export const theme: Record<string, any> = extendTheme({
   ...foundations,
   config,
   components: { ...components },
-  colors: { 
-    ...baseTheme.colors, 
+  colors: {
+    ...baseTheme.colors,
     // brand: baseTheme.colors.blue ,
     brand: {
       100: "#F0E4FB",
       600: "#8D1CFF",
-      700: "#210D35"
+      700: "#210D35",
     },
     // primary: {
     //   main: "#ca9fff",
@@ -36,9 +36,9 @@ export const theme: Record<string, any> = extendTheme({
     //   800: "#6100eb",
     //   900: "#4200e5"
     // },
-    boldgrey:"#9F9F9F",
-    lightgrey:"#666666",
-    bordergrey:"#D2D2D2"
+    boldgrey: "#9F9F9F",
+    lightgrey: "#666666",
+    bordergrey: "#D2D2D2",
   },
   space: {
     "4.5": "1.125rem",

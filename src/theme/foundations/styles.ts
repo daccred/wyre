@@ -4,7 +4,7 @@ import { mode } from "@chakra-ui/theme-tools";
 const styles = {
   global: (props: StyleFunctionProps) => ({
     body: {
-      color: mode('#010C14', 'whiteAlpha.900')(props),
+      color: mode("#010C14", "whiteAlpha.900")(props),
       bg: "bg-canvas",
     },
     "*::placeholder": {

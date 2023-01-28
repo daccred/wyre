@@ -1,8 +1,8 @@
 import React from "react";
-import { Meta } from "@/layouts";
-import View from "@/views/Login";
+import { Meta } from "../layouts";
+import View from "../views/Login";
 import z from "zod";
-import { useForm } from "@/components/forms";
+import { useForm } from "../components/forms";
 
 const loginValidationSchema = z.object({
   email: z.string(),
