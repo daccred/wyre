@@ -1364,18 +1364,18 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@trpc-playground/html@0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@trpc-playground/html/-/html-0.3.3.tgz#7f315fc19c641c892cecb7d0b492c19c1bf34d2b"
-  integrity sha512-JTQOLiO4B1FMcB2z+ymvjGD5ToI7oimFPfXXEz4dKfWmfEybHZpjfB5FfVcWMbrFOwUzOEGlawTjw5UsNa2U0w==
+"@trpc-playground/html@1.0.0-next.0":
+  version "1.0.0-next.0"
+  resolved "https://registry.yarnpkg.com/@trpc-playground/html/-/html-1.0.0-next.0.tgz#ee3038f4736544d54aec68f3145380f623a7f293"
+  integrity sha512-kXivzKW4xBppEYT9TkUBShrwlyhJCCJ69jMFHFoRtHvqfCJqX0rNMNoXwW2rIa915U4L9wBxuO9A1FdrmnfNQA==
   dependencies:
     vite "^2.9.1"
     xss "^1.0.11"
 
-"@trpc-playground/types@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@trpc-playground/types/-/types-0.2.0.tgz#d74460a04218e1aa4bc74d452987aa14f25014bf"
-  integrity sha512-bz8uZ45pNHVooHHqp+2lNd5HiT6GsowaDgjYd/xslmaqoKBrROTc/7wg1XPxQKSx7GxKkPx7fgjoeVNUdZywNA==
+"@trpc-playground/types@1.0.0-next.0":
+  version "1.0.0-next.0"
+  resolved "https://registry.yarnpkg.com/@trpc-playground/types/-/types-1.0.0-next.0.tgz#bbb014f5d0ac1637215b5cca35d52fe7f3bf0930"
+  integrity sha512-tIfzYKX5yliaKhA9fgeQUG3REqMHuMPQrSXiayH0niUzvzjkEMFBL5zQMPeLO3pLqH0bOEC5UkFlqQ+TaueKLQ==
   dependencies:
     ts-essentials "^9.1.2"
 
@@ -5192,13 +5192,13 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trpc-playground@^0.4.3:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/trpc-playground/-/trpc-playground-0.4.4.tgz#2e66fbdd0b8f23bfd6706d22359cc4bdf8d4fe4d"
-  integrity sha512-9oCvt7wj15sYGxF3zaGZHCPy6RoSAwe1+UKDFkREv5lyxR1G7tIHGMZ+yDs18vI++0C00tMM0lA1BDMFh2DlJg==
+trpc-playground@1.0.0-next.0:
+  version "1.0.0-next.0"
+  resolved "https://registry.yarnpkg.com/trpc-playground/-/trpc-playground-1.0.0-next.0.tgz#ffa9d19796e6897d198a933f64ed811c10e9713a"
+  integrity sha512-zhuX1fW7UD126scCtzZwLU+hjxGi9L23RkojjMnw0hdUhLW3G7hjf1bCwdBcRCFILZPkaF3aHRHHfj8curXgMA==
   dependencies:
-    "@trpc-playground/html" "0.3.3"
-    "@trpc-playground/types" "0.2.0"
+    "@trpc-playground/html" "1.0.0-next.0"
+    "@trpc-playground/types" "1.0.0-next.0"
     lodash "^4.17.21"
     uttp "^0.1.3"
     zod-to-ts "^0.2.2"
