@@ -25,6 +25,7 @@
     "test": "jest -i"
   },
   "dependencies": {
+    "@ajna/pagination": "^1.4.19",
     "@chakra-ui/react": "^2.3.7",
     "@chakra-ui/theme-tools": "^2.0.12",
     "@emotion/react": "^11.10.5",
