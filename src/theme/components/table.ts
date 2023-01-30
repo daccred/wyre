@@ -18,9 +18,15 @@ const baseStyle = {
 const variants = {
   simple: (props: StyleFunctionProps) => ({
     th: {
-      color: "muted",
-      bg: mode("gray.50", transparentize("gray.700", 0.4)(props.theme))(props),
+      fontWeight: "semibold",
+      fontSize:"14px",
+      color:"lightgrey",
+      bg: mode("#F7F7F7", transparentize("gray.700", 0.4)(props.theme))(props),
+      borderColor:'bordergrey'
     },
+    td:{
+      borderColor:'bordergrey'
+    }
   }),
   striped: (props: StyleFunctionProps) => ({
     th: {

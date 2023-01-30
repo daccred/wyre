@@ -131,6 +131,25 @@ const variants = {
       color: "white",
     },
   }),
+  "darkBtn": () => ({
+    padding: "10px",
+    lineHeight: "normal",
+    color: "white",
+    background:"brand.700",
+    borderRadius:"5px",
+    fontSize:"12px",
+    fontWeight:"bold",
+    height:"40px",
+
+    _hover: {
+      color: "white",
+      background:"#2a1143",
+    },
+    _active: {
+      color: "white",
+      background:"#2d104a",
+    },
+  }),
 };
 
 const button = {
