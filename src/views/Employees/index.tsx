@@ -13,11 +13,12 @@ import {
   Td,
   TableContainer,
   Avatar,
-  Flex, 
+  Flex,
+  Center, 
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi'
-import { PlusIcon } from "./ProviderIcons";
+import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
 import {
   Pagination,
   usePagination,
@@ -33,63 +34,42 @@ import { useEffect, useState } from "react";
 const Employees = () => {
 
   const [dummyData, setDummyData]= useState<{[key: string]: string}[]>([])
+  const [dummyDataInUse, setDummyDataInUse]= useState<{[key: string]: string}[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
 
+  const [activeEmployeesOnly, setActiveEmployeesOnly] = useState(true)
+
+  const [dummyEmployee, setDummyEmployee]= useState<{[key: string]: string}>()
+
+
+  // search and active employees switch function
   useEffect(()=>{
-    let v=[]
-    for(let i=0; i<24; i++){
-      v.push({
-        fullName:'john doe',
-        category:'employee',
-        jobRole:'fullstack developer',
-        department:'engineering',
-        status:'active',
-        imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-      })
+    if(searchTerm){
+      const searchData = dummyData?.filter(data=>data?.fullName?.toLowerCase().includes(searchTerm?.toLowerCase()))
+      if (activeEmployeesOnly){
+        const activeData= searchData.filter(data=>data?.status==='active')
+        setDummyDataInUse(activeData);
+        return
+      }else{
+        setDummyDataInUse(searchData);
+        return
+      }
     }
-    setDummyData(v)
-  },[])
 
-  // const dummyData= [
-  //   {
-  //     fullName:'john doe',
-  //     category:'employee',
-  //     jobRole:'fullstack developer',
-  //     department:'engineering',
-  //     status:'active',
-  //     imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-  //   },
-  //   {
-  //     fullName:'john doe',
-  //     category:'employee',
-  //     jobRole:'fullstack developer',
-  //     department:'engineering',
-  //     status:'active',
-  //     imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-  //   },
-  //   {
-  //     fullName:'john doe',
-  //     category:'employee',
-  //     jobRole:'fullstack developer',
-  //     department:'engineering',
-  //     status:'active',
-  //     imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-  //   }
-  // ]
+    if(!searchTerm){
+      if (activeEmployeesOnly){
+        const activeData= dummyData.filter(data=>data?.status==='active')
+        setDummyDataInUse(activeData);
+        return
+      }
+    }
 
-  const dummyEmployee={
-    fullName:'john doe',
-    category:'employee',
-    jobRole:'fullstack developer',
-    department:'engineering',
-    status:'active',
-    imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-    email:'Kelechi.Iheanacho@company.com',
-    phoneNumber:'(+44) 800 829 7600',
-    grossSalary:'$4,500',
-    location:'Bay Area, California, USA',
-    paymentMethod:'75% USD, 15% BTC, 10 ETH'
-  }
+    setDummyDataInUse(dummyData)
+    
+  },[activeEmployeesOnly, searchTerm, dummyData])
+  
 
+  // pagination functions start
    // constants
    const outerLimit = 2;
    const innerLimit = 2;
@@ -97,7 +77,7 @@ const Employees = () => {
    const {
      pages,
      pagesCount,
-     offset,
+    //  offset,
      currentPage,
      setCurrentPage,
     //  setIsDisabled,
@@ -105,7 +85,7 @@ const Employees = () => {
      pageSize,
     //  setPageSize
    } = usePagination({
-     total: dummyData?.length,
+     total: dummyDataInUse?.length,
      limits: {
        outer: outerLimit,
        inner: innerLimit
@@ -123,30 +103,129 @@ const Employees = () => {
     setCurrentPage(nextPage);
   };
 
+  // pagination functions end
+
+  useEffect(()=>{
+    // let v=[]
+    // for(let i=0; i<24; i++){
+    //   v.push({
+    //     fullName:'john doe',
+    //     category:'employee',
+    //     jobRole:'fullstack developer',
+    //     department:'engineering',
+    //     status:'active',
+    //     imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+    //   })
+    // }
+    // setDummyData(v)
+    setDummyData(
+      [
+        {
+          fullName:'john doe',
+          category:'employee',
+          jobRole:'fullstack developer',
+          department:'engineering',
+          status:'inactive',
+          imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        },
+        {
+          fullName:'joan doe',
+          category:'employee',
+          jobRole:'fullstack developer',
+          department:'engineering',
+          status:'active',
+          imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        },
+        {
+          fullName:'james doe',
+          category:'employee',
+          jobRole:'fullstack developer',
+          department:'engineering',
+          status:'active',
+          imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        }
+      ]
+    )
+    setDummyDataInUse(
+      [
+        {
+          fullName:'john doe',
+          category:'employee',
+          jobRole:'fullstack developer',
+          department:'engineering',
+          status:'inactive',
+          imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        },
+        {
+          fullName:'joan doe',
+          category:'employee',
+          jobRole:'fullstack developer',
+          department:'engineering',
+          status:'active',
+          imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        },
+        {
+          fullName:'james doe',
+          category:'employee',
+          jobRole:'fullstack developer',
+          department:'engineering',
+          status:'active',
+          imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        }
+      ]
+    )
+  },[])
+
+  useEffect(()=>{
+    setDummyEmployee(
+      {
+        fullName:'john doe',
+        category:'employee',
+        jobRole:'fullstack developer',
+        department:'engineering',
+        status:'active',
+        imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
+        email:'Kelechi.Iheanacho@company.com',
+        phoneNumber:'(+44) 800 829 7600',
+        grossSalary:'$4,500',
+        location:'Bay Area, California, USA',
+        paymentMethod:'75% USD, 15% BTC, 10 ETH'
+      }
+    )
+  },[])
+
   
   return (
     <>
       <ViewLayout title="Employees">
         <HStack gap="4" alignItems={"flex-start"}>
           <Stack borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} w='70%'>
+            
             <Text fontWeight="bold" fontSize="18px" mb="4" >Employees</Text>
+
             <HStack justifyContent={"space-between"} >
               <Button variant={"darkBtn"} rightIcon={<PlusIcon/>} iconSpacing="3" >Add Employee</Button>
               <Stack spacing={"0"} alignItems="flex-end">
-                <Text fontWeight="bold" fontSize="20px">12</Text>
+                <Text fontWeight="bold" fontSize="20px">{dummyDataInUse?.length}</Text>
                 <Text fontWeight={"light"} fontSize="xs" >Employee(s)</Text>
               </Stack>
             </HStack>
+
+            {dummyData && dummyData?.length>0 &&
             <HStack justifyContent={"space-between"} pt="2">
               <HStack gap="1">
                 <FiSearch fontSize={"24px"}/>
-                <Input variant={"unstyled"} border={"0"} borderBottom="1px solid" borderRadius={0} px="0" py="1" h="40px" w="250px" fontSize={"sm"} placeholder="Search Employee" />
+                <Input variant={"unstyled"} border={"0"} borderBottom="1px solid" borderRadius={0} px="0" py="1" h="40px" w="250px" fontSize={"sm"} placeholder="Search Employee"
+                value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}
+                />
               </HStack>
               <HStack gap={"2"} alignItems="center">
-                <Switch size='sm' colorScheme={"black"} />
+                <Switch size='sm' colorScheme={"black"} defaultChecked onChange={e=>setActiveEmployeesOnly(e?.target?.checked)} />
                 <Text  fontWeight={"semibold"} fontSize="sm">Active Employees</Text>
               </HStack>
-            </HStack>
+            </HStack>}
+
+            {dummyData && dummyData?.length>0 &&
             <TableContainer pt="4"
             css={{
               "&::-webkit-scrollbar": {
@@ -175,30 +254,32 @@ const Employees = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {dummyData && dummyData?.length>0 && dummyData?.slice(((pageSize * currentPage)-pageSize),(pageSize * currentPage)).map(data=>(
-                    <Tr textTransform={"capitalize"} >
+                  {dummyDataInUse && dummyDataInUse?.length>0 && dummyDataInUse?.slice(((pageSize * currentPage)-pageSize),(pageSize * currentPage)).map((data, index)=>(
+                    <Tr textTransform={"capitalize"} key={index} >
                       <Td>
                         <HStack>
                         <Avatar
                           size={"sm"}
                           src={data?.imgURL}
+                          opacity={data?.status!=='active'?"35%":''}
                         />
-                        <Text>{data?.fullName}</Text>
+                        <Text color={data?.status!=='active'?"#FF951C":''} >{data?.fullName}</Text>
                         </HStack>
                       </Td>
-                      <Td>{data?.category}</Td>
-                      <Td>{data?.jobRole}</Td>
-                      <Td>{data?.department}</Td>
-                      <Td>{data?.status}</Td>
+                      <Td opacity={data?.status!=='active'?"35%":''}>{data?.category}</Td>
+                      <Td opacity={data?.status!=='active'?"35%":''}>{data?.jobRole}</Td>
+                      <Td opacity={data?.status!=='active'?"35%":''}>{data?.department}</Td>
+                      <Td opacity={data?.status!=='active'?"35%":''}>{data?.status}</Td>
                     </Tr>
                   ))
-                  }
-                  
+                  }                  
                 </Tbody>
                
               </Table>
-            </TableContainer>
-            <Pagination
+            </TableContainer>}
+
+            {dummyDataInUse && dummyDataInUse?.length>0 &&
+              <Pagination
               pagesCount={pagesCount}
               currentPage={currentPage}
               isDisabled={isDisabled}
@@ -266,8 +347,18 @@ const Employees = () => {
                   <Text>Next</Text>
                 </PaginationNext>
               </PaginationContainer>
-            </Pagination>
+            </Pagination>}
+            
+            {
+              (!dummyDataInUse || dummyDataInUse?.length===0) &&
+              <Center w="100%" p="8" flexDirection={"column"}>
+                <EmptyEmployeeImage/>
+                <Text pr="12" pt="2">No Employee</Text>
+              </Center>
+            }
+
           </Stack>
+          {dummyEmployee &&
           <Flex flexDirection={"column"} borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} flex="1" marginInlineStart="0" >
             <Text fontWeight="bold" fontSize="18px" mb="4" >Employee Details</Text>
             <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"} >
@@ -277,47 +368,48 @@ const Employees = () => {
               />
               <Stack spacing={0} marginTop="0">
                 <Text fontWeight={"semibold"}>Full Name</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.fullName}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.fullName}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Email Address</Text>
-                <Text textTransform={"lowercase"} overflowWrap="anywhere" >{dummyEmployee.email}</Text>
+                <Text textTransform={"lowercase"} overflowWrap="anywhere" >{dummyEmployee?.email}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Phone Number</Text>
-                <Text>{dummyEmployee.phoneNumber}</Text>
+                <Text>{dummyEmployee?.phoneNumber}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Category</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.category}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.category}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Status</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.status}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.status}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Department</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.department}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.department}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Job Role</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.jobRole}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.jobRole}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Gross Salary</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.grossSalary}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.grossSalary}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Location</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.location}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.location}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Payment Method</Text>
-                <Text overflowWrap="break-word">{dummyEmployee.paymentMethod}</Text>
+                <Text overflowWrap="break-word">{dummyEmployee?.paymentMethod}</Text>
               </Stack>
             </Stack>
             <Button variant={"darkBtn"} w="100%" mt="10" py="15px" >Manage Employee</Button>
           </Flex>
+          }
         </HStack>
         
       </ViewLayout>
