@@ -61,7 +61,11 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
             {label}
           </FormLabel>
         )}
-        <InputGroup>
+        <InputGroup
+        style={{
+            borderColor:'#D2D2D2',
+        }}
+        >
           {leftElement && (
             <InputLeftElement>
               <Center
@@ -88,16 +92,18 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           )}
           <Input
             size={"lg"}
-            fontSize="16px"
-            rounded={"3xl"}
-            _placeholder={{ fontSize: "sm" }}
+            fontSize="sm"
+            height='45px'
+            borderRadius={'5px'}
+            // rounded={"3xl"}
+            bg={"#F7F7F7"}
+            _placeholder={{ fontSize: "sm", color:"#D2D2D2" }}
             _hover={{ borderColor: "primary" }}
             _focus={{ borderColor: "primary" }}
             isDisabled={isSubmitting}
             {...register(name, {
               valueAsNumber: type === "number",
             })}
-            style={{ borderRadius: "100px" }}
             type={type}
             {...props}
           />
@@ -107,7 +113,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
             </InputRightElement>
           )}
         </InputGroup>
-        <FormErrorMessage fontSize="xs" role="alert" color="red.500">
+        <FormErrorMessage fontSize="sm" role="alert" color="red.500">
           {error?.toString()}
         </FormErrorMessage>
       </FormControl>
