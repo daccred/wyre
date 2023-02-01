@@ -15,6 +15,12 @@ import {
   Avatar,
   Flex,
   Center, 
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  useDisclosure,
+  Image,
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi'
@@ -30,8 +36,15 @@ import {
   PaginationSeparator
 } from "@ajna/pagination";
 import { useEffect, useState } from "react";
+import AddEmployee from "./AddEmployee";
+import { useRouter } from "next/router";
 
 const Employees = () => {
+
+  const router = useRouter()
+
+  const { isOpen:addEmployeeModalIsOpen, onOpen:openAddEmployeeModal, onClose:closeAddEmployeeModal } = useDisclosure()
+  const { isOpen:addEmployeeSuccessModalIsOpen, onOpen:openAddEmployeeSuccessModal, onClose:closeAddEmployeeSuccessModal } = useDisclosure()
 
   const [dummyData, setDummyData]= useState<{[key: string]: string}[]>([])
   const [dummyDataInUse, setDummyDataInUse]= useState<{[key: string]: string}[]>([])
@@ -204,7 +217,7 @@ const Employees = () => {
             <Text fontWeight="bold" fontSize="18px" mb="4" >Employees</Text>
 
             <HStack justifyContent={"space-between"} >
-              <Button variant={"darkBtn"} rightIcon={<PlusIcon/>} iconSpacing="3" >Add Employee</Button>
+              <Button variant={"darkBtn"} rightIcon={<PlusIcon/>} iconSpacing="3" onClick={openAddEmployeeModal} >Add Employee</Button>
               <Stack spacing={"0"} alignItems="flex-end">
                 <Text fontWeight="bold" fontSize="20px">{dummyDataInUse?.length}</Text>
                 <Text fontWeight={"light"} fontSize="xs" >Employee(s)</Text>
@@ -215,7 +228,7 @@ const Employees = () => {
             <HStack justifyContent={"space-between"} pt="2">
               <HStack gap="1">
                 <FiSearch fontSize={"24px"}/>
-                <Input variant={"unstyled"} border={"0"} borderBottom="1px solid" borderRadius={0} px="0" py="1" h="40px" w="250px" fontSize={"sm"} placeholder="Search Employee"
+                <Input variant={"unstyled"} border={"0"} borderBottom="1px solid" borderRadius={0} px="0" py="1" h="40px" w={{base:"auto", lg:"250px"}} fontSize={"sm"} placeholder="Search Employee"
                 value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}
                 />
               </HStack>
@@ -407,12 +420,30 @@ const Employees = () => {
                 <Text overflowWrap="break-word">{dummyEmployee?.paymentMethod}</Text>
               </Stack>
             </Stack>
-            <Button variant={"darkBtn"} w="100%" mt="10" py="15px" >Manage Employee</Button>
+            <Button variant={"darkBtn"} w="100%" mt="10" py="15px" onClick={()=>router.push('/employees/manage-employee')} >Manage Employee</Button>
           </Flex>
           }
         </HStack>
         
       </ViewLayout>
+
+      <AddEmployee 
+        closeAddEmployeeModal={closeAddEmployeeModal} 
+        addEmployeeModalIsOpen={addEmployeeModalIsOpen} 
+        openAddEmployeeSuccessModal={openAddEmployeeSuccessModal} 
+      />
+
+      <Modal onClose={closeAddEmployeeSuccessModal} isOpen={addEmployeeSuccessModalIsOpen} isCentered size={"sm"}>
+        <ModalOverlay />
+        <ModalContent w="100%">
+          <ModalBody>
+            <Stack alignItems={"center"} justifyContent="center" p="4" textAlign="center">
+              <Text fontWeight="bold" fontSize="18px">You’ve successfully added an employee to the team member</Text>
+              <Image src="/addEmployeeSuccess.png" alt='' w="40" />
+            </Stack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

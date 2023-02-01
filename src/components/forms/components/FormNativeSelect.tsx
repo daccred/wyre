@@ -48,18 +48,18 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
         justifyContent={flex}
         {...outerProps}
       >
-        <FormLabel {...labelProps}>{label}</FormLabel>
+        <FormLabel {...labelProps} color="lightgrey">{label}</FormLabel>
         <Controller
           name={name}
           control={control}
           render={({ field }) => (
             <Select
               size={"lg"}
-              fontSize="md"
+              fontSize="sm"
+              bg={"#F7F7F7"}
               // rounded={"3xl"}
-              bg="#1F1F1F"
-              h="60px"
-              borderRadius={"100px"}
+              h="45px"
+              borderRadius={"5px"}
               _placeholder={{ fontSize: "sm" }}
               _hover={{ borderColor: "primary" }}
               _focus={{ borderColor: "primary" }}
