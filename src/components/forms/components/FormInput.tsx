@@ -57,7 +57,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         {label && (
-          <FormLabel color={"default"} fontSize="sm" {...labelProps}>
+          <FormLabel fontSize="sm" {...labelProps} color="lightgrey">
             {label}
           </FormLabel>
         )}
@@ -110,6 +110,11 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           {rightElement && (
             <InputRightElement>
               <Icon as={icon} color="primary.500" />
+            </InputRightElement>
+          )}
+          {props?.rightElementText && (
+            <InputRightElement style={props?.rightElementTextStyle}>
+              {props?.rightElementText}
             </InputRightElement>
           )}
         </InputGroup>

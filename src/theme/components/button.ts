@@ -139,7 +139,7 @@ const variants = {
     borderRadius:"5px",
     fontSize:"12px",
     fontWeight:"bold",
-    height:"40px",
+    height:"44px",
 
     _hover: {
       color: "white",
@@ -149,6 +149,25 @@ const variants = {
       color: "white",
       background:"#2d104a",
     },
+  }),
+  "greyBtn": () => ({
+    padding: "10px",
+    lineHeight: "normal",
+    color: "#210D35",
+    background:"#D9D9D9",
+    borderRadius:"5px",
+    fontSize:"12px",
+    fontWeight:"bold",
+    height:"44px",
+
+    // _hover: {
+    //   color: "white",
+    //   background:"#2a1143",
+    // },
+    // _active: {
+    //   color: "white",
+    //   background:"#2d104a",
+    // },
   }),
 };
 

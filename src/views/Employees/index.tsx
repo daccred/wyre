@@ -37,8 +37,11 @@ import {
 } from "@ajna/pagination";
 import { useEffect, useState } from "react";
 import AddEmployee from "./AddEmployee";
+import { useRouter } from "next/router";
 
 const Employees = () => {
+
+  const router = useRouter()
 
   const { isOpen:addEmployeeModalIsOpen, onOpen:openAddEmployeeModal, onClose:closeAddEmployeeModal } = useDisclosure()
   const { isOpen:addEmployeeSuccessModalIsOpen, onOpen:openAddEmployeeSuccessModal, onClose:closeAddEmployeeSuccessModal } = useDisclosure()
@@ -417,7 +420,7 @@ const Employees = () => {
                 <Text overflowWrap="break-word">{dummyEmployee?.paymentMethod}</Text>
               </Stack>
             </Stack>
-            <Button variant={"darkBtn"} w="100%" mt="10" py="15px" >Manage Employee</Button>
+            <Button variant={"darkBtn"} w="100%" mt="10" py="15px" onClick={()=>router.push('/employees/manage-employee')} >Manage Employee</Button>
           </Flex>
           }
         </HStack>

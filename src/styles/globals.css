@@ -224,3 +224,28 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* toast styling */
+/* success */
+.chakra-alert.css-dj8m96 {
+  background: rgba(33, 13, 53, 0.8);
+  color: white;
+  border-radius: 10px;
+  border: 1px solid #d2d2d2;
+}
+
+.chakra-alert.css-dj8m96 .css-1lx1wer {
+  color: greenyellow;
+}
+
+/* error */
+/* .chakra-alert.css-1pgbk9c {
+  background: black;
+  color: white;
+  border-radius: 24px;
+  border: 1px solid red;
+}
+
+.chakra-alert.css-1pgbk9c .css-1lx1wer {
+  color: red;
+} */

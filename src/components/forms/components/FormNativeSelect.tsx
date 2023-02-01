@@ -48,7 +48,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
         justifyContent={flex}
         {...outerProps}
       >
-        <FormLabel {...labelProps}>{label}</FormLabel>
+        <FormLabel {...labelProps} color="lightgrey">{label}</FormLabel>
         <Controller
           name={name}
           control={control}
