@@ -1,0 +1,31 @@
+{
+  "name": "@wyre-zayroll/api",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": ["dist/**"],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "lint:ts": "tsc --pretty --noEmit",
+    "dev": "tsc --watch",
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wyre-zayroll/db": "*",
+    "@trpc/client": "^10.9.0",
+    "@trpc/server": "^10.9.0",
+    "next": "^13.1.1",
+    "next-auth": "^4.15.1",
+    "superjson": "1.9.1",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.32.0",
+    "typescript": "^4.8.4",
+    "@types/superjson": "latest"
+  }
+}

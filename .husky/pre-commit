@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn lint:ts && yarn pretty-quick --staged
+npm run lint:ts && npm run pretty-format
