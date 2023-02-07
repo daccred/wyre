@@ -5,7 +5,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-import ViewLayout from "../../components/core/ViewLayout";
+import ViewLayout from "../../../components/core/ViewLayout";
 import ContractorForm from "./ContractorForm";
 import CompensationForm from "./CompensationForm";
 import { FiChevronRight } from "react-icons/fi";

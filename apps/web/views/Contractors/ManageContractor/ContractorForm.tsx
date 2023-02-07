@@ -6,9 +6,13 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import styledToast from "../../components/core/StyledToast";
+import styledToast from "../../../components/core/StyledToast";
 import z from "zod";
-import { FormInput, FormNativeSelect, useForm } from "../../components/forms";
+import {
+  FormInput,
+  FormNativeSelect,
+  useForm,
+} from "../../../components/forms";
 import { ProfileIcon } from "./ProviderIcons";
 
 const addContractorValidationSchema = z.object({});

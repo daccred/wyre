@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta } from "../../layouts";
-import View from "../../views/ManageContractor";
+import View from "../../views/Contractors/ManageContractor";
 
 export default function Page() {
   return (

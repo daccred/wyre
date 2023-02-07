@@ -1,11 +1,11 @@
 import { Button, Stack, Text, Flex, useToast } from "@chakra-ui/react";
 import z from "zod";
-import { FormInput, useForm } from "../../components/forms";
-import styledToast from "../../components/core/StyledToast";
+import { FormInput, useForm } from "../../../components/forms";
+import styledToast from "../../../components/core/StyledToast";
 
-const addContractorValidationSchema = z.object({});
+const addEmployeeValidationSchema = z.object({});
 
-type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
+type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
 
 const EditedFormInput = ({
   name,
@@ -55,7 +55,7 @@ export default function CompensationForm() {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     // defaultValues: { email: "" },
-    schema: addContractorValidationSchema,
+    schema: addEmployeeValidationSchema,
   });
 
   return (
@@ -75,11 +75,43 @@ export default function CompensationForm() {
       {renderForm(
         <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
           <Stack spacing={0} marginTop="0">
-            <Text fontWeight={"semibold"}>Gross Payment</Text>
+            <Text fontWeight={"semibold"}>Gross Salary</Text>
             <EditedFormInput
-              name="grossPayment"
+              name="grossSalary"
               rightElementText="USD"
               color="#0AAF60"
+            />
+          </Stack>
+          <Stack spacing={0}>
+            <Text fontWeight={"semibold"}>Signing Bonus</Text>
+            <EditedFormInput
+              name="signingBonus"
+              rightElementText="USD"
+              color="#0AAF60"
+            />
+          </Stack>
+          <Stack spacing={0}>
+            <Text fontWeight={"semibold"}>Health Insurance</Text>
+            <EditedFormInput
+              name="healthInsurance"
+              rightElementText="USD"
+              color="#0AAF60"
+            />
+          </Stack>
+          <Stack spacing={0}>
+            <Text fontWeight={"semibold"}>Income Tax</Text>
+            <EditedFormInput
+              name="incomeTax"
+              rightElementText="Percentage"
+              color="#E71D36"
+            />
+          </Stack>
+          <Stack spacing={0}>
+            <Text fontWeight={"semibold"}>Pension</Text>
+            <EditedFormInput
+              name="pension"
+              rightElementText="Percentage"
+              color="#E71D36"
             />
           </Stack>
           <Stack spacing={0}>

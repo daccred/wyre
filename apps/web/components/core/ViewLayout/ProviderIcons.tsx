@@ -167,22 +167,3 @@ export const EmployeesIcon = (props: HTMLChakraProps<"svg">) => (
     <path d="M18.228 12.311H14.41v-.555a.555.555 0 10-1.111 0v.555h-1.078V10.74A11.206 11.206 0 0010 10.5a10.706 10.706 0 00-5.033 1.233.422.422 0 00-.228.378v3.117h3.95v3.383a.555.555 0 00.555.556h8.984a.556.556 0 00.555-.556v-5.744a.556.556 0 00-.555-.556zm-.556 5.756H9.8v-4.645h3.5v.506a.555.555 0 101.111 0v-.506h3.261v4.645z" />
   </chakra.svg>
 );
-
-export const ChevronDownIcon = (props: HTMLChakraProps<"svg">) => (
-  <chakra.svg
-    width={25}
-    height={25}
-    viewBox="0 0 24 24"
-    stroke="#9F9F9F"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <path
-      d="M6 9l6 6 6-6"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </chakra.svg>
-);

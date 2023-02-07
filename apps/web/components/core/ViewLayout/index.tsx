@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import {
   IconButton,
@@ -9,7 +9,7 @@ import {
   VStack,
   Icon,
   useColorModeValue,
-  Link,
+  // Link,
   Text,
   Button,
   Image,
@@ -26,9 +26,10 @@ import {
   PayrollIcon,
   PeopleIcon,
   ExpensesIcon,
-  ChevronDownIcon,
 } from "./ProviderIcons";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface LinkItemProps {
   name: string;
@@ -115,6 +116,8 @@ const SidebarContent = ({ ...rest }) => {
                 linkName={link.name}
                 icon={link.icon}
                 href={link.href}
+                peopleMenuVisible={peopleMenuVisible}
+                setPeopleMenuVisible={setPeopleMenuVisible}
                 pl={index !== 0 ? "10" : ""}
                 onClick={() => {
                   if (index === 0) {
@@ -168,19 +171,32 @@ interface NavItemProps extends FlexProps {
   children: ReactNode;
   href: string;
   linkName?: string;
+  peopleMenuVisible?: boolean;
+  setPeopleMenuVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const NavItem = ({ icon, children, href, linkName, ...rest }: NavItemProps) => {
+const NavItem = ({
+  icon,
+  children,
+  href,
+  linkName,
+  peopleMenuVisible,
+  setPeopleMenuVisible,
+  ...rest
+}: NavItemProps) => {
   const router = useRouter();
   const isActive =
     router.asPath === href ? true : router.pathname.startsWith(href);
 
+  // useEffect(()=>{
+  //   if (linkName==='People' && setPeopleMenuVisible){
+  //     setPeopleMenuVisible(true)
+  //   }
+  // },[linkName])
+
   return (
     <Link
       href={href}
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-      w="100%"
-      px="4"
+      style={{ textDecoration: "none", width: "100%", padding: "0 16px" }}
     >
       <Flex
         align="center"
@@ -215,10 +231,9 @@ const NavItem = ({ icon, children, href, linkName, ...rest }: NavItemProps) => {
           {children}
         </Text>
         {linkName === "People" && (
-          <ChevronDownIcon
-            stroke={isActive ? "brand.600" : "boldgrey"}
-            ml="4"
-          />
+          <Box ml="4" fontSize={"20px"} color={"boldgrey"}>
+            {!peopleMenuVisible ? <FiChevronDown /> : <FiChevronUp />}
+          </Box>
         )}
       </Flex>
     </Link>
