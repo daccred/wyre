@@ -32,7 +32,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
     } = useFormContext();
 
     const error = Array.isArray(errors)
-      ? errors[name]?.message || Object.entries(errors[name]?.types || {})
+      ? errors[name]?.message
       : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
@@ -48,7 +48,9 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
         justifyContent={flex}
         {...outerProps}
       >
-        <FormLabel {...labelProps} color="lightgrey">{label}</FormLabel>
+        <FormLabel {...labelProps} color="lightgrey">
+          {label}
+        </FormLabel>
         <Controller
           name={name}
           control={control}

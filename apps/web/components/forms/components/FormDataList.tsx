@@ -40,7 +40,7 @@ const DataListSelect = ({
   } = useFormContext();
   // const error = Array.isArray(errors[name]) ? errors[name].join(', ') : errors[name]?.message || errors[name];
   const error = Array.isArray(errors[name])
-    ? errors[name]?.types?.message?.toString()
+    ? errors[name]?.message?.toString()
     : errors[name]?.message?.valueOf() || errors[name];
 
   const getOptions = (options: any[]) => {

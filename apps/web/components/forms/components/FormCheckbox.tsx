@@ -21,7 +21,7 @@ const FormCheckbox = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
       formState: { errors },
     } = useFormContext();
     const error = Array.isArray(errors)
-      ? errors[name]?.message || Object.entries(errors[name]?.types || {})
+      ? errors[name]?.message || Object.entries(errors[name]?.type || {})
       : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 

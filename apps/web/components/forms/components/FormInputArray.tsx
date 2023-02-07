@@ -72,7 +72,7 @@ export const FormInputArray = forwardRef<
     const _handleArrayAppend = () =>
       limit && fields.length < limit && append(" ");
     const error = Array.isArray(errors)
-      ? errors[name]?.message || Object.entries(errors[name]?.types || {})
+      ? errors[name]?.message
       : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 

@@ -1,5 +1,3 @@
-/* eslint-disable react/display-name */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
 import { forwardRef } from "react";
@@ -134,7 +132,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
       control,
     } = useFormContext();
     const error = Array.isArray(errors)
-      ? errors[name]?.message || Object.entries(errors[name]?.types || {})
+      ? errors[name]?.message
       : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
@@ -156,7 +154,6 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
           control={control}
           render={({ field }) => (
             <RadioCardGroup
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               //@ts-ignore
               defaultValue={options[0].value}
               spacing="3"
@@ -188,5 +185,6 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
 );
 
 FormRadioCard.displayName = "FormRadioCard";
+RadioCardGroup.displayName = "RadioCardGroup";
 
 export default FormRadioCard;

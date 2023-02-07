@@ -50,7 +50,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
     } = useFormContext();
     // const error = Array.isArray(errors[name]) ? errors[name]?.types?.join(', ') : errors[name]?.message || errors[name];
     const error = Array.isArray(errors)
-      ? errors[name]?.message || Object.entries(errors[name]?.types || {})
+      ? errors[name]?.message
       : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
@@ -62,9 +62,9 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           </FormLabel>
         )}
         <InputGroup
-        style={{
-            borderColor:'#D2D2D2',
-        }}
+          style={{
+            borderColor: "#D2D2D2",
+          }}
         >
           {leftElement && (
             <InputLeftElement>
@@ -93,11 +93,11 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           <Input
             size={"lg"}
             fontSize="sm"
-            height='45px'
-            borderRadius={'5px'}
+            height="45px"
+            borderRadius={"5px"}
             // rounded={"3xl"}
             bg={"#F7F7F7"}
-            _placeholder={{ fontSize: "sm", color:"#D2D2D2" }}
+            _placeholder={{ fontSize: "sm", color: "#D2D2D2" }}
             _hover={{ borderColor: "primary" }}
             _focus={{ borderColor: "primary" }}
             isDisabled={isSubmitting}

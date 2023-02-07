@@ -44,7 +44,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
       control,
     } = useFormContext();
     const error = Array.isArray(errors[name])
-      ? errors[name]?.types?.message?.toString()
+      ? errors[name]?.message?.toString()
       : errors[name]?.message?.valueOf() || errors[name];
 
     return (
