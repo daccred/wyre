@@ -5,15 +5,15 @@ import EmailProvider from "next-auth/providers/email";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-import { env } from "@wyre-zayroll/env/src/index.mjs";
-import { client } from "@wyre-zayroll/db/src/client";
+import { env } from "../../../env/server.mjs";
+import { prisma } from "../../../server/db/client";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   callbacks: {
     session({ session, user }) {
       if (session.user) {
-        session.user.name = user.id;
+        session.user.id = user.id;
       }
       return session;
     },
@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
     // },
   },
   // Configure one or more authentication providers
-  adapter: PrismaAdapter(client as any),
+  adapter: PrismaAdapter(prisma),
   providers: [
     EmailProvider({
       from: "admin@tecmie.com",

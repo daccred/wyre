@@ -1,10 +1,10 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 
-import { prisma } from "@wyre-zayroll/db/src";
+import { prisma } from "../../server/db/client";
 
 const examples = async (req: NextApiRequest, res: NextApiResponse) => {
-  //   const examples = await prisma.example.findMany();
-  res.status(200).json({ message: "Hello World" });
+  const examples = await prisma.example.findMany();
+  res.status(200).json(examples);
 };
 
 export default examples;
