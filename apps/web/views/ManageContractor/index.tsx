@@ -6,14 +6,14 @@ import {
   BreadcrumbLink,
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
-import EmployeeForm from "./EmployeeForm";
+import ContractorForm from "./ContractorForm";
 import CompensationForm from "./CompensationForm";
 import { FiChevronRight } from "react-icons/fi";
 
-const ManageEmployee = () => {
+const ManageContractor = () => {
   return (
     <>
-      <ViewLayout title="Employees">
+      <ViewLayout title="Contractors">
         <Breadcrumb
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
@@ -21,13 +21,13 @@ const ManageEmployee = () => {
           fontWeight={"semibold"}
         >
           <BreadcrumbItem>
-            <BreadcrumbLink color={"lightgrey"}>Employee</BreadcrumbLink>
+            <BreadcrumbLink color={"lightgrey"}>Contractor</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink
             // href='#'
             >
-              Kelechi Ihenacho
+              Bright Ephraim
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
@@ -40,7 +40,7 @@ const ManageEmployee = () => {
             bg={"white"}
             w="70%"
           >
-            <EmployeeForm />
+            <ContractorForm />
           </Stack>
           <CompensationForm />
         </HStack>
@@ -49,4 +49,4 @@ const ManageEmployee = () => {
   );
 };
 
-export default ManageEmployee;
+export default ManageContractor;
