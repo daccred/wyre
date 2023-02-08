@@ -17,6 +17,16 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": "./"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "packages/env/src/server.mjs",
+    "packages/env/src/schema.mjs",
+    "packages/env/src/client.mjs",
+    "packages/env/src/index.mjs"
+  ],
   "exclude": ["node_modules"]
 }
