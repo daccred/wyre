@@ -1,8 +1,6 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 
-// import superjson from "../node_modules/superjson/dist/index";
-
 import { type Context } from "./context";
 
 const t = initTRPC.context<Context>().create({
