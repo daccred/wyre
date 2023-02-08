@@ -18,6 +18,7 @@
     "bootstrap": "nx run bootstrap",
     "pack": "nx add",
     "dev": "nx run-many --target=dev --all --parallel",
+    "refresh": "npm run build && npm run dev",
     "lint": "nx run-many --target=lint --all --parallel",
     "lint:ts": "tsc --pretty --noEmit",
     "graph": "nx run graph",
@@ -31,6 +32,6 @@
   },
   "dependencies": {
     "husky": "^8.0.3",
-    "superjson": "^1.12.2"
+    "superjson": "1.9.1"
   }
 }
