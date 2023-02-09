@@ -43,7 +43,7 @@ const PayrollLinkItems: Array<LinkItemProps> = [
   { name: "Payroll", href: "/payroll", icon: PayrollIcon },
 ];
 const PeopleLinkItems: Array<LinkItemProps> = [
-  { name: "People", href: "#", icon: PeopleIcon },
+  { name: "People", href: "", icon: PeopleIcon },
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
   { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
 ];
@@ -185,7 +185,9 @@ const NavItem = ({
 }: NavItemProps) => {
   const router = useRouter();
   const isActive =
-    router.asPath === href ? true : router.pathname.startsWith(href);
+    router.asPath === href
+      ? true
+      : router.pathname.startsWith(href) && href !== "";
 
   // useEffect(()=>{
   //   if (linkName==='People' && setPeopleMenuVisible){

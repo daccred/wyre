@@ -227,14 +227,14 @@ body {
 
 /* toast styling */
 /* success */
-.chakra-alert.css-dj8m96 {
+.chakra-alert.css-xrnvp3 {
   background: rgba(33, 13, 53, 0.8);
   color: white;
   border-radius: 10px;
   border: 1px solid #d2d2d2;
 }
 
-.chakra-alert.css-dj8m96 .css-1lx1wer {
+.chakra-alert.css-xrnvp3 .css-1lx1wer {
   color: greenyellow;
 }
 
@@ -249,3 +249,10 @@ body {
 .chakra-alert.css-1pgbk9c .css-1lx1wer {
   color: red;
 } */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
