@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import type { ReactNode } from "react";
 import {
   IconButton,
@@ -247,6 +247,8 @@ interface HeaderNavProps extends FlexProps {
 }
 
 const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
+  const router = useRouter();
+
   return (
     <Flex
       ml={60}
@@ -304,6 +306,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             spacing={4}
             transition="all 0.3s"
             _focus={{ boxShadow: "none" }}
+            onClick={() => router.push("/profile")}
           >
             <Avatar
               size={"sm"}

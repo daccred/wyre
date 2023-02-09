@@ -119,7 +119,7 @@ const Integrations = () => {
           <Text fontWeight="bold" fontSize="18px" mb="1">
             Payment Services
           </Text>
-          <Text mb="4" color={"lightgrey"}>
+          <Text mb="4" color={"lightgrey"} fontSize="sm">
             Supercharge your payroll and connect the best tool for making
             payments globally
           </Text>
