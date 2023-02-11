@@ -16,6 +16,7 @@ datasource db {
 
 model Example {
   id        String   @id @default(cuid())
+  name      String?  @default("Example")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -37,6 +38,7 @@ model Account {
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   admin             Admin   @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
@@ -69,35 +71,35 @@ model User {
 }
 
 model Admin {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String?   @unique
-  phone     String?
+  id            String       @id @default(cuid())
+  name          String?
+  email         String?      @unique
+  phone         String?
   emailVerified DateTime?
-  image     String?
-  jobRole   String?
-  category  String?
-  company   Company?  @relation(fields: [companyId], references: [id])
-  companyId String?
-  accounts  Account[]
-  sessions  Session[]
-  invitations Invitation[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  image         String?
+  jobRole       String?
+  category      String?
+  company       Company?     @relation(fields: [companyId], references: [id])
+  companyId     String?
+  accounts      Account[]
+  sessions      Session[]
+  invitations   Invitation[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Company {
-  id        String   @id @default(cuid())
-  companyName      String
-  companyEmail     String   @unique
-  companyPhone     String?
-  country          String?
-  address   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  users     User[]
-  admins    Admin[]
-  invitations Invitation[]
+  id           String       @id @default(cuid())
+  companyName  String
+  companyEmail String       @unique
+  companyPhone String?
+  country      String?
+  address      String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  users        User[]
+  admins       Admin[]
+  invitations  Invitation[]
 }
 
 model VerificationToken {
@@ -109,16 +111,16 @@ model VerificationToken {
 }
 
 model Invitation {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id          String    @id @default(cuid())
+  email       String    @unique
   description String?
-  token     String   @unique
-  category  String
-  expires   DateTime?
-  adminId   String?
-  companyId String?
-  company   Company?  @relation(fields: [companyId], references: [id])
-  admin     Admin?    @relation(fields: [adminId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  token       String    @unique
+  category    String
+  expires     DateTime?
+  adminId     String?
+  companyId   String?
+  company     Company?  @relation(fields: [companyId], references: [id])
+  admin       Admin?    @relation(fields: [adminId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
