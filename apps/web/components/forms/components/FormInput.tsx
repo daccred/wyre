@@ -63,7 +63,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
         )}
         <InputGroup
           style={{
-            borderColor: "#D2D2D2",
+            borderColor: "#9f9f9f",
           }}
         >
           {leftElement && (

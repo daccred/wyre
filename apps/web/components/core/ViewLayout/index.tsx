@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import type { ReactNode } from "react";
 import {
   IconButton,
@@ -43,7 +43,7 @@ const PayrollLinkItems: Array<LinkItemProps> = [
   { name: "Payroll", href: "/payroll", icon: PayrollIcon },
 ];
 const PeopleLinkItems: Array<LinkItemProps> = [
-  { name: "People", href: "#", icon: PeopleIcon },
+  { name: "People", href: "", icon: PeopleIcon },
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
   { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
 ];
@@ -185,7 +185,9 @@ const NavItem = ({
 }: NavItemProps) => {
   const router = useRouter();
   const isActive =
-    router.asPath === href ? true : router.pathname.startsWith(href);
+    router.asPath === href
+      ? true
+      : router.pathname.startsWith(href) && href !== "";
 
   // useEffect(()=>{
   //   if (linkName==='People' && setPeopleMenuVisible){
@@ -245,6 +247,8 @@ interface HeaderNavProps extends FlexProps {
 }
 
 const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
+  const router = useRouter();
+
   return (
     <Flex
       ml={60}
@@ -302,6 +306,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             spacing={4}
             transition="all 0.3s"
             _focus={{ boxShadow: "none" }}
+            onClick={() => router.push("/profile")}
           >
             <Avatar
               size={"sm"}
