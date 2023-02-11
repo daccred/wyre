@@ -56,9 +56,10 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  userType      String?
+  type      String?
   phone         String?
-  emailVerified DateTime?
+  password      String?
+  emailVerified Boolean? @default(false)
   image         String?
   jobRole       String?
   category      String?
@@ -66,6 +67,7 @@ model User {
   companyId     String?
   accounts      Account[]
   sessions      Session[]
+  invitations   Invitation[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -75,10 +77,12 @@ model Admin {
   name          String?
   email         String?      @unique
   phone         String?
-  emailVerified DateTime?
+  password      String?
+  emailVerified Boolean?    @default(false)
   image         String?
   jobRole       String?
   category      String?
+  type      String?
   company       Company?     @relation(fields: [companyId], references: [id])
   companyId     String?
   accounts      Account[]
@@ -119,6 +123,8 @@ model Invitation {
   expires     DateTime?
   adminId     String?
   companyId   String?
+  userId      String?
+  user        User?     @relation(fields: [userId], references: [id])
   company     Company?  @relation(fields: [companyId], references: [id])
   admin       Admin?    @relation(fields: [adminId], references: [id])
   createdAt   DateTime  @default(now())

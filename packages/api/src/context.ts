@@ -6,6 +6,18 @@ import { type Session } from "next-auth";
 import { getServerAuthSession } from "./common/get-server-side-auth-session";
 import { prisma } from "@wyre-zayroll/db/src";
 
+// export declare type ISODateString = string;
+// interface Session {
+//     user?: {
+//         name?: string | null;
+//         email?: string | null;
+//         image?: string | null;
+//         userId?: string | null;
+//     };
+//     expires: ISODateString;
+
+// }
+
 type CreateContextOptions = {
   session: Session | null;
 };
