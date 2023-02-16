@@ -8,6 +8,7 @@ import {
   HStack,
   Icon,
   Link,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import type { ComponentWithAs, IconProps, FlexProps } from "@chakra-ui/react";
@@ -55,13 +56,13 @@ export default function SidebarAccordion({ menu }: Props) {
 
             <AccordionIcon
               color={isActive ? "brand.600" : "boldgrey"}
-              fontSize="3xl"
+              fontSize="2xl"
               mr={8}
             />
           </AccordionButton>
         </h2>
 
-        <AccordionPanel p={0}>
+        <AccordionPanel py={2} px={0} as={Stack}>
           {menu.panels?.map((panel) => (
             <SidebarAccordionItem
               key={panel.name}
@@ -94,22 +95,24 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
       w="100%"
-      px="4"
-      py={"2"}
+      borderRadius="lg"
+      _hover={{
+        bg: "blackAlpha.100",
+        // color: 'white',
+      }}
     >
       <Flex
         align="center"
-        p="10"
+        px="6"
         py="2"
         // mx="4"
         w="100%"
-        borderRadius="lg"
         role="group"
-        cursor="pointer"
-        _hover={{
-          bg: "blackAlpha.100",
-          // color: 'white',
-        }}
+        // borderRadius="lg"
+        // _hover={{
+        //   bg: "blackAlpha.100",
+        //   // color: 'white',
+        // }}
         {...rest}
       >
         {icon && (

@@ -29,14 +29,14 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    EmailProvider({
-      from: "admin@tecmie.com",
-      server: env.AUTH_EMAIL_SERVER,
-    }),
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
+    // EmailProvider({
+    //   from: "admin@tecmie.com",
+    //   server: env.AUTH_EMAIL_SERVER,
+    // }),
+    // GoogleProvider({
+    //   clientId: env.GOOGLE_CLIENT_ID,
+    //   clientSecret: env.GOOGLE_CLIENT_SECRET,
+    // }),
     // ...add more providers here
   ],
 };
