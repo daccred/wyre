@@ -12,13 +12,13 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "npm run build",
+    "postinstall": "yarn build",
     "build": "nx run-many --target=build --all --parallel",
     "build:no-cache": "nx run-many --target=build --all --parallel --no-cache",
     "bootstrap": "nx run bootstrap",
     "pack": "nx add",
     "dev": "nx run-many --target=dev --all --parallel",
-    "refresh": "npm run build && npm run dev",
+    "refresh": "yarn build && yarn dev",
     "lint": "nx run-many --target=lint --all --parallel",
     "lint:ts": "tsc --pretty --noEmit",
     "graph": "nx run graph",
@@ -36,5 +36,10 @@
     "superjson": "1.9.1",
     "zod": "^3.19.0",
     "nanoid": "^4.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ccgls"
+    }
   }
 }
