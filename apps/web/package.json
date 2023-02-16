@@ -59,5 +59,10 @@
     "release-it": "^15.5.0",
     "tsconfig": "*",
     "typescript": "^4.8.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ccgls"
+    }
   }
 }
