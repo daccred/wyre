@@ -6,7 +6,7 @@ export const userRouter = router({
     const users = await ctx.prisma.user.findMany();
     return users;
   }),
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: publicProcedure.query(() => {
     // return await ctx.prisma.in.findMany();
     return { message: "Hello World" };
   }),

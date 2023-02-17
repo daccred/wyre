@@ -57,7 +57,7 @@ const View = () => (
               label="Your email address"
               placeholder="Enter your email address..."
             />
-            <Button variant="gradient" rounded={"3xl"}>
+            <Button variant="gradient" rounded={"3xl"} type="submit">
               Continue with email
             </Button>
           </Stack>

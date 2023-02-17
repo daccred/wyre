@@ -12,13 +12,13 @@ export const authRouter = router({
   adminSignUp: publicProcedure
     .input(signUpSchema)
     .mutation(async ({ input }) => {
-      const admin = await AuthService.adminSignUp(input as any);
+      const admin = await AuthService.adminSignUp(input);
       return admin;
     }),
   userSignup: publicProcedure
     .input(signUpSchema)
     .mutation(async ({ input }) => {
-      const user = await AuthService.userSignUp(input as any);
+      const user = await AuthService.userSignUp(input);
       return user;
     }),
 });

@@ -1,9 +1,10 @@
-import { ISODateString, NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { prisma } from "@wyre-zayroll/db";
-import { loginSchema } from "../../../../../packages/api/src/interfaces";
-import { verifyHash } from "../../../../../packages/api/src/utils";
+import { loginSchema } from "./interfaces";
+import { verifyHash } from "./utils";
 
 // interface MainSession {
 //     user: {
@@ -19,7 +20,19 @@ import { verifyHash } from "../../../../../packages/api/src/utils";
 // }
 
 export const nextAuthOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
+
   providers: [
+    // EmailProvider({
+    //   from: "admin@tecmie.com",
+    //   server: env.AUTH_EMAIL_SERVER,
+    // }),
+    // GoogleProvider({
+    //   clientId: env.GOOGLE_CLIENT_ID,
+    //   clientSecret: env.GOOGLE_CLIENT_SECRET,
+    // }),
+
+    // ...add more providers here
     Credentials({
       name: "credentials",
       credentials: {
@@ -48,59 +61,28 @@ export const nextAuthOptions: NextAuthOptions = {
           if (!isValidPassword) return null;
 
           return { id: result.id, email: result.email };
-        } catch {
-          return null;
+        } catch (error) {
+          throw new Error(JSON.stringify(error));
         }
       },
     }),
     // add another auth this time for admin
-    Credentials({
-      name: "admin",
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "admin@gmail.com",
-        },
-        password: { label: "Password", type: "password" },
-      },
-      authorize: async (credentials) => {
-        try {
-          const { email, password } = await loginSchema.parseAsync(credentials);
-
-          const result = await prisma.admin.findFirst({
-            where: { email },
-          });
-
-          if (!result) return null;
-          const isValidPassword = await verifyHash(
-            result.password as string,
-            password
-          );
-
-          if (!isValidPassword) return null;
-
-          return { id: result.id, email: result.email };
-        } catch {
-          return null;
-        }
-      },
-    }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: ({ token, user }) => {
+      console.warn(user);
       if (user) {
-        token.userId = user.id;
+        token.id = user.id;
         token.email = user.email;
       }
 
       return token;
     },
-    session: async ({ session, token }) => {
-      if (token) {
-        (session as any).user.userId = token.userId;
-        (session as any).user.email = token.email;
-        (session as any).user.username = token.username;
+    session: ({ session, token }) => {
+      if (token && session.user) {
+        // session.user.id = token.id;
+        session.user.email = token.email;
+        // session.user.name = token.name;
       }
 
       return session;
@@ -110,8 +92,8 @@ export const nextAuthOptions: NextAuthOptions = {
     maxAge: 15 * 24 * 30 * 60, // 15 days
   },
   pages: {
-    signIn: "/",
+    signIn: "/login",
     newUser: "/sign-up",
   },
-  secret: "super-secret",
+  secret: process.env.NEXTAUTH_SECRET,
 };

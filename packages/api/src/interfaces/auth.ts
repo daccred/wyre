@@ -20,6 +20,7 @@ export const signUpSchema = loginSchema.extend({
   companyName: z.string().optional(),
   country: z.string().optional(),
   jobRole: z.string().optional(),
+  companyId: z.string().optional(),
 });
 
 export type ILogin = z.infer<typeof loginSchema>;

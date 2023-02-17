@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
-import { SignUp } from "../interfaces";
+import { ISignUp } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db/src";
 
 export class AuthError extends TRPCError {
@@ -13,16 +13,21 @@ export class AuthError extends TRPCError {
 }
 
 export class AuthService {
-  static async adminSignUp(input: SignUp) {
+  static async adminSignUp(input: ISignUp) {
     try {
       // check if company exists
-      const companyExists = await this.checkIfCompanyExists(input.companyName);
+      const companyExists = await AuthService.checkIfCompanyExists(
+        input.companyName
+      );
 
       if (companyExists) {
         throw new AuthError("Company already exists");
       }
+
       // check if email is an organization
-      const isOrganization = await this.checkIfEmailIsOrganization(input.email);
+      const isOrganization = AuthService.checkIfEmailIsOrganization(
+        input.email
+      );
       if (!isOrganization) {
         throw new AuthError("Email is not an organization");
       }
@@ -61,12 +66,15 @@ export class AuthService {
         },
       });
       return admin;
-    } catch (error: any) {
-      throw new AuthError(error.message);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
     }
   }
 
-  static async userSignUp(input: SignUp) {
+  static async userSignUp(input: ISignUp) {
     try {
       // check if email exists
       const emailExists = await prisma.user.findFirst({
@@ -90,8 +98,11 @@ export class AuthService {
         },
       });
       return user;
-    } catch (error: any) {
-      throw new AuthError(error.message);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
     }
   }
 
@@ -105,7 +116,7 @@ export class AuthService {
     return !!result;
   }
 
-  static async checkIfEmailIsOrganization(email: string) {
+  static checkIfEmailIsOrganization(email: string) {
     // get all the free email domains/clients
     const emailClients = [
       "gmail.com",

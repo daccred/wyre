@@ -1,22 +1,9 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
 
 import { getServerAuthSession } from "./common/get-server-side-auth-session";
-import { prisma } from "@wyre-zayroll/db/src";
-
-// export declare type ISODateString = string;
-// interface Session {
-//     user?: {
-//         name?: string | null;
-//         email?: string | null;
-//         image?: string | null;
-//         userId?: string | null;
-//     };
-//     expires: ISODateString;
-
-// }
+import { prisma } from "@wyre-zayroll/db";
+import { Session } from "next-auth";
 
 type CreateContextOptions = {
   session: Session | null;
@@ -27,7 +14,7 @@ type CreateContextOptions = {
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://beta.create.t3.gg/en/usage/trpc#-servertrpccontextts
  **/
-export const createContextInner = async (opts: CreateContextOptions) => {
+export const createContextInner = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
@@ -42,11 +29,13 @@ export const createContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
   // Get the session from the server using the unstable_getServerSession wrapper function
-  const session: any = await getServerAuthSession({ req, res });
+  const session = await getServerAuthSession({ req, res });
 
-  return await createContextInner({
+  const contextInner = createContextInner({
     session,
   });
+
+  return contextInner;
 };
 
 export type Context = inferAsyncReturnType<typeof createContext>;
