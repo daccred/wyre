@@ -44,7 +44,7 @@ export class AuthService {
       // create company
       const company = await prisma.company.create({
         data: {
-          companyName: input.companyName as string,
+          companyName: input.companyName,
           country: input.country,
           companyEmail: input.email,
         },
@@ -94,7 +94,7 @@ export class AuthService {
           password: await hashString(input.password),
           jobRole: input.jobRole,
           type: USER,
-          companyId: input.companyId,
+          // companyId: input.companyId,
         },
       });
       return user;

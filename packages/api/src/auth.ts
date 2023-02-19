@@ -1,26 +1,17 @@
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { prisma } from "@wyre-zayroll/db";
 import { loginSchema } from "./interfaces";
 import { verifyHash } from "./utils";
 
-// interface MainSession {
-//     user: {
-//         name: string | null;
-//         email: string | null;
-//         image: string | null;
-//         userId: string | null;
-//     };
-//     expires: ISODateString;
-// }
-
-// export interface Session extends MainSession {
-// }
+/**
+ * * Important Info
+ * TODO: Extend session object to accept more user data
+ **/
 
 export const nextAuthOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
 
   providers: [
     // EmailProvider({
@@ -45,55 +36,47 @@ export const nextAuthOptions: NextAuthOptions = {
       },
       authorize: async (credentials) => {
         try {
-          const { email, password } = await loginSchema.parseAsync(credentials);
+          const { email } = await loginSchema.parseAsync(credentials);
 
-          const result = await prisma.user.findFirst({
+          const user = await prisma.user.findFirst({
             where: { email },
           });
 
-          if (!result) return null;
+          if (!user) {
+            throw new Error("Account not found");
+          }
 
           const isValidPassword = await verifyHash(
-            result.password as string,
-            password
+            "#John007",
+            user.password as string
           );
 
-          if (!isValidPassword) return null;
-
-          return { id: result.id, email: result.email };
+          if (!isValidPassword) {
+            throw new Error("Your username or password is incorrect");
+          }
+          return user;
         } catch (error) {
-          throw new Error(JSON.stringify(error));
+          throw new Error(error as string);
         }
       },
     }),
     // add another auth this time for admin
   ],
   callbacks: {
-    jwt: ({ token, user }) => {
-      console.warn(user);
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-      }
-
-      return token;
-    },
     session: ({ session, token }) => {
-      if (token && session.user) {
-        // session.user.id = token.id;
-        session.user.email = token.email;
-        // session.user.name = token.name;
-      }
-
+      session.user.id = token.sub;
       return session;
     },
   },
-  jwt: {
-    maxAge: 15 * 24 * 30 * 60, // 15 days
+
+  session: {
+    maxAge: 1 * 24 * 60 * 60, // 1 days
   },
   pages: {
     signIn: "/login",
     newUser: "/sign-up",
+    error: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV == "development",
 };

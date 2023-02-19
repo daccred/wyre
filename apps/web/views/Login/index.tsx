@@ -11,8 +11,12 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { GoogleIcon, TwitterIcon } from "./ProviderIcons";
+import { signIn } from "next-auth/react";
 
-const View = () => (
+interface Props {
+  isSubmitting: boolean;
+}
+const View = ({ isSubmitting }: Props) => (
   <Box
     minH={"100vh"}
     bgGradient={{ sm: "linear(to-r, blue.600, purple.600)" }}
@@ -36,6 +40,7 @@ const View = () => (
         <Stack spacing="6">
           <Button
             rounded={"3xl"}
+            onClick={() => signIn("google", { callbackUrl: "/demo" })}
             variant="outline"
             leftIcon={<GoogleIcon boxSize="5" />}
             iconSpacing="3"
@@ -57,7 +62,12 @@ const View = () => (
               label="Your email address"
               placeholder="Enter your email address..."
             />
-            <Button variant="gradient" rounded={"3xl"} type="submit">
+            <Button
+              variant="gradient"
+              rounded={"3xl"}
+              type="submit"
+              isDisabled={isSubmitting}
+            >
               Continue with email
             </Button>
           </Stack>

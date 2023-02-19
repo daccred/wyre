@@ -12,6 +12,7 @@ import {
 import { useColorMode, IconButton } from "@chakra-ui/react";
 import { FaSun, FaMoon } from "react-icons/fa";
 import * as Layout from "../layouts";
+import { useSession } from "next-auth/react";
 
 export const DarkModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -31,6 +32,8 @@ export const DarkModeSwitch = () => {
 
 export default function Page() {
   const methods = useForm<any>();
+  const { data: session } = useSession();
+  console.log(session);
 
   const onSubmit = (data: any) => {
     console.warn(data);
