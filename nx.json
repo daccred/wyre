@@ -1,0 +1,47 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "defaultBase": "main",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "nx.json": "*"
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "build:production"
+        }
+      }
+    }
+  },
+  "dev": {},
+  "generators": {
+    "@nrwl/js:library": {
+      "buildable": true
+    }
+  }
+}
