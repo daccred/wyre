@@ -1,6 +1,6 @@
-import { router, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const userRouter = router({
+export const userRouter = createTRPCRouter({
   // this is a public route
   getAllUsers: publicProcedure.query(async ({ ctx }) => {
     const users = await ctx.prisma.user.findMany();

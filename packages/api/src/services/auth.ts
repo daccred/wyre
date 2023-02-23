@@ -1,7 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
 import { ISignUp } from "../interfaces";
-import { prisma } from "@wyre-zayroll/db/src";
+import { prisma } from "@wyre-zayroll/db";
+// import { sendEmail } from "@wyre-zayroll/dialog";
 
 export class AuthError extends TRPCError {
   constructor(message: string) {
@@ -13,6 +14,13 @@ export class AuthError extends TRPCError {
 }
 
 export class AuthService {
+  // static async verifyEmail(input: ILogin) {
+  //   try {
+  //     await sendEmail({
+
+  //     })
+  //   }
+  // }
   static async adminSignUp(input: ISignUp) {
     try {
       // check if company exists

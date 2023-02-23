@@ -10,7 +10,8 @@
   "scripts": {
     "clean": "rimraf .turbo node_modules dist",
     "lint:ts": "tsc --pretty --noEmit",
-    "lint": "TIMING=1 eslint \"src/**/*.ts\""
+    "lint": "TIMING=1 eslint \"src/**/*.ts\"",
+    "generate": "tsc"
   },
   "dependencies": {
     "zod": "^3.20.2"

@@ -29,8 +29,7 @@
     "generate": "prisma generate",
     "lint": "TIMING=1 eslint \"src/**/*.ts\"",
     "prebuild": "yarn db-generate && yarn db-sync",
-    "predev": "yarn db-generate && yarn db-sync",
-    "postinstall": "yarn db-generate && yarn db-sync"
+    "predev": "yarn db-generate && yarn db-sync"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0"
