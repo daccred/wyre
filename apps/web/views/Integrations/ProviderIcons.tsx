@@ -226,3 +226,5 @@ export const CoinProfileIcon = (props: HTMLChakraProps<"svg">) => (
     </defs>
   </chakra.svg>
 );
+
+

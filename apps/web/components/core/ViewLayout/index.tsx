@@ -66,7 +66,7 @@ export default function ViewLayout({
       <SidebarContent />
       {/* mobilenav */}
       <HeaderNav title={title} />
-      <Box ml={60} p="4">
+      <Box ml={60} p={6}>
         {children}
       </Box>
     </Box>

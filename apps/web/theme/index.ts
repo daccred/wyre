@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ThemeConfig } from "@chakra-ui/react";
 import { extendTheme, theme as baseTheme } from "@chakra-ui/react";
 import * as components from "./components";
@@ -38,6 +37,7 @@ export const theme: Record<string, any> = extendTheme({
     // },
     boldgrey: "#9F9F9F",
     lightgrey: "#666666",
+    dirtywhite: "#FDFFFC",
     bordergrey: "#D2D2D2",
   },
   space: {
