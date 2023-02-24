@@ -39,7 +39,7 @@
     "react-icons": "^4.6.0",
     "react-select": "^5.6.0",
     "superjson": "1.9.1",
-    "trpc-playground": "^1.0.4",
+    "trpc-playground": "1.0.0-next.0",
     "ui": "*",
     "zod": "^3.18.0"
   },

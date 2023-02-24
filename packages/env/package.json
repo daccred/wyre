@@ -5,13 +5,13 @@
   "main": "./src/server.mjs",
   "module": "./src/server.mjs",
   "files": [
-    "dist/**"
+    "src/**"
   ],
   "scripts": {
     "clean": "rimraf .turbo node_modules dist",
     "lint:ts": "tsc --pretty --noEmit",
     "lint": "TIMING=1 eslint \"src/**/*.ts\"",
-    "generate": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "zod": "^3.20.2"
