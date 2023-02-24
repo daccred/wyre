@@ -17,9 +17,10 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@trpc/client": "^10.8.1",
+    "@trpc/server": "^10.8.1",
     "@wyre-zayroll/db": "*",
-    "@trpc/client": "^10.9.0",
-    "@trpc/server": "^10.9.0",
+    "@wyre-zayroll/dialog": "*",
     "next": "^13.1.1",
     "next-auth": "^4.15.1",
     "superjson": "1.9.1",
@@ -27,7 +28,6 @@
   },
   "devDependencies": {
     "eslint": "^8.32.0",
-    "typescript": "^4.8.4",
-    "@types/superjson": "latest"
+    "typescript": "^4.8.4"
   }
 }

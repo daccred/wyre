@@ -1,7 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
-import { ISignUp } from "../interfaces";
-import { prisma } from "@wyre-zayroll/db/src";
+import { IEmail, ISignUp, IVerifyEmail } from "../interfaces";
+import { prisma } from "@wyre-zayroll/db";
+import { sendEmail } from "@wyre-zayroll/dialog";
 
 export class AuthError extends TRPCError {
   constructor(message: string) {
@@ -13,6 +14,68 @@ export class AuthError extends TRPCError {
 }
 
 export class AuthService {
+  static async verifyEmail(input: IVerifyEmail) {
+    try {
+      const { id, expires } = input;
+
+      const user = await prisma.user.findFirst({
+        where: {
+          id,
+        },
+      });
+
+      if (!user)
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      const now = new Date();
+      const expireTime = new Date(expires);
+
+      if (now > expireTime)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Confirmation link is expired",
+        });
+
+      const emailVerified = prisma.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          emailVerified: true,
+        },
+      });
+      return emailVerified;
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
+    }
+  }
+
+  static async sendMailVerification(input: IEmail) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: { email: input.email },
+      });
+
+      if (!user)
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+
+      const response = await sendEmail({
+        from: "admin@tecmie.com",
+        subject: "Verify your email",
+        to: input.email,
+        textBody: "Email sent",
+        userId: user?.id,
+      });
+      return response;
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
+    }
+  }
   static async adminSignUp(input: ISignUp) {
     try {
       // check if company exists
