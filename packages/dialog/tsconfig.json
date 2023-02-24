@@ -1,9 +1,15 @@
 {
   "extends": "tsconfig/base.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src"
-  }
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": ["es2021"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "strict": true,
+    "target": "es2021"
+  },
+  "include": ["src/**/*"]
 }

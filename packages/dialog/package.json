@@ -4,7 +4,6 @@
   "description": "Module to handle external communications for zayroll eg: email, sms",
   "license": "MIT",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist/**"

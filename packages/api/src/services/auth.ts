@@ -2,8 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
 import { IEmail, ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
-// import { sendEmail } from "@wyre-zayroll/dialog";
-import { sendEmail } from "../../../dialog/src/email/postmark";
+import { sendEmail } from "@wyre-zayroll/dialog";
 
 export class AuthError extends TRPCError {
   constructor(message: string) {

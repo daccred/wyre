@@ -2,7 +2,7 @@ import { ServerClient } from "postmark";
 import crypto from "crypto";
 import queryString from "query-string";
 import { POSTMARK_CLIENT_ID } from "../constants";
-import { getBaseUrl } from "../sms/utiils";
+import { getBaseUrl } from "../sms/utils";
 import { emailHTML } from "./templates/sendEmail";
 
 type EmailProps = {
