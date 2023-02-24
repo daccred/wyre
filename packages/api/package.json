@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "eslint": "^8.32.0",
-    "typescript": "^4.8.4",
-    "@types/superjson": "latest"
+    "typescript": "^4.8.4"
   }
 }
