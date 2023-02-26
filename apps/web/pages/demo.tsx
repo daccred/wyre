@@ -47,10 +47,10 @@ export default function Page() {
       <DarkModeSwitch />
 
       <Layout.Mobile>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <FormProvider {...methods}><form onSubmit={methods.handleSubmit(onSubmit)}>
             <Stack spacing={6}>
               <FormUpload name="idUpload" />
+          
               <FormInput
                 name="firstName"
                 label="First Name"

@@ -37,7 +37,7 @@ interface LinkItemProps {
   href: string;
 }
 const DashboardLinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", href: "/test", icon: DashboardIcon },
+  { name: "Dashboard", href: "/dashboard", icon: DashboardIcon },
 ];
 const PayrollLinkItems: Array<LinkItemProps> = [
   { name: "Payroll", href: "/payroll", icon: PayrollIcon },
@@ -45,7 +45,7 @@ const PayrollLinkItems: Array<LinkItemProps> = [
 const PeopleLinkItems: Array<LinkItemProps> = [
   { name: "People", href: "", icon: PeopleIcon },
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
-  { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
+  { name: "Contractors", href: "/contractors",   icon: ContractorsIcon },
 ];
 const ExpensesLinkItems: Array<LinkItemProps> = [
   { name: "Expenses", href: "/expenses", icon: ExpensesIcon },
@@ -66,7 +66,7 @@ export default function ViewLayout({
       <SidebarContent />
       {/* mobilenav */}
       <HeaderNav title={title} />
-      <Box ml={60} p="4">
+      <Box ml={60} p="8">
         {children}
       </Box>
     </Box>
@@ -87,11 +87,11 @@ const SidebarContent = ({ ...rest }) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent={"center"}>
-        <Image src="/wyre-logo.png" alt="" w={10} />
-        <Text fontWeight={"semibold"} fontSize="xl" ml="2">
+      <Flex h="20" alignItems="center" mx="8" justifyContent={"Vtart"}>
+        <Image src="/Zayroll Logo.png" alt="" w={90}/>
+        {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
           Wyre
-        </Text>
+        </Text> */}
       </Flex>
       <VStack mt="16">
         {DashboardLinkItems.map((link) => (
@@ -148,13 +148,13 @@ const SidebarContent = ({ ...rest }) => {
       <HStack
         align="center"
         mb="10"
-        // mx="4"
+        mx="8"
         w="100%"
         borderRadius="lg"
         cursor="pointer"
         position={"absolute"}
         bottom="0"
-        justifyContent="center"
+        justifyContent="start"
       >
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
 
@@ -252,7 +252,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
   return (
     <Flex
       ml={60}
-      px={{ base: 4, md: 4 }}
+      px={{ base: 4, md: 8 }}
       height="20"
       alignItems="center"
       bg={useColorModeValue("white", "gray.900")}

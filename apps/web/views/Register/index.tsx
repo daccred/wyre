@@ -10,9 +10,11 @@ import {
     Image,
     Text
 } from '@chakra-ui/react';
-// import 
 
-const View = () => (
+
+const View = () => {
+
+  return(
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
 
        <Stack flex={1} >
@@ -26,60 +28,59 @@ const View = () => (
                 Already have an account? <Link color='#8D1CFF' href="/login">Login</Link>
               </Text> 
             </Stack>
-          
-            <Stack spacing={4}>
-              <FormInput
-                name="company"
-                type="text"
-                label="Company Name"
-                placeholder="e.g. Zayroll LLC"
-              />
-              <FormSelect
-                  label="Country"
-                  name="country"
-                  options={[
-                    { value: "gh", label: "Ghana" },
-                    { value: "ng", label: "Nigeria" },
-                  ]}
+              <Stack spacing={4}>
+                <FormInput
+                  name="company"
+                  type="text"
+                  label="Company Name"
+                  placeholder="e.g. Zayroll LLC"
                 />
-              <FormInput
-                name="name"
-                type="text"
-                label="Full Name"
-                placeholder="e.g. john.doe@zayroll.com"
-              />
-               <FormInput
-                  name="email"
-                  type="email"
-                  label="Email Address"
-                  placeholder="john-mcdonald@zayroll.com"
+                <FormSelect
+                    label="Country"
+                    name="country"
+                    options={[
+                      { value: "gh", label: "Ghana" },
+                      { value: "ng", label: "Nigeria" },
+                    ]}
+                  />
+                <FormInput
+                  name="name"
+                  type="text"
+                  label="Full Name"
+                  placeholder="e.g. john.doe@zayroll.com"
                 />
-              <FormInput
-                name="role"
-                type="text"
-                label="Job Role"
-                placeholder="e.g. chief people officer"
-              />
-              <FormInput
-                name="text"
-                type="password"
-                label="Password"
-                placeholder="***************"
-              />
-              <FormInput
-                name="text"
-                type="password"
-                label="Confirm Password"
-                placeholder="***************"
-              />
+                <FormInput
+                    name="email"
+                    type="email"
+                    label="Email Address"
+                    placeholder="john-mcdonald@zayroll.com"
+                  />
+                <FormInput
+                  name="role"
+                  type="text"
+                  label="Job Role"
+                  placeholder="e.g. chief people officer"
+                />
+                <FormInput
+                  name="text"
+                  type="password"
+                  label="Password"
+                  placeholder="***************"
+                />
+                <FormInput
+                  name="text"
+                  type="password"
+                  label="Confirm Password"
+                  placeholder="***************"
+                />
+              </Stack>
+              <Button variant="link" color="white" bgColor="#210D35" p="3" type="submit"
+              _hover={{
+                bg: '#210D35',
+              }}>
+                Create Account
+              </Button>
             </Stack>
-            <Button variant="link" color="white" bgColor="#210D35" p="3"
-            _hover={{
-              bg: '#210D35',
-            }}>
-              Create Account
-            </Button>
-          </Stack>
         </Flex>
       </Stack>
       
@@ -102,6 +103,7 @@ const View = () => (
       </Flex>
 
     </Stack>
-);
+  )
+}
 
 export default View;

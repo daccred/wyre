@@ -6,6 +6,7 @@ import { useForm } from "../components/forms";
 
 const loginValidationSchema = z.object({
   email: z.string(),
+  psssword: z.string()
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;

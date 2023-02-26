@@ -4,11 +4,11 @@ import View from "../views/Register";
 import z from "zod";
 import { useForm } from "../components/forms";
 
-const loginValidationSchema = z.object({
+const signUpValidationSchema = z.object({
   email: z.string(),
 });
 
-type FormInputOptions = z.infer<typeof loginValidationSchema>;
+type FormInputOptions = z.infer<typeof signUpValidationSchema>;
 
 export default function Page() {
   const handleSubmit = async (data: FormInputOptions) => {
@@ -17,7 +17,7 @@ export default function Page() {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     defaultValues: { email: "" },
-    schema: loginValidationSchema,
+    schema: signUpValidationSchema,
   });
 
   return renderForm(
