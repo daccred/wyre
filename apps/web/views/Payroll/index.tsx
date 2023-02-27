@@ -7,162 +7,25 @@ import {
   Heading,
   Stack,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
 import CustomTable from "components/CustomTable";
+import { Card, payrollColumns, PayrollTypeCard } from "./utils/misc";
+import { payrollData } from "./utils/dummyData";
+import PayrollType from "./PayrollType";
 
-const Card = ({
-  heading,
-  text,
-  icon,
-}: {
-  heading: string;
-  text: string;
-  icon: JSX.Element;
-}) => (
-  <Flex
-    bg="white"
-    justify="space-between"
-    align="center"
-    p={5}
-    rounded="xl"
-    border="1px solid #D2D2D2"
-  >
-    <VStack align="left" spacing={0.5}>
-      <Heading as="h4" size="xs" fontSize="xl">
-        {heading}
-      </Heading>
-      <Text color="lightgrey">{text}</Text>
-    </VStack>
-    {icon}
-  </Flex>
-);
 
-interface IPayrollData {
-  id: number;
-  description: string;
-  dueDate?: string;
-  paidOn: string;
-  status?: string;
-}
-const payrollData = [
-  {
-    id: 1,
-    decription: "Monthly Salary for December ",
-    amount: "$17,949.28",
-    dueDate: "Dec 28, 2022",
-    paidOn: "Dec 28, 2022",
-    status: "On-time",
-  },
-  {
-    id: 1,
-    decription: "Contractor Payout for Q4 Milestone",
-    amount: "$3625.75",
-    paidOn: "Dec 15, 2022",
-  },
-  {
-    id: 1,
-    decription: "Monthly Salary for November",
-    amount: "$17,949.28",
-    dueDate: "Nov 28, 2022",
-    paidOn: "Nov 30, 2022",
-    status: "Late",
-  },
-  {
-    id: 1,
-    decription: "Monthly Salary for October",
-    amount: "$17,949.28",
-    dueDate: "Oct 28, 2022",
-    paidOn: "Oct 27, 2022",
-    status: "Early",
-  },
-  {
-    id: 1,
-    decription: "Monthly Salary for September",
-    amount: "$15,200.00",
-    dueDate: "Dec 28, 2022",
-    paidOn: "Sep 28, 2022",
-    status: "On Time",
-  },
-];
 
-const payrollColumns = [
-  {
-    id: 1,
-    name: "Payroll Description",
-    selector: "decription",
-  },
-  {
-    id: 2,
-    name: "Amount",
-    selector: "amount",
-  },
-  {
-    id: 3,
-    name: "Amount",
-    selector: "amount",
-  },
-  {
-    id: 4,
-    name: "Due Date",
-    selector: "dueDate",
-  },
-  {
-    id: 5,
-    name: "Paid On",
-    selector: "paidOn",
-  },
-  {
-    id: 6,
-    name: "Status",
-    selector: (row: any) => (
-      <Text
-        fontWeight={600}
-        color={
-          row?.status === "Late"
-            ? "#E71D36"
-            : row?.status === "Early"
-            ? "#0AAF60"
-            : row?.status === "On Time"
-            ? "#FF951C"
-            : "black"
-        }
-      >
-        {row?.status ? row?.status : "-"}
-      </Text>
-    ),
-  },
-];
-
-const PayrollTypeCard = ({
-  type,
-  date,
-  text,
-  amount,
-}: {
-  type: string;
-  date: string;
-  text: string;
-  amount: number;
-}) => (
-  <VStack bg="brand.700" color="white" align="left" p={4} rounded="xl">
-    <Flex justify="space-between">
-      <Text fontWeight={700}>{type}</Text>
-      <Text color="dirtywhite" fontSize="xs">
-        {date}{" "}
-      </Text>
-    </Flex>
-    <Box>
-      <Text fontWeight={700} fontSize="3xl">{`USD ${amount}`}</Text>
-      <Text fontSize="xs" color="dirtywhite">
-        {text}
-      </Text>
-    </Box>
-  </VStack>
-);
 const Payrol = () => {
+
+  const {
+    isOpen: payrollTypeModalIsOpen,
+    onOpen: openAPayrollTypeModal,
+    onClose: closePayrollTypeModal,
+  } = useDisclosure();
 
   return (
     <ViewLayout title="Payroll">
@@ -173,6 +36,7 @@ const Payrol = () => {
               heading="Create Payroll"
               text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
               icon={<CreateIcon />}
+              onClick={()=> openAPayrollTypeModal()}
             />
           </GridItem>
           <GridItem>
@@ -235,6 +99,8 @@ const Payrol = () => {
           emptyStateInfo="No Payroll History"
         />
       </Stack>
+
+      <PayrollType payrollTypeModalIsOpen={payrollTypeModalIsOpen} closePayrollTypeModal={closePayrollTypeModal} />
     </ViewLayout>
   );
 };

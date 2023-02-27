@@ -46,7 +46,7 @@ const CustomTable = ({
 }) => {
   const currentData = data || [];
   return (
-    <Flex direction="column" w="100%" h="100%" position="relative">
+    <Flex direction="column"  position="relative">
       {!loading && !data.length ? (
         showEmptyState ? (
           <Center w="100%" p="8" flexDirection={"column"}>
@@ -64,7 +64,7 @@ const CustomTable = ({
           loading={loading}
           onLoadingData={onLoadingData}
         >
-          <Box w="100%" as="tbody">
+          <Box  as="tbody">
             {(currentData || [])?.map((item, i) => (
               <TableContent
                 index={i + 1}

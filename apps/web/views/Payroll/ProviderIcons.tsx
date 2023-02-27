@@ -33,16 +33,22 @@ export const InstantPayment = (props: HTMLChakraProps<"svg">) => (
 );
 
 export const ChevronRight = (props: HTMLChakraProps<"svg">) => (
-    <chakra.svg
-      width={16}
-      height={16}
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-    <path d="M6 13.3335L11.3333 8.00016L6 2.66683" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <chakra.svg
+    width={16}
+    height={16}
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M6 13.3335L11.3333 8.00016L6 2.66683"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </chakra.svg>
+);
 
-    </chakra.svg>
-  );
-  
+
