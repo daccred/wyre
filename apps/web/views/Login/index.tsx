@@ -12,9 +12,16 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { GetServerSideProps } from "next";
-// import { GoogleIcon, TwitterIcon } from "./ProviderIcons";
+import { LoadingButton } from "../../components/shared/loadingButton";
 
-const View = () => {
+type Props = {
+  isLoading?: boolean;
+};
+
+
+const View: React.FC<Props> = (Props) => {
+
+  const { isLoading } = Props;
 
   return (
   <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -50,12 +57,10 @@ const View = () => {
               </Stack>
 
               <Stack>
-                <Button color="white" bgColor="#210D35" py={8} type="submit"
-                _hover={{
-                  bg: '#210D35',
-                }}>
+           
+                <LoadingButton loading={isLoading}>
                     Login
-                </Button>
+                </LoadingButton>
                 <Center>Forgot Password? 
                   <Link color='#8D1CFF' marginLeft={2} href='/forgot-password'>Reset</Link>
                 </Center>

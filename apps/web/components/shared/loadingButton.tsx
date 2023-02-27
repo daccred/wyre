@@ -23,7 +23,7 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
   return (
     <Button
       type='submit'
-      w="full" color="white" bgColor={loading ? '' : btnColor} py={7} 
+      w="full" color="white" bgColor={loading ? btnColor : btnColor} py={7} 
       _hover={{
         bg: '#210D35',
       }}
