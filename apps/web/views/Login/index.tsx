@@ -11,6 +11,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { GetServerSideProps } from "next";
 // import { GoogleIcon, TwitterIcon } from "./ProviderIcons";
 
 const View = () => {
@@ -86,3 +87,7 @@ const View = () => {
 
 export default View;
  
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+  
+// }

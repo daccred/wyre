@@ -2,16 +2,24 @@ import React from "react";
 import { Meta } from "../layouts";
 import View from "../views/Register";
 import z from "zod";
+import { useToast } from "@chakra-ui/react"
 import { useForm } from "../components/forms";
+import { trpc } from "../utils/trpc";
+import styledToast from "../components/core/StyledToast";
+import type { GetServerSideProps, NextPage } from "next";
+
+
 
 const signUpValidationSchema = z.object({
-  company: z.string().min(1) ,
+  company: z.string().min(1,  "Company name is required"),
   country: z.string() ,
-  name: z.string().min(1) ,
+  name: z.string().min(1, "Full name is required") ,
   email: z.string().email(),
-  role: z.string().min(1) ,
-  password: z.string().min(8) ,
-  confirmPassword: z.string().min(8) ,
+  role: z.string().min(1,  "Job role is required"),
+  password: z.string().min(1, "Password is required")
+  .min(8, "Password must be more than 8 characters")
+  .max(12, "Password must be less than 32 characters"),
+  confirmPassword: z.string().min(1, "Please confirm your password"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],
@@ -20,19 +28,47 @@ const signUpValidationSchema = z.object({
 type FormInputOptions = z.infer<typeof signUpValidationSchema>;
 
 export default function Page() {
-  const handleSubmit = async (data: FormInputOptions) => {
-    
-    alert(JSON.stringify(data));
+  const toast = useToast();
+
+  const { mutate: signUp, isLoading } = trpc.auth.userSignup.useMutation({
+    onSuccess(data) {
+      styledToast({
+        status: "success",
+        description: "Admin has been added successfully",
+        toast: toast,
+      });
+    },
+    onError(error) {
+      styledToast({
+        status: "error",
+        description: `${error}`,
+        toast: toast,
+      });
+    },
+  })
+
+   
+  const Submit = (data: FormInputOptions) => {
+    signUp({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      companyName: data.company,
+      country: data.country,
+      jobRole: data.role,
+    });
   };
+
+
   const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: handleSubmit,
+    onSubmit: Submit,
     schema: signUpValidationSchema,
   });
 
   return renderForm(
     <>
       <Meta />
-      <View />
+      <View isLoading={isLoading}/>
     </>
   );
 }

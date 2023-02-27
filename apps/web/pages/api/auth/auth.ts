@@ -1,6 +1,5 @@
 import { ISODateString, NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
 import { prisma } from "@wyre-zayroll/db";
 import { loginSchema } from "../../../../../packages/api/src/interfaces";
 import { verifyHash } from "../../../../../packages/api/src/utils";
@@ -110,7 +109,7 @@ export const nextAuthOptions: NextAuthOptions = {
     maxAge: 15 * 24 * 30 * 60, // 15 days
   },
   pages: {
-    signIn: "/",
+    signIn: "/login",
     newUser: "/sign-up",
   },
   secret: "super-secret",

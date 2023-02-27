@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormInput, useForm, FormNativeSelect } from "../../components/forms";
+import { FormInput, FormNativeSelect } from "../../components/forms";
 import {
     Button,
     Flex,
@@ -9,10 +9,17 @@ import {
     HStack,
     Image,
     Text,
-    useColorModeValue
 } from '@chakra-ui/react';
+import { LoadingButton } from "../../components/shared/loadingButton";
 
-const View = () => {
+type Props = {
+  isLoading?: boolean;
+};
+
+
+const View: React.FC<Props> = (Props) => {
+
+  const { isLoading } = Props;
 
   return(
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -75,12 +82,10 @@ const View = () => {
                         label="Confirm Password"
                         placeholder="***************"
                       />
-                    <Button w="full" color="white" bgColor="#210D35" py={8} type="submit"  
-                      _hover={{
-                        bg: '#210D35',
-                      }}>
+                  
+                    <LoadingButton loading={isLoading}>
                       Create Account
-                    </Button>
+                    </LoadingButton>
                   </Stack>
                 
             </Stack>
