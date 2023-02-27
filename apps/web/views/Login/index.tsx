@@ -11,27 +11,9 @@ import {
   Image,
 } from "@chakra-ui/react";
 import * as React from "react";
-import z from "zod";
 // import { GoogleIcon, TwitterIcon } from "./ProviderIcons";
 
-const loginValidationSchema = z.object({
-  email: z.string(),
-  password: z.string()
-});
-
-
-type FormInputOptions = z.infer<typeof loginValidationSchema>;
-
 const View = () => {
-
-  const handleSubmit = async (data: FormInputOptions, event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    alert(JSON.stringify(data));
-  };
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: handleSubmit,
-    schema: loginValidationSchema,
-  });
 
   return (
   <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -49,7 +31,6 @@ const View = () => {
             </Text> 
           </Stack>
          
-          {renderForm(
             <Stack spacing={"6"} pb="4">
               <Stack spacing={4}>            
                 <FormInput
@@ -68,7 +49,7 @@ const View = () => {
               </Stack>
 
               <Stack>
-                <Button color="white" bgColor="#210D35" p="3" type="submit"
+                <Button color="white" bgColor="#210D35" py={8} type="submit"
                 _hover={{
                   bg: '#210D35',
                 }}>
@@ -79,7 +60,6 @@ const View = () => {
                 </Center>
               </Stack>
             </Stack>
-          )}
         </Stack>
       </Flex>
     </Stack>

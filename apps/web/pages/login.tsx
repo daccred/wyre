@@ -5,8 +5,8 @@ import z from "zod";
 import { useForm } from "../components/forms";
 
 const loginValidationSchema = z.object({
-  email: z.string(),
-  psssword: z.string()
+  email: z.string().email(),
+  password: z.string().min(8)
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
@@ -17,7 +17,6 @@ export default function Page() {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "" },
     schema: loginValidationSchema,
   });
 
