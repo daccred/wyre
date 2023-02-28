@@ -1,7 +1,7 @@
 interface EmailHTMLProps {
   confirmLink: string;
 }
-export const emailHTML = ({ confirmLink }: EmailHTMLProps) => {
+export const forgotPassword = ({ confirmLink }: EmailHTMLProps) => {
   const btnStyle = {
     background: "#000000",
     color: "#fff",

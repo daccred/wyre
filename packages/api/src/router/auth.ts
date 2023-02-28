@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { AuthService } from "../services";
 import { loginSchema, signUpSchema, verifyEmailSchema } from "../interfaces";
+import _ from "lodash";
 
 export const authRouter = createTRPCRouter({
   getSession: publicProcedure.query(({ ctx }) => {

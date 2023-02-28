@@ -14,6 +14,10 @@ export class AuthError extends TRPCError {
 }
 
 export class AuthService {
+  static renewPassword() {
+    throw new AuthError("Not implemented");
+  }
+
   static async verifyEmail(input: IVerifyEmail) {
     try {
       const { id, expires } = input;
@@ -35,7 +39,7 @@ export class AuthService {
           message: "Confirmation link is expired",
         });
 
-      const emailVerified = prisma.user.update({
+      const updatedUser = await prisma.user.update({
         where: {
           id: user?.id,
         },
@@ -43,7 +47,11 @@ export class AuthService {
           emailVerified: true,
         },
       });
-      return emailVerified;
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+      // const verifiedUser = exclude(updatedUser, ["password"]);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return updatedUser;
     } catch (error) {
       if (error instanceof AuthError) {
         throw new AuthError(error.message);

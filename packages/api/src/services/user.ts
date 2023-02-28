@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
 import type { User } from "../interfaces";
@@ -25,7 +24,6 @@ export class UserService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async updateUser(data: User, id?: string) {
     try {
       const updateUser = await prisma.user.update({
