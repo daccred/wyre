@@ -38,7 +38,7 @@ export default function Page() {
         description: "account has been created successfully",
         toast: toast,
       });
-      router.push("/dashboard");
+      router.push("/verify");
     },
     onError(error: any) {
       styledToast({
@@ -46,6 +46,7 @@ export default function Page() {
         description: `${error}`,
         toast: toast,
       });
+      console.log(error)
     },
   })
 

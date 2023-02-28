@@ -10,7 +10,6 @@ import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 
 
-
 const loginValidationSchema = z.object({
   email: z.string().email(),
   password: z.string()
