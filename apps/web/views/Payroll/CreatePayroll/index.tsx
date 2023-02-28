@@ -26,7 +26,7 @@ import {
   FormCheckbox,
 } from "../../../components/forms";
 import z from "zod";
-import CustomTable from "components/CustomTable";
+import CustomTable from "views/CustomTable";
 import { createPayrollColumns, SalaryProgress } from "../utils/misc";
 import { createPayrollData } from "../utils/dummyData";
 
