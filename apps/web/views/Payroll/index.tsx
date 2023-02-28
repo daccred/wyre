@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
-import CustomTable from "views/CustomTable";
+import CustomTable from "components/CustomTable";
 import { Card, payrollColumns, PayrollTypeCard } from "./utils/misc";
 import { payrollData } from "./utils/dummyData";
 import PayrollType from "./PayrollType";
