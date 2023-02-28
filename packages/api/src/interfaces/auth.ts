@@ -12,15 +12,23 @@ export interface SignUp {
   companyName?: string;
   country?: string;
   jobRole?: string;
-  companyId?: string;
 }
 
 export const signUpSchema = loginSchema.extend({
   name: z.string(),
-  companyName: z.string().optional(),
+  companyName: z.string(),
+  companyPhone: z.string().optional(),
   country: z.string().optional(),
   jobRole: z.string().optional(),
 });
 
+export const verifyEmailSchema = z.object({
+  id: z.string(),
+  expires: z.string(),
+  token: z.string(),
+});
+
 export type ILogin = z.infer<typeof loginSchema>;
 export type ISignUp = z.infer<typeof signUpSchema>;
+export type IEmail = Pick<z.infer<typeof loginSchema>, "email">;
+export type IVerifyEmail = z.infer<typeof verifyEmailSchema>;

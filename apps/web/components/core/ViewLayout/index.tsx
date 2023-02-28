@@ -30,11 +30,19 @@ import {
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import SidebarAccordion from "./SidebarAccordion";
 
 interface LinkItemProps {
   name: string;
   icon: ComponentWithAs<"svg", IconProps>;
   href: string;
+}
+
+interface LinkAccordionProps {
+  name: string;
+  icon: ComponentWithAs<"svg", IconProps>;
+  href: string;
+  panels?: LinkAccordionProps[];
 }
 const DashboardLinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", href: "/test", icon: DashboardIcon },
@@ -42,6 +50,16 @@ const DashboardLinkItems: Array<LinkItemProps> = [
 const PayrollLinkItems: Array<LinkItemProps> = [
   { name: "Payroll", href: "/payroll", icon: PayrollIcon },
 ];
+
+const PeopleAccordion: LinkAccordionProps = {
+  name: "People",
+  href: "#",
+  icon: PeopleIcon,
+  panels: [
+    { name: "Employees", href: "/employees", icon: EmployeesIcon },
+    { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
+  ],
+};
 const PeopleLinkItems: Array<LinkItemProps> = [
   { name: "People", href: "", icon: PeopleIcon },
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
@@ -108,7 +126,12 @@ const SidebarContent = ({ ...rest }) => {
             {link.name}
           </NavItem>
         ))}
-        {PeopleLinkItems.map(
+
+        {/* Using an accordion for drop down nav */}
+        <SidebarAccordion menu={PeopleAccordion} />
+        {/* Using an accordion for drop down nav */}
+
+        {/* {PeopleLinkItems.map(
           (link, index) =>
             !(index !== 0 && !peopleMenuVisible) && (
               <NavItem
@@ -128,7 +151,7 @@ const SidebarContent = ({ ...rest }) => {
                 {link.name}
               </NavItem>
             )
-        )}
+        )} */}
         {ExpensesLinkItems.map((link) => (
           <NavItem key={link.name} icon={link.icon} href={link.href}>
             {link.name}

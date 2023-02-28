@@ -1,7 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
-import { SignUp } from "../interfaces";
-import { prisma } from "@wyre-zayroll/db/src";
+import { IEmail, ISignUp, IVerifyEmail } from "../interfaces";
+import { prisma } from "@wyre-zayroll/db";
+import { sendEmail } from "@wyre-zayroll/dialog";
 
 export class AuthError extends TRPCError {
   constructor(message: string) {
@@ -13,16 +14,83 @@ export class AuthError extends TRPCError {
 }
 
 export class AuthService {
-  static async adminSignUp(input: SignUp) {
+  static async verifyEmail(input: IVerifyEmail) {
+    try {
+      const { id, expires } = input;
+
+      const user = await prisma.user.findFirst({
+        where: {
+          id,
+        },
+      });
+
+      if (!user)
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      const now = new Date();
+      const expireTime = new Date(expires);
+
+      if (now > expireTime)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Confirmation link is expired",
+        });
+
+      const emailVerified = prisma.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          emailVerified: true,
+        },
+      });
+      return emailVerified;
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
+    }
+  }
+
+  static async sendMailVerification(input: IEmail) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: { email: input.email },
+      });
+
+      if (!user)
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+
+      const response = await sendEmail({
+        from: "admin@tecmie.com",
+        subject: "Verify your email",
+        to: input.email,
+        textBody: "Email sent",
+        userId: user?.id,
+      });
+      return response;
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
+    }
+  }
+  static async adminSignUp(input: ISignUp) {
     try {
       // check if company exists
-      const companyExists = await this.checkIfCompanyExists(input.companyName);
+      const companyExists = await AuthService.checkIfCompanyExists(
+        input.companyName
+      );
 
       if (companyExists) {
         throw new AuthError("Company already exists");
       }
+
       // check if email is an organization
-      const isOrganization = await this.checkIfEmailIsOrganization(input.email);
+      const isOrganization = AuthService.checkIfEmailIsOrganization(
+        input.email
+      );
       if (!isOrganization) {
         throw new AuthError("Email is not an organization");
       }
@@ -39,7 +107,7 @@ export class AuthService {
       // create company
       const company = await prisma.company.create({
         data: {
-          companyName: input.companyName as string,
+          companyName: input.companyName,
           country: input.country,
           companyEmail: input.email,
         },
@@ -61,12 +129,15 @@ export class AuthService {
         },
       });
       return admin;
-    } catch (error: any) {
-      throw new AuthError(error.message);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
     }
   }
 
-  static async userSignUp(input: SignUp) {
+  static async userSignUp(input: ISignUp) {
     try {
       // check if email exists
       const emailExists = await prisma.user.findFirst({
@@ -86,12 +157,15 @@ export class AuthService {
           password: await hashString(input.password),
           jobRole: input.jobRole,
           type: USER,
-          companyId: input.companyId,
+          // companyId: input.companyId,
         },
       });
       return user;
-    } catch (error: any) {
-      throw new AuthError(error.message);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw new AuthError(error.message);
+      }
+      throw new Error(JSON.stringify(error as string));
     }
   }
 
@@ -105,7 +179,7 @@ export class AuthService {
     return !!result;
   }
 
-  static async checkIfEmailIsOrganization(email: string) {
+  static checkIfEmailIsOrganization(email: string) {
     // get all the free email domains/clients
     const emailClients = [
       "gmail.com",

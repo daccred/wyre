@@ -33,3 +33,7 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+
+#miscellaneous
+.dccache
