@@ -142,7 +142,7 @@ const CreatePayroll = () => {
               rounded="md"
               p={4}
             >
-              <Text>Pyroll Burden</Text>
+              <Text>Payroll Burden</Text>
               <Text fontSize="xl" fontWeight={700}>
                 USD 0.00
               </Text>
@@ -153,7 +153,7 @@ const CreatePayroll = () => {
             <SalaryProgress color='#8E1CFF' label='Pension' amount={0.00} />
             <Flex justify="space-between">
               <Heading as="h4" size="xs" fontSize="md">
-                Selected Employess(s)
+                Selected Employee(s)
               </Heading>
               <Text>0</Text>
             </Flex>

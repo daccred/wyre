@@ -23,21 +23,16 @@ export const payrollColumns = [
   },
   {
     id: 3,
-    name: "Amount",
-    selector: "amount",
-  },
-  {
-    id: 4,
     name: "Due Date",
     selector: "dueDate",
   },
   {
-    id: 5,
+    id: 4,
     name: "Paid On",
     selector: "paidOn",
   },
   {
-    id: 6,
+    id: 5,
     name: "Status",
     selector: (row: any) => (
       <Text

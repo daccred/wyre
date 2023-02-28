@@ -55,7 +55,7 @@ const Payrol = () => {
             amount={0.0}
           />
           <PayrollTypeCard
-            type="Crypto Payrolll"
+            type="Crypto Payroll"
             date="Jan, 2023"
             text="Dollar equivalent of fiat-based payroll"
             amount={0.0}
