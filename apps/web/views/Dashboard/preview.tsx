@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
 	Avatar,
 	Box,
-	Button,
+	AvatarGroup,
 	CircularProgress,
 	CircularProgressLabel,
 	Flex,
 	Grid,
 	Icon,
-	HStack,
+	Center,
 	Stack,
 	Stat,
 	StatHelpText,
@@ -31,40 +31,67 @@ import { FormSelect } from '../../components';
 type Props = {}
 
 const Preview = (props: Props) => {
-	const [dummyData, setDummyData]= useState<{[key: string]: string}[]>([]);
+	const [dummyData, setDummyData] = useState<{ currency: string; amount: string; team: { name: string; src: string; }[]; start_date: string; due_date: string; }[]>([]);
 	const [payrollData, setPayrollData]= useState<{[key: string]: string}[]>([]);
 	const [annualData, setAnnualData]= useState<{[key: string]: string}[]>([]);
+	const [lineChart, setlineChart]= useState<{[key: string]: string}[]>([]);
 
+
+	const data = [
+		{
+		  currency: "Dollar (USD)",
+		  amount: "55232",
+		  team: [
+			{ name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
+			{ name: "Segun Adebayo", src: "https://bit.ly/sage-adebayo" },
+			{ name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
+			{ name: "Prosper Otemuyiwa", src: "https://bit.ly/prosper-baba" },
+			{ name: "Christian Nwamba", src: "https://bit.ly/code-beast" },
+		  ],
+		  start_date: "1/31/2023",
+		  due_date: "4/12/2022",
+		},
+		{
+		  currency: "Naira (NGN)",
+		  amount: "8547030",
+		  team: [
+			{ name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
+			{ name: "Segun Adebayo", src: "https://bit.ly/sage-adebayo" },
+			{ name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
+		  ],
+		  start_date: "12/22/2022",
+		  due_date: "10/30/2022",
+		},
+		{
+		  currency: "Bitcoin (BTC)",
+		  amount: "0.0335",
+		  team: [
+			{ name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
+			{ name: "Prosper Otemuyiwa", src: "https://bit.ly/prosper-baba" },
+			{ name: "Christian Nwamba", src: "https://bit.ly/code-beast" },
+			{ name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
+		  ],
+		  start_date: "12/15/2022",
+		  due_date: "2/19/2023",
+		},
+		{
+		  currency: "Cedis (GHC)",
+		  amount: "76349",
+		  team: [
+			{ name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
+			{ name: "Segun Adebayo", src: "https://bit.ly/sage-adebayo" },
+			{ name: "Christian Nwamba", src: "https://bit.ly/code-beast" },
+			{ name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
+			{ name: "Prosper Otemuyiwa", src: "https://bit.ly/prosper-baba" },
+		  ],
+		  start_date: "8/14/2022",
+		  due_date: "12/18/2022",
+		},
+	  ];
 
 	useEffect(()=>{
 	
-		setDummyData(
-			[{
-				currency: "Dollar (USD)",
-				amount: "55232",
-				team: "https://robohash.org/eiusquidemaut.png?size=50x50&set=set1",
-				start_date: "1/31/2023",
-				due_date: "4/12/2022"
-			  }, {
-				currency: "Naira (NGN)",
-				amount: "8547030",
-				team: "https://robohash.org/perferendisfugaodio.png?size=50x50&set=set1",
-				start_date: "12/22/2022",
-				due_date: "10/30/2022"
-			  }, {
-				currency: "Bitcoin (BTC)",
-				amount: "0.0335",
-				team: "https://robohash.org/estetid.png?size=50x50&set=set1",
-				start_date: "12/15/2022",
-				due_date: "2/19/2023"
-			  }, {
-				currency: "Cedis (GHC)",
-				amount: "76349",
-				team: "https://robohash.org/verobeataedolorem.png?size=50x50&set=set1",
-				start_date: "8/14/2022",
-				due_date: "12/18/2022"
-			  }]
-		)
+		setDummyData(data)
 			  
 		setPayrollData(
 			[{
@@ -73,7 +100,7 @@ const Preview = (props: Props) => {
 				status: "on time"
 			  }, {
 				desc: "Contractor Payout for Q4 Mile...",
-				start_date: "12/22/2022",
+				paid_at: "12/22/2022",
 				status: "-"
 			  }, {
 				desc: "Monthly Salary for November",
@@ -163,7 +190,7 @@ const Preview = (props: Props) => {
 							},
 						}}
 					>
-						<Table size='sm' variant="unstyled">
+						<Table size='md' variant="unstyled">
 						<Thead>
 							<Tr>
 							<Th>Payroll Description</Th>
@@ -187,7 +214,10 @@ const Preview = (props: Props) => {
 						</Table>
 				</TableContainer>
 				:
-				<Text>No Data Found</Text>
+				<Center>
+					<Text>No Data Found</Text>
+				</Center>
+				
 				}
 		</Box>
 
@@ -230,42 +260,53 @@ const Preview = (props: Props) => {
 							},
 						}}
 					>
-						<Table size='sm' variant="unstyled" >
+						<Table size='md' variant="unstyled" >
 						<Thead >
 							<Tr>
-							<Th>Currency</Th>
-							<Th>Amount</Th>
-							<Th>Team</Th>
-							<Th>Start Date</Th>
-							<Th>Due Date</Th>
+								<Th>Currency</Th>
+								<Th>Amount</Th>
+								<Th>Team</Th>
+								<Th>Start Date</Th>
+								<Th>Due Date</Th>
 							</Tr>
 						</Thead>
-						<Tbody>
-							{dummyData.map((data, index) =>(
-							<Tr textTransform={"capitalize"} key={index} >
-								
-								<Td fontSize='xs'>{data?.currency}</Td>
-								<Td fontSize='xs' isNumeric>{data?.amount}</Td>
-								<Td>
-								<HStack>
-									<Avatar
-										size={"sm"}
-										src={data?.team}
-									 
-									/>
-								</HStack>
+
+							<Tbody>
+							{data?.map((item, index) => (
+								<Tr textTransform={"capitalize"} key={index}>
+									
+								<Td fontSize="xs">{item?.currency}</Td>
+								<Td fontSize="xs" isNumeric>
+									{item?.amount}
 								</Td>
-								<Td fontSize='xs'>{formateDate(data?.start_date)}</Td>
-								<Td fontSize='xs'>{formateDate(data?.due_date)}</Td>
+								<Td>
+									<AvatarGroup size="xs" max={2}>
+									{item.team.map((member: any, index: number) => {
+										return (
+										<Avatar
+											key={index}
+											name={member?.name}
+											src={member?.src}
+											showBorder={false}
+											border="none"
+											_hover={{ zIndex: "3", cursor: "pointer" }}
+										/>
+										);
+									})}
+									</AvatarGroup>
+								</Td>
+								<Td fontSize="xs">{formateDate(item?.start_date)}</Td>
+								<Td fontSize="xs">{formateDate(item?.due_date)}</Td>
 							</Tr>
-							))
-							}                  
-						</Tbody>
+							))}
+							</Tbody>
 						
 						</Table>
 				</TableContainer>
 				:
-				<Text>No data found</Text>
+				<Center>
+					<Text>No Data Found</Text>
+				</Center>
 				}
 			</Box>
 	</Grid>
@@ -308,7 +349,7 @@ const Preview = (props: Props) => {
 			<Box p=''>
 				<Flex direction='row' justify='space-between' align='center'>
 					<Text fontSize='lg' fontWeight='bold' pb='8px'>
-						Projects
+					Payroll Summary
 					</Text>
 					<Flex justify={'center'} align='center'>
 						<select name="" id="">
@@ -318,7 +359,23 @@ const Preview = (props: Props) => {
 					</Flex>
 				</Flex>
 			</Box>
-			
+			<Box>
+				<Flex direction='column'>
+					{lineChart && lineChart?.length>0? 
+						(lineChart.map((data, index) => {
+							return (
+								<Flex flexDirection='row' align='center' justify='center' w='100%' fontSize='xs' py={2} key={index}>
+									
+								</Flex>
+							)
+						}))
+						:
+						<Center>
+							<Text>No data Found</Text>
+						</Center>
+					} 
+				</Flex>
+			</Box>
 		</Box>
 		{/* Annual Payroll */}
 		<Box  bg="white" rounded="2xl" p="4">

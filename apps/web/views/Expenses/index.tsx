@@ -129,13 +129,11 @@ const Index: React.FC = () => {
             borderRadius={"15px"}
             border={"1px solid"}
             borderColor="bordergrey"
-            p="4"
+            // p="4"
             bg={"white"}
             w="100%"
           >
-           
-
-            <Stack spacing={4}>
+          <Stack spacing={4} p={5}>
             <Text fontWeight="bold" fontSize="18px">
               Expenses
             </Text>
@@ -167,8 +165,6 @@ const Index: React.FC = () => {
              <Text fontWeight="bold" fontSize="18px">Recent Expense(s)</Text>
             </Stack>
 
-           
-
               <TableContainer
                 css={{
                   "&::-webkit-scrollbar": {
@@ -186,7 +182,7 @@ const Index: React.FC = () => {
                   },
                 }}
               >
-                <Table variant="unstyled">
+                <Table size="md" variant="unstyled">
                   <Thead>
                     <Tr>
                       <Th>Full Name</Th>
@@ -247,11 +243,12 @@ const Index: React.FC = () => {
                 currentPage={currentPage}
                 isDisabled={isDisabled}
                 onPageChange={handlePageChange}
+                
               >
                 <PaginationContainer
                   align="center"
                   justify="space-between"
-                  py={2}
+                  p={5}
                   w="full"
                 >
                   <PaginationPrevious

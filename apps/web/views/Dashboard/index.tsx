@@ -2,11 +2,9 @@ import React, {useState} from 'react';
 import ViewLayout from "../../components/core/ViewLayout";
 import {
     Stack,
-    SimpleGrid,
-    Text,
   } from "@chakra-ui/react";
-import Onboarding from './onbording';
-import Preview from './preview';
+import Onboarding from './Onbording';
+import Preview from './Preview';
 
 
 const Index: React.FC = () => {

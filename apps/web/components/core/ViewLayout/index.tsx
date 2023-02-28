@@ -272,7 +272,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
           variant="ghost"
           aria-label="open menu"
           icon={
-            <>
+            <Link href="/notifications">
               <BellIcon />
               <Center
                 as={"span"}
@@ -290,7 +290,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
               >
                 4
               </Center>
-            </>
+            </Link>
           }
           borderRadius="full"
           bg="#F7F7F7"

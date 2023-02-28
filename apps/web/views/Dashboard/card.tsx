@@ -59,7 +59,7 @@ const Card = ({ data }: { data: StatData }) => {
                 <Text color='purple.600' fontWeight={'semibold'}>Proceed</Text>
                 <Icon
                   ml="3"
-                  w={6} h={6}
+                  w={4} h={4}
                   as={ArrowRightIcon}
                 />
               </Flex>
