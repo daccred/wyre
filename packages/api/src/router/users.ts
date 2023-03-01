@@ -8,6 +8,6 @@ export const userRouter = router({
   }),
   getAll: publicProcedure.query(() => {
     // return await ctx.prisma.in.findMany();
-    return { message: "Hello World" };
+    return { message: "Hello Worlds" };
   }),
 });

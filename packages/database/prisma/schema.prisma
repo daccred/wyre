@@ -70,8 +70,7 @@ model User {
   invitations   Invitation[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  Payroll       Payroll[]
-  Salary        Salary[]
+
 }
 
 model VerificationToken {
@@ -133,27 +132,42 @@ model Invitation {
   updatedAt   DateTime  @updatedAt
 }
 
+model Employee {
+  id          String @id @default(cuid())
+  name        String
+  email       String @unique
+  department  String
+  jobRole     String  
+  salary      String
+  signBonus   String
+  payrollId   String
+  payroll     Payroll?  @relation(fields: [payrollId], references: [id])
+}
+
+model Contractor {
+  id          String @id @default(cuid())
+  name        String
+  email       String @unique
+  department  String
+  jobRole     String  
+  salary      String
+  signBonus   String
+  payrollId   String
+  payroll     Payroll?  @relation(fields: [payrollId], references: [id])
+
+}
+
 model Payroll {
   id          String    @id @default(cuid())
   title       String
-  totalAmount Int
   cycle       String
-  dueDate     DateTime
+  payday      DateTime
   auto        Boolean
-  extendedTo  DateTime?
-  employees   User?     @relation(fields: [employeeId], references: [id])
-  employeeId  String?
-  salaries    Salary    @relation(fields: [salaryId], references: [id])
-  salaryId    String
+  burden      Int
+  currency    String
+  employees   Employee[]
+  contractors Contractor[]
+
 }
 
-model Salary {
-  id         String    @id @default(cuid())
-  employee   User      @relation(fields: [employeeId], references: [id])
-  employeeId String
-  grossPay   Int
-  commission Int
-  bonus      Int
-  deduction  Int
-  Payroll    Payroll[]
-}
+

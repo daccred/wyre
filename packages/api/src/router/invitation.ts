@@ -1,6 +1,6 @@
 import { InvitationSchema } from "../interfaces";
 import { InvitationService } from "../services";
-import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 
 export const invitationRouter = router({
   createInvitation: protectedProcedure

@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
 import { ISignUp } from "../interfaces";
-import { prisma } from "@wyre-zayroll/db/src";
+import { prisma } from "@wyre-zayroll/db";
 
 export class AuthError extends TRPCError {
   constructor(message: string) {
