@@ -6,7 +6,6 @@ const TableContent = ({
   renderer,
   item,
   index,
-  isClickable,
   onClick,
 }: {
   onClick?: (x: unknown) => void;
@@ -27,12 +26,6 @@ const TableContent = ({
     as="tr"
     fontSize="md"
     borderBottom="1px solid #E2E8F0"
-    cursor={isClickable ? 'pointer' : 'inherit'}
-    onClick={() => {
-      if (onClick) {
-        onClick(item);
-      }
-    }}
     
   >
     {renderer?.map((selector) => {

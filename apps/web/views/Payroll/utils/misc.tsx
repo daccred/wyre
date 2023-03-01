@@ -10,71 +10,7 @@ import {
 import useHover from "components/hooks/useHover";
 import { useRef } from "react";
 
-export const payrollColumns = [
-  {
-    id: 1,
-    name: "Payroll Description",
-    selector: "decription",
-  },
-  {
-    id: 2,
-    name: "Amount",
-    selector: "amount",
-  },
-  {
-    id: 3,
-    name: "Due Date",
-    selector: "dueDate",
-  },
-  {
-    id: 4,
-    name: "Paid On",
-    selector: "paidOn",
-  },
-  {
-    id: 5,
-    name: "Status",
-    selector: (row: any) => (
-      <Text
-        fontWeight={600}
-        color={
-          row?.status === "Late"
-            ? "#E71D36"
-            : row?.status === "Early"
-            ? "#0AAF60"
-            : row?.status === "On Time"
-            ? "#FF951C"
-            : "black"
-        }
-      >
-        {row?.status ? row?.status : "-"}
-      </Text>
-    ),
-  },
-];
 
-export const createPayrollColumns = [
-  {
-    id: 1,
-    name: "Full Name",
-    selector: "name",
-  },
-  {
-    id: 2,
-    name: "Department",
-    selector: "department",
-  },
-  {
-    id: 3,
-    name: "Job Role",
-    selector: "role",
-  },
-  {
-    id: 4,
-    name: "Status",
-    selector: "status",
-  },
-];
 
 export const Card = ({
   heading,
@@ -165,13 +101,11 @@ export const SalaryProgress = ({
   label,
   amount,
   color,
-  percentage,
   value
 }: {
   label: string;
-  amount: number;
+  amount: number | string;
   color: string;
-  percentage?: number;
   value?: number
 }) => (
   <Flex justify="space-between" align="center" my={4}>
@@ -184,7 +118,7 @@ export const SalaryProgress = ({
     <Box>
       <CircularProgress value={value || 0} color={color}>
         <CircularProgressLabel color={color} fontWeight={700}>
-          {`${percentage || 0}%`}
+          {`${value || 0}%`}
         </CircularProgressLabel>
       </CircularProgress>
     </Box>

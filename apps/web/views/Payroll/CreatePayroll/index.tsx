@@ -10,10 +10,8 @@ import {
   Text,
   VStack,
   Flex,
-  Box,
-  CircularProgress,
-  CircularProgressLabel,
   Button,
+  Center,
 } from "@chakra-ui/react";
 import ViewLayout from "../../../components/core/ViewLayout";
 
@@ -27,10 +25,13 @@ import {
 } from "../../../components/forms";
 import z from "zod";
 import CustomTable from "components/CustomTable";
-import { createPayrollColumns, SalaryProgress } from "../utils/misc";
+import { SalaryProgress } from "../utils/misc";
 import { createPayrollData } from "../utils/dummyData";
+import { useEffect, useState } from "react";
+import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
+import { createPayrollColumns } from "../utils/tableColumns";
 
-const createPayrollValidationSchema = z.object({
+export const createPayrollValidationSchema = z.object({
   title: z.string().email(),
   cycle: z.string().min(1, { message: "Required" }),
   paymentDate: z.string().min(1, { message: "Required" }),
@@ -42,6 +43,37 @@ type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 const CreatePayroll = () => {
   const { pathname } = useRouter();
   const createPayrollPath = "/payroll/create-payroll";
+  const [defaultTableData, setDefaultTableData] = useState<unknown[]>([])
+  const [tableData, setTableData] = useState<unknown[]>([])
+
+
+
+  useEffect(() => {
+    if (createPayrollData) {
+      setDefaultTableData(createPayrollData)
+      setTableData(createPayrollData)
+    }
+  }, [])
+
+  // useEffect(() => {
+  //   setTableData(createPayrollData) 
+  //   if(searchTerm) {
+  //     const searchData = tableData?.filter((item) => item?.name?.toLowerCase() === searchTerm?.toLowerCase())
+  //      setTableData(searchData)
+  //   }
+  // }, [searchTerm, tableData])
+  // useEffect(()=>{
+  //   if(searchTerm){
+  //     const searchData = dummyData?.filter(data=>data?.fullName?.toLowerCase().includes(searchTerm?.toLowerCase()))
+  //     if (activeEmployeesOnly){
+  //       const activeData= searchData.filter(data=>data?.status==='active')
+  //       setDummyDataInUse(activeData);
+  //       return
+  //     }else{
+  //       setDummyDataInUse(searchData);
+  //       return
+  //     }
+  //   }
 
   const { renderForm } = useForm<FormInputOptions>({
     // onSubmit: handleSubmit,
@@ -117,11 +149,28 @@ const CreatePayroll = () => {
               <Heading as="h4" size="xs" fontSize="xl">
                 Add Employee(s)
               </Heading>
-              <CustomTable
-                columns={createPayrollColumns}
-                data={createPayrollData}
-                emptyStateInfo="No Payroll History"
-              />
+              {
+                createPayrollData?.length === 0 ? 
+               (   <Center w="100%" p="8" flexDirection={"column"}>
+                  <EmptyEmployeeImage />
+                  <Text pr="12" pt="2">
+                   No Payment History
+                  </Text>
+                </Center>) : (
+                      <CustomTable
+                      columns={createPayrollColumns}
+                      data={tableData}
+                      defaultTableData={defaultTableData}
+                      emptyStateInfo="No Payroll History"
+                      hasSearch
+                      searchOptions={['All Departments', 'Tech', 'Finance', 'Operations']}
+                      setDefaultTableData={setDefaultTableData}
+                      setTableData={setTableData}
+                   
+                    />
+                )
+              }
+          
             </Stack>
           </GridItem>
           <GridItem

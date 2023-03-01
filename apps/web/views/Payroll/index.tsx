@@ -13,19 +13,20 @@ import {
 import ViewLayout from "../../components/core/ViewLayout";
 import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
 import CustomTable from "components/CustomTable";
-import { Card, payrollColumns, PayrollTypeCard } from "./utils/misc";
+import { Card, PayrollTypeCard } from "./utils/misc";
 import { payrollData } from "./utils/dummyData";
-import PayrollType from "./PayrollType";
+import PayrollType from "./modals/PayrollType";
+import { useRouter } from "next/router";
+import { payrollColumns } from "./utils/tableColumns";
 
-
-
-const Payrol = () => {
-
+const Payroll = () => {
   const {
     isOpen: payrollTypeModalIsOpen,
-    onOpen: openAPayrollTypeModal,
+    onOpen: openPayrollTypeModal,
     onClose: closePayrollTypeModal,
   } = useDisclosure();
+
+  const router = useRouter();
 
   return (
     <ViewLayout title="Payroll">
@@ -36,7 +37,7 @@ const Payrol = () => {
               heading="Create Payroll"
               text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
               icon={<CreateIcon />}
-              onClick={()=> openAPayrollTypeModal()}
+              onClick={() => openPayrollTypeModal()}
             />
           </GridItem>
           <GridItem>
@@ -76,6 +77,7 @@ const Payrol = () => {
               iconSpacing="3"
               w="fit-content"
               _hover={{ hover: "none" }}
+              onClick={() => router.push("/payroll/manage-payroll")}
             >
               Manage Payroll
             </Button>
@@ -100,9 +102,12 @@ const Payrol = () => {
         />
       </Stack>
 
-      <PayrollType payrollTypeModalIsOpen={payrollTypeModalIsOpen} closePayrollTypeModal={closePayrollTypeModal} />
+      <PayrollType
+        payrollTypeModalIsOpen={payrollTypeModalIsOpen}
+        closePayrollTypeModal={closePayrollTypeModal}
+      />
     </ViewLayout>
   );
 };
 
-export default Payrol;
+export default Payroll;

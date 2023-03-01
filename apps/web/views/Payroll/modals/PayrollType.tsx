@@ -11,7 +11,7 @@ import { ContractorsIcon, EmployeesIcon } from "components/core/ViewLayout/Provi
 import { useRouter } from "next/router";
 import React from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { Card } from "./utils/misc";
+import { Card } from "../utils/misc";
 
 interface IPayrollType {
   closePayrollTypeModal: () => void;
