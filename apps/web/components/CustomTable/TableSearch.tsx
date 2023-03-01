@@ -16,7 +16,6 @@ const TableSearch = ({
 }) => {
     const [filterTerm, setFilterTerm] = useState('')
     const [searchTerm, setSearchTerm] = useState('')
-    console.log('heeey', defaultTableData)
 
     useEffect( () => {
          // @ts-ignore
