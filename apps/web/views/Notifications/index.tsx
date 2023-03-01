@@ -120,14 +120,14 @@ const notifications: Notification[] = [
   },
 ];
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 8;
 
 const NotificationsList  = () => {
   const [displayCount, setDisplayCount] = useState<number>(PAGE_SIZE);
   const [isAllRead, setIsAllRead] = useState<boolean>(false);
 
   const handleLoadMore = (): void => {
-    setDisplayCount(displayCount + 5);
+    setDisplayCount(displayCount + 2);
   };
 
   const handleMarkAllRead = (): void => {
@@ -222,7 +222,6 @@ const NotificationsList  = () => {
     </ViewLayout>
   );
 };
-
 
 const NotificationLink = ({ label }: { label: string }) => {
   return (
