@@ -271,7 +271,7 @@ const Preview = (props: Props) => {
 							</Tr>
 						</Thead>
 
-							<Tbody>
+						<Tbody>
 							{data?.map((item, index) => (
 								<Tr textTransform={"capitalize"} key={index}>
 									
@@ -299,7 +299,7 @@ const Preview = (props: Props) => {
 								<Td fontSize="xs">{formateDate(item?.due_date)}</Td>
 							</Tr>
 							))}
-							</Tbody>
+						</Tbody>
 						
 						</Table>
 				</TableContainer>
@@ -311,7 +311,7 @@ const Preview = (props: Props) => {
 			</Box>
 	</Grid>
 	
-    <Grid templateColumns={{ sm: '1fr', md: '1fr 1fr'}} gap='20px'>
+    <Grid templateColumns={{ sm: '1fr', md: '1fr 1fr'}} columnGap="20px">
 				
 		<Box gridArea={{ md: '2 / 1 / 3 / 2', '2xl': 'auto' }} bg='white' rounded="2xl" p="3" w={'full'}>
 			<Flex direction='row' justify='space-between' align='center'>
