@@ -32,7 +32,7 @@ export default function Page() {
   const toast = useToast();
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
-    onSuccess(data) {
+    onSuccess(data: any) {
       styledToast({
         status: "success",
         description: "account has been created successfully",

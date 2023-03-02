@@ -30,7 +30,7 @@ export default function Page() {
   //   },
   // });
 
-  const { isLoading, mutate: loginUser } = trpc.auth.useMutation({
+  const { isLoading, mutate: loginUser } = trpc.auth.adminSignUp.useMutation({
     onSuccess() {
       styledToast({
         status: "success",
@@ -50,10 +50,7 @@ export default function Page() {
   });
 
   const handleSubmit = (data: FormInputOptions) => {
-    loginUser({
-      email: data.email,
-      password: data.password,
-    });
+   
   };
 
   const { renderForm } = useForm<FormInputOptions>({
