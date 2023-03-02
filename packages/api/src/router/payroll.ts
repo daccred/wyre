@@ -1,5 +1,5 @@
-import { payrollSchema } from "../interfaces/payroll";
-import { PayrollService } from "../services/payroll";
+import { payrollSchema } from "../interfaces";
+import { PayrollService } from "../services";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { z } from "zod";
 
@@ -13,9 +13,12 @@ export const payrollRouter = createTRPCRouter({
     }),
 
   updatePayroll: protectedProcedure
-    .input(payrollSchema)
+    .input(z.object({ payrollId: z.string(), data: payrollSchema }))
     .mutation(async ({ input }) => {
-      const updatePayroll = await PayrollService.updatePayroll(input);
+      const updatePayroll = await PayrollService.updatePayroll(
+        input.payrollId,
+        input.data
+      );
       return updatePayroll;
     }),
   deletePayroll: protectedProcedure
@@ -44,4 +47,20 @@ export const payrollRouter = createTRPCRouter({
     }),
 
   //* *  Mutations *//
+
+  // * *  Queries *//
+
+  getSinglePayroll: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ input }) => {
+      const getSinglePayroll = PayrollService.getSinglePayroll(input.id);
+      return getSinglePayroll;
+    }),
+
+  getPayrolls: protectedProcedure.query(() => {
+    const getPayrolls = PayrollService.getPayrolls();
+    return getPayrolls;
+  }),
+
+  // * *  Queries *//
 });

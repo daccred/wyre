@@ -133,26 +133,26 @@ model Invitation {
 }
 
 model Employee {
-  id          String @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
-  email       String @unique
+  email       String    @unique
   department  String
   jobRole     String  
   salary      String
   signBonus   String
-  payrollId   String
+  payrollId   String?
   payroll     Payroll?  @relation(fields: [payrollId], references: [id])
 }
 
 model Contractor {
-  id          String @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
-  email       String @unique
+  email       String     @unique
   department  String
   jobRole     String  
   salary      String
   signBonus   String
-  payrollId   String
+  payrollId   String?
   payroll     Payroll?  @relation(fields: [payrollId], references: [id])
 
 }

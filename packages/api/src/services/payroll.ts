@@ -1,6 +1,5 @@
 import { IPayrollSchema } from "../interfaces/payroll";
 import { TRPCError } from "@trpc/server";
-
 import { prisma } from "@wyre-zayroll/db";
 
 export class PayrollService {
@@ -12,13 +11,10 @@ export class PayrollService {
             in: input.employees,
           },
         },
+        select: {
+          id: true,
+        },
       });
-
-      if (!employees)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Employees not found",
-        });
 
       const contractors = await prisma.contractor.findMany({
         where: {
@@ -26,32 +22,21 @@ export class PayrollService {
             in: input.contractors,
           },
         },
+        select: {
+          id: true,
+        },
       });
-      if (!contractors)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Contractors not found",
-        });
 
       const payroll = await prisma.payroll.create({
         data: {
-          id: input.id,
           title: input.title,
           cycle: input.cycle,
           payday: input.payday,
           auto: input.auto,
           burden: input.burden,
           currency: input.currency,
-          employees: {
-            createMany: { data: employees },
-          },
-          contractors: {
-            createMany: { data: contractors },
-          },
-        },
-        include: {
-          employees: true,
-          contractors: true,
+          contractors: { connect: contractors },
+          employees: { connect: employees },
         },
       });
 
@@ -61,9 +46,12 @@ export class PayrollService {
           message: "Failed to create payroll",
         });
       }
+
+      console.warn(payroll);
       return payroll;
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      if (error instanceof TRPCError) throw error;
+      console.warn(error);
     }
   }
 
@@ -72,6 +60,10 @@ export class PayrollService {
       const payroll = await prisma.payroll.findUnique({
         where: {
           id,
+        },
+        select: {
+          contractors: true,
+          employees: true,
         },
       });
 
@@ -88,7 +80,19 @@ export class PayrollService {
 
   static async getPayrolls() {
     try {
-      const payrolls = await prisma.payroll.findMany();
+      const payrolls = await prisma.payroll.findMany({
+        select: {
+          id: true,
+          title: true,
+          cycle: true,
+          payday: true,
+          auto: true,
+          burden: true,
+          currency: true,
+          contractors: true,
+          employees: true,
+        },
+      });
       if (!payrolls)
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -100,11 +104,11 @@ export class PayrollService {
     }
   }
 
-  static async updatePayroll(input: IPayrollSchema) {
+  static async updatePayroll(id: string, input: IPayrollSchema) {
     try {
       const payroll = await prisma.payroll.findUnique({
         where: {
-          id: input.id,
+          id,
         },
       });
       if (!payroll) {
@@ -129,8 +133,8 @@ export class PayrollService {
       });
       if (!updatePayroll) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create payroll",
+          code: "PRECONDITION_FAILED",
+          message: "Failed to update payroll",
         });
       }
       return payroll;

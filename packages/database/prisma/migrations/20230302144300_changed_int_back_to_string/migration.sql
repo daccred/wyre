@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Contractor" ALTER COLUMN "salary" SET DATA TYPE TEXT,
+ALTER COLUMN "signBonus" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Employee" ALTER COLUMN "salary" SET DATA TYPE TEXT,
+ALTER COLUMN "signBonus" SET DATA TYPE TEXT;
