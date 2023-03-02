@@ -25,7 +25,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
     // ...add more providers here
     Credentials({
-      name: "credentials",
+      name: "Credentials",
       credentials: {
         email: {
           label: "Email",
@@ -54,7 +54,15 @@ export const nextAuthOptions: NextAuthOptions = {
           if (!isValidPassword) {
             throw new Error("Your username or password is incorrect");
           }
-          return user;
+          return {
+            id: user.id,
+            name: user.name,
+            image: user.image,
+            userType: user.type,
+            emailVerified: user.emailVerified,
+            email: user.email,
+            jobRole: user.jobRole,
+          };
         } catch (error) {
           throw new Error(error as string);
         }
@@ -63,10 +71,16 @@ export const nextAuthOptions: NextAuthOptions = {
     // add another auth this time for admin
   ],
   callbacks: {
-    session: ({ session, token }) => {
-      session.user.id = token.sub;
-      return session;
-    },
+    // jwt: ({ token, user }) => {
+    //   if (user) {
+    //     token.user = user;
+    //   }
+    //   return token;
+    // },
+    // session: ({ session, token }) => {
+    //   session.user = token.user;
+    //   return session;
+    // },
   },
 
   session: {

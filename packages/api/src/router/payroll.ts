@@ -1,9 +1,9 @@
 import { payrollSchema } from "../interfaces/payroll";
 import { PayrollService } from "../services/payroll";
-import { router, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { z } from "zod";
 
-export const payrollRouter = router({
+export const payrollRouter = createTRPCRouter({
   //* *  Mutations *//
   createPayroll: protectedProcedure
     .input(payrollSchema)
@@ -34,27 +34,14 @@ export const payrollRouter = router({
       return removeContractor;
     }),
   removeEmployee: protectedProcedure
-    .input(z.object({ payrollId: z.string(), employeeId: z.string() }))
+    .input(z.object({ payrollId: z.string(), contractorId: z.string() }))
     .mutation(async ({ input }) => {
-      const removeEmployee = await PayrollService.removeEmployee(
+      const removeContractor = await PayrollService.removeContractor(
         input.payrollId,
-        input.employeeId
+        input.contractorId
       );
-      return removeEmployee;
+      return removeContractor;
     }),
 
   //* *  Mutations *//
-
-  //* *  Queries *//
-  getSinglePayroll: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      const payroll = await PayrollService.getSinglePayroll(input.id);
-      return payroll;
-    }),
-  getPayrolls: protectedProcedure.query(async () => {
-    const payrolls = await PayrollService.getPayrolls();
-    return payrolls;
-  }),
-  //* *  Queries *//
 });
