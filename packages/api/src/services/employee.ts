@@ -24,7 +24,7 @@ export class EmployeeService {
 
       if (!employee)
         throw new TRPCError({
-          code: "PRECONDITION_FAILED",
+          code: "INTERNAL_SERVER_ERROR",
           message: "Failed to create employee",
         });
 
@@ -96,15 +96,19 @@ export class EmployeeService {
   }
 
   static async getEmployees() {
-    const employees = await prisma.employee.findMany();
+    try {
+      const employees = await prisma.employee.findMany();
 
-    if (!employees) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Employees not found",
-      });
+      if (!employees) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Employees not found",
+        });
+      }
+
+      return employees;
+    } catch (error) {
+      EmployeeError(error);
     }
-
-    return employees;
   }
 }
