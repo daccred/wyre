@@ -1,7 +1,3 @@
-// pages/api/trpc-playground.ts
-// import { appRouter } from "../../server/trpc/router/_app";
-// import { appRouter } from "../../../../packages/api/src/router/_app";
-
 import type { NextApiHandler } from "next";
 import { nextHandler } from "trpc-playground/handlers/next";
 import { appRouter } from "@wyre-zayroll/api";

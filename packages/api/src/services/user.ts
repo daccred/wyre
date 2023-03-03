@@ -25,7 +25,6 @@ export class UserService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async updateUser(data: User, id?: string) {
     try {
       const updateUser = await prisma.user.update({

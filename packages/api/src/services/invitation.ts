@@ -31,10 +31,10 @@ export class InvitationService {
       });
       // TODO: send email to the user
       return invitation;
-    } catch (error: any) {
+    } catch (error) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: error.message,
+        message: JSON.stringify(error as string),
       });
     }
   }
@@ -47,10 +47,10 @@ export class InvitationService {
         },
       });
       return invitations;
-    } catch (error: any) {
+    } catch (error) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: error.message,
+        message: JSON.stringify(error as string),
       });
     }
   }
@@ -63,10 +63,10 @@ export class InvitationService {
         },
       });
       return invitations;
-    } catch (error: any) {
+    } catch (error) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: error.message,
+        message: JSON.stringify(error as string),
       });
     }
   }
@@ -79,10 +79,10 @@ export class InvitationService {
         },
       });
       return invitation;
-    } catch (error: any) {
+    } catch (error) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: error.message,
+        message: JSON.stringify(error as string),
       });
     }
   }
@@ -95,10 +95,10 @@ export class InvitationService {
         },
       });
       return invitation;
-    } catch (error: any) {
+    } catch (error) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: error.message,
+        message: JSON.stringify(error as string),
       });
     }
   }
