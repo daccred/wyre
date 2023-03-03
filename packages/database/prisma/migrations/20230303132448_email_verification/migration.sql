@@ -41,12 +41,13 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
     "email" TEXT,
     "type" TEXT,
     "phone" TEXT,
-    "password" TEXT,
+    "password" TEXT NOT NULL,
     "emailVerified" BOOLEAN DEFAULT false,
+    "verifyId" TEXT,
     "image" TEXT,
     "jobRole" TEXT,
     "category" TEXT,
@@ -59,19 +60,22 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "VerificationToken" (
-    "identifier" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
-    "email" TEXT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "phone" TEXT,
-    "password" TEXT,
+    "password" TEXT NOT NULL,
     "emailVerified" BOOLEAN DEFAULT false,
+    "verifyId" TEXT,
     "image" TEXT,
     "jobRole" TEXT,
     "category" TEXT,
@@ -121,9 +125,9 @@ CREATE TABLE "Employee" (
     "email" TEXT NOT NULL,
     "department" TEXT NOT NULL,
     "jobRole" TEXT NOT NULL,
-    "salary" INTEGER NOT NULL,
-    "signBonus" INTEGER NOT NULL,
-    "payrollId" TEXT NOT NULL,
+    "salary" TEXT NOT NULL,
+    "signBonus" TEXT NOT NULL,
+    "payrollId" TEXT,
 
     CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
 );
@@ -135,9 +139,9 @@ CREATE TABLE "Contractor" (
     "email" TEXT NOT NULL,
     "department" TEXT NOT NULL,
     "jobRole" TEXT NOT NULL,
-    "salary" INTEGER NOT NULL,
-    "signBonus" INTEGER NOT NULL,
-    "payrollId" TEXT NOT NULL,
+    "salary" TEXT NOT NULL,
+    "signBonus" TEXT NOT NULL,
+    "payrollId" TEXT,
 
     CONSTRAINT "Contractor_pkey" PRIMARY KEY ("id")
 );
@@ -165,13 +169,19 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_verifyId_key" ON "User"("verifyId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
+CREATE UNIQUE INDEX "VerificationToken_id_token_key" ON "VerificationToken"("id", "token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Admin_verifyId_key" ON "Admin"("verifyId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Company_companyEmail_key" ON "Company"("companyEmail");
@@ -201,10 +211,16 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Session" ADD CONSTRAINT "Session_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Admin"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_verifyId_fkey" FOREIGN KEY ("verifyId") REFERENCES "VerificationToken"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Admin" ADD CONSTRAINT "Admin_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Admin" ADD CONSTRAINT "Admin_verifyId_fkey" FOREIGN KEY ("verifyId") REFERENCES "VerificationToken"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Admin" ADD CONSTRAINT "Admin_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -216,7 +232,7 @@ ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_companyId_fkey" FOREIGN KEY 
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Employee" ADD CONSTRAINT "Employee_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Employee" ADD CONSTRAINT "Employee_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Contractor" ADD CONSTRAINT "Contractor_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Contractor" ADD CONSTRAINT "Contractor_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { AuthService } from "../services";
-import { loginSchema, signUpSchema, verifyEmailSchema } from "../interfaces";
+import { signUpSchema, verifyEmailSchema } from "../interfaces";
+import { z } from "zod";
 
 export const authRouter = createTRPCRouter({
   getSession: publicProcedure.query(({ ctx }) => {
@@ -21,16 +22,19 @@ export const authRouter = createTRPCRouter({
       const user = await AuthService.userSignUp(input);
       return user;
     }),
-  sendMailVerification: publicProcedure
-    .input(loginSchema.omit({ password: true }))
+  sendAdminMailVerification: publicProcedure
+    .input(z.object({ email: z.string().email(), verifyCode: z.string() }))
     .mutation(async ({ input }) => {
-      const mail = await AuthService.sendMailVerification(input);
+      const mail = await AuthService.sendAdminMailVerification(
+        input.email,
+        input.verifyCode
+      );
       return mail;
     }),
-  verifyUserEmail: publicProcedure
+  verifyAdminEmail: publicProcedure
     .input(verifyEmailSchema)
     .mutation(async ({ input }) => {
-      const verified = await AuthService.verifyEmail(input);
+      const verified = await AuthService.verifyAdminEmail(input);
       return verified;
     }),
 });
