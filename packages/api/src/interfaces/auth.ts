@@ -25,7 +25,7 @@ export const signUpSchema = loginSchema.extend({
 export const verifyEmailSchema = z.object({
   id: z.string(),
   expires: z.string(),
-  token: z.string(),
+  code: z.string(),
 });
 
 export type ILogin = z.infer<typeof loginSchema>;
