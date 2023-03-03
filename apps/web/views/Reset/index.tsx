@@ -21,7 +21,6 @@ const View = () => (
         <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12}/>
 
         <Flex p={12} flex={1} align={'start'} justify={''}
-          // bg={useColorModeValue('gray.50', 'gray.800')}
         >
           <Stack
             spacing={4}

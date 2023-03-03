@@ -3,12 +3,15 @@ import { Meta } from "../layouts";
 import View from "../views/Verify";
 import z from "zod";
 import { useForm } from "../components/forms";
+import { trpc } from "../utils/trpc";
+import { useRouter } from "next/router";
 
-const loginValidationSchema = z.object({
+
+const verifyEmailSchema = z.object({
   email: z.string(),
 });
 
-type FormInputOptions = z.infer<typeof loginValidationSchema>;
+type FormInputOptions = z.infer<typeof verifyEmailSchema>;
 
 export default function Page() {
   const handleSubmit = async (data: FormInputOptions) => {
@@ -16,8 +19,7 @@ export default function Page() {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "" },
-    schema: loginValidationSchema,
+    schema: verifyEmailSchema,
   });
 
   return renderForm(

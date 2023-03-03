@@ -5,10 +5,9 @@ import z from "zod";
 import { useToast } from "@chakra-ui/react"
 import { useForm } from "../components/forms";
 import { trpc } from "../utils/trpc";
-import styledToast from "../components/core/StyledToast";
 import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
-
+import { sendEmail } from "@wyre-zayroll/dialog";
 
 const signUpValidationSchema = z.object({
   company: z.string().min(1,  "Company name is required"),
@@ -33,19 +32,31 @@ export default function Page() {
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess(data: any) {
-      styledToast({
+      toast({
         status: "success",
-        description: "account has been created successfully",
-        toast: toast,
+        description: `Registration successful. Please check your email ${data.email} to verify your account.`,
+        isClosable: true,
+        duration: 5000,
+        position: 'top-right'
+      });
+      sendEmail({
+        from: "godsfavour.solomon@tecmie.com",
+        to: data.email,
+        subject: "Verify your account",
+        textBody: "Please click the following link to verify your account",
+        userId: data.userId // assuming userId is returned from backend
       });
       router.push("/verify");
     },
     onError(error: any) {
-      styledToast({
+      toast({
         status: "error",
         description: `${error}`,
-        toast: toast,
+        isClosable: true,
+        duration: 5000,
+        position: 'top-right'
       });
+      
       console.log(error)
     },
   })
@@ -70,11 +81,10 @@ export default function Page() {
   return renderForm(
     <>
       <Meta />
-      <View isLoading={isLoading}/>
+      <View isSubmitting={isLoading}/>
     </>
   );
 }
-
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {

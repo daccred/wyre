@@ -11,17 +11,17 @@ import {
   Image,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { GetServerSideProps } from "next";
 import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
-  isLoading?: boolean;
+  // isLoading?: boolean;
+  isSubmitting: boolean;
 };
 
 
 const View: React.FC<Props> = (Props) => {
 
-  const { isLoading } = Props;
+  const { isSubmitting } = Props;
 
   return (
   <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -58,7 +58,7 @@ const View: React.FC<Props> = (Props) => {
 
               <Stack>
            
-                <LoadingButton loading={isLoading}>
+                <LoadingButton submitting={isSubmitting} >
                     Login
                 </LoadingButton>
                 <Center>Forgot Password? 
@@ -92,7 +92,3 @@ const View: React.FC<Props> = (Props) => {
 
 export default View;
  
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-  
-// }

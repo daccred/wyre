@@ -3,8 +3,8 @@ import ViewLayout from "../../components/core/ViewLayout";
 import {
     Stack,
   } from "@chakra-ui/react";
-import Onboarding from './Onbording';
-import Preview from './Preview';
+import Onboarding from './onbording';
+import Preview from './preview';
 
 
 const Index: React.FC = () => {

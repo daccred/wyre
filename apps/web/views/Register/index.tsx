@@ -13,13 +13,13 @@ import {
 import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
-  isLoading?: boolean;
+  isSubmitting?: boolean;
 };
 
 
 const View: React.FC<Props> = (Props) => {
 
-  const { isLoading } = Props;
+  const { isSubmitting } = Props;
 
   return(
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -83,7 +83,7 @@ const View: React.FC<Props> = (Props) => {
                         placeholder="***************"
                       />
                   
-                    <LoadingButton loading={isLoading}>
+                    <LoadingButton submitting={isSubmitting}>
                       Create Account
                     </LoadingButton>
                   </Stack>

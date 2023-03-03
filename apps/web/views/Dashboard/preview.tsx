@@ -25,7 +25,6 @@ import {
 	Tr
 } from '@chakra-ui/react';
 import { ArrowRightIcon, CalenderIcon, TeamIcon } from './ProviderIcons';
-import { FormSelect } from '../../components';
 
 
 type Props = {}

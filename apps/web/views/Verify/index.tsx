@@ -5,7 +5,6 @@ import {
   FormControl,
   Flex,
   Stack,
-  useColorModeValue,
   HStack,
   Image,
   Text,
@@ -61,7 +60,6 @@ const View = () => (
             </Stack>
             <Text>{"Didn’t receive a verification code? "}<Link href='/' color={'#8D1CFF'}>Resend</Link></Text>
           </Stack>
-          
         </Stack>
     </Flex>
   </Stack>

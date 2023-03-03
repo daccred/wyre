@@ -3,10 +3,9 @@ import { Meta } from "../layouts";
 import View from "../views/Login";
 import z from "zod";
 import { useForm } from "../components/forms";
-import { useToast } from "@chakra-ui/react"
-import { trpc } from "../utils/trpc";
-import styledToast from "../components/core/StyledToast";
+import { signIn } from "next-auth/react";
 import type { GetServerSideProps, NextPage } from "next";
+import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 
@@ -14,8 +13,6 @@ const loginValidationSchema = z.object({
   email: z.string().email(),
   password: z.string()
   .min(1, "Password is required")
-  .min(8, "Password must be more than 8 characters")
-  .max(32, "Password must be less than 32 characters"),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
@@ -24,36 +21,32 @@ export default function Page() {
   const router = useRouter();
   const toast = useToast();
 
-  // const query = trpc.useQuery(undefined, {
-  //   enabled: false,
-  //   onSuccess: (data: any) => {
-  //   },
-  // });
-
-  const { isLoading, mutate: loginUser } = trpc.auth.adminSignUp.useMutation({
-    onSuccess() {
-      styledToast({
-        status: "success",
-        description: "Logged in successfully",
-        toast: toast,
+  const handleSubmit = React.useCallback(
+    async (data: FormInputOptions) => {
+      const response = await signIn("credentials", {
+        email: data.email,
+        password: "admin",
+        callbackUrl: "/demo",
+        redirect: false,
       });
-      // query.refetch();
-      // router.push("/dashboard");
-    },
-    onError(error: any) {
-      styledToast({
-        status: "error",
-        description: `${error}`,
-        toast: toast,
-      });
-    },
-  });
 
-  const handleSubmit = (data: FormInputOptions) => {
-   
-  };
+      if (response?.status != 200) {
+        toast({
+          description: response?.error,
+          status: "error",
+          duration: 5000,
+          position: "top-right",
+          isClosable: true,
+        });
+      } else {
+        router.push("/dashboard");
+      }
+      // alert(JSON.stringify(data));
+    },
+    [toast, router]
+  );
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: loginValidationSchema,
   });
@@ -61,12 +54,10 @@ export default function Page() {
   return renderForm(
     <>
       <Meta />
-      <View isLoading={isLoading}/>
+      <View isSubmitting={formState.isSubmitting}/>
     </>
   );
 }
-
-
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {

@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 
 type LoadingButtonProps = {
-  loading?: boolean;
+  submitting?: boolean;
   btnColor?: string;
   textColor?: string;
   children: React.ReactNode;
@@ -18,17 +18,18 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
   textColor = 'white',
   btnColor = '#210D35',
   children,
-  loading = false,
+  submitting = false,
 }) => {
   return (
     <Button
       type='submit'
-      w="full" color="white" bgColor={loading ? btnColor : btnColor} py={7} 
+      isDisabled={submitting}
+      w="full" color="white" bgColor={submitting ? '#010C14' : btnColor} py={7} 
       _hover={{
         bg: '#210D35',
       }}
     >
-      {loading ? (
+      {submitting ? (
         <Flex align={'center'} >
           <Spinner 
             thickness='4px'

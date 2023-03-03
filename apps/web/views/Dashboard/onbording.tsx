@@ -4,7 +4,7 @@ import {
     SimpleGrid,
     Text,
   } from "@chakra-ui/react";
-import Card from './Card';
+import Card from './card';
 import { LayoutIcon, UserIcon, CreditCardIcon } from "./ProviderIcons";
 
 type StatData  = {
