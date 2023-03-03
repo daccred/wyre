@@ -1,9 +1,10 @@
+import { UserService } from "../services";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const userRouter = createTRPCRouter({
   // this is a public route
-  getAllUsers: publicProcedure.query(async ({ ctx }) => {
-    const users = await ctx.prisma.user.findMany();
+  getAllUsers: publicProcedure.query(async () => {
+    const users = await UserService.getUsers();
     return users;
   }),
   getAll: publicProcedure.query(() => {

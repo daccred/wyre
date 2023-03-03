@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
 import type { User } from "../interfaces";
@@ -21,6 +20,24 @@ export class UserService {
         message: "User not found",
       });
     } catch (error) {
+      throw new Error(error as string);
+    }
+  }
+
+  static async getUsers() {
+    try {
+      const users = await prisma.user.findMany();
+      if (!users) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Users not found",
+        });
+        return users;
+      }
+    } catch (error) {
+      if (error instanceof TRPCError) {
+        throw new TRPCError({ code: error.code, message: error.message });
+      }
       throw new Error(error as string);
     }
   }

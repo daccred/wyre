@@ -35,9 +35,8 @@
     "@prisma/client": "^4.5.0"
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
     "eslint": "^8.12.0",
-    "prisma": "^4.5.0",
+    "eslint-config-custom": "*",
     "rimraf": "^3.0.2",
     "tsconfig": "*",
     "typescript": "^4.8.4"
