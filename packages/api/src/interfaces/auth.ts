@@ -22,5 +22,13 @@ export const signUpSchema = loginSchema.extend({
   jobRole: z.string().optional(),
 });
 
+export const verifyEmailSchema = z.object({
+  id: z.string(),
+  expires: z.string(),
+  token: z.string(),
+});
+
 export type ILogin = z.infer<typeof loginSchema>;
 export type ISignUp = z.infer<typeof signUpSchema>;
+export type IEmail = Pick<z.infer<typeof loginSchema>, "email">;
+export type IVerifyEmail = z.infer<typeof verifyEmailSchema>;

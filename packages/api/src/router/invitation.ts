@@ -1,8 +1,8 @@
 import { InvitationSchema } from "../interfaces";
 import { InvitationService } from "../services";
-import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-export const invitationRouter = router({
+export const invitationRouter = createTRPCRouter({
   createInvitation: protectedProcedure
     .input(InvitationSchema)
     .mutation(async ({ ctx, input }) => {

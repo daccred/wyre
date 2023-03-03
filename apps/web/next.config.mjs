@@ -12,7 +12,6 @@ const dev = process.env.NODE_ENV === "development";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // const runtimeCaching = import('next-pwa/cache');
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withPWA = import("next-pwa").then((pwa) =>
   pwa.default({
     dest: "public",

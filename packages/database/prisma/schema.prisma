@@ -53,24 +53,26 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
-  type      String?
+  email         String?      @unique
+  type          String?
   phone         String?
   password      String?
-  emailVerified Boolean? @default(false)
+  emailVerified Boolean?     @default(false)
   image         String?
   jobRole       String?
   category      String?
-  company       Company?  @relation(fields: [companyId], references: [id])
+  company       Company?     @relation(fields: [companyId], references: [id])
   companyId     String?
   accounts      Account[]
   sessions      Session[]
   invitations   Invitation[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
 }
+
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -85,11 +87,11 @@ model Admin {
   email         String?      @unique
   phone         String?
   password      String?
-  emailVerified Boolean?    @default(false)
+  emailVerified Boolean?     @default(false)
   image         String?
   jobRole       String?
   category      String?
-  type      String?
+  type          String?
   company       Company?     @relation(fields: [companyId], references: [id])
   companyId     String?
   accounts      Account[]
@@ -113,7 +115,6 @@ model Company {
   invitations  Invitation[]
 }
 
-
 model Invitation {
   id          String    @id @default(cuid())
   email       String    @unique
@@ -130,3 +131,43 @@ model Invitation {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+
+model Employee {
+  id          String    @id @default(cuid())
+  name        String
+  email       String    @unique
+  department  String
+  jobRole     String  
+  salary      String
+  signBonus   String
+  payrollId   String?
+  payroll     Payroll?  @relation(fields: [payrollId], references: [id])
+}
+
+model Contractor {
+  id          String    @id @default(cuid())
+  name        String
+  email       String     @unique
+  department  String
+  jobRole     String  
+  salary      String
+  signBonus   String
+  payrollId   String?
+  payroll     Payroll?  @relation(fields: [payrollId], references: [id])
+
+}
+
+model Payroll {
+  id          String    @id @default(cuid())
+  title       String
+  cycle       String
+  payday      DateTime
+  auto        Boolean
+  burden      Int
+  currency    String
+  employees   Employee[]
+  contractors Contractor[]
+
+}
+
+
