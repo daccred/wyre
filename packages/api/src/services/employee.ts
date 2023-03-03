@@ -11,6 +11,18 @@ function EmployeeError(error: unknown) {
 export class EmployeeService {
   static async createEmployee(input: IEmployeeSchema) {
     try {
+      const employeeExists = await prisma.employee.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
+
+      if (employeeExists) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Employee already exists",
+        });
+      }
       const employee = await prisma.employee.create({
         data: {
           name: input.name,

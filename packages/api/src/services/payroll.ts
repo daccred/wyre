@@ -110,13 +110,36 @@ export class PayrollService {
         where: {
           id,
         },
+        include: { contractors: true, employees: true },
       });
+
       if (!payroll) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Payroll not found",
         });
       }
+
+      const employees = await prisma.employee.findMany({
+        where: {
+          id: {
+            in: input.employees,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+      const contractors = await prisma.contractor.findMany({
+        where: {
+          id: {
+            in: input.contractors,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
 
       const updatePayroll = await prisma.payroll.update({
         where: {
@@ -129,6 +152,8 @@ export class PayrollService {
           auto: input.auto,
           burden: input.burden,
           currency: input.currency,
+          contractors: { connect: contractors },
+          employees: { connect: employees },
         },
       });
       if (!updatePayroll) {

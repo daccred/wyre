@@ -11,6 +11,18 @@ function ContractorError(error: unknown) {
 export class ContractorService {
   static async createContractor(input: IContractorSchema) {
     try {
+      const contractorExists = await prisma.contractor.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
+
+      if (contractorExists) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Contractor already exists",
+        });
+      }
       const contractor = await prisma.contractor.create({
         data: {
           name: input.name,
