@@ -14,7 +14,6 @@ import * as React from "react";
 import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
-  // isLoading?: boolean;
   isSubmitting: boolean;
 };
 
@@ -35,7 +34,7 @@ const View: React.FC<Props> = (Props) => {
           <Stack>
             <Text color={'#010C14'} fontWeight={'bold'} fontSize={{ base: '3xl', md: '4xl' }}>Login</Text>
             <Text color="#010C14">
-              Don’t have an account? <Link color='#8D1CFF' href="/register">Create Account</Link>
+              Don’t have an account? <Link color='#8D1CFF' href="/sign-up">Create Account</Link>
             </Text> 
           </Stack>
          

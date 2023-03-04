@@ -7,12 +7,12 @@ import { useForm } from "../components/forms";
 import { trpc } from "../utils/trpc";
 import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import { sendEmail } from "@wyre-zayroll/dialog";
+
 
 const signUpValidationSchema = z.object({
   company: z.string().min(1,  "Company name is required"),
   country: z.string() ,
-  name: z.string().min(1, "Full name is required") ,
+  name: z.string().min(1, "Full name is required"),
   email: z.string().email(),
   role: z.string().min(1,  "Job role is required"),
   password: z.string().min(1, "Password is required")
@@ -32,19 +32,13 @@ export default function Page() {
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess(data: any) {
+      
       toast({
         status: "success",
         description: `Registration successful. Please check your email ${data.email} to verify your account.`,
         isClosable: true,
         duration: 5000,
         position: 'top-right'
-      });
-      sendEmail({
-        from: "godsfavour.solomon@tecmie.com",
-        to: data.email,
-        subject: "Verify your account",
-        textBody: "Please click the following link to verify your account",
-        userId: data.userId // assuming userId is returned from backend
       });
       router.push("/verify");
     },
@@ -56,7 +50,6 @@ export default function Page() {
         duration: 5000,
         position: 'top-right'
       });
-      
       console.log(error)
     },
   })

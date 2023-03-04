@@ -25,7 +25,7 @@ export default function Page() {
     async (data: FormInputOptions) => {
       const response = await signIn("credentials", {
         email: data.email,
-        password: "admin",
+        password: data.password,
         callbackUrl: "/demo",
         redirect: false,
       });

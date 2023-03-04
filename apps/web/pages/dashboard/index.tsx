@@ -3,17 +3,13 @@ import { Meta } from "../../layouts";
 import View from "../../views/Dashboard";
 import { getServerAuthSession } from "../../server/common/get-server-auth-session";
 import { useRouter } from "next/router";
+import {useSession} from "next-auth/react";
 
-export default function Page( session: any ) {
+function Page() {
 
-  console.log(session)
-
+  // console.log(session)
+  const session = useSession();
   const router = useRouter();
-
-  if (!session) {
-    router.push("/login");
-    return null;
-  }
 
   return (
     <>
@@ -23,11 +19,7 @@ export default function Page( session: any ) {
   );
 }
 
-export async function getServerSideProps(context: any) {
-  const session = await getServerAuthSession(context);
-  return {
-    props: {
-      session,
-    },
-  };
-}
+// add the requireAuth property to the page component
+Page.requireAuth = true;
+
+export default Page;

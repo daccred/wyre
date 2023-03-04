@@ -11,7 +11,7 @@ const Index: React.FC = () => {
   const [isNew, setIsNew] = useState(false);
   return (
     <ViewLayout title='Dashboard'>
-      <Stack spacing={'6'} >
+      <Stack spacing={'6'}>
         {isNew ?
           <Onboarding/>
           :

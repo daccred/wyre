@@ -31,6 +31,7 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import SidebarAccordion from "./SidebarAccordion";
+import { signOut, useSession } from "next-auth/react";
 
 interface LinkItemProps {
   name: string;
@@ -181,9 +182,9 @@ const SidebarContent = ({ ...rest }) => {
       >
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
 
-        <Text color="#E71D36" fontWeight={"semibold"}>
+        <Button color="#E71D36" fontWeight={"semibold"} onClick={() => signOut()}>
           Logout
-        </Text>
+        </Button>
       </HStack>
     </Box>
   );
@@ -271,6 +272,7 @@ interface HeaderNavProps extends FlexProps {
 
 const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
   const router = useRouter();
+  const { data: sessionData } = useSession();
 
   return (
     <Flex
@@ -344,7 +346,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
               pr="4"
             >
               <Text fontSize="sm" fontWeight={"bold"}>
-                John McDonald
+              {sessionData?.user?.name}
               </Text>
               <Text fontSize="xs" fontWeight={"medium"} color="boldgrey">
                 Chief People Officer
