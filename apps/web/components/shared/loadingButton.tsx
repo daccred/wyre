@@ -12,19 +12,21 @@ type LoadingButtonProps = {
   btnColor?: string;
   textColor?: string;
   children: React.ReactNode;
+  width?: string;
 };
 
 export const LoadingButton: React.FC<LoadingButtonProps> = ({
   textColor = 'white',
   btnColor = '#210D35',
   children,
+  width,
   submitting = false,
 }) => {
   return (
     <Button
       type='submit'
       isDisabled={submitting}
-      w="full" color="white" bgColor={submitting ? '#010C14' : btnColor} py={7} 
+      w={width} color="white" bgColor={submitting ? '#010C14' : btnColor} py={7} 
       _hover={{
         bg: '#210D35',
       }}

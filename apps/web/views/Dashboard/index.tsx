@@ -8,7 +8,7 @@ import Preview from './preview';
 
 
 const Index: React.FC = () => {
-  const [isNew, setIsNew] = useState(false);
+  const [isNew, setIsNew] = useState(true);
   return (
     <ViewLayout title='Dashboard'>
       <Stack spacing={'6'}>

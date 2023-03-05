@@ -1,15 +1,8 @@
 import React from "react";
 import { Meta } from "../../layouts";
 import View from "../../views/Dashboard";
-import { getServerAuthSession } from "../../server/common/get-server-auth-session";
-import { useRouter } from "next/router";
-import {useSession} from "next-auth/react";
 
 function Page() {
-
-  // console.log(session)
-  const session = useSession();
-  const router = useRouter();
 
   return (
     <>
