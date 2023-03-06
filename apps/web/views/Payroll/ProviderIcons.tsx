@@ -51,4 +51,15 @@ export const ChevronRight = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-
+export const CheckedIcon = (props: HTMLChakraProps<"svg">) => (
+  <chakra.svg
+    width={5}
+    height={5}
+    viewBox="0 0 5 5"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+ <rect width="5" height="5" rx="2" fill="#929292"/>
+  </chakra.svg>
+);

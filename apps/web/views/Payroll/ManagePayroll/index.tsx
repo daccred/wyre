@@ -4,11 +4,12 @@ import CustomTable from 'components/CustomTable'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { FiChevronRight } from 'react-icons/fi'
+import { managePayrollPath } from 'routes'
 import { payrollData } from '../utils/dummyData'
 import { managePayrollColumns } from '../utils/tableColumns'
 
 const ManagePayroll = () => {
-  const managePayrollPath = "/payroll/manage-payroll";
+
   const { pathname } = useRouter();
   const router = useRouter();
 
@@ -45,11 +46,10 @@ const ManagePayroll = () => {
         <Heading as="h4" size="xs" fontSize="xl">
           Active Payroll
         </Heading>
-        <CustomTable
-          columns={managePayrollColumns(()=> router.push('/payroll/manage-payroll/monthly-employee-salary'))}
-          data={payrollData}
-          emptyStateInfo="No Active Payroll"
-        />
+        <CustomTable 
+        // @ts-ignore
+        columns={managePayrollColumns(()=> router.push('/payroll/manage-payroll/monthly-employee-salary'))}
+        data={payrollData} />
       </Stack>
    </ViewLayout>
   )

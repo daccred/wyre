@@ -27,7 +27,7 @@ interface Data {
   [key: string]: any;
 }
 
-export default function CustomTable({ data, columns }: Props) {
+export default function MainTable({ data, columns }: Props) {
   const columnsMemo = useMemo(() => columns, [columns]);
 
   const {

@@ -9,7 +9,6 @@ const baseStyle = (props: StyleFunctionProps) => ({
   control: {
     bg: mode("white", "gray.800")(props),
     borderRadius: "base",
-    rounded: "full",
   },
 });
 

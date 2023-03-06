@@ -12,10 +12,12 @@ import {
   Flex,
   Button,
   Center,
+  Input,
+  Select,
 } from "@chakra-ui/react";
 import ViewLayout from "../../../components/core/ViewLayout";
 
-import { FiChevronRight } from "react-icons/fi";
+import { FiChevronRight, FiSearch } from "react-icons/fi";
 import { useRouter } from "next/router";
 import {
   FormInput,
@@ -24,12 +26,13 @@ import {
   FormCheckbox,
 } from "../../../components/forms";
 import z from "zod";
-import CustomTable from "components/CustomTable";
 import { SalaryProgress } from "../utils/misc";
 import { createPayrollData } from "../utils/dummyData";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
 import { createPayrollColumns } from "../utils/tableColumns";
+import { createPayrollPath } from "routes";
+import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
 
 export const createPayrollValidationSchema = z.object({
   title: z.string().email(),
@@ -42,38 +45,64 @@ type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 
 const CreatePayroll = () => {
   const { pathname } = useRouter();
-  const createPayrollPath = "/payroll/create-payroll";
-  const [defaultTableData, setDefaultTableData] = useState<unknown[]>([])
-  const [tableData, setTableData] = useState<unknown[]>([])
+  const [tableData, setTableData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRowIds, setSelectedRowIds] = useState({});
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [selectedDepartment, setSelectedDepartment] =
+    useState("All departments");
 
+  const handleSelectionChange = (selection: any) => {
+    setSelectedRowIds(selection);
+  };
 
+  const handleSelectedRowsAmountChange = (amount: number) => {
+    setTotalAmount(amount);
+  };
+
+  const selectedRows = useMemo(
+    () =>
+      tableData.filter((row: any) => {
+        // @ts-ignore
+        return selectedRowIds[row.id];
+      }),
+    [selectedRowIds, tableData]
+  );
 
   useEffect(() => {
     if (createPayrollData) {
-      setDefaultTableData(createPayrollData)
-      setTableData(createPayrollData)
+      // @ts-ignore
+      setTableData(createPayrollData);
     }
-  }, [])
+  }, []);
 
-  // useEffect(() => {
-  //   setTableData(createPayrollData) 
-  //   if(searchTerm) {
-  //     const searchData = tableData?.filter((item) => item?.name?.toLowerCase() === searchTerm?.toLowerCase())
-  //      setTableData(searchData)
-  //   }
-  // }, [searchTerm, tableData])
-  // useEffect(()=>{
-  //   if(searchTerm){
-  //     const searchData = dummyData?.filter(data=>data?.fullName?.toLowerCase().includes(searchTerm?.toLowerCase()))
-  //     if (activeEmployeesOnly){
-  //       const activeData= searchData.filter(data=>data?.status==='active')
-  //       setDummyDataInUse(activeData);
-  //       return
-  //     }else{
-  //       setDummyDataInUse(searchData);
-  //       return
-  //     }
-  //   }
+  useEffect(() => {
+    let filteredData = createPayrollData;
+    if (selectedDepartment !== "All departments") {
+      filteredData = createPayrollData.filter(
+        (data) =>
+          data?.department?.toLowerCase() === selectedDepartment.toLowerCase()
+      );
+    }
+    const searchData = filteredData.filter((data) =>
+      data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+    );
+    // @ts-ignore
+    setTableData(searchData as {}[]);
+  }, [searchTerm, selectedDepartment]);
+
+  useEffect(() => {
+    const selectedAmounts = selectedRows.map((row: any) => row.grossPay);
+    const total = selectedAmounts.reduce((sum: number, amount: number) => {
+      return sum + amount;
+    }, 0);
+    handleSelectedRowsAmountChange(total);
+  }, [selectedRows]);
+
+  const departmentOptions = useMemo(
+    () => ["All departments", "Tech", "Finance", "Operations"],
+    []
+  );
 
   const { renderForm } = useForm<FormInputOptions>({
     // onSubmit: handleSubmit,
@@ -81,6 +110,16 @@ const CreatePayroll = () => {
     // schema: addContractorValidationSchema,
   });
 
+  console.log("selectedId", selectedRowIds);
+
+  const totalSalaries = useMemo(() => {
+    return tableData.reduce((total, { grossPay }) => total + grossPay, 0);
+  }, [tableData]);
+
+  const salaryPercentage = Math.round((totalAmount / totalSalaries) * 100);
+  console.log("totalSalaries", totalSalaries);
+  console.log("salaryPercentage", salaryPercentage);
+  const selectedEmployees = Object.keys(selectedRowIds).length;
   return (
     <>
       <ViewLayout title="Payroll">
@@ -149,28 +188,73 @@ const CreatePayroll = () => {
               <Heading as="h4" size="xs" fontSize="xl">
                 Add Employee(s)
               </Heading>
-              {
-                createPayrollData?.length === 0 ? 
-               (   <Center w="100%" p="8" flexDirection={"column"}>
+              {createPayrollData?.length === 0 ? (
+                <Center w="100%" p="8" flexDirection={"column"}>
                   <EmptyEmployeeImage />
                   <Text pr="12" pt="2">
-                   No Payment History
+                    No Payment History
                   </Text>
-                </Center>) : (
-                      <CustomTable
-                      columns={createPayrollColumns}
-                      data={tableData}
-                      defaultTableData={defaultTableData}
-                      emptyStateInfo="No Payroll History"
-                      hasSearch
-                      searchOptions={['All Departments', 'Tech', 'Finance', 'Operations']}
-                      setDefaultTableData={setDefaultTableData}
-                      setTableData={setTableData}
-                   
-                    />
-                )
-              }
-          
+                </Center>
+              ) : (
+                <>
+                  <Grid
+                    templateColumns="30% 25%"
+                    justifyContent="space-between"
+                    my={6}
+                  >
+                    <GridItem>
+                      <HStack gap="1">
+                        <FiSearch fontSize={"24px"} />
+                        <Input
+                          variant={"unstyled"}
+                          border={"0"}
+                          borderBottom="1px solid"
+                          borderRadius={0}
+                          h={12}
+                          fontSize={"sm"}
+                          placeholder="Search Employee"
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                      </HStack>
+                    </GridItem>
+                    <GridItem>
+                      <Select
+                        value={selectedDepartment}
+                        onChange={(event) =>
+                          setSelectedDepartment(event.target.value)
+                        }
+                      >
+                        {departmentOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Select>
+                    </GridItem>
+                  </Grid>
+                  {tableData?.length > 0 ? (
+                    <>
+                      <RowSelectTable
+                        // @ts-ignore
+                        columns={createPayrollColumns}
+                        data={tableData}
+                        onRowSelectionChange={handleSelectionChange}
+                        onSelectedRowsAmountChange={
+                          handleSelectedRowsAmountChange
+                        }
+                      />
+                    </>
+                  ) : (
+                    <Center w="100%" p="8" flexDirection={"column"}>
+                      <EmptyEmployeeImage />
+                      <Text pr="12" pt="2">
+                        No result found for search
+                      </Text>
+                    </Center>
+                  )}
+                </>
+              )}
             </Stack>
           </GridItem>
           <GridItem
@@ -193,33 +277,33 @@ const CreatePayroll = () => {
             >
               <Text>Payroll Burden</Text>
               <Text fontSize="xl" fontWeight={700}>
-                USD 0.00
+                {`USD ${totalSalaries}`}
               </Text>
             </VStack>
-            <SalaryProgress color='#2EC4B6' label='Salary' amount={0.00} />
-            <SalaryProgress color='#E71D36' label='Tax' amount={0.00} />
-            <SalaryProgress color='#FF951C' label='Insurance' amount={0.00} />
-            <SalaryProgress color='#8E1CFF' label='Pension' amount={0.00} />
+            <SalaryProgress
+              color="#2EC4B6"
+              label="Salary"
+              amount={totalAmount}
+              value={salaryPercentage}
+            />
             <Flex justify="space-between">
               <Heading as="h4" size="xs" fontSize="md">
                 Selected Employee(s)
               </Heading>
-              <Text>0</Text>
+              <Text>{selectedEmployees}</Text>
             </Flex>
-           <Flex justify='center' mt={6}>
-           <Button
-              bg="brand.700"
-              color="white"
-            //   rightIcon={<ChevronRight boxSize={4} />}
-              iconSpacing="3"
-              w="100%"
-              _hover={{ hover: "none" }}
-              isDisabled={true}
-              
-            >
-              Create Payroll
-            </Button>
-           </Flex>
+            <Flex justify="center" mt={6}>
+              <Button
+                bg="brand.700"
+                color="white"
+                iconSpacing="3"
+                w="100%"
+                _hover={{ hover: "none" }}
+                isDisabled={selectedEmployees > 0 ? false : true}
+              >
+                Create Payroll
+              </Button>
+            </Flex>
           </GridItem>
         </Grid>
       </ViewLayout>

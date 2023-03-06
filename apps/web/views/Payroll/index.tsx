@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Flex,
   Grid,
   GridItem,
   Heading,
@@ -12,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
-import CustomTable from "components/CustomTable";
 import { Card, PayrollTypeCard } from "./utils/misc";
 import { payrollData } from "./utils/dummyData";
 import PayrollType from "./modals/PayrollType";
 import { useRouter } from "next/router";
 import { payrollColumns } from "./utils/tableColumns";
+import CustomTable from "components/CustomTable";
 
 const Payroll = () => {
   const {
@@ -96,9 +95,9 @@ const Payroll = () => {
           Payroll History
         </Heading>
         <CustomTable
+          // @ts-ignore
           columns={payrollColumns}
           data={payrollData}
-          emptyStateInfo="No Payroll History"
         />
       </Stack>
 
