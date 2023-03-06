@@ -10,8 +10,7 @@ export default function Page() {
   React.useEffect(() => {
     mutation.mutate({
       id: id as string,
-      expires: expires as string,
-      code: token as string,
+      token: token as string,
     });
     router.push("/login");
   });

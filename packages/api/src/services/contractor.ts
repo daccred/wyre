@@ -58,6 +58,7 @@ export class ContractorService {
           department: input.department,
           jobRole: input.jobRole,
           salary: input.salary,
+          status: input.status,
         },
       });
 

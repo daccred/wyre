@@ -7,6 +7,7 @@ export const contractorSchema = z.object({
   jobRole: z.string(),
   salary: z.string(),
   signBonus: z.string(),
+  status: z.boolean(),
 });
 
 export type IContractorSchema = z.infer<typeof contractorSchema>;

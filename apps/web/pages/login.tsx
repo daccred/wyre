@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
+  password: z.string(),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
@@ -20,7 +21,7 @@ export default function Page() {
     async (data: FormInputOptions) => {
       const response = await signIn("credentials", {
         email: data.email,
-        password: "admin",
+        password: data.password,
         callbackUrl: "/demo",
         redirect: false,
       });
@@ -43,7 +44,8 @@ export default function Page() {
 
   const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "" },
+    defaultValues: { email: "", password: "#John007" },
+
     schema: loginValidationSchema,
   });
 

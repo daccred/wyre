@@ -88,11 +88,12 @@ export class AuthService {
         data: {
           name: input.name,
           email: input.email,
+          phone: input.companyPhone,
           password: await hashString(input.password),
-
           companyId: company.id,
           type: SUPER_ADMIN,
           jobRole: input.jobRole,
+          verifyId: token.id,
         },
       });
 
@@ -136,76 +137,54 @@ export class AuthService {
 
   static async verifyAdminEmail(input: IVerifyEmail) {
     try {
-      const { id, code } = input;
+      const { id, token } = input;
 
       const admin = await prisma.admin.findFirst({
         where: {
           id,
         },
         select: {
-          id: true,
+          verification: true,
         },
       });
 
-      if (!admin) {
+      if (!admin?.verification) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Admin not found",
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to verify admin email",
         });
       }
 
-      const verification = await prisma.verificationToken.findFirst({
-        where: {
-          id: admin?.id,
-        },
-      });
-
-      if (!verification) {
-        new TRPCError({
-          code: "NOT_FOUND",
-          message: "Failed to verify admin email",
+      const now = new Date();
+      const expireTime = admin.verification.expires;
+      if (now > expireTime)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Confirmation code is expired",
         });
-      } else {
-        const { expires, token } = verification;
-        const now = new Date();
-        const expireTime = expires;
 
-        if (code !== token) {
-          new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Failed to verify admin email",
-          });
-        }
-
-        if (now > expireTime)
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Confirmation code is expired",
-          });
-
-        await prisma.admin.update({
+      if (token === admin.verification.token) {
+        const adminVerfied = await prisma.admin.update({
           where: {
-            id,
+            id: id,
           },
           data: {
             emailVerified: true,
-            verifyId: verification.id,
+          },
+
+          select: {
+            verification: true,
+            emailVerified: true,
           },
         });
-      }
 
-      const emailVerified = prisma.admin.update({
-        where: {
-          id: admin?.id,
-        },
-        data: {
-          emailVerified: true,
-        },
-        select: {
-          emailVerified: true,
-        },
-      });
-      return emailVerified;
+        return adminVerfied;
+      } else {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Confirmation code is invalid",
+        });
+      }
     } catch (error) {
       if (error instanceof TRPCError) {
         throw new TRPCError({ code: error.code, message: error.message });

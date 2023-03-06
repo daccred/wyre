@@ -31,6 +31,7 @@ export class EmployeeService {
           jobRole: input.jobRole,
           salary: input.salary,
           signBonus: input.signBonus,
+          status: input.status,
         },
       });
 
