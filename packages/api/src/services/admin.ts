@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
 import type { Admin } from "../interfaces";
+import { ServicesError } from "./ServiceErrors";
 
 export class AdminService {
   static async getAdminById(id?: string) {
@@ -19,7 +19,7 @@ export class AdminService {
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 
@@ -38,11 +38,10 @@ export class AdminService {
         message: "Admin not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async updateAdmin(data: Admin, id?: string) {
     try {
       const updateAdmin = await prisma.admin.update({
@@ -59,7 +58,7 @@ export class AdminService {
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 
@@ -78,7 +77,7 @@ export class AdminService {
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 }

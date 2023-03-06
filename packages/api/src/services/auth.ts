@@ -4,15 +4,7 @@ import { ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
 import { sendEmail } from "@wyre-zayroll/dialog";
 import { Prisma } from "@prisma/client";
-
-export class AuthError extends TRPCError {
-  constructor(message: string) {
-    super({
-      code: "UNAUTHORIZED",
-      message,
-    });
-  }
-}
+import { ServicesError } from "./ServiceErrors";
 
 export class AuthService {
   static async adminSignUp(input: ISignUp) {
@@ -25,7 +17,10 @@ export class AuthService {
       });
 
       if (adminExists) {
-        throw new AuthError("Admin already exists");
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Admin already exists",
+        });
       }
       // check if company exists
       const companyExists = await AuthService.checkIfCompanyExists(
@@ -44,7 +39,10 @@ export class AuthService {
         input.email
       );
       if (!isOrganization) {
-        throw new AuthError("Email is not an organization");
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Email is not an organization",
+        });
       }
 
       // create company
@@ -204,7 +202,10 @@ export class AuthService {
       });
 
       if (emailExists) {
-        throw new AuthError("Email already exists");
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Email already exists",
+        });
       }
       // create user
       const user = await prisma.user.create({
@@ -219,10 +220,7 @@ export class AuthService {
       });
       return user;
     } catch (error) {
-      if (error instanceof AuthError) {
-        throw new AuthError(error.message);
-      }
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
@@ -245,13 +243,9 @@ export class AuthService {
       });
       return response;
     } catch (error) {
-      if (error instanceof AuthError) {
-        throw new AuthError(error.message);
-      }
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
-
   static async checkIfCompanyExists(companyName?: string) {
     const result = await prisma.company.findFirst({
       where: {
@@ -303,7 +297,10 @@ export class AuthService {
       },
     });
     if (!result) {
-      throw new AuthError("You are not a super admin");
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You don't have super admin rights",
+      });
     }
     return true;
   }
@@ -316,7 +313,10 @@ export class AuthService {
       },
     });
     if (!result) {
-      throw new AuthError("You are not an admin");
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You don't have  admin rights",
+      });
     }
     return true;
   }

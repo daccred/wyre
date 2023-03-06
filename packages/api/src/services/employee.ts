@@ -1,12 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { prisma } from "@wyre-zayroll/db";
 import { IEmployeeSchema } from "../interfaces";
-
-function EmployeeError(error: unknown) {
-  if (error instanceof TRPCError) throw error;
-  console.warn(error);
-  return error;
-}
+import { ServicesError } from "./ServiceErrors";
 
 export class EmployeeService {
   static async createEmployee(input: IEmployeeSchema) {
@@ -43,7 +38,7 @@ export class EmployeeService {
 
       return employee;
     } catch (error) {
-      EmployeeError(error);
+      ServicesError(error);
     }
   }
 
@@ -68,7 +63,7 @@ export class EmployeeService {
 
       return employee;
     } catch (error) {
-      EmployeeError(error);
+      ServicesError(error);
     }
   }
 
@@ -86,7 +81,7 @@ export class EmployeeService {
       }
       return "Employee deleted successfully";
     } catch (error) {
-      EmployeeError(error);
+      ServicesError(error);
     }
   }
 
@@ -104,7 +99,7 @@ export class EmployeeService {
       }
       return employee;
     } catch (error) {
-      EmployeeError(error);
+      ServicesError(error);
     }
   }
 
@@ -121,7 +116,7 @@ export class EmployeeService {
 
       return employees;
     } catch (error) {
-      EmployeeError(error);
+      ServicesError(error);
     }
   }
 }

@@ -1,12 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { prisma } from "@wyre-zayroll/db";
 import { IContractorSchema } from "../interfaces";
-
-function ContractorError(error: unknown) {
-  if (error instanceof TRPCError) throw error;
-  console.warn(error);
-  return error;
-}
+import { ServicesError } from "./ServiceErrors";
 
 export class ContractorService {
   static async createContractor(input: IContractorSchema) {
@@ -42,7 +37,7 @@ export class ContractorService {
 
       return contractor;
     } catch (error) {
-      ContractorError(error);
+      ServicesError(error);
     }
   }
   static async updateContractor(
@@ -70,7 +65,7 @@ export class ContractorService {
 
       return contractor;
     } catch (error) {
-      ContractorError(error);
+      ServicesError(error);
     }
   }
   static async deleteContractor(contractorId: string) {
@@ -87,7 +82,7 @@ export class ContractorService {
       }
       return "Contractor deleted successfully";
     } catch (error) {
-      ContractorError(error);
+      ServicesError(error);
     }
   }
   static async getSingleContractor(contractorId: string) {
@@ -104,7 +99,7 @@ export class ContractorService {
       }
       return contractor;
     } catch (error) {
-      ContractorError(error);
+      ServicesError(error);
     }
   }
   static async getContractors() {
@@ -120,7 +115,7 @@ export class ContractorService {
 
       return contractors;
     } catch (error) {
-      ContractorError(error);
+      ServicesError(error);
     }
   }
 }
