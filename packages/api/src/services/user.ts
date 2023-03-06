@@ -26,14 +26,18 @@ export class UserService {
 
   static async getUsers() {
     try {
-      const users = await prisma.user.findMany();
+      const users = await prisma.admin.findMany({
+        include: {
+          verification: true,
+        },
+      });
       if (!users) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Users not found",
         });
-        return users;
       }
+      return users;
     } catch (error) {
       if (error instanceof TRPCError) {
         throw new TRPCError({ code: error.code, message: error.message });

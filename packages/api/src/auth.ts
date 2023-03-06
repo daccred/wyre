@@ -42,6 +42,8 @@ export const nextAuthOptions: NextAuthOptions = {
             where: { email },
           });
 
+          console.error(user);
+
           if (!user) {
             throw new Error("Account not found");
           }

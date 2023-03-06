@@ -1,3 +1,4 @@
+export * from "./ServiceErrors";
 export * from "./admin";
 export * from "./auth";
 export * from "./invitation";

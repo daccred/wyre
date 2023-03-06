@@ -67,7 +67,7 @@ model User {
   category      String?
   company       Company?     @relation(fields: [companyId], references: [id])
   companyId     String?
-  accounts      Account[]
+  accounts      Account[]     
   sessions      Session[]
   invitations   Invitation[]
   createdAt     DateTime     @default(now())
@@ -79,8 +79,8 @@ model VerificationToken {
   id         String   @id @default(cuid())
   token      String   @unique
   expires    DateTime
-  admin      Admin?
-  user       User?
+  admin      Admin[]  
+  user       User[]
 
   @@unique([id, token])
 }
@@ -93,7 +93,7 @@ model Admin {
   password      String
   emailVerified Boolean?      @default(false)
   verifyId      String?       @unique
-  verification  VerificationToken?  @relation(fields: [verifyId], references: [id])
+  verification  VerificationToken?  @relation(fields: [verifyId], references: [id], onDelete: Cascade)
   image         String?
   jobRole       String?
   category      String?
@@ -146,6 +146,7 @@ model Employee {
   jobRole     String  
   salary      String
   signBonus   String
+  status      Boolean?
   payrollId   String?
   payroll     Payroll?        @relation(fields: [payrollId], references: [id])
 }
@@ -158,6 +159,7 @@ model Contractor {
   jobRole     String  
   salary      String
   signBonus   String
+  status      Boolean?
   payrollId   String?
   payroll     Payroll?        @relation(fields: [payrollId], references: [id])
 

@@ -1,6 +1,7 @@
 import { IPayrollSchema } from "../interfaces/payroll";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "@wyre-zayroll/db";
+import { ServicesError } from "./ServiceErrors";
 
 export class PayrollService {
   static async createPayroll(input: IPayrollSchema) {
@@ -47,11 +48,9 @@ export class PayrollService {
         });
       }
 
-      console.warn(payroll);
       return payroll;
     } catch (error) {
-      if (error instanceof TRPCError) throw error;
-      console.warn(error);
+      ServicesError(error);
     }
   }
 
@@ -74,21 +73,14 @@ export class PayrollService {
         });
       return payroll;
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
   static async getPayrolls() {
     try {
       const payrolls = await prisma.payroll.findMany({
-        select: {
-          id: true,
-          title: true,
-          cycle: true,
-          payday: true,
-          auto: true,
-          burden: true,
-          currency: true,
+        include: {
           contractors: true,
           employees: true,
         },
@@ -100,7 +92,7 @@ export class PayrollService {
         });
       return payrolls;
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
@@ -164,7 +156,7 @@ export class PayrollService {
       }
       return payroll;
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
@@ -184,7 +176,7 @@ export class PayrollService {
       }
       return "Payroll deleted successfully";
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
@@ -211,7 +203,7 @@ export class PayrollService {
       }
       return "Contractor removed successfully";
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
   static async removeEmployee(payrollId: string, employeeId: string) {
@@ -237,7 +229,7 @@ export class PayrollService {
       }
       return "Employee removed successfully";
     } catch (error) {
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 }
