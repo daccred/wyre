@@ -36,20 +36,19 @@ export const nextAuthOptions: NextAuthOptions = {
       },
       authorize: async (credentials) => {
         try {
-          const { email } = await loginSchema.parseAsync(credentials);
+          const { email, password } = await loginSchema.parseAsync(credentials);
 
-          const user = await prisma.user.findFirst({
+          const user = await prisma.admin.findFirst({
             where: { email },
           });
+
+          console.error(user);
 
           if (!user) {
             throw new Error("Account not found");
           }
 
-          const isValidPassword = await verifyHash(
-            "#John007",
-            user.password as string
-          );
+          const isValidPassword = await verifyHash(password, user.password);
 
           if (!isValidPassword) {
             throw new Error("Your username or password is incorrect");
