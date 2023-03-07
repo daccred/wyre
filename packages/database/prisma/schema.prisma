@@ -37,7 +37,6 @@ model Account {
   id_token          String? // @db.Text
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  admin             Admin   @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -49,16 +48,20 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  admin        Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
 model User {
   id            String       @id @default(cuid())
   name          String
-  email         String?      @unique
-  type          String?
+  email         String       @unique
   phone         String?
   password      String
+  type          Role         @default(USER)
   emailVerified Boolean?     @default(false)
   verifyId      String?      @unique
   verification  VerificationToken? @relation(fields: [verifyId], references: [id])
@@ -79,33 +82,11 @@ model VerificationToken {
   id         String   @id @default(cuid())
   token      String   @unique
   expires    DateTime
-  admin      Admin[]  
   user       User[]
 
   @@unique([id, token])
 }
 
-model Admin {
-  id            String        @id @default(cuid())
-  name          String
-  email         String        @unique
-  phone         String?
-  password      String
-  emailVerified Boolean?      @default(false)
-  verifyId      String?       @unique
-  verification  VerificationToken?  @relation(fields: [verifyId], references: [id], onDelete: Cascade)
-  image         String?
-  jobRole       String?
-  category      String?
-  type          String?
-  company       Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId     String?
-  accounts      Account[]
-  sessions      Session[]
-  invitations   Invitation[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-}
 
 model Company {
   id           String         @id @default(cuid())
@@ -117,7 +98,6 @@ model Company {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   users        User[]
-  admins       Admin[]
   invitations  Invitation[]
 }
 
@@ -128,12 +108,10 @@ model Invitation {
   token       String          @unique
   category    String
   expires     DateTime?
-  adminId     String?
   companyId   String?
   userId      String?
   user        User?           @relation(fields: [userId], references: [id])
   company     Company?        @relation(fields: [companyId], references: [id])
-  admin       Admin?          @relation(fields: [adminId], references: [id])
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 }
@@ -152,9 +130,11 @@ model Employee {
   salary      String
   signBonus   String
   status      Boolean?
-  category    WorkerType       @default(EMPLOYEE)
+  category    WorkerType      @default(EMPLOYEE)
   payrollId   String?
   payroll     Payroll?        @relation(fields: [payrollId], references: [id])
+  expenseId   String?
+  expense     Expense[]         
 }
 
 
@@ -170,4 +150,10 @@ model Payroll {
 
 }
 
-
+model Expense {
+  id          String           @id @default(cuid())
+  description String
+  amount      String
+  employees   Employee[]
+   
+}

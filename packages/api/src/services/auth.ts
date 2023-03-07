@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { ADMIN, hashString, SUPER_ADMIN, USER } from "../utils";
+import { hashString } from "../utils";
 import { ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
 import { sendEmail } from "@wyre-zayroll/dialog";
@@ -10,7 +10,7 @@ export class AuthService {
   static async adminSignUp(input: ISignUp) {
     try {
       // check if admin exists
-      const adminExists = await prisma.admin.findFirst({
+      const adminExists = await prisma.user.findFirst({
         where: {
           email: input.email,
         },
@@ -82,14 +82,14 @@ export class AuthService {
       }
 
       // create admin
-      const admin = await prisma.admin.create({
+      const admin = await prisma.user.create({
         data: {
           name: input.name,
           email: input.email,
           phone: input.companyPhone,
           password: await hashString(input.password),
           companyId: company.id,
-          type: SUPER_ADMIN,
+          type: "SUPER_ADMIN",
           jobRole: input.jobRole,
           verifyId: token.id,
         },
@@ -137,9 +137,10 @@ export class AuthService {
     try {
       const { id, token } = input;
 
-      const admin = await prisma.admin.findFirst({
+      const admin = await prisma.user.findFirst({
         where: {
           id,
+          type: "ADMIN" || "SUPER_ADMIN",
         },
         select: {
           verification: true,
@@ -162,7 +163,7 @@ export class AuthService {
         });
 
       if (token === admin.verification.token) {
-        const adminVerfied = await prisma.admin.update({
+        const adminVerfied = await prisma.user.update({
           where: {
             id: id,
           },
@@ -214,7 +215,7 @@ export class AuthService {
           email: input.email,
           password: await hashString(input.password),
           jobRole: input.jobRole,
-          type: USER,
+          type: "USER",
           // companyId: input.companyId,
         },
       });
@@ -226,7 +227,7 @@ export class AuthService {
 
   static async sendAdminMailVerification(email: string, verifyCode: string) {
     try {
-      const admin = await prisma.admin.findFirst({
+      const admin = await prisma.user.findFirst({
         where: { email: email },
       });
 
@@ -290,10 +291,10 @@ export class AuthService {
   }
 
   static async checkIfSuperAdmin(userId: string) {
-    const result = await prisma.admin.findFirst({
+    const result = await prisma.user.findFirst({
       where: {
         id: userId,
-        type: SUPER_ADMIN,
+        type: "SUPER_ADMIN",
       },
     });
     if (!result) {
@@ -306,10 +307,10 @@ export class AuthService {
   }
 
   static async checkIfAdmin(userId: string) {
-    const result = await prisma.admin.findFirst({
+    const result = await prisma.user.findFirst({
       where: {
         id: userId,
-        type: ADMIN,
+        type: "ADMIN",
       },
     });
     if (!result) {
