@@ -37,4 +37,15 @@ export const employeeRouter = createTRPCRouter({
     const employees = EmployeeService.getEmployees();
     return employees;
   }),
+
+  getSingleContractor: protectedProcedure
+    .input(z.string())
+    .query(({ input }) => {
+      const contractor = EmployeeService.getSingleContractor(input);
+      return contractor;
+    }),
+  getContractors: protectedProcedure.query(() => {
+    const contractors = EmployeeService.getContractors();
+    return contractors;
+  }),
 });

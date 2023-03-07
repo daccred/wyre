@@ -2,14 +2,18 @@ import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
 import { InvitationSchemaType } from "../interfaces";
 import { AuthService } from "./auth";
-import { AdminService } from "./admin";
 import { nanoid } from "nanoid";
 import { ServicesError } from "./ServiceErrors";
 
 export class InvitationService {
   static async createInvitation(input: InvitationSchemaType) {
     try {
-      const getAdmin = await AdminService.getAdminByEmail(input.email);
+      const getAdmin = await prisma.user.findFirst({
+        where: {
+          email: input.email,
+          type: "ADMIN" || "SUPER_ADMIN",
+        },
+      });
       if (!getAdmin) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
       }
@@ -29,7 +33,7 @@ export class InvitationService {
           description: input.description,
           token: nanoid(10),
           category: input.category,
-          adminId: getAdmin.id,
+          userId: getAdmin.id,
           companyId: getAdmin.companyId,
         },
       });
@@ -64,7 +68,7 @@ export class InvitationService {
     try {
       const invitations = await prisma.invitation.findMany({
         where: {
-          adminId: adminId,
+          userId: adminId,
         },
       });
       if (!invitations) {
