@@ -14,18 +14,17 @@ export class PayrollService {
         },
         select: {
           id: true,
+          category: true,
         },
       });
 
-      const contractors = await prisma.contractor.findMany({
-        where: {
-          id: {
-            in: input.contractors,
-          },
-        },
-        select: {
-          id: true,
-        },
+      employees.some((employees) => {
+        if (employees.category === "CONTRACTOR") {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Contractors cannot be added to a payroll",
+          });
+        }
       });
 
       const payroll = await prisma.payroll.create({
@@ -36,7 +35,6 @@ export class PayrollService {
           auto: input.auto,
           burden: input.burden,
           currency: input.currency,
-          contractors: { connect: contractors },
           employees: { connect: employees },
         },
       });
@@ -60,8 +58,7 @@ export class PayrollService {
         where: {
           id,
         },
-        select: {
-          contractors: true,
+        include: {
           employees: true,
         },
       });
@@ -81,7 +78,6 @@ export class PayrollService {
     try {
       const payrolls = await prisma.payroll.findMany({
         include: {
-          contractors: true,
           employees: true,
         },
       });
@@ -102,7 +98,7 @@ export class PayrollService {
         where: {
           id,
         },
-        include: { contractors: true, employees: true },
+        include: { employees: true },
       });
 
       if (!payroll) {
@@ -122,16 +118,6 @@ export class PayrollService {
           id: true,
         },
       });
-      const contractors = await prisma.contractor.findMany({
-        where: {
-          id: {
-            in: input.contractors,
-          },
-        },
-        select: {
-          id: true,
-        },
-      });
 
       const updatePayroll = await prisma.payroll.update({
         where: {
@@ -144,7 +130,6 @@ export class PayrollService {
           auto: input.auto,
           burden: input.burden,
           currency: input.currency,
-          contractors: { connect: contractors },
           employees: { connect: employees },
         },
       });
@@ -180,32 +165,6 @@ export class PayrollService {
     }
   }
 
-  static async removeContractor(payrollId: string, contractorId: string) {
-    try {
-      const payroll = await prisma.payroll.update({
-        where: {
-          id: payrollId,
-        },
-        data: {
-          contractors: {
-            disconnect: {
-              id: contractorId,
-            },
-          },
-        },
-      });
-
-      if (!payroll) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create payroll",
-        });
-      }
-      return "Contractor removed successfully";
-    } catch (error) {
-      ServicesError(error);
-    }
-  }
   static async removeEmployee(payrollId: string, employeeId: string) {
     try {
       const payroll = await prisma.payroll.update({
@@ -213,7 +172,7 @@ export class PayrollService {
           id: payrollId,
         },
         data: {
-          contractors: {
+          employees: {
             disconnect: {
               id: employeeId,
             },

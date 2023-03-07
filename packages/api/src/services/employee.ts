@@ -15,7 +15,7 @@ export class EmployeeService {
       if (employeeExists) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Employee already exists",
+          message: "employee already exists",
         });
       }
       const employee = await prisma.employee.create({
@@ -26,7 +26,7 @@ export class EmployeeService {
           jobRole: input.jobRole,
           salary: input.salary,
           signBonus: input.signBonus,
-          status: input.status,
+          category: input.category,
         },
       });
 
@@ -41,7 +41,6 @@ export class EmployeeService {
       ServicesError(error);
     }
   }
-
   static async updateEmployee(employeeId: string, input: IEmployeeSchema) {
     try {
       const employee = await prisma.employee.update({
@@ -52,6 +51,8 @@ export class EmployeeService {
           department: input.department,
           jobRole: input.jobRole,
           salary: input.salary,
+          status: input.status,
+          category: input.category,
         },
       });
 
@@ -66,7 +67,6 @@ export class EmployeeService {
       ServicesError(error);
     }
   }
-
   static async deleteEmployee(employeeId: string) {
     try {
       const employee = await prisma.employee.delete({
@@ -76,10 +76,10 @@ export class EmployeeService {
       if (!employee) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Failed to delete payroll",
+          message: "Failed to delete employee",
         });
       }
-      return "Employee deleted successfully";
+      return "employee deleted successfully";
     } catch (error) {
       ServicesError(error);
     }
@@ -87,8 +87,8 @@ export class EmployeeService {
 
   static async getSingleEmployee(employeeId: string) {
     try {
-      const employee = await prisma.employee.findUnique({
-        where: { id: employeeId },
+      const employee = await prisma.employee.findFirst({
+        where: { category: "EMPLOYEE", id: employeeId },
       });
 
       if (!employee) {
@@ -103,9 +103,46 @@ export class EmployeeService {
     }
   }
 
+  static async getSingleContractor(employeeId: string) {
+    try {
+      const employee = await prisma.employee.findFirst({
+        where: { category: "CONTRACTOR", id: employeeId },
+      });
+
+      if (!employee) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Employee not found",
+        });
+      }
+      return employee;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
   static async getEmployees() {
     try {
-      const employees = await prisma.employee.findMany();
+      const employees = await prisma.employee.findMany({
+        where: { category: "EMPLOYEE" },
+      });
+
+      if (!employees) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Employees not found",
+        });
+      }
+
+      return employees;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+  static async getContractors() {
+    try {
+      const employees = await prisma.employee.findMany({
+        where: { category: "CONTRACTOR" },
+      });
 
       if (!employees) {
         throw new TRPCError({

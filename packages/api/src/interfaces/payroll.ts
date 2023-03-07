@@ -8,7 +8,6 @@ export const payrollSchema = z.object({
   currency: z.enum(["USD", "GHC", "NGN", "CNY", "GBP", "EUR"]),
   burden: z.number(),
   employees: z.array(z.string()),
-  contractors: z.array(z.string()),
 });
 
 export type IPayrollSchema = z.infer<typeof payrollSchema>;

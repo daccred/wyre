@@ -138,6 +138,11 @@ model Invitation {
   updatedAt   DateTime        @updatedAt
 }
 
+enum WorkerType {
+  EMPLOYEE
+  CONTRACTOR
+}
+
 model Employee {
   id          String          @id @default(cuid())
   name        String
@@ -147,23 +152,11 @@ model Employee {
   salary      String
   signBonus   String
   status      Boolean?
+  category    WorkerType       @default(EMPLOYEE)
   payrollId   String?
   payroll     Payroll?        @relation(fields: [payrollId], references: [id])
 }
 
-model Contractor {
-  id          String          @id @default(cuid())
-  name        String
-  email       String          @unique
-  department  String
-  jobRole     String  
-  salary      String
-  signBonus   String
-  status      Boolean?
-  payrollId   String?
-  payroll     Payroll?        @relation(fields: [payrollId], references: [id])
-
-}
 
 model Payroll {
   id          String          @id @default(cuid())
@@ -174,7 +167,6 @@ model Payroll {
   burden      Int
   currency    String
   employees   Employee[]
-  contractors Contractor[]
 
 }
 
