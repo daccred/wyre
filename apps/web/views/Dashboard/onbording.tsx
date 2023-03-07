@@ -28,7 +28,7 @@ const statData: StatData[] = [
       label: 'Add employees or contractor',
       icon: UserIcon,
       desc: 'Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis',
-      link: '/'
+      link: '/employees'
     },
     {
       id: 3,

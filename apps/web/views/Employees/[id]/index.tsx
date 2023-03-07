@@ -9,8 +9,16 @@ import ViewLayout from "../../../components/core/ViewLayout";
 import EmployeeForm from "./EmployeeForm";
 import CompensationForm from "./CompensationForm";
 import { FiChevronRight } from "react-icons/fi";
+import { useRouter } from "next/router";
+import { trpc } from "utils/trpc";
 
 const ManageEmployee = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data: employee } = trpc.employees.getSingleEmployee.useQuery('');
+  console.log(employee);
+
   return (
     <>
       <ViewLayout title="Employees">
@@ -21,13 +29,13 @@ const ManageEmployee = () => {
           fontWeight={"semibold"}
         >
           <BreadcrumbItem>
-            <BreadcrumbLink color={"lightgrey"}>Employee</BreadcrumbLink>
+            <BreadcrumbLink href='/employees' color={"lightgrey"}>Employee</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink
-            // href='#'
+            href='#'
             >
-              Kelechi Ihenacho
+            {id}
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
