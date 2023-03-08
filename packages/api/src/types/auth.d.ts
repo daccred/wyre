@@ -13,19 +13,19 @@ export interface User {
 }
 
 declare module "next-auth" {
-  // interface User {
-  //   id?: string;
-  //   name?: string;
-  //   email?: string;
-  //   userType?: string;
-  //   phone?: string;
-  //   password?: string;
-  //   emailVerified?: boolean;
-  //   image?: string;
-  //   jobRole?: string;
-  //   category?: string;
-  //   companyId?: string;
-  // }
+  interface User {
+    id?: string;
+    name?: string;
+    email?: string;
+    userType?: string;
+    phone?: string;
+    password?: string;
+    emailVerified?: boolean;
+    image: string | null;
+    jobRole: string | null;
+    category?: string;
+    companyId?: string;
+  }
 
   interface Session {
     user: User;
