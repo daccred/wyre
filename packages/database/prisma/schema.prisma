@@ -129,7 +129,7 @@ model Employee {
   jobRole     String  
   salary      String
   signBonus   String
-  status      Boolean?
+  status      Boolean?        @default(true)
   category    WorkerType      @default(EMPLOYEE)
   payrollId   String?
   payroll     Payroll?        @relation(fields: [payrollId], references: [id])

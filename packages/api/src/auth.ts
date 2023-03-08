@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@wyre-zayroll/db";
 import { loginSchema } from "./interfaces";
 import { verifyHash } from "./utils";
+import { TRPCError } from "@trpc/server";
 
 /**
  * * Important Info
@@ -45,7 +46,10 @@ export const nextAuthOptions: NextAuthOptions = {
           if (!user) {
             throw new Error("Account not found");
           } else if (!user.emailVerified) {
-            throw new Error("Your email is  not verified");
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Your email is  not verified",
+            });
           }
 
           // const verify = await hashString(password)
@@ -56,7 +60,10 @@ export const nextAuthOptions: NextAuthOptions = {
           );
 
           if (!isValidPassword) {
-            throw new Error("Your username or password is incorrect");
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Your username or password is incorrect",
+            });
           }
           return {
             id: user.id,
@@ -68,6 +75,9 @@ export const nextAuthOptions: NextAuthOptions = {
             jobRole: user.jobRole,
           };
         } catch (error) {
+          if (error instanceof TRPCError) {
+            throw new TRPCError({ code: error.code, message: error.message });
+          }
           throw new Error(error as string);
         }
       },
@@ -75,16 +85,15 @@ export const nextAuthOptions: NextAuthOptions = {
     // add another auth this time for admin
   ],
   callbacks: {
-    // jwt: ({ token, user }) => {
-    //   if (user) {
-    //     token.user = user;
-    //   }
-    //   return token;
-    // },
-    // session: ({ session, token }) => {
-    //   session.user = token.user;
-    //   return session;
-    // },
+    jwt: ({ token, user }) => {
+      if (user) {
+        return { ...token, user };
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      return { ...session, ...token };
+    },
   },
 
   session: {

@@ -48,7 +48,7 @@ export default function Page() {
 
   const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "", password: "#John007" },
 
     schema: loginValidationSchema,
   });
