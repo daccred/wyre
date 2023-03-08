@@ -5,7 +5,6 @@ import { invitationRouter } from "./invitation";
 import { payrollRouter } from "./payroll";
 import { employeeRouter } from "./employees";
 import { userRouter } from "./users";
-import { contractorRouter } from "./contractor";
 
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
@@ -14,7 +13,6 @@ export const appRouter = createTRPCRouter({
   invitations: invitationRouter,
   payroll: payrollRouter,
   employees: employeeRouter,
-  contractors: contractorRouter,
 });
 
 // export type definition of API

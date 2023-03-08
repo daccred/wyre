@@ -27,6 +27,7 @@
     "@wyre-zayroll/db": "*",
     "@wyre-zayroll/dialog": "*",
     "@wyre-zayroll/env": "*",
+    "argon2": "^0.30.3",
     "cz-ccgls": "^0.4.6",
     "framer-motion": "^7.6.5",
     "next": "^13.1.1",

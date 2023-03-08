@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@wyre-zayroll/db";
 import { loginSchema } from "./interfaces";
 import { verifyHash } from "./utils";
+import { TRPCError } from "@trpc/server";
 
 /**
  * * Important Info
@@ -38,20 +39,26 @@ export const nextAuthOptions: NextAuthOptions = {
         try {
           const { email, password } = await loginSchema.parseAsync(credentials);
 
-          const user = await prisma.admin.findFirst({
+          const user = await prisma.user.findFirst({
             where: { email },
           });
 
-          console.error(user);
-
           if (!user) {
             throw new Error("Account not found");
+          } else if (!user.emailVerified) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Your email is  not verified",
+            });
           }
 
           const isValidPassword = await verifyHash(password, user.password);
 
           if (!isValidPassword) {
-            throw new Error("Your username or password is incorrect");
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Your username or password is incorrect",
+            });
           }
           return {
             id: user.id,
@@ -63,6 +70,9 @@ export const nextAuthOptions: NextAuthOptions = {
             jobRole: user.jobRole,
           };
         } catch (error) {
+          if (error instanceof TRPCError) {
+            throw new TRPCError({ code: error.code, message: error.message });
+          }
           throw new Error(error as string);
         }
       },
@@ -70,16 +80,15 @@ export const nextAuthOptions: NextAuthOptions = {
     // add another auth this time for admin
   ],
   callbacks: {
-    // jwt: ({ token, user }) => {
-    //   if (user) {
-    //     token.user = user;
-    //   }
-    //   return token;
-    // },
-    // session: ({ session, token }) => {
-    //   session.user = token.user;
-    //   return session;
-    // },
+    jwt: ({ token, user }) => {
+      if (user) {
+        return { ...token, user };
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      return { ...session, ...token };
+    },
   },
 
   session: {
