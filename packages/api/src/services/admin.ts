@@ -1,18 +1,42 @@
 import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
-import type { Admin } from "../interfaces";
+import type { IUserSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
 
 export class AdminService {
-  static async getAdminById(id?: string) {
+  // constructor(input:IUserSchema) {
+  //   this.input = input
+  //   this.isAdmin();
+  // }
+
+  async isAdmin(input: IUserSchema) {
     try {
-      const getAdmin = await prisma.admin.findFirst({
+      const admin = await prisma.user.findFirst({
+        where: {
+          id: input.id,
+          type: input.type,
+        },
+      });
+
+      if (!admin) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You do not have permission to perform this action",
+        });
+      }
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+  static async getuserById(id?: string) {
+    try {
+      const getuser = await prisma.user.findFirst({
         where: {
           id,
         },
       });
-      if (getAdmin) {
-        return getAdmin;
+      if (getuser) {
+        return getuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",
@@ -23,35 +47,35 @@ export class AdminService {
     }
   }
 
-  static async getAdminByEmail(email?: string) {
+  static async getuserByEmail(email?: string) {
     try {
-      const getAdmin = await prisma.admin.findFirst({
+      const getuser = await prisma.user.findFirst({
         where: {
           email,
         },
       });
-      if (getAdmin) {
-        return getAdmin;
+      if (getuser) {
+        return getuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",
-        message: "Admin not found",
+        message: "user not found",
       });
     } catch (error) {
       ServicesError(error);
     }
   }
 
-  static async updateAdmin(data: Admin, id?: string) {
+  static async updateuser(data: IUserSchema, id?: string) {
     try {
-      const updateAdmin = await prisma.admin.update({
+      const updateuser = await prisma.user.update({
         where: {
           id,
         },
         data,
       });
-      if (updateAdmin) {
-        return updateAdmin;
+      if (updateuser) {
+        return updateuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",
@@ -62,15 +86,15 @@ export class AdminService {
     }
   }
 
-  static async deleteAdmin(id: string) {
+  static async deleteuser(id: string) {
     try {
-      const deleteAdmin = await prisma.admin.delete({
+      const deleteuser = await prisma.user.delete({
         where: {
           id,
         },
       });
-      if (deleteAdmin) {
-        return deleteAdmin;
+      if (deleteuser) {
+        return deleteuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",

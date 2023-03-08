@@ -27,19 +27,11 @@ export const payrollRouter = createTRPCRouter({
       const deletePayroll = await PayrollService.deletePayroll(input.id);
       return deletePayroll;
     }),
-  removeContractor: protectedProcedure
-    .input(z.object({ payrollId: z.string(), contractorId: z.string() }))
-    .mutation(async ({ input }) => {
-      const removeContractor = await PayrollService.removeContractor(
-        input.payrollId,
-        input.contractorId
-      );
-      return removeContractor;
-    }),
+
   removeEmployee: protectedProcedure
     .input(z.object({ payrollId: z.string(), contractorId: z.string() }))
     .mutation(async ({ input }) => {
-      const removeContractor = await PayrollService.removeContractor(
+      const removeContractor = await PayrollService.removeEmployee(
         input.payrollId,
         input.contractorId
       );

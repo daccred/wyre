@@ -1,6 +1,6 @@
-import { prisma } from "@wyre-zayroll/db/src";
+import { prisma } from "@wyre-zayroll/db";
 import { TRPCError } from "@trpc/server";
-import type { User } from "../interfaces";
+import type { IUserSchema } from "../interfaces";
 
 export const config = { send_json: true, send_form: false };
 
@@ -26,7 +26,7 @@ export class UserService {
 
   static async getUsers() {
     try {
-      const users = await prisma.admin.findMany({
+      const users = await prisma.user.findMany({
         include: {
           verification: true,
         },
@@ -46,7 +46,7 @@ export class UserService {
     }
   }
 
-  static async updateUser(data: User, id?: string) {
+  static async updateUser(data: IUserSchema, id?: string) {
     try {
       const updateUser = await prisma.user.update({
         where: {
