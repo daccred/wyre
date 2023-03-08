@@ -140,17 +140,22 @@ export class AuthService {
       const admin = await prisma.user.findFirst({
         where: {
           id,
-          type: "ADMIN" || "SUPER_ADMIN",
+          // type: "ADMIN" || "SUPER_ADMIN",
         },
         select: {
           verification: true,
         },
       });
 
-      if (!admin?.verification) {
+      if (!admin) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to verify admin email",
+          message: "Account not found",
+        });
+      } else if (!admin.verification) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Account verification failed",
         });
       }
 
