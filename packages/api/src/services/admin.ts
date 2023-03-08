@@ -4,12 +4,20 @@ import type { IUserSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
 
 export class AdminService {
-  // constructor(input:IUserSchema) {
-  //   this.input = input
-  //   this.isAdmin();
-  // }
+  public input: IUserSchema;
+  constructor(input: IUserSchema) {
+    this.input = input;
+    AdminService.isAdmin(input)
+      .then((res) => res)
+      .catch(() => {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You do not have permission to perform this action",
+        });
+      });
+  }
 
-  async isAdmin(input: IUserSchema) {
+  static async isAdmin(input: IUserSchema) {
     try {
       const admin = await prisma.user.findFirst({
         where: {
@@ -28,7 +36,7 @@ export class AdminService {
       ServicesError(error);
     }
   }
-  static async getuserById(id?: string) {
+  static async getUserById(id?: string) {
     try {
       const getuser = await prisma.user.findFirst({
         where: {

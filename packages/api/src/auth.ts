@@ -48,7 +48,7 @@ export const nextAuthOptions: NextAuthOptions = {
           } else if (!user.emailVerified) {
             throw new TRPCError({
               code: "BAD_REQUEST",
-              message: "Your email is  not verified",
+              message: "Your email is not verified",
             });
           }
 
