@@ -19,10 +19,10 @@ interface Props {
 
 const IndeterminateCheckbox = forwardRef<
   HTMLInputElement,
-  { indeterminate: boolean }
+  { indeterminate?: boolean }
 >(
   (
-    { indeterminate, ...rest },
+    { indeterminate = false, ...rest },
     ref:
       | React.Ref<HTMLInputElement>
       | ((instance: HTMLInputElement | null) => void)

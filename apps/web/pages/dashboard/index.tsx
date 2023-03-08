@@ -1,8 +1,8 @@
 import React from "react";
 import { Meta } from "../../layouts";
-import View from "../../views/Contractors";
+import View from "../../views/Dashboard";
 
-export default function Page() {
+function Page() {
   return (
     <>
       <Meta />
@@ -13,3 +13,5 @@ export default function Page() {
 
 // add the requireAuth property to the page component
 Page.requireAuth = true;
+
+export default Page;

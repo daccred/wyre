@@ -50,11 +50,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps}>
         <Flex align="center" justify="space-between">
-          <FormLabel
-            color={useColorModeValue("black", "white")}
-            fontSize="sm"
-            {...labelProps}
-          >
+          <FormLabel color={"#666666"} fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         </Flex>
@@ -74,8 +70,8 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
                 menuList(provided) {
                   return {
                     ...provided,
-                    backgroundColor: "#011627",
-                    color: "white",
+                    backgroundColor: "",
+                    color: "black",
                   };
                 },
                 valueContainer(provided) {
@@ -90,13 +86,13 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
                 control(provided) {
                   return {
                     ...provided,
-                    borderRadius: "24px",
-                    minHeight: "48px",
-                    border: ".77px solid",
-                    boxShadow: "none",
-                    backgroundColor: "none",
+                    minHeight: "45px",
+                    padding: "10px",
+                    border: "1px solid #D2D2D2",
+                    borderRadius: "5px",
+                    backgroundColor: "#F7F7F7",
                     "&:hover": {
-                      borderColor: "brand",
+                      borderColor: "gray",
                     },
                   };
                 },
