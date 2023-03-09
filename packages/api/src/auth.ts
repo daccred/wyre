@@ -44,7 +44,10 @@ export const nextAuthOptions: NextAuthOptions = {
           });
 
           if (!user) {
-            throw new Error("Account not found");
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "User not found.",
+            });
           } else if (!user.emailVerified) {
             throw new TRPCError({
               code: "BAD_REQUEST",

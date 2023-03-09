@@ -27,9 +27,11 @@ export class UserService {
   static async getUsers() {
     try {
       const users = await prisma.user.findMany({
+        // **  To be taken out after testing user verification //
         include: {
           verification: true,
         },
+        // **  To be taken out after testing user verification //
       });
       if (!users) {
         throw new TRPCError({

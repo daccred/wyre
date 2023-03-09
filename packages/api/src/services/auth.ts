@@ -3,7 +3,6 @@ import { hashString } from "../utils";
 import { ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
 import { sendEmail } from "@wyre-zayroll/dialog";
-import { Prisma } from "@prisma/client";
 import { ServicesError } from "./ServiceErrors";
 
 export class AuthService {
@@ -117,19 +116,7 @@ export class AuthService {
 
       return { admin, emailStatus: response };
     } catch (error) {
-      if (error instanceof TRPCError) {
-        throw new TRPCError({ code: error.code, message: error.message });
-      }
-
-      if (error instanceof Prisma.PrismaClientValidationError) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          cause: error.name,
-          message: "Prisma Client validation failed",
-        });
-      }
-      console.warn(error);
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
@@ -144,6 +131,7 @@ export class AuthService {
         },
         select: {
           verification: true,
+          emailVerified: true,
         },
       });
 
@@ -152,6 +140,8 @@ export class AuthService {
           code: "INTERNAL_SERVER_ERROR",
           message: "Account not found",
         });
+      } else if (admin.emailVerified) {
+        return "Account already verified";
       } else if (!admin.verification) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -190,11 +180,7 @@ export class AuthService {
         });
       }
     } catch (error) {
-      if (error instanceof TRPCError) {
-        throw new TRPCError({ code: error.code, message: error.message });
-      }
-      console.warn(error);
-      throw new Error(JSON.stringify(error as string));
+      ServicesError(error);
     }
   }
 
