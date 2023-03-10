@@ -11,8 +11,7 @@ import { useRouter } from "next/router";
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
-  password: z.string()
-  .min(1, "Password is required")
+  password: z.string().min(4).max(12),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
