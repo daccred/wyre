@@ -86,7 +86,7 @@ const MonthlyEmployeeSalary = () => {
   const data = router.query;
 
   const { data: employeeData, isLoading } =
-    trpc.employees.getEmployees.useQuery();
+    trpc.employee.getEmployees.useQuery();
 
   const columns = [
     ...createPayrollColumns,

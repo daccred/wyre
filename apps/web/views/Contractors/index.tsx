@@ -42,7 +42,7 @@ import { trpc } from "../../utils/trpc";
 
 const Contractors = () => {
   const router = useRouter();
-  const { data: contractors } = trpc.employees.getContractors.useQuery();
+  const { data: contractors } = trpc.employee.getContractors.useQuery();
 
   const {
     isOpen: addContractorModalIsOpen,

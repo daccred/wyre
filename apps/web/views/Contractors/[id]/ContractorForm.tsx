@@ -38,7 +38,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
     contractor ?? {};
 
   const { mutate: updateContractor, isLoading } =
-    trpc.employees.updateEmployee.useMutation({
+    trpc.employee.updateEmployee.useMutation({
       onSuccess(data: any) {
         // Reset the form data to empty values
         styledToast({
@@ -94,7 +94,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
   });
 
   const { mutate: terminateEmployee, isLoading: isTerminating } =
-    trpc.employees.updateEmployee.useMutation({
+    trpc.employee.updateEmployee.useMutation({
       onSuccess(data: any) {
         styledToast({
           status: "success",

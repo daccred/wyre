@@ -5,6 +5,7 @@ import { prisma } from "@wyre-zayroll/db";
 import { loginSchema } from "./interfaces";
 import { verifyHash } from "./utils";
 import { TRPCError } from "@trpc/server";
+import { ServicesError } from "./services";
 
 /**
  * * Important Info
@@ -44,11 +45,14 @@ export const nextAuthOptions: NextAuthOptions = {
           });
 
           if (!user) {
-            throw new Error("Account not found");
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "User not found.",
+            });
           } else if (!user.emailVerified) {
             throw new TRPCError({
               code: "BAD_REQUEST",
-              message: "Your email is  not verified",
+              message: "Your email is not verified",
             });
           }
 
@@ -73,7 +77,7 @@ export const nextAuthOptions: NextAuthOptions = {
           };
         } catch (error) {
           if (error instanceof TRPCError) {
-            throw new TRPCError({ code: error.code, message: error.message });
+            ServicesError(error);
           }
           throw new Error(error as string);
         }

@@ -63,8 +63,8 @@ model User {
   password      String
   type          Role         @default(USER)
   emailVerified Boolean?     @default(false)
-  verifyId      String?      @unique
-  verification  VerificationToken? @relation(fields: [verifyId], references: [id])
+  verifyId      String       @unique
+  verification  VerificationToken @relation(fields: [verifyId], references: [id])
   image         String?
   jobRole       String?
   category      String?
@@ -134,7 +134,7 @@ model Employee {
   payrollId   String?
   payroll     Payroll?        @relation(fields: [payrollId], references: [id])
   expenseId   String?
-  expense     Expense[]         
+  expense     Expense[]        
 }
 
 

@@ -50,7 +50,7 @@ const CreatePayroll = () => {
     useState("All departments");
 
   const { data: employeeData, isLoading } =
-    trpc.employees.getEmployees.useQuery();
+    trpc.employee.getEmployees.useQuery();
 
   const handleSelectionChange = (selection: any) => {
     setSelectedRowIds(selection);

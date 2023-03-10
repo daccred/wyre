@@ -39,7 +39,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
     employee ?? {};
 
   const { mutate: updateEmployee, isLoading } =
-    trpc.employees.updateEmployee.useMutation({
+    trpc.employee.updateEmployee.useMutation({
       onSuccess(data: any) {
         // Reset the form data to empty values
         styledToast({
@@ -81,7 +81,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
   };
 
   const { mutate: terminateEmployee, isLoading: isTerminating } =
-    trpc.employees.updateEmployee.useMutation({
+    trpc.employee.updateEmployee.useMutation({
       onSuccess(data: any) {
         styledToast({
           status: "success",

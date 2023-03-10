@@ -4,17 +4,25 @@ import type { IUserSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
 
 export class AdminService {
-  // constructor(input:IUserSchema) {
-  //   this.input = input
-  //   this.isAdmin();
+  // public adminId: string;
+  // constructor(adminId: string) {
+  //   this.adminId = adminId;
+  //   AdminService.isAdmin(adminId)
+  //     .then((res) => res)
+  //     .catch(() => {
+  //       throw new TRPCError({
+  //         code: "UNAUTHORIZED",
+  //         message: "You do not have permission to perform this action",
+  //       });
+  //     });
   // }
 
-  async isAdmin(input: IUserSchema) {
+  static async isAdmin(adminId: string) {
     try {
       const admin = await prisma.user.findFirst({
         where: {
-          id: input.id,
-          type: input.type,
+          id: adminId,
+          type: "ADMIN",
         },
       });
 
@@ -28,11 +36,12 @@ export class AdminService {
       ServicesError(error);
     }
   }
-  static async getuserById(id?: string) {
+  static async getAdmin(id?: string) {
     try {
       const getuser = await prisma.user.findFirst({
         where: {
           id,
+          type: "ADMIN",
         },
       });
       if (getuser) {
@@ -40,14 +49,14 @@ export class AdminService {
       }
       throw new TRPCError({
         code: "NOT_FOUND",
-        message: "User not found",
+        message: "Admin not found",
       });
     } catch (error) {
       ServicesError(error);
     }
   }
 
-  static async getuserByEmail(email?: string) {
+  static async getAdminByEmail(email?: string) {
     try {
       const getuser = await prisma.user.findFirst({
         where: {
@@ -66,7 +75,7 @@ export class AdminService {
     }
   }
 
-  static async updateuser(data: IUserSchema, id?: string) {
+  static async updateAdmin(data: IUserSchema, id?: string) {
     try {
       const updateuser = await prisma.user.update({
         where: {
@@ -86,7 +95,7 @@ export class AdminService {
     }
   }
 
-  static async deleteuser(id: string) {
+  static async deleteAdmin(id: string) {
     try {
       const deleteuser = await prisma.user.delete({
         where: {

@@ -3,17 +3,17 @@ import * as z from "zod";
 
 // convert the interface to a zod schema
 export const UserSchema = z.object({
-  id: z.string().optional(),
-  name: z.string().optional(),
-  email: z.string().optional(),
-  type: z.enum(["ADMIN", "USER", "SUPER_ADMIN"]),
-  phone: z.string().optional(),
-  password: z.string().optional(),
-  emailVerified: z.boolean().optional(),
-  image: z.string().optional(),
-  jobRole: z.string().optional(),
-  category: z.string().optional(),
-  companyId: z.string().optional(),
+  // id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  type: z.enum(["ADMIN", "USER"]),
+  phone: z.string(),
+  password: z.string(),
+  emailVerified: z.boolean(),
+  image: z.string(),
+  jobRole: z.string(),
+  // category: z.string(),
+  companyId: z.string(),
 });
 
 export type IUserSchema = z.infer<typeof UserSchema>;

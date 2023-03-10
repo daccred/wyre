@@ -16,12 +16,7 @@ export const authRouter = createTRPCRouter({
       const admin = await AuthService.adminSignUp(input);
       return admin;
     }),
-  userSignup: publicProcedure
-    .input(signUpSchema)
-    .mutation(async ({ input }) => {
-      const user = await AuthService.userSignUp(input);
-      return user;
-    }),
+
   sendAdminMailVerification: publicProcedure
     .input(z.object({ email: z.string().email(), verifyCode: z.string() }))
     .mutation(async ({ input }) => {

@@ -42,7 +42,7 @@ import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 
 const Employees = () => {
-  const { data: employees } = trpc.employees.getEmployees.useQuery();
+  const { data: employees } = trpc.employee.getEmployees.useQuery();
   console.log(employees);
 
   const router = useRouter();

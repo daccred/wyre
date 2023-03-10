@@ -45,7 +45,7 @@ const ManageEmployee = ({ employeeData }: any) => {
     employee: employeeData,
   });
   const { data: employee, isLoading } =
-    trpc.employees.getSingleEmployee.useQuery(id as string);
+    trpc.employee.getSingleEmployee.useQuery(id as string);
 
   useEffect(() => {
     if (employee) {
@@ -97,7 +97,7 @@ export default ManageEmployee;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const id = query.id as string;
-  const { data: employee } = trpc.employees.getSingleEmployee.useQuery(id);
+  const { data: employee } = trpc.employee.getSingleEmployee.useQuery(id);
   return {
     props: {
       requireAuth: false,
