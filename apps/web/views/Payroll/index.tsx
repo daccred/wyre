@@ -16,16 +16,31 @@ import { payrollData } from "./utils/dummyData";
 import PayrollType from "./modals/PayrollType";
 import { useRouter } from "next/router";
 import { payrollColumns } from "./utils/tableColumns";
-import CustomTable from "../../components/CustomTable/index";
+import { trpc } from "../../utils/trpc";
+import { useEffect, useState } from "react";
+import { Payroll } from "@prisma/client";
+import { CustomTable } from "../../components/CustomTable";
 
 const Payroll = () => {
+  const router = useRouter();
+
   const {
     isOpen: payrollTypeModalIsOpen,
     onOpen: openPayrollTypeModal,
     onClose: closePayrollTypeModal,
   } = useDisclosure();
 
-  const router = useRouter();
+  const [tableData, setTableData] = useState<Payroll[]>([]);
+
+  const { data: payroll, isLoading } = trpc.payroll.getPayrolls.useQuery();
+
+  useEffect(() => {
+    if (!payroll) {
+      return;
+    }
+
+    setTableData(payroll as Payroll[]);
+  }, [payroll]);
 
   return (
     <ViewLayout title="Payroll">
@@ -97,7 +112,7 @@ const Payroll = () => {
         <CustomTable
           // @ts-ignore
           columns={payrollColumns}
-          data={payrollData}
+          data={tableData}
         />
       </Stack>
 

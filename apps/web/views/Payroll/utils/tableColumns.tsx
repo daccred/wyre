@@ -7,29 +7,33 @@ import {
   Icon,
   Box,
 } from "@chakra-ui/react";
+import moment from "moment";
+import { Row } from "react-table";
 import { CheckedIcon } from "../ProviderIcons";
 
 export const payrollColumns = [
   {
     id: 1,
     Header: "Payroll Description",
-    accessor: "decription",
+    accessor: "title",
   },
   {
     id: 2,
     Header: "Amount",
-    accessor: "amount",
+    accessor: "burden",
   },
+
   {
     id: 3,
     Header: "Due Date",
-    accessor: "dueDate",
+    accessor: (row: any) => <Text>{moment(row?.payday).format("LL")} </Text>,
   },
   {
     id: 4,
-    Header: "Paid On",
-    accessor: "paidOn",
+    Header: "Paid At",
+    accessor: (row: any) => <Text>Not Available </Text>,
   },
+
   {
     id: 5,
     Header: "Status",
@@ -52,11 +56,6 @@ export const payrollColumns = [
   },
 ];
 
-function CustomIcon(props: any) {
-  const { isIndeterminate, isChecked, ...rest } = props;
-
-  return <>{isChecked ? <CheckedIcon /> : null}</>;
-}
 export const createPayrollColumns = [
   {
     Header: "Full Name",
@@ -74,65 +73,45 @@ export const createPayrollColumns = [
   },
   {
     Header: "Department",
-    accessor: "department",
+    accessor: (row: any) => (
+      <Text textTransform="capitalize">{row?.department}</Text>
+    ),
   },
   {
     Header: "Job Role",
-    accessor: "role",
+    accessor: (row: any) => (
+      <Text textTransform="capitalize">{row?.jobRole} </Text>
+    ),
   },
   {
     Header: "Salary",
-    accessor: "grossPay",
+    accessor: (row: any) => <Text>{row?.salary} </Text>,
   },
   {
     Header: "Status",
-    accessor: "status",
+    accessor: (row: any) => (
+      <Text>{row?.status === true ? "Active" : "Inactive"} </Text>
+    ),
   },
-
-  // {
-  //   Header: 'header',
-  //   accessor: () => (
-  //     <Checkbox
-  //     icon={<CustomIcon />}
-  //           colorScheme='white'
-  //           rounded={0}
-  //           size='lg'
-  //         />
-  //   )
-  // }
 ];
 
-export const managePayrollColumns = (onClick: () => void) => [
+export const managePayrollColumns = [
   {
-    Header: "Pay Schedule",
-    accessor: "decription",
+    Header: "Pay Description",
+    accessor: "title",
   },
   {
     Header: "Amount",
-    accessor: "amount",
+    accessor: "burden",
   },
   {
     Header: "Payment Cycle",
-    accessor: "paymentCycle",
+    accessor: "cycle",
   },
+  // TODO: Paid on the same as pay day?
   {
     Header: "Last Paid",
-    accessor: "paidOn",
-  },
-  {
-    Header: "Action",
-    accessor: (row: any) => (
-      <Button
-        bg="brand.700"
-        color="white"
-        iconSpacing="3"
-        w="fit-content"
-        _hover={{ hover: "none" }}
-        onClick={onClick}
-      >
-        Manage
-      </Button>
-    ),
+    accessor: (row: any) => <Text>{moment(row?.payday).format("LL")} </Text>,
   },
 ];
 

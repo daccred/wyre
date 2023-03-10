@@ -1,62 +1,64 @@
 import {
-  HStack,
-  Stack,
+  Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Button,
+  Center,
+  Checkbox,
+  Flex,
   Grid,
   GridItem,
   Heading,
-  Text,
-  VStack,
-  Flex,
-  Button,
-  Center,
+  HStack,
   Input,
   Select,
-  Box,
+  Spinner,
+  Stack,
+  Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import ViewLayout from "../../../components/core/ViewLayout";
-
+import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
 import { useRouter } from "next/router";
-import {
-  FormInput,
-  FormNativeSelect,
-  useForm,
-  FormCheckbox,
-} from "../../../components/forms";
-import z from "zod";
+import { FormInput, FormNativeSelect, useForm } from "../../../components";
+import { createPayrollColumns } from "../utils/tableColumns";
 import { SalaryProgress } from "../utils/misc";
-import { createPayrollData } from "../utils/dummyData";
-import { useEffect, useMemo, useState } from "react";
-import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
-import { employeeSalaryColumns } from "../utils/tableColumns";
+import z from "zod";
+import { trpc } from "../../../utils/trpc";
+import { Employee } from "@prisma/client";
+import { CustomTable } from "../../../components/CustomTable";
+import { employeeSalaryPath, managePayrollPath } from "../routes";
 import SuspendPayroll from "../modals/SuspendPayroll";
 import SuccessModal from "../modals/SuccessModal";
-import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
-import { employeeSalaryPath, managePayrollPath } from "../routes";
+
+const cycleEnum = z
+  .enum(["daily", "bi-weekly", "monthly"])
+  .refine((value) => value != null, { message: "Cycle is required" });
+const currencyEnum = z
+  .enum(["USD", "GHC", "NGN", "CNY", "GBP", "EUR"])
+  .refine((value) => value !== undefined, { message: "Currency is required" });
 
 export const createPayrollValidationSchema = z.object({
-  title: z.string().email(),
-  cycle: z.string().min(1, { message: "Required" }),
-  paymentDate: z.string().min(1, { message: "Required" }),
-  automaticPayment: z.boolean(),
+  title: z.string().nonempty("Title is required"),
+  cycle: cycleEnum,
+  auto: z.boolean().refine((value) => value !== undefined && value !== null, {
+    message: "Auto is required",
+  }),
+  payday: z
+    .date()
+    .refine((value) => value !== null && !isNaN(value.getTime()), {
+      message: "Payday is required",
+    }),
+  currency: currencyEnum,
+  burden: z.number(),
+  employees: z.array(z.string()).nonempty("Employees is required"),
 });
-
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 
 const MonthlyEmployeeSalary = () => {
-  const { pathname } = useRouter();
-
-  const [tableData, setTableData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRowIds, setSelectedRowIds] = useState({});
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [selectedDepartment, setSelectedDepartment] =
-    useState("All departments");
-
   const {
     isOpen: suspendPayrolleModalIsOpen,
     onOpen: openSuspendPayrollModal,
@@ -69,70 +71,75 @@ const MonthlyEmployeeSalary = () => {
     onClose: closeSuccessModal,
   } = useDisclosure();
 
-  const handleSelectionChange = (selection: any) => {
-    setSelectedRowIds(selection);
-  };
-
-  const handleSelectedRowsAmountChange = (amount: number) => {
-    setTotalAmount(amount);
-  };
-
-  const selectedRows = useMemo(
-    () =>
-      tableData.filter((row: any) => {
-        // @ts-ignore
-        return selectedRowIds[row.id];
-      }),
-    [selectedRowIds, tableData]
-  );
-
-  useEffect(() => {
-    if (createPayrollData) {
-      // @ts-ignore
-      setTableData(createPayrollData);
-    }
-  }, []);
-
-  useEffect(() => {
-    let filteredData = createPayrollData;
-    if (selectedDepartment !== "All departments") {
-      filteredData = createPayrollData.filter(
-        (data) =>
-          data?.department?.toLowerCase() === selectedDepartment.toLowerCase()
-      );
-    }
-    const searchData = filteredData.filter((data) =>
-      data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-    );
-    // @ts-ignore
-    setTableData(searchData as {}[]);
-  }, [searchTerm, selectedDepartment]);
-
-  useEffect(() => {
-    const selectedAmounts = selectedRows.map((row: any) => row.grossPay);
-    const total = selectedAmounts.reduce((sum: number, amount: number) => {
-      return sum + amount;
-    }, 0);
-    handleSelectedRowsAmountChange(total);
-  }, [selectedRows]);
+  const { pathname } = useRouter();
+  const [tableData, setTableData] = useState<Employee[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDepartment, setSelectedDepartment] =
+    useState("All departments");
 
   const departmentOptions = useMemo(
     () => ["All departments", "Tech", "Finance", "Operations"],
     []
   );
 
+  const router = useRouter();
+  const data = router.query;
+
+  const { data: employeeData, isLoading } =
+    trpc.employees.getEmployees.useQuery();
+
+  const columns = [
+    ...createPayrollColumns,
+    {
+      Header: "header",
+      accessor: (row: any) => (
+        <Checkbox name="auto" colorScheme="purple" size="md" />
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    if (!employeeData) {
+      return;
+    }
+
+    setTableData(employeeData as Employee[]);
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (!employeeData) {
+      return;
+    }
+
+    let filteredData = employeeData;
+    if (selectedDepartment !== "All departments") {
+      filteredData = employeeData?.filter(
+        (data) =>
+          data?.department?.toLowerCase() === selectedDepartment?.toLowerCase()
+      );
+    }
+    const searchData = filteredData?.filter((data) =>
+      data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+    );
+    setTableData(searchData);
+  }, [employeeData, searchTerm, selectedDepartment]);
+
   const { renderForm } = useForm<FormInputOptions>({
     // onSubmit: handleSubmit,
-    // defaultValues: { email: "" },
-    // schema: addContractorValidationSchema,
+    schema: createPayrollValidationSchema,
+    defaultValues: {
+      title: data.title as string,
+      cycle: data.cycle as "daily" | "bi-weekly" | "monthly",
+      auto: data.auto as any,
+      payday: new Date(),
+      // Todo: fix currency
+      currency: "USD",
+      burden: 0,
+      // Todo: fix this
+      employees: ["Agnes"],
+    },
   });
 
-  const totalSalaries = useMemo(() => {
-    return tableData.reduce((total, { grossPay }) => total + grossPay, 0);
-  }, [tableData]);
-
-  const salaryPercentage = Math.round((totalAmount / totalSalaries) * 100);
-  const selectedEmployees = Object.keys(selectedRowIds).length;
   return (
     <>
       <ViewLayout title="Payroll">
@@ -164,12 +171,13 @@ const MonthlyEmployeeSalary = () => {
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
+
         <Grid templateColumns="69% 30%" gap={4} mt={4}>
-          <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4}>
-            <Heading as="h4" size="xs" fontSize="xl">
-              Payroll History
-            </Heading>
-            {renderForm(
+          {renderForm(
+            <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4}>
+              <Heading as="h4" size="xs" fontSize="xl">
+                Payroll History
+              </Heading>
               <Stack spacing={"6"} pb="4">
                 <Stack>
                   <FormInput
@@ -184,100 +192,83 @@ const MonthlyEmployeeSalary = () => {
                       placeholder="Payment Cycle"
                       options={[
                         { label: "Daily", value: "daily" },
-                        { label: "Weekly", value: "weekly" },
+                        { label: "Bi-Weekly", value: "bi-weekly" },
                         { label: "Monthly", value: "monthly" },
-                        { label: "Yearly", value: "yearly" },
                       ]}
                     />
 
                     <FormInput
-                      name="paymentDate"
+                      name="payday"
                       label="Payment Date"
                       placeholder="Payment Date"
                       type="date"
                     />
                   </HStack>
                 </Stack>
-
-                <FormCheckbox
-                  label="Allow automatic payment of payroll on due date"
-                  name="automaticPayment"
-                />
+                <Checkbox name="auto" colorScheme="purple" size="md">
+                  Allow automatic payment of payroll on due date
+                </Checkbox>
               </Stack>
-            )}
-            <Stack mt={6}>
-              <Heading as="h4" size="xs" fontSize="xl">
-                Add Employee(s)
-              </Heading>
-              {createPayrollData?.length === 0 ? (
-                <Center w="100%" p="8" flexDirection={"column"}>
-                  <EmptyEmployeeImage />
-                  <Text pr="12" pt="2">
-                    No Payment History
-                  </Text>
-                </Center>
-              ) : (
-                <>
-                  <Grid
-                    templateColumns="30% 25%"
-                    justifyContent="space-between"
-                    my={6}
-                  >
-                    <GridItem>
-                      <HStack gap="1">
-                        <FiSearch fontSize={"24px"} />
-                        <Input
-                          variant={"unstyled"}
-                          border={"0"}
-                          borderBottom="1px solid"
-                          borderRadius={0}
-                          h={12}
-                          fontSize={"sm"}
-                          placeholder="Search Employee"
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                      </HStack>
-                    </GridItem>
-                    <GridItem>
-                      <Select
-                        value={selectedDepartment}
-                        onChange={(event) =>
-                          setSelectedDepartment(event.target.value)
-                        }
-                      >
-                        {departmentOptions.map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </Select>
-                    </GridItem>
-                  </Grid>
-                  {tableData?.length > 0 ? (
-                    <>
-                      <RowSelectTable
-                        // @ts-ignore
-                        columns={employeeSalaryColumns}
-                        data={tableData}
-                        onRowSelectionChange={handleSelectionChange}
-                        onSelectedRowsAmountChange={
-                          handleSelectedRowsAmountChange
-                        }
-                      />
-                    </>
-                  ) : (
-                    <Center w="100%" p="8" flexDirection={"column"}>
-                      <EmptyEmployeeImage />
-                      <Text pr="12" pt="2">
-                        No result found for search
-                      </Text>
-                    </Center>
-                  )}
-                </>
-              )}
-            </Stack>
-          </GridItem>
+              <Stack mt={6}>
+                <Heading as="h4" size="xs" fontSize="xl">
+                  Add Employee(s)
+                </Heading>
+
+                {isLoading ? (
+                  <Center>
+                    <Spinner
+                      thickness="4px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.500"
+                      size="xl"
+                    />
+                  </Center>
+                ) : (
+                  <>
+                    <Grid
+                      templateColumns="30% 25%"
+                      justifyContent="space-between"
+                      my={6}
+                    >
+                      <GridItem>
+                        <HStack gap="1">
+                          <FiSearch fontSize={"24px"} />
+                          <Input
+                            variant={"unstyled"}
+                            border={"0"}
+                            borderBottom="1px solid"
+                            borderRadius={0}
+                            h={12}
+                            fontSize={"sm"}
+                            placeholder="Search Employee"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                          />
+                        </HStack>
+                      </GridItem>
+                      <GridItem>
+                        <Select
+                          value={selectedDepartment}
+                          onChange={(event) =>
+                            setSelectedDepartment(event.target.value)
+                          }
+                        >
+                          {departmentOptions.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </Select>
+                      </GridItem>
+                    </Grid>
+                    <CustomTable columns={columns} data={tableData} />
+                  </>
+                )}
+              </Stack>
+            </GridItem>
+          )}
+
           <GridItem
             border="1px solid #D2D2D2"
             rounded="xl"
@@ -312,13 +303,13 @@ const MonthlyEmployeeSalary = () => {
                 <Heading as="h4" size="xs" fontSize="md">
                   Employee Count
                 </Heading>
-                <Text fontWeight={700}>{selectedEmployees}</Text>
+                <Text fontWeight={700}>20</Text>
               </Flex>
               <Flex justify="space-between">
                 <Heading as="h4" size="xs" fontSize="md">
                   Total Amount
                 </Heading>
-                <Text fontWeight={700}>USD {totalAmount}</Text>
+                <Text fontWeight={700}>USD 50</Text>
               </Flex>
             </Box>
             <VStack mt={6} spacing={4}>
@@ -345,55 +336,8 @@ const MonthlyEmployeeSalary = () => {
               </Button>
             </VStack>
           </GridItem>
-          {/* <GridItem
-            border="1px solid #D2D2D2"
-            rounded="xl"
-            bg="white"
-            p={4}
-            height="fit-content"
-          >
-            <Heading as="h4" size="xs" fontSize="xl">
-              Summary
-            </Heading>
-            <VStack
-              spacing={1}
-              align="left"
-              bg="brand.700"
-              color="white"
-              rounded="md"
-              p={4}
-            >
-              <Text>Payroll Burden</Text>
-              <Text fontSize="xl" fontWeight={700}>
-                {`USD ${totalSalaries}`}
-              </Text>
-            </VStack>
-            <SalaryProgress
-              color="#2EC4B6"
-              label="Salary"
-              amount={totalAmount}
-              value={salaryPercentage}
-            />
-            <Flex justify="space-between">
-              <Heading as="h4" size="xs" fontSize="md">
-                Selected Employee(s)
-              </Heading>
-              <Text>{selectedEmployees}</Text>
-            </Flex>
-            <Flex justify="center" mt={6}>
-              <Button
-                bg="brand.700"
-                color="white"
-                iconSpacing="3"
-                w="100%"
-                _hover={{ hover: "none" }}
-                isDisabled={selectedEmployees > 0 ? false : true}
-              >
-                Create Payroll
-              </Button>
-            </Flex>
-          </GridItem> */}
         </Grid>
+
         <SuspendPayroll
           suspendPayrolleModalIsOpen={suspendPayrolleModalIsOpen}
           closeSuspendPayrollModal={closeSuspendPayrollModal}

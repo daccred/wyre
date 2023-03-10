@@ -2,21 +2,62 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Button,
+  Center,
   Heading,
+  Spinner,
   Stack,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import ViewLayout from "../../../components/core/ViewLayout";
-import CustomTable from "../../../components/CustomTable";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { managePayrollPath } from "../routes";
-import { payrollData } from "../utils/dummyData";
 import { managePayrollColumns } from "../utils/tableColumns";
+import { Payroll } from "@prisma/client";
+import { trpc } from "../../../utils/trpc";
+import { CustomTable } from "../../../components/CustomTable";
 
 const ManagePayroll = () => {
   const { pathname } = useRouter();
-  const router = useRouter();
+
+  const [tableData, setTableData] = useState<Payroll[]>([]);
+
+  const columns = [
+    ...managePayrollColumns,
+    {
+      Header: "Action",
+      accessor: (row: any) => (
+        <Link
+          href={{
+            pathname: "/payroll/manage-payroll/monthly-employee-salary",
+            query: row,
+          }}
+        >
+          <Button
+            bg="brand.700"
+            color="white"
+            iconSpacing="3"
+            w="fit-content"
+            _hover={{ hover: "none" }}
+          >
+            Manage
+          </Button>
+        </Link>
+      ),
+    },
+  ];
+
+  const { data: payroll, isLoading } = trpc.payroll.getPayrolls.useQuery();
+
+  useEffect(() => {
+    if (!payroll) {
+      return;
+    }
+
+    setTableData(payroll as Payroll[]);
+  }, [payroll]);
 
   return (
     <ViewLayout title="Payroll">
@@ -51,13 +92,23 @@ const ManagePayroll = () => {
         <Heading as="h4" size="xs" fontSize="xl">
           Active Payroll
         </Heading>
-        <CustomTable
-          // @ts-ignore
-          columns={managePayrollColumns(() =>
-            router.push("/payroll/manage-payroll/monthly-employee-salary")
-          )}
-          data={payrollData}
-        />
+        {isLoading ? (
+          <Center>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Center>
+        ) : (
+          <CustomTable
+            // @ts-ignore
+            columns={columns}
+            data={tableData}
+          />
+        )}
       </Stack>
     </ViewLayout>
   );

@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import useHover from "../../../hooks/useHover";
 import { useRef } from "react";
+import z from "zod";
 
 export const Card = ({
   heading,
@@ -122,3 +123,26 @@ export const SalaryProgress = ({
     </Box>
   </Flex>
 );
+
+const cycleEnum = z
+  .enum(["daily", "bi-weekly", "monthly"])
+  .refine((value) => value != null, { message: "Cycle is required" });
+const currencyEnum = z
+  .enum(["USD", "GHC", "NGN", "CNY", "GBP", "EUR"])
+  .refine((value) => value !== undefined, { message: "Currency is required" });
+
+export const createPayrollValidationSchema = z.object({
+  title: z.string().nonempty("Title is required"),
+  cycle: cycleEnum,
+  auto: z.boolean().refine((value) => value !== undefined && value !== null, {
+    message: "Auto is required",
+  }),
+  payday: z
+    .date()
+    .refine((value) => value !== null && !isNaN(value.getTime()), {
+      message: "Payday is required",
+    }),
+  currency: currencyEnum,
+  burden: z.number(),
+  employees: z.array(z.string()),
+});

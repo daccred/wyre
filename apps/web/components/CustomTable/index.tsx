@@ -1,6 +1,23 @@
-import { useMemo } from "react";
-import { useTable, usePagination } from "react-table";
-import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import React from "react";
+import { useTable, Column, usePagination } from "react-table";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  IconButton,
+  ButtonGroup,
+  Button,
+  Stack,
+  Flex,
+  Text,
+  Box,
+  Icon,
+} from "@chakra-ui/react";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {
   Pagination,
   PaginationContainer,
@@ -12,70 +29,47 @@ import {
 } from "@ajna/pagination";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
-interface Columns {
-  Header: string;
-  accessor?: string;
-  Cell?: (row: any) => JSX.Element;
+interface TableProps<T extends object> {
+  data: T[];
+  columns: Column<T>[];
+  pageSize?: number;
 }
 
-interface Props {
-  columns: Columns[];
-  data: any[];
-}
-
-interface Data {
-  [key: string]: any;
-}
-
-export default function CustomTable({ data, columns }: Props) {
-  const columnsMemo = useMemo(() => columns, [columns]);
-
+export function CustomTable<T extends object>({
+  data,
+  columns,
+}: TableProps<T>) {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    prepareRow,
-    // @ts-ignore
     page,
-    // @ts-ignore
+    prepareRow,
     pageCount,
-    // @ts-ignore
     gotoPage,
-    // @ts-ignore
     nextPage,
-    // @ts-ignore
     previousPage,
-    // @ts-ignore
-    setPageSize,
-    // @ts-ignore
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
     state: { pageIndex, pageSize },
-  } = useTable<Data>(
+  } = useTable(
     {
-      // @ts-ignore
-      columns: columnsMemo,
+      columns,
       data,
-      // @ts-ignore
       initialState: { pageIndex: 0, pageSize: 10 },
     },
     usePagination
   );
 
-  const handlePageChange = (newPage: number) => {
-    gotoPage(newPage - 1);
-  };
-
   return (
-    <>
+    <Stack spacing={16}>
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <Th
-                  {...column.getHeaderProps()}
-                  borderTop="none"
-                  backgroundColor="transparent"
-                >
+                <Th fontSize="md" py={6}>
                   {column.render("Header")}
                 </Th>
               ))}
@@ -83,14 +77,11 @@ export default function CustomTable({ data, columns }: Props) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row: any) => {
-            if (!row) {
-              return null;
-            }
+          {page.map((row, i) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()}>
-                {row.cells.map((cell: any) => {
+                {row.cells.map((cell) => {
                   return (
                     <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
                   );
@@ -100,74 +91,23 @@ export default function CustomTable({ data, columns }: Props) {
           })}
         </Tbody>
       </Table>
-      <Pagination
-        pagesCount={pageCount}
-        currentPage={pageIndex + 1}
-        isDisabled={false}
-        onPageChange={handlePageChange}
-      >
-        <PaginationContainer
-          align="center"
-          justify="space-between"
-          py={2}
-          w="full"
-        >
-          <PaginationPrevious
-            variant={"outline"}
-            h="40px"
-            px="12px"
-            leftIcon={<FiArrowLeft />}
-            iconSpacing={3}
-            border={"1px solid #D0D5DD"}
-            borderRadius="8px"
-            boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-          >
-            Previous
-          </PaginationPrevious>
-          <PaginationPageGroup
-            isInline
-            align="center"
-            separator={
-              <PaginationSeparator
-                bg="#EAECF0"
-                fontSize="sm"
-                boxSize="10"
-                jumpSize={11}
-              />
-            }
-          >
-            {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
-              <PaginationPage
-                w={7}
-                bg="white"
-                key={`pagination_page_${page}`}
-                page={page - 1}
-                fontSize="sm"
-                boxSize="10"
-                fontWeight="bold"
-                _hover={{
-                  bg: "#EAECF0",
-                }}
-                _current={{
-                  bg: "#EAECF0",
-                }}
-              />
-            ))}
-          </PaginationPageGroup>
-          <PaginationNext
-            variant={"outline"}
-            h="40px"
-            px="12px"
-            rightIcon={<FiArrowRight />}
-            iconSpacing={3}
-            border={"1px solid #D0D5DD"}
-            borderRadius="8px"
-            boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-          >
-            Next
-          </PaginationNext>
-        </PaginationContainer>
-      </Pagination>
-    </>
+      <Flex justify="space-between" mt={20}>
+        <Button onClick={previousPage} disabled={!canPreviousPage}>
+          <Flex align="center">
+            <Icon as={AiOutlineLeft} />
+            <Text ml={2}>Previous</Text>
+          </Flex>
+        </Button>
+        <Text>
+          Page {pageIndex + 1} of {pageOptions.length}
+        </Text>
+        <Button onClick={nextPage} disabled={!canNextPage}>
+          <Flex align="center">
+            <Text mr={2}>Next</Text>
+            <Icon as={AiOutlineRight} />
+          </Flex>
+        </Button>
+      </Flex>
+    </Stack>
   );
 }
