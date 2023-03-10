@@ -19,7 +19,6 @@ import { useToast } from "@chakra-ui/react";
 
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "name is required" }),
   email: z.string().email(),
   department:z.string().min(1, { message: "Required" }),
   jobRole:z.string().min(1, { message: "Required" }),
@@ -43,7 +42,7 @@ export default function AddEmployee({
 
     const toast = useToast()
 
-    const { mutate: addEmployee, isLoading } = trpc.employees.createEmployee.useMutation({
+    const { mutate: addEmployee, isLoading,  } = trpc.employee.createEmployee.useMutation({
         onSuccess(data: any) {
         // Reset the form data to empty values
         
@@ -67,7 +66,7 @@ export default function AddEmployee({
     console.log(JSON.stringify(data));
 
     addEmployee({
-        name: data.name,
+        name: '',
         email: data.email,
         department: data.department,
         jobRole: data.jobRole,
@@ -76,7 +75,6 @@ export default function AddEmployee({
         status: true,
         category: "EMPLOYEE",
       });
-      
   };
 
 
@@ -97,26 +95,18 @@ export default function AddEmployee({
             {renderForm
                 (<Stack spacing={"6"} pb="4">
                     <Stack>
-                        <FormInput
-                            name="name"
-                            label="Full name"
-                            placeholder="Full name"
-                        />
+                     
                         <FormInput
                         name="email"
                         label="Email Address"
                         placeholder="Email Address"
                         />
                         <HStack>
-                            <FormNativeSelect
+                            <FormInput
                             name="department"
                             label="Department"
                             placeholder="Select Department"
-                            options={[
-                                {label:'Tech', value:'tech'},
-                                {label:'Time', value:'time'}
-                            ]}
-                            />
+                           />
 
                             <FormInput
                             name="jobRole"

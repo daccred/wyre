@@ -19,7 +19,6 @@ import { useToast } from "@chakra-ui/react";
 
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, {message: "Name is Required"}),
   email: z.string().email(),
   department: z.string().min(1, { message: "Deparment is Required" }),
   jobRole: z.string().min(1, { message: "JobRole is Required" }),
@@ -43,7 +42,7 @@ export default function AddContractor({
   
   const toast = useToast()
 
-    const { mutate: addContractor, isLoading } = trpc.employees.createEmployee.useMutation({
+    const { mutate: addContractor, isLoading } = trpc.employee.createEmployee.useMutation({
         onSuccess(data: any) {
         // Reset the form data to empty values
         
@@ -67,7 +66,7 @@ export default function AddContractor({
     console.log(JSON.stringify(data));
 
     addContractor({
-        name: data.name,
+        name: '',
         email: data.email,
         department: data.department,
         jobRole: data.jobRole,

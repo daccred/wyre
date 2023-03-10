@@ -22,13 +22,13 @@ type EmployeeFormProps = {
 }
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }).default(""),
-  email: z.string().email().default(""),
-  department: z.string().min(1, { message: "Required" }).default(""),
-  jobRole: z.string().min(1, { message: "Required" }).default(""),
+  name: z.string().min(1, { message: "Required" }),
+  email: z.string().email(),
+  department: z.string().min(1, { message: "Required" }),
+  jobRole: z.string().min(1, { message: "Required" }),
   // grossSalary: z.string().min(1, { message: "Required" }),
   // signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.string().default(""),
+  category: z.string(),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -38,7 +38,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
   console.log(employee)
   const { name, email, department, jobRole, category, salary, signBonus } = employee ?? {};
 
-  const { mutate: updateEmployee, isLoading } = trpc.employees.updateEmployee.useMutation({
+  const { mutate: updateEmployee, isLoading } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
       // Reset the form data to empty values
        styledToast({
@@ -71,7 +71,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           jobRole: data.jobRole,    
           salary: employee.salary,
           signBonus: employee.signBonus,
-          status: true,
+          status: employee.status,
           category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
         },
       });
@@ -81,8 +81,9 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
    
   };
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employees.updateEmployee.useMutation({
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
+      
       styledToast({
         status: "success",
         description: "Employee has been terminated successfully",
@@ -125,11 +126,11 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     defaultValues: ({
-      name: name,
-      email: email,      
-      department: department,
-      jobRole: jobRole,
-      category: category,
+      name: '',
+      email: '',      
+      department: '',
+      jobRole: '',
+      category: '',
       // grossSalary: "",
       // signingBonus: ""
     }),
@@ -191,9 +192,9 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Contractor", value: "CONTRACTOR" },{ label: "Employee", value: "EMPLOYEE" },
+              { label: "Employee", value: "EMPLOYEE" },{ label: "Contractor", value: "CONTRACTOR" }
             ]}
-            defaultValue={"EMPLOYEE"} // set default value to "Employee"
+            defaultValue={category} // set default value to "Employee"
           />
           <FormInput
             name="payrollMethod"

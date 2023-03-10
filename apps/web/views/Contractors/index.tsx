@@ -21,6 +21,8 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  SkeletonText,
+  SkeletonCircle
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -43,7 +45,7 @@ import { trpc } from "utils/trpc";
 
 const Contractors = () => {
   const router = useRouter();
-  const { data: contractors } = trpc.employees.getContractors.useQuery();
+  const { data: contractors } = trpc.employee.getContractors.useQuery();
 
 
   const {
@@ -200,6 +202,7 @@ const Contractors = () => {
                     fontSize={"sm"}
                     placeholder="Search Contractor"
                     value={searchTerm}
+                    defaultChecked
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </HStack>
@@ -207,6 +210,7 @@ const Contractors = () => {
                   <Switch
                     size="sm"
                     colorScheme={"black"}
+                    defaultChecked
                     onChange={(e) =>
                       setActiveContractorsOnly(e?.target?.checked)
                     }
@@ -473,11 +477,10 @@ const Contractors = () => {
             </Flex>
             :
             <Flex flexDirection={"column"} borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} flex="1" marginInlineStart="0">
-              <Center w="100%" flexDirection={"column"}>
-                <Text fontWeight="bold" fontSize="18px" mb="4" >Contractor Details</Text>
-                  <EmptyContractorImage/>
-                  <Text pt="2">No currrent selected Contractor</Text>
-                </Center>
+              <SkeletonText my='4' noOfLines={1} spacing='4' skeletonHeight='4' />
+              <SkeletonCircle size='10' />
+              <SkeletonText mt='4' noOfLines={10} spacing='4' skeletonHeight='3' />
+              <SkeletonText mt='4' noOfLines={1} skeletonHeight='10' />
             </Flex>
             }
         </HStack>

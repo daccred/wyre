@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 
 const signUpValidationSchema = z.object({
   company: z.string().min(1,  "Company name is required"),
+  companyPhone: z.string().min(11, ""),
   country: z.string() ,
   name: z.string().min(1, "Full name is required"),
   email: z.string().email(),
@@ -33,14 +34,12 @@ export default function Page() {
   type User = {
     id: string;
     email: string;
-    // verifyId: string | null;
-    // other properties
   };
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
-    onSuccess: (data: { admin: User}) => {
-      const { admin } = data;
-      const { email, id  } = admin;
+    onSuccess: (data: { updatedAdmin: Omit<User, "password">}) => {
+      const { updatedAdmin } = data;
+      const { email, id  } = updatedAdmin;
       toast({
         status: "success",
         description: `Registration successful. Please check your email ${email} to verify your account.`,
@@ -73,6 +72,7 @@ export default function Page() {
       companyName: data.company,
       country: data.country,
       jobRole: data.role,
+      companyPhone: data.companyPhone
     });
   };
 

@@ -20,8 +20,6 @@ type ContractorFormProps = {
   contractor: any | null; // update the type to match the employee object type
 }
 
-
-
 const addContractorValidationSchema = z.object({
   name: z.string().min(1, { message: "Required" }).optional().default(""),
   email: z.string().email().optional().default(""),
@@ -38,7 +36,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
   const toast = useToast();
   const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
 
-  const { mutate: updateContractor , isLoading } = trpc.employees.updateEmployee.useMutation({
+  const { mutate: updateContractor , isLoading } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
       // Reset the form data to empty values
        styledToast({
@@ -62,18 +60,18 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
 
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     try {
       updateContractor({
         id: contractor.id, // pass the ID of the contractor that you want to update
         data: {
           name: data.name,
           email: data.email,
-          department: data.department,
-          jobRole: data.jobRole,    
+          department: data.department, 
+          jobRole: data.jobRole,
           salary: contractor.salary,
           signBonus: contractor.signBonus,
-          status: true,
+          status: contractor.status,
           category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
         },
       });
@@ -95,7 +93,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
     schema: addContractorValidationSchema,
   });
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employees.updateEmployee.useMutation({
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
       styledToast({
         status: "success",

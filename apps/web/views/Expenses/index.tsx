@@ -14,6 +14,7 @@ import {
   Td,
   TableContainer,
   Avatar,
+  Checkbox,
   Flex,
   Center,
   Modal,
@@ -36,14 +37,44 @@ import {
   PaginationSeparator,
 } from "@ajna/pagination";
 
+interface DataRow {
+  fullName: string;
+  department: string;
+  jobRole: string;
+  date: string;
+  amount: string;
+  description: string;
+  imgURL: string;
+}
+
+const dummyData: DataRow[] = [
+  { fullName: "John Doe", department: "Sales", jobRole: "Manager", date: "2022-01-01", amount: "$100", description: "Lorem ipsum dolor sit amet", imgURL: "" },
+  { fullName: "Jane Doe", department: "Marketing", jobRole: "Assistant", date: "2022-01-02", amount: "$200", description: "consectetur adipiscing elit", imgURL: "" },
+  { fullName: "Bob Smith", department: "Finance", jobRole: "Analyst", date: "2022-01-03", amount: "$300", description: "sed do eiusmod tempor incididunt", imgURL: "" },
+  { fullName: "Alice Brown", department: "IT", jobRole: "Developer", date: "2022-01-04", amount: "$400", description: "ut labore et dolore magna aliqua", imgURL: "" }
+];
+
+
 
 const Index: React.FC = () => {
-
-  // const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
-  const [dummyDataInUse, setDummyDataInUse] = useState<
-    { [key: string]: string }[]
-  >([]);
+  const [dummyDataInUse, setDummyDataInUse] = useState<DataRow[]>(dummyData);
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  console.log(selectedRows);
+
+ 
+  // const handleSelectAllRows = () => {
+  //   setSelectAll(true);
+  //   setSelectedRows(dummyDataInUse);
+  // };
+
+  // const handleDeselectAllRows = () => {
+  //   setSelectAll(false);
+  //   setSelectedRows([]);
+  // };
+
 
   // search and 
   useEffect(() => {
@@ -88,38 +119,6 @@ const Index: React.FC = () => {
 
   useEffect(() => {
 
-    setDummyDataInUse([
-      {
-        fullName: "john doe",
-        description: "Travel Ticket",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        date: "Dec 28, 2022",
-        amount: "USD 2000",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-      {
-        fullName: "andrew tate",
-        description: "Travel Ticket",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        date: "Dec 28, 2022",
-        amount: "USD 2000",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-      {
-        fullName: "akpan",
-        description: "Travel Ticket",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        date: "Dec 28, 2022",
-        amount: "USD 2000",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-    ]);
   }, []);
     
   return (
@@ -162,6 +161,7 @@ const Index: React.FC = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </HStack>
+              
              <Text fontWeight="bold" fontSize="18px">Recent Expense(s)</Text>
             </Stack>
 
@@ -191,14 +191,10 @@ const Index: React.FC = () => {
                       <Th>Date</Th>
                       <Th>Amount</Th>
                       <Th>description</Th>
-                      <Th></Th>
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {dummyDataInUse &&
-                      dummyDataInUse?.length > 0 &&
-                      dummyDataInUse
-                        ?.slice(
+                    {dummyDataInUse && dummyDataInUse?.length > 0 && dummyDataInUse ?.slice(
                           pageSize * currentPage - pageSize,
                           pageSize * currentPage
                         )
@@ -206,31 +202,15 @@ const Index: React.FC = () => {
                           <Tr textTransform={"capitalize"} key={index}>
                             <Td>
                               <HStack>
-                                <Avatar
-                                  size={"sm"}
-                                  src={data?.imgURL}
-                                 
-                                />
-                                <Text>
-                                  {data?.fullName}
-                                </Text>
+                                <Avatar size={"sm"} src={data?.imgURL} name={data?.fullName} />
+                                <Text>{data?.fullName}</Text>
                               </HStack>
                             </Td>
-                            <Td>
-                              {data?.department}
-                            </Td>
-                            <Td>
-                              {data?.jobRole}
-                            </Td>
-                            <Td>
-                              {data?.date}
-                            </Td>
-                            <Td>
-                              {data?.amount}
-                            </Td>
-                            <Td>
-                              {data?.description}
-                            </Td>
+                            <Td>{data?.department}</Td>
+                            <Td>{data?.jobRole}</Td>
+                            <Td>{data?.date}</Td>
+                            <Td>{data?.amount}</Td>
+                            <Td>{data?.description}</Td> 
                           </Tr>
                         ))}
                   </Tbody>

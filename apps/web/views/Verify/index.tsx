@@ -23,7 +23,7 @@ const View = () => {
   const router = useRouter();
   const { email, id} = router.query;
 
-  console.log(id, email)
+  // console.log(id, email)
 
   const { mutate: verifyEmail, isLoading } = trpc.auth.verifyAdminEmail.useMutation({
     onSuccess() {

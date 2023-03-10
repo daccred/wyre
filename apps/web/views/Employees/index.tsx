@@ -21,7 +21,8 @@ import {
   ModalBody,
   useDisclosure,
   Image,
-  Spinner
+  SkeletonText,
+  SkeletonCircle
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi'
@@ -42,7 +43,7 @@ import { useRouter } from "next/router";
 import { trpc } from "utils/trpc";
 
 const Employees = () => {
-  const { data: employees } = trpc.employees.getEmployees.useQuery();
+  const { data: employees } = trpc.employee.getEmployees.useQuery();
   console.log(employees);
 
   const router = useRouter();
@@ -55,7 +56,7 @@ const Employees = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<{[key: string]: string}>();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [activeEmployeesOnly, setActiveEmployeesOnly] = useState(false);
+  const [activeEmployeesOnly, setActiveEmployeesOnly] = useState(true);
 
 
   useEffect(()=>{
@@ -164,7 +165,7 @@ const Employees = () => {
                 />
               </HStack>
               <HStack gap={"2"} alignItems="center">
-                <Switch size='sm' colorScheme={"black"} onChange={e=>setActiveEmployeesOnly(e?.target?.checked)} />
+                <Switch size='sm' colorScheme={"black"} defaultChecked onChange={e=>setActiveEmployeesOnly(e?.target?.checked)} />
                 <Text fontWeight={"semibold"} fontSize="sm">Active Employees</Text>
               </HStack>
             </HStack>}
@@ -359,18 +360,16 @@ const Employees = () => {
               </Stack>
             </Stack>
             <Button variant={"darkBtn"} w="100%" mt="10" py="15px" 
-            onClick={()=> router.push({pathname:`/employees/${selectedEmployee.id}`, query: { id: selectedEmployee.name }})}
-            >
+            onClick={()=> router.push({pathname:`/employees/${selectedEmployee.id}`, query: { id: selectedEmployee.name }})}>
             Manage Employee
             </Button> 
           </Flex>
           :
           <Flex flexDirection={"column"} borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} flex="1" marginInlineStart="0">
-            <Center w="100%" flexDirection={"column"}>
-              <Text fontWeight="bold" fontSize="18px" mb="4" >Employee Details</Text>
-                <EmptyEmployeeImage/>
-                <Text pt="2">No currrent selected Employee</Text>
-              </Center>
+            <SkeletonText my='4' noOfLines={1} spacing='4' skeletonHeight='4' />
+            <SkeletonCircle size='20' />
+            <SkeletonText mt='4' noOfLines={10} spacing='4' skeletonHeight='3' />
+            <SkeletonText mt='4' noOfLines={1} skeletonHeight='10' />
           </Flex>
           }
         </HStack>

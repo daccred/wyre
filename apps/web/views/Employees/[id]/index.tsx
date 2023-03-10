@@ -45,7 +45,7 @@ const ManageEmployee = ({ employeeData }: any) => {
     ...initialState,
     employee: employeeData,
   });
-  const { data: employee, isLoading } = trpc.employees.getSingleEmployee.useQuery(id as string);
+  const { data: employee, isLoading } = trpc.employee.getSingleEmployee.useQuery(id as string);
 
   useEffect(() => {
     if (employee) {
@@ -69,7 +69,7 @@ const ManageEmployee = ({ employeeData }: any) => {
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink href="#">
-              <Skeleton textTransform={'capitalize'} isLoaded={isLoading}>
+              <Skeleton textTransform={'capitalize'} isLoaded={!isLoading}>
                 {state.employee?.name}
               </Skeleton>
             </BreadcrumbLink>
@@ -97,7 +97,7 @@ export default ManageEmployee;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const id = query.id as string;
-  const { data: employee } = trpc.employees.getSingleEmployee.useQuery(id);
+  const { data: employee } = trpc.employee.getSingleEmployee.useQuery(id);
   return {
     props: {
       requireAuth: false,
