@@ -21,6 +21,7 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -41,8 +42,7 @@ import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 
 const Employees = () => {
-  const { data: employees, isLoading } = trpc.employees.getEmployees.useQuery();
-
+  const { data: employees } = trpc.employees.getEmployees.useQuery();
   console.log(employees);
 
   const router = useRouter();
@@ -83,6 +83,9 @@ const Employees = () => {
               ? "active"
               : "terminated"
             : "",
+        category: employee.category,
+        salary: employee.salary,
+        signBonus: employee.signBonus,
       }));
       setDummyData(convertedEmployees);
       setDummyDataInUse(convertedEmployees);
@@ -143,7 +146,7 @@ const Employees = () => {
       inner: innerLimit,
     },
     initialState: {
-      pageSize: 5,
+      pageSize: 10,
       isDisabled: false,
       currentPage: 1,
     },
@@ -246,7 +249,7 @@ const Employees = () => {
                   <Thead>
                     <Tr>
                       <Th>Full Name</Th>
-                      <Th>Email</Th>
+                      <Th>Category</Th>
                       <Th>Job Role</Th>
                       <Th>Department</Th>
                       <Th>Status</Th>
@@ -289,10 +292,10 @@ const Employees = () => {
                               </HStack>
                             </Td>
                             <Td
+                              textTransform={"lowercase"}
                               opacity={data?.status !== "active" ? "35%" : ""}
-                              textTransform={"none"}
                             >
-                              {data?.email}
+                              {data?.category}
                             </Td>
                             <Td
                               opacity={data?.status !== "active" ? "35%" : ""}
@@ -314,6 +317,87 @@ const Employees = () => {
                   </Tbody>
                 </Table>
               </TableContainer>
+            )}
+
+            {dummyDataInUse && dummyDataInUse?.length > 0 && (
+              <Pagination
+                pagesCount={pagesCount}
+                currentPage={currentPage}
+                isDisabled={isDisabled}
+                onPageChange={handlePageChange}
+              >
+                <PaginationContainer
+                  align="center"
+                  justify="space-between"
+                  py={2}
+                  px={4}
+                  w="full"
+                >
+                  <PaginationPrevious
+                    variant={"outline"}
+                    h="40px"
+                    px="12px"
+                    leftIcon={<FiArrowLeft />}
+                    iconSpacing={3}
+                    border={"1px solid #D0D5DD"}
+                    borderRadius="8px"
+                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
+                  >
+                    <Text>Previous</Text>
+                  </PaginationPrevious>
+                  <PaginationPageGroup
+                    isInline
+                    align="center"
+                    separator={
+                      <PaginationSeparator
+                        bg="#EAECF0"
+                        fontSize="sm"
+                        boxSize="10"
+                        jumpSize={11}
+                      />
+                    }
+                  >
+                    {pages.map((page: number) => (
+                      <PaginationPage
+                        w={7}
+                        bg="white"
+                        key={`pagination_page_${page}`}
+                        page={page}
+                        fontSize="sm"
+                        boxSize="10"
+                        fontWeight="bold"
+                        _hover={{
+                          bg: "#EAECF0",
+                        }}
+                        _current={{
+                          bg: "#EAECF0",
+                        }}
+                      />
+                    ))}
+                  </PaginationPageGroup>
+                  <PaginationNext
+                    variant={"outline"}
+                    h="40px"
+                    px="12px"
+                    rightIcon={<FiArrowRight />}
+                    iconSpacing={3}
+                    border={"1px solid #D0D5DD"}
+                    borderRadius="8px"
+                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
+                  >
+                    <Text>Next</Text>
+                  </PaginationNext>
+                </PaginationContainer>
+              </Pagination>
+            )}
+
+            {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
+              <Center w="100%" p="8" flexDirection={"column"}>
+                <EmptyEmployeeImage />
+                <Text pr="12" pt={2}>
+                  No Employee
+                </Text>
+              </Center>
             )}
 
             {dummyDataInUse && dummyDataInUse?.length > 0 && (
@@ -435,7 +519,7 @@ const Employees = () => {
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Category</Text>
-                  <Text overflowWrap="break-word">
+                  <Text textTransform={"lowercase"} overflowWrap="break-word">
                     {selectedEmployee?.category}
                   </Text>
                 </Stack>
@@ -454,13 +538,13 @@ const Employees = () => {
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Job Role</Text>
                   <Text overflowWrap="break-word">
-                    {selectedEmployee?.jobRole}
+                    {selectedEmployee?.role}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Gross Salary</Text>
                   <Text overflowWrap="break-word">
-                    {selectedEmployee?.grossSalary}
+                    {selectedEmployee?.salary}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
@@ -481,7 +565,12 @@ const Employees = () => {
                 w="100%"
                 mt="10"
                 py="15px"
-                onClick={() => router.push(`/employees/${selectedEmployee.id}`)}
+                onClick={() =>
+                  router.push({
+                    pathname: `/employees/${selectedEmployee.id}`,
+                    query: { id: selectedEmployee.name },
+                  })
+                }
               >
                 Manage Employee
               </Button>

@@ -16,7 +16,6 @@ import { PeopleIcon } from "./ProviderIcons";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
-import { LoadingButton } from "../../components/shared/loadingButton";
 
 const addEmployeeValidationSchema = z.object({
   name: z.string().min(1, { message: "name is required" }),
@@ -72,7 +71,7 @@ export default function AddEmployee({
       jobRole: data.jobRole,
       salary: data.grossSalary,
       signBonus: data.signingBonus,
-      status: false,
+      status: true,
       category: "EMPLOYEE",
     });
   };

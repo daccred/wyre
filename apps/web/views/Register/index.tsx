@@ -105,7 +105,7 @@ const View: React.FC<Props> = (Props) => {
       >
         <HStack flex={1} align={"start"} justify={"end"}>
           <Stack p={8} maxW={"md"}>
-            <Heading>Zayroll</Heading>
+            <Heading>Wyre</Heading>
             <Text>
               The open-source payroll Infrastructure for African businesses.
             </Text>
