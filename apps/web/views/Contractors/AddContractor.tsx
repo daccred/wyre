@@ -19,11 +19,12 @@ import { useToast } from "@chakra-ui/react";
 
 
 const addContractorValidationSchema = z.object({
+  name: z.string().min(1, {message: "Name is Required"}),
   email: z.string().email(),
-  department: z.string().min(1, { message: "Required" }),
-  jobRole: z.string().min(1, { message: "Required" }),
-  grossSalary: z.string().min(1, { message: "Required" }),
-  signingBonus: z.string().min(1, { message: "Required" }),
+  department: z.string().min(1, { message: "Deparment is Required" }),
+  jobRole: z.string().min(1, { message: "JobRole is Required" }),
+  grossSalary: z.string().min(1, { message: "Gross salary is Required" }),
+  signingBonus: z.string().min(1, { message: "Bonus is Required" }),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
@@ -66,7 +67,7 @@ export default function AddContractor({
     console.log(JSON.stringify(data));
 
     addContractor({
-        name: '',
+        name: data.name,
         email: data.email,
         department: data.department,
         jobRole: data.jobRole,

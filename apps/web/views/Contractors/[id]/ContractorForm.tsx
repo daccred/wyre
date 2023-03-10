@@ -16,29 +16,29 @@ import {
 import { ProfileIcon } from "./ProviderIcons";
 import { trpc } from "utils/trpc";
 
-
-type EmployeeFormProps = {
-  employee: any | null; // update the type to match the employee object type
+type ContractorFormProps = {
+  contractor: any | null; // update the type to match the employee object type
 }
 
-const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }).default(""),
-  email: z.string().email().default(""),
-  department: z.string().min(1, { message: "Required" }).default(""),
-  jobRole: z.string().min(1, { message: "Required" }).default(""),
+
+
+const addContractorValidationSchema = z.object({
+  name: z.string().min(1, { message: "Required" }).optional().default(""),
+  email: z.string().email().optional().default(""),
+  department: z.string().min(1, { message: "Required" }).optional().default(""),
+  jobRole: z.string().min(1, { message: "Required" }).optional().default(""),
   // grossSalary: z.string().min(1, { message: "Required" }),
   // signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.string().default(""),
+  category: z.string().optional().default(""),
 });
 
-type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
+type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
 
-export default function EmployeeForm({ employee }: EmployeeFormProps) {
+export default function ContractorForm({ contractor }: ContractorFormProps) {
   const toast = useToast();
-  console.log(employee)
-  const { name, email, department, jobRole, category, salary, signBonus } = employee ?? {};
+  const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
 
-  const { mutate: updateEmployee, isLoading } = trpc.employees.updateEmployee.useMutation({
+  const { mutate: updateContractor , isLoading } = trpc.employees.updateEmployee.useMutation({
     onSuccess(data: any) {
       // Reset the form data to empty values
        styledToast({
@@ -60,17 +60,19 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
       },
   });
 
+
   const handleSubmit = async (data: FormInputOptions) => {
+    console.log(JSON.stringify(data));
     try {
-      updateEmployee({
-        id: employee.id, // pass the ID of the employee that you want to update
+      updateContractor({
+        id: contractor.id, // pass the ID of the contractor that you want to update
         data: {
           name: data.name,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,    
-          salary: employee.salary,
-          signBonus: employee.signBonus,
+          salary: contractor.salary,
+          signBonus: contractor.signBonus,
           status: true,
           category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
         },
@@ -78,8 +80,20 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
     } catch (error) {
       console.error(error);
     }
-   
   };
+  const { renderForm } = useForm<FormInputOptions>({
+    onSubmit: handleSubmit,
+    defaultValues: ({
+      name: name,
+      email: email,      
+      department: department,
+      jobRole: jobRole,
+      category: category,
+      // grossSalary: "",
+      // signingBonus: ""
+    }),
+    schema: addContractorValidationSchema,
+  });
 
   const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employees.updateEmployee.useMutation({
     onSuccess(data: any) {
@@ -104,7 +118,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
   const handleTerminate = async () => {
     try {
       terminateEmployee({
-        id: employee.id,
+        id: contractor.id,
         data: {
           name: name,
           email: email,
@@ -120,21 +134,6 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
       console.error(error);
     }
   };
-
-  
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: handleSubmit,
-    defaultValues: ({
-      name: name,
-      email: email,      
-      department: department,
-      jobRole: jobRole,
-      category: category,
-      // grossSalary: "",
-      // signingBonus: ""
-    }),
-    schema: addEmployeeValidationSchema,
-  });
 
   return renderForm(
     <Stack spacing={"6"} pb="4" mt="-0.5rem">
@@ -168,7 +167,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
             name="email"
             label="Email Address"
             placeholder="Email Address"
-            defaultValue={email} 
+            defaultValue={email}
           />
           <FormInput
             name="phoneNumber"
@@ -193,7 +192,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
             options={[
               { label: "Contractor", value: "CONTRACTOR" },{ label: "Employee", value: "EMPLOYEE" },
             ]}
-            defaultValue={"EMPLOYEE"} // set default value to "Employee"
+            defaultValue={contractor}
           />
           <FormInput
             name="payrollMethod"
@@ -205,7 +204,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           <FormInput
             name="department"
             label="Department"
-            placeholder="Enter Department"
+            placeholder="Select Department"
            defaultValue={department}
           />
           <FormInput
@@ -231,16 +230,15 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           Update Profile
         </Button>
         <Button
-          onClick={handleTerminate}
-          isLoading={isTerminating}
-          loadingText='Terminating'
           variant={"greyBtn"}
           rightIcon={<ProfileIcon fill={"#210D35"} stroke={"#210D35"} />}
           iconSpacing="3"
           w="fit-content"
           _hover={{ bg: '' }}
+          onClick={handleTerminate}
+          isLoading={isTerminating}
         >
-          Terminate Employee
+          Terminate Contractor
         </Button>
       </HStack>
     </Stack>

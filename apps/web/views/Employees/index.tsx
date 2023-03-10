@@ -199,7 +199,8 @@ const Employees = () => {
                 </Thead>
                 <Tbody>
                   {dummyDataInUse && dummyDataInUse?.length>0 && dummyDataInUse?.slice(((pageSize * currentPage)-pageSize),(pageSize * currentPage)).map((data, index)=>(
-                    <Tr textTransform={"capitalize"} cursor={"pointer"}
+                    <Tr 
+                      textTransform={"capitalize"} cursor={"pointer"}
                       key={index}
                       onClick={() => setSelectedEmployee(data)}
                       borderBottom={"1px solid"} borderColor="bordergrey"
@@ -302,7 +303,7 @@ const Employees = () => {
               (!dummyDataInUse || dummyDataInUse?.length===0) &&
               <Center w="100%" p="8" flexDirection={"column"}>
                 <EmptyEmployeeImage/>
-                <Text pt={2}>No Employee</Text>
+                <Text pr="12" pt={2}>No Employee</Text>
               </Center>
             }
 
