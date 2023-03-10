@@ -36,7 +36,6 @@ const reducer = (state:any, action:any) => {
   }
 };
 
-
 const ManageContractor = ({ contractorData }: any) => {
   const router = useRouter();
   const { id } = router.query;
@@ -54,7 +53,7 @@ const ManageContractor = ({ contractorData }: any) => {
   },[contractor]);
   return (
     <>
-      <ViewLayout title="Contractors">
+      <ViewLayout title="Manage Contractor">
         <Breadcrumb
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}

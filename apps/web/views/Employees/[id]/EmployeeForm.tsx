@@ -83,7 +83,6 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
 
   const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
-      
       styledToast({
         status: "success",
         description: "Employee has been terminated successfully",
@@ -126,11 +125,11 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     defaultValues: ({
-      name: '',
-      email: '',      
-      department: '',
-      jobRole: '',
-      category: '',
+      name: name,
+      email: email,      
+      department: department,
+      jobRole: jobRole,
+      category: category,
       // grossSalary: "",
       // signingBonus: ""
     }),

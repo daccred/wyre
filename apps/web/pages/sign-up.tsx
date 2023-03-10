@@ -37,8 +37,8 @@ export default function Page() {
   };
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
-    onSuccess: (data: { updatedAdmin: Omit<User, "password">}) => {
-      const { updatedAdmin } = data;
+    onSuccess: (data, variables, context) => {
+      const { updatedAdmin } = data!;
       const { email, id  } = updatedAdmin;
       toast({
         status: "success",

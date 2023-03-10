@@ -55,7 +55,7 @@ const ManageEmployee = ({ employeeData }: any) => {
 
   return (
     <>
-      <ViewLayout title={'Employees'}>
+      <ViewLayout title={'Manage Employee'}>
         <Breadcrumb
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
