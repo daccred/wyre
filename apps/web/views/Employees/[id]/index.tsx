@@ -1,9 +1,12 @@
+import React, { useEffect, useReducer } from "react";
 import {
   HStack,
   Stack,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 import ViewLayout from "../../../components/core/ViewLayout";
 import EmployeeForm from "./EmployeeForm";
@@ -11,17 +14,48 @@ import CompensationForm from "./CompensationForm";
 import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { trpc } from "utils/trpc";
+import { GetServerSideProps } from "next/types";
 
-const ManageEmployee = () => {
+// Define initial state
+const initialState = {
+  employee: null,
+  isLoading: true,
+  
+};
+
+// Define reducer function
+const reducer = (state:any, action:any) => {
+  switch (action.type) {
+    case "SET_EMPLOYEE":
+      return {
+        ...state,
+        employee: action.payload,
+        isLoading: false,
+      };
+    default:
+      return state;
+  }
+};
+
+const ManageEmployee = ({ employeeData }: any) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: employee } = trpc.employees.getSingleEmployee.useQuery('');
-  console.log(employee);
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    employee: employeeData,
+  });
+  const { data: employee } = trpc.employees.getSingleEmployee.useQuery(id as string);
+
+  useEffect(() => {
+    if (employee) {
+      dispatch({ type: "SET_EMPLOYEE", payload: employee });
+    }
+  },[employee]);
 
   return (
     <>
-      <ViewLayout title="Employees">
+      <ViewLayout title={state.employee?.name}>
         <Breadcrumb
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
@@ -29,13 +63,15 @@ const ManageEmployee = () => {
           fontWeight={"semibold"}
         >
           <BreadcrumbItem>
-            <BreadcrumbLink href='/employees' color={"lightgrey"}>Employee</BreadcrumbLink>
+            <BreadcrumbLink href="/employees" color={"lightgrey"}>
+              Employee
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <BreadcrumbLink
-            href='#'
-            >
-            {id}
+            <BreadcrumbLink href="#">
+              <Skeleton isLoaded={!state.isLoading}>
+                {state.employee?.name}
+              </Skeleton>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
@@ -48,7 +84,7 @@ const ManageEmployee = () => {
             bg={"white"}
             w="70%"
           >
-            <EmployeeForm />
+            <EmployeeForm employee={state.employee || null} />
           </Stack>
           <CompensationForm />
         </HStack>
@@ -58,3 +94,15 @@ const ManageEmployee = () => {
 };
 
 export default ManageEmployee;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const id = query.id as string;
+  const { data: employee } = await trpc.employees.getSingleEmployee.useQuery(id);
+  return {
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+      employeeData: employee,
+    },
+  };
+};

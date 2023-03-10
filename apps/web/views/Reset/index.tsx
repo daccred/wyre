@@ -7,7 +7,6 @@ import {
     Flex,
     Heading,
     Stack,
-    useColorModeValue,
     Image
   } from '@chakra-ui/react';
 
@@ -73,15 +72,13 @@ const View = () => (
         
         <HStack flex={1} align={'start'} justify={'end'} >
           <Stack p={8} maxW={'md'}>
-            <Heading>Zayroll</Heading>
+            <Heading>Wyre</Heading>
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
       
           <Image
             alt={'Image'}
-            src={
-              'images/Payroll.png'
-            }
+            src={'images/Payroll.png'}
           />
         </HStack>
       </Flex>

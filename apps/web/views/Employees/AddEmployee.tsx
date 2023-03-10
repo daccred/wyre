@@ -16,7 +16,7 @@ import { PeopleIcon } from "./ProviderIcons";
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { trpc } from "utils/trpc";
 import { useToast } from "@chakra-ui/react";
-import { LoadingButton } from "components/shared/loadingButton";
+
 
 const addEmployeeValidationSchema = z.object({
   name: z.string().min(1, { message: "name is required" }),
@@ -45,7 +45,6 @@ export default function AddEmployee({
 
     const { mutate: addEmployee, isLoading } = trpc.employees.createEmployee.useMutation({
         onSuccess(data: any) {
-
         // Reset the form data to empty values
         
         openAddEmployeeSuccessModal();
@@ -60,7 +59,7 @@ export default function AddEmployee({
                 duration: 5000,
                 position: 'top-right'
               });
-          console.log('Error creating employee:', error)
+          console.log('Error creating employee:', error);
         },
     })
     
@@ -74,6 +73,8 @@ export default function AddEmployee({
         jobRole: data.jobRole,
         salary: data.grossSalary,
         signBonus: data.signingBonus,
+        status: true,
+        category: "EMPLOYEE",
       });
       
   };

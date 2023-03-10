@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Center, Heading } from '@chakra-ui/react';
 import {
   Button,
   FormControl,
@@ -8,12 +7,54 @@ import {
   HStack,
   Image,
   Text,
-  Link
+  Link,
+  Center, Heading, useToast
 } from '@chakra-ui/react';
-import { PinInput, PinInputField } from '@chakra-ui/react';
+import { PinInputField, PinInput } from '@chakra-ui/react';
+import { trpc } from "utils/trpc";
+import { useRouter } from "next/router";
+import { GetServerSideProps } from "next/types";
 
 
-const View = () => (
+const View = () => {
+
+  const [pinInputData, setPinInputData] = React.useState('');
+  const toast = useToast();
+  const router = useRouter();
+  const { email, id} = router.query;
+
+  console.log(id, email)
+
+  const { mutate: verifyEmail, isLoading } = trpc.auth.verifyAdminEmail.useMutation({
+    onSuccess() {
+      toast({
+        title: 'Verification code confirmed.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right'
+      });
+      router.push("/login");
+    },
+    onError(error: any) {
+      toast({
+        title: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right'
+      });
+      // console.log(error);
+    },
+  }); 
+
+  const handleSubmit = () => {
+    verifyEmail({ id: id as string, token: pinInputData as string });
+  };
+  
+
+
+  return(
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
 
       <Stack flex={1} >
@@ -33,10 +74,10 @@ const View = () => (
             spacing={4}
             my={10}>
             
-            <FormControl>
+            <FormControl mb={4}>
               <Center>
                 <HStack>
-                <PinInput size='lg' placeholder='-'>
+                <PinInput size='lg' mask placeholder='-' value={pinInputData} onChange={(value) => setPinInputData(value)} >
                   <PinInputField />
                   <PinInputField />
                   <PinInputField />
@@ -51,13 +92,19 @@ const View = () => (
               <Button
                 bg={'#010C14'}
                 color={'white'}
-                _hover={{
-                  bg: '#210D35',
-                }}
+                type="submit"
+                isDisabled={pinInputData.length<6}
+                isLoading={isLoading}
+                onClick={handleSubmit}
+                // _hover={{
+                //   bg: '#210D35',
+                // }}
+                _hover={{ bg: '' }}
                 >
                 Continue
               </Button>
             </Stack>
+           
             <Text>{"Didn’t receive a verification code? "}<Link href='/' color={'#8D1CFF'}>Resend</Link></Text>
           </Stack>
         </Stack>
@@ -68,7 +115,7 @@ const View = () => (
         
         <HStack flex={1} align={'start'} justify={'end'} >
           <Stack p={8} maxW={'md'}>
-            <Heading>Zayroll</Heading>
+            <Heading>Wyre</Heading>
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
         
@@ -81,6 +128,21 @@ const View = () => (
         </HStack>
       </Flex>
     </Stack>
-);
+  )
+};
 
 export default View;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const email = query.email as string;
+  const id = query.id as string;
+
+  return {
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+      email,
+      id: id,
+    },
+  };
+};

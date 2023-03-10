@@ -21,6 +21,7 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  Spinner
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi'
@@ -41,8 +42,7 @@ import { useRouter } from "next/router";
 import { trpc } from "utils/trpc";
 
 const Employees = () => {
-  const { data: employees, isLoading } = trpc.employees.getEmployees.useQuery();
-
+  const { data: employees } = trpc.employees.getEmployees.useQuery();
   console.log(employees);
 
   const router = useRouter();
@@ -67,6 +67,9 @@ const Employees = () => {
         role: employee.jobRole,
         department: employee.department,
         status: employee.status !== null ? (employee.status === true ? 'active' : 'terminated') : "",
+        category: employee.category,
+        salary: employee.salary,
+        signBonus: employee.signBonus,
       }));
       setDummyData(convertedEmployees); 
       setDummyDataInUse(convertedEmployees);
@@ -123,7 +126,7 @@ const Employees = () => {
        inner: innerLimit
      },
      initialState: {
-       pageSize: 5,
+       pageSize: 10,
        isDisabled: false,
        currentPage: 1
      }
@@ -188,7 +191,7 @@ const Employees = () => {
                 <Thead>
                   <Tr>
                     <Th>Full Name</Th>
-                    <Th>Email</Th>
+                    <Th>Category</Th>
                     <Th>Job Role</Th>
                     <Th>Department</Th>
                     <Th>Status</Th>
@@ -212,7 +215,7 @@ const Employees = () => {
                         <Text color={data?.status!=='active'?"#FF951C":''} >{data?.name}</Text>
                         </HStack>
                       </Td>
-                      <Td opacity={data?.status!=='active'?"35%":''} textTransform={"none"}>{data?.email}</Td>
+                      <Td textTransform={"lowercase"} opacity={data?.status!=='active'?"35%":''} >{data?.category}</Td>
                       <Td opacity={data?.status!=='active'?"35%":''}>{data?.role}</Td>
                       <Td opacity={data?.status!=='active'?"35%":''}>{data?.department}</Td>
                       <Td opacity={data?.status!=='active'?"35%":''}>{data?.status}</Td>
@@ -299,7 +302,7 @@ const Employees = () => {
               (!dummyDataInUse || dummyDataInUse?.length===0) &&
               <Center w="100%" p="8" flexDirection={"column"}>
                 <EmptyEmployeeImage/>
-                <Text pr="12" pt="2">No Employee</Text>
+                <Text pt={2}>No Employee</Text>
               </Center>
             }
 
@@ -326,8 +329,8 @@ const Employees = () => {
                 <Text>{selectedEmployee?.phoneNumber}</Text>
               </Stack>
               <Stack spacing={0}>
-                <Text fontWeight={"semibold"}>Category</Text>
-                <Text overflowWrap="break-word">{selectedEmployee?.category}</Text>
+                <Text  fontWeight={"semibold"}>Category</Text>
+                <Text textTransform={"lowercase"} overflowWrap="break-word">{selectedEmployee?.category}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Status</Text>
@@ -339,11 +342,11 @@ const Employees = () => {
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Job Role</Text>
-                <Text overflowWrap="break-word">{selectedEmployee?.jobRole}</Text>
+                <Text overflowWrap="break-word">{selectedEmployee?.role}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Gross Salary</Text>
-                <Text overflowWrap="break-word">{selectedEmployee?.grossSalary}</Text>
+                <Text overflowWrap="break-word">{selectedEmployee?.salary}</Text>
               </Stack>
               <Stack spacing={0}>
                 <Text fontWeight={"semibold"}>Location</Text>
@@ -355,10 +358,10 @@ const Employees = () => {
               </Stack>
             </Stack>
             <Button variant={"darkBtn"} w="100%" mt="10" py="15px" 
-            onClick={()=>router.push(`/employees/${selectedEmployee.id}`)}
+            onClick={()=> router.push({pathname:`/employees/${selectedEmployee.id}`, query: { id: selectedEmployee.name }})}
             >
             Manage Employee
-            </Button>
+            </Button> 
           </Flex>
           :
           <Flex flexDirection={"column"} borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} flex="1" marginInlineStart="0">

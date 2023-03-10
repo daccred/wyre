@@ -11,9 +11,12 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import z from "zod";
-import { FormInput, FormNativeSelect, useForm } from "../../components/forms";
+import { FormInput, useForm } from "../../components/forms";
 import { PeopleIcon } from "./ProviderIcons";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { trpc } from "utils/trpc";
+import { useToast } from "@chakra-ui/react";
+
 
 const addContractorValidationSchema = z.object({
   email: z.string().email(),
@@ -36,11 +39,45 @@ export default function AddContractor({
   addContractorModalIsOpen,
   closeAddContractorModal,
 }: addContractorTypes) {
+  
+  const toast = useToast()
+
+    const { mutate: addContractor, isLoading } = trpc.employees.createEmployee.useMutation({
+        onSuccess(data: any) {
+        // Reset the form data to empty values
+        
+        openAddContractorSuccessModal();
+        closeAddContractorModal();
+            
+        },
+        onError(error: any) {
+            toast({
+                status: "error",
+                description: `${error}`,
+                isClosable: true,
+                duration: 5000,
+                position: 'top-right'
+              });
+          console.log('Error creating contractor:', error);
+        },
+    })
+    
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
-    openAddContractorSuccessModal();
-    closeAddContractorModal();
+
+    addContractor({
+        name: '',
+        email: data.email,
+        department: data.department,
+        jobRole: data.jobRole,
+        salary: data.grossSalary,
+        signBonus: data.signingBonus,
+        status: true,
+        category: "CONTRACTOR",
+      });
+      
   };
+  
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     // defaultValues: { email: "" },
@@ -73,14 +110,10 @@ export default function AddContractor({
                   placeholder="Email Address"
                 />
                 <HStack>
-                  <FormNativeSelect
+                  <FormInput
                     name="department"
                     label="Department"
-                    placeholder="Select Department"
-                    options={[
-                      { label: "Tech", value: "tech" },
-                      { label: "Time", value: "time" },
-                    ]}
+                    placeholder="Enter Department"
                   />
 
                   <FormInput
@@ -115,11 +148,14 @@ export default function AddContractor({
               </Text>
 
               <Button
-                variant={"darkBtn"}
-                rightIcon={<PeopleIcon fill={"white"} />}
-                iconSpacing="3"
-                w="fit-content"
-                type="submit"
+                 isLoading={isLoading}
+                 loadingText='Submitting' 
+                 variant={"darkBtn"} 
+                 rightIcon={<PeopleIcon fill={"white"} />} 
+                 iconSpacing="3" 
+                 w="fit-content" 
+                 type="submit" 
+                 _hover={{ bg: '' }}
               >
                 Add Contractor
               </Button>
