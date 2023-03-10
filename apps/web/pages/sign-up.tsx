@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 
 const signUpValidationSchema = z.object({
   company: z.string().min(1,  "Company name is required"),
-  companyPhone: z.string().min(11, ""),
+  companyPhone: z.number().min(11, ""),
   country: z.string() ,
   name: z.string().min(1, "Full name is required"),
   email: z.string().email(),
@@ -72,7 +72,7 @@ export default function Page() {
       companyName: data.company,
       country: data.country,
       jobRole: data.role,
-      companyPhone: data.companyPhone
+      companyPhone: String((data as unknown as { companyPhone: unknown }).companyPhone)
     });
   };
 

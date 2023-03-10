@@ -71,6 +71,12 @@ const View: React.FC<Props> = (Props) => {
                         placeholder="e.g. chief people officer"
                       />
                       <FormInput
+                        name="companyPhone"
+                        type="number"
+                        label="Company Phone"
+                        placeholder="phone number"
+                      />
+                      <FormInput
                         name="password"
                         type="password"
                         label="Password"
