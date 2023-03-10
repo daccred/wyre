@@ -41,20 +41,22 @@ export default function Page() {
   };
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
-    onSuccess: (data: { admin: User }) => {
-      const { admin } = data;
-      const { email, id } = admin;
-      toast({
-        status: "success",
-        description: `Registration successful. Please check your email ${email} to verify your account.`,
-        isClosable: true,
-        duration: 5000,
-        position: "top-right",
-      });
-      router.push({
-        pathname: `/verify`,
-        query: { id, email },
-      });
+    onSuccess: (data) => {
+      if (data) {
+        const { admin } = data;
+        const { email, id } = admin;
+        toast({
+          status: "success",
+          description: `Registration successful. Please check your email ${email} to verify your account.`,
+          isClosable: true,
+          duration: 5000,
+          position: "top-right",
+        });
+        router.push({
+          pathname: `/verify`,
+          query: { id, email },
+        });
+      }
     },
     onError(error: any) {
       toast({
