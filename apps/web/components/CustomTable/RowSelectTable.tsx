@@ -3,6 +3,7 @@ import { useMemo, useEffect, useRef, forwardRef } from "react";
 import { useTable, useRowSelect, TableInstance } from "react-table";
 import type { Row } from "react-table";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { useFormContext } from "../../components/forms";
 
 interface Columns {
   Header: string;
@@ -15,6 +16,7 @@ interface Props {
   data: {}[];
   onRowSelectionChange: (selectedRowIds: Record<string, boolean>) => void;
   onSelectedRowsAmountChange: (amount: number) => void;
+  selectedEmployees: string[];
   setSelectedEmployees: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
@@ -39,6 +41,7 @@ export default function RowSelectTable({
   columns,
   onRowSelectionChange,
   onSelectedRowsAmountChange,
+  selectedEmployees,
   setSelectedEmployees,
 }: Props) {
   const {
@@ -88,8 +91,11 @@ export default function RowSelectTable({
     );
   }, [selectedFlatRows]);
 
+  const { setValue } = useFormContext();
+
   useEffect(() => {
     setSelectedEmployees(() => [...rowData] as string[]);
+    setValue("employees", selectedEmployees);
   }, [rowData, setSelectedEmployees]);
 
   useEffect(() => {

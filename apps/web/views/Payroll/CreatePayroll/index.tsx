@@ -24,7 +24,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
 import { createPayrollPath } from "../routes";
 import { useRouter } from "next/dist/client/router";
-import { FormInput, FormNativeSelect, useForm } from "../../../components";
+import {
+  FormInput,
+  FormNativeSelect,
+  useForm,
+  useFormContext,
+} from "../../../components";
 import { createPayrollColumns } from "../utils/tableColumns";
 import { createPayrollValidationSchema, SalaryProgress } from "../utils/misc";
 import z from "zod";
@@ -155,7 +160,9 @@ const CreatePayroll = () => {
     });
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  // const { setValue } = useFormContext()
+
+  const { renderForm, getValues } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: createPayrollValidationSchema,
     defaultValues: {
@@ -168,6 +175,27 @@ const CreatePayroll = () => {
       employees: selectedEmployees,
     },
   });
+
+  console.log("fam", getValues);
+
+  // TODO: Figure this out
+  //   useEffect(() => {
+  //     if (totalSalaries && selectedEmployees) {
+  //       reset(formValues => ({
+  //         ...formValues,
+  //         burden: totalSalaries,
+  //         employees: selectedEmployees,
+  //       }))
+
+  //     }
+  // }, [reset]);
+
+  // useEffect(() => {
+  //   if (totalSalaries && selectedEmployees) {
+  //     setValue('burden', totalSalaries)
+  //     setValue('employees', selectedEmployees)
+  //   }
+  // }, []);
 
   return (
     <>
@@ -291,6 +319,7 @@ const CreatePayroll = () => {
                       onSelectedRowsAmountChange={
                         handleSelectedRowsAmountChange
                       }
+                      selectedEmployees={selectedEmployees}
                       setSelectedEmployees={setSelectedEmployees}
                     />
                     {/* <CustomTable columns={columns} data={tableData} /> */}

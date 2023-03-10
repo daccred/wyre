@@ -337,7 +337,11 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             _focus={{ boxShadow: "none" }}
             onClick={() => router.push("/profile")}
           >
-            <Avatar size={"sm"} src={""} name={sessionData?.user?.name} />
+            <Avatar
+              size={"sm"}
+              src={""}
+              name={sessionData?.user?.name as string}
+            />
             <VStack
               display={"flex"}
               alignItems="flex-start"
