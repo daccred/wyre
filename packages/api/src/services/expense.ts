@@ -12,6 +12,9 @@ export class ExpenseService {
             in: input.employees,
           },
         },
+        select: {
+          id: true,
+        },
       });
 
       if (!employees || employees.length === 0) {
@@ -31,7 +34,7 @@ export class ExpenseService {
 
       if (!expense) {
         throw new TRPCError({
-          code: "NOT_FOUND",
+          code: "INTERNAL_SERVER_ERROR",
           message: "Failed to create expense",
         });
       }
@@ -39,16 +42,29 @@ export class ExpenseService {
       return expense;
     } catch (error) {
       ServicesError(error);
+      console.error(error);
     }
   }
 
   static async updateExpense(expenseId: string, input: IExpenseSchema) {
     try {
+      const employees = await prisma.employee.findMany({
+        where: {
+          category: "EMPLOYEE",
+          id: {
+            in: input.employees,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
       const expense = await prisma.expense.update({
         where: { id: expenseId },
         data: {
           amount: input.amount,
           description: input.description,
+          employees: { connect: employees },
         },
       });
 
@@ -87,6 +103,7 @@ export class ExpenseService {
     try {
       const expense = await prisma.expense.findUnique({
         where: { id: expenseId },
+        include: { employees: true },
       });
       if (!expense) {
         throw new TRPCError({
@@ -101,7 +118,9 @@ export class ExpenseService {
 
   static async getExpenses() {
     try {
-      const expenses = await prisma.expense.findMany();
+      const expenses = await prisma.expense.findMany({
+        include: { employees: true },
+      });
       if (!expenses) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

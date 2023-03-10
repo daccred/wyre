@@ -8,7 +8,7 @@ export const employeeSchema = z.object({
   category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
   salary: z.string(),
   signBonus: z.string(),
-  status: z.boolean(),
+  status: z.boolean().default(true),
 });
 
 export type IEmployeeSchema = z.infer<typeof employeeSchema>;

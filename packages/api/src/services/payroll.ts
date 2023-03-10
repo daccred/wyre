@@ -6,26 +6,36 @@ import { ServicesError } from "./ServiceErrors";
 export class PayrollService {
   static async createPayroll(input: IPayrollSchema) {
     try {
+      const payrollExists = await prisma.payroll.findFirst({
+        where: {
+          title: input.title,
+        },
+      });
+
+      if (payrollExists) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Payroll with name ${input.title} already exists`,
+        });
+      }
       const employees = await prisma.employee.findMany({
         where: {
+          category: "EMPLOYEE",
           id: {
             in: input.employees,
           },
         },
         select: {
           id: true,
-          category: true,
         },
       });
 
-      employees.some((employees) => {
-        if (employees.category === "CONTRACTOR") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Contractors cannot be added to a payroll",
-          });
-        }
-      });
+      if (!employees || employees.length === 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Add employees to create a payroll",
+        });
+      }
 
       const payroll = await prisma.payroll.create({
         data: {

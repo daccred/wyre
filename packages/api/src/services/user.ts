@@ -1,11 +1,66 @@
 import { prisma } from "@wyre-zayroll/db";
 import { TRPCError } from "@trpc/server";
 import type { IUserSchema } from "../interfaces";
+import { ServicesError } from "./ServiceErrors";
+import { hashString } from "../utils";
 
-export const config = { send_json: true, send_form: false };
+export const i = { send_json: true, send_form: false };
 
 export class UserService {
-  static async getUserById(id?: string) {
+  static async createUser(input: IUserSchema) {
+    try {
+      // check if email exists
+      const emailExists = await prisma.user.findFirst({
+        where: {
+          email: input.email,
+        },
+      });
+
+      if (emailExists) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Email already exists",
+        });
+      }
+
+      //Handle email verification
+      const confirmCode = JSON.stringify(
+        Math.floor(100000 + Math.random() * 900000)
+      ); // generates a random 6-digit code
+
+      const token = await prisma.verificationToken.create({
+        data: {
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          token: confirmCode,
+        },
+      });
+
+      if (!token) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Token creation failed",
+        });
+      }
+      // create user
+      const user = await prisma.user.create({
+        data: {
+          name: input.name,
+          email: input.email,
+          password: await hashString(input.password),
+          jobRole: input.jobRole,
+          type: "USER",
+          phone: input.phone,
+          verifyId: token.id,
+
+          // companyId: input.companyId,
+        },
+      });
+      return user;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+  static async getSingleUser(id: string) {
     try {
       const getUser = await prisma.user.findFirst({
         where: {
@@ -26,19 +81,14 @@ export class UserService {
 
   static async getUsers() {
     try {
-      const users = await prisma.user.findMany({
-        // **  To be taken out after testing user verification //
-        include: {
-          verification: true,
-        },
-        // **  To be taken out after testing user verification //
-      });
+      const users = await prisma.user.findMany({});
       if (!users) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Users not found",
         });
       }
+
       return users;
     } catch (error) {
       if (error instanceof TRPCError) {
@@ -48,7 +98,7 @@ export class UserService {
     }
   }
 
-  static async updateUser(data: IUserSchema, id?: string) {
+  static async updateUser(id: string, data: IUserSchema) {
     try {
       const updateUser = await prisma.user.update({
         where: {
@@ -64,7 +114,7 @@ export class UserService {
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 
@@ -83,7 +133,7 @@ export class UserService {
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 }

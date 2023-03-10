@@ -10,7 +10,7 @@ import { expenseRouter } from "./expense";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   auth: authRouter,
-  users: userRouter,
+  user: userRouter,
   invitations: invitationRouter,
   payroll: payrollRouter,
   employee: employeeRouter,

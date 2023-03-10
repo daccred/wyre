@@ -2,8 +2,9 @@ import { TRPCError } from "@trpc/server";
 import { hashString } from "../utils";
 import { ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
-import { sendEmail } from "@wyre-zayroll/dialog";
+import { sendEmail, emailHTML } from "@wyre-zayroll/dialog";
 import { ServicesError } from "./ServiceErrors";
+import { exclude } from "./utils";
 
 export class AuthService {
   static async adminSignUp(input: ISignUp) {
@@ -88,7 +89,7 @@ export class AuthService {
           phone: input.companyPhone,
           password: await hashString(input.password),
           companyId: company.id,
-          type: "SUPER_ADMIN",
+          type: "ADMIN",
           jobRole: input.jobRole,
           verifyId: token.id,
         },
@@ -114,7 +115,8 @@ export class AuthService {
         });
       }
 
-      return { admin, emailStatus: response };
+      const updatedAdmin = exclude(admin, ["password"]);
+      return { updatedAdmin, emailStatus: response };
     } catch (error) {
       ServicesError(error);
     }
@@ -154,7 +156,7 @@ export class AuthService {
       if (now > expireTime)
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Confirmation code is expired",
+          message: "Verification code is expired",
         });
 
       if (token === admin.verification.token) {
@@ -167,7 +169,9 @@ export class AuthService {
           },
 
           select: {
-            verification: true,
+            name: true,
+            email: true,
+            phone: true,
             emailVerified: true,
           },
         });
@@ -184,38 +188,6 @@ export class AuthService {
     }
   }
 
-  static async userSignUp(input: ISignUp) {
-    try {
-      // check if email exists
-      const emailExists = await prisma.user.findFirst({
-        where: {
-          email: input.email,
-        },
-      });
-
-      if (emailExists) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Email already exists",
-        });
-      }
-      // create user
-      const user = await prisma.user.create({
-        data: {
-          name: input.name,
-          email: input.email,
-          password: await hashString(input.password),
-          jobRole: input.jobRole,
-          type: "USER",
-          // companyId: input.companyId,
-        },
-      });
-      return user;
-    } catch (error) {
-      ServicesError(error);
-    }
-  }
-
   static async sendAdminMailVerification(email: string, verifyCode: string) {
     try {
       const admin = await prisma.user.findFirst({
@@ -225,13 +197,15 @@ export class AuthService {
       if (!admin)
         new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
 
+      const verifyEmail = emailHTML({ confirmCode: verifyCode });
+
       const response = await sendEmail({
         from: "admin@tecmie.com",
         subject: "Verify your email",
         to: email,
         textBody: "Email sent",
         userId: admin?.id,
-        verifyCode,
+        htmlBody: verifyEmail,
       });
       return response;
     } catch (error) {
@@ -282,22 +256,43 @@ export class AuthService {
   }
 
   static async checkIfSuperAdmin(userId: string) {
-    const result = await prisma.user.findFirst({
-      where: {
-        id: userId,
-        type: "SUPER_ADMIN",
-      },
-    });
-    if (!result) {
-      throw new TRPCError({
-        code: "UNAUTHORIZED",
-        message: "You don't have super admin rights",
+    try {
+      const result = await prisma.user.findFirst({
+        where: {
+          id: userId,
+          type: "ADMIN",
+        },
       });
+      if (!result) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You don't have super admin rights",
+        });
+      }
+      return true;
+    } catch (error) {
+      ServicesError(error);
     }
-    return true;
   }
 
   static async checkIfAdmin(userId: string) {
+    try {
+      const result = await prisma.user.findFirst({
+        where: {
+          id: userId,
+          type: "ADMIN",
+        },
+      });
+      if (!result) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You don't have  admin rights",
+        });
+      }
+      return true;
+    } catch (error) {
+      ServicesError(error);
+    }
     const result = await prisma.user.findFirst({
       where: {
         id: userId,

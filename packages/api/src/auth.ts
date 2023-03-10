@@ -5,6 +5,7 @@ import { prisma } from "@wyre-zayroll/db";
 import { loginSchema } from "./interfaces";
 import { verifyHash } from "./utils";
 import { TRPCError } from "@trpc/server";
+import { ServicesError } from "./services";
 
 /**
  * * Important Info
@@ -74,7 +75,7 @@ export const nextAuthOptions: NextAuthOptions = {
           };
         } catch (error) {
           if (error instanceof TRPCError) {
-            throw new TRPCError({ code: error.code, message: error.message });
+            ServicesError(error);
           }
           throw new Error(error as string);
         }

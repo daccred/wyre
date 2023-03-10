@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(4).max(12),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;

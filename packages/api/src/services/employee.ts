@@ -89,6 +89,7 @@ export class EmployeeService {
     try {
       const employee = await prisma.employee.findFirst({
         where: { category: "EMPLOYEE", id: employeeId },
+        include: { expense: true, payroll: true },
       });
 
       if (!employee) {
