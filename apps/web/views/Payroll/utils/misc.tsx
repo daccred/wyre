@@ -143,6 +143,6 @@ export const createPayrollValidationSchema = z.object({
       message: "Payday is required",
     }),
   currency: currencyEnum,
-  burden: z.number(),
-  employees: z.array(z.string()),
+  burden: z.number().optional(),
+  employees: z.array(z.string()).optional(),
 });
