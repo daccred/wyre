@@ -273,6 +273,7 @@ export class AuthService {
         await redisClient.HSET(`otp_${user.id}`, "id", user.id);
         await redisClient.HSET(`otp_${user.id}`, "email", user.email);
         await redisClient.HSET(`otp_${user.id}`, "otp", confirmCode);
+        await redisClient.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
       }
 
       const confirmLink = `${getBaseUrl()}/reset-password?otp=${confirmCode}&email=${email}`;
