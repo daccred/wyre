@@ -4,7 +4,6 @@ import { ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
 import { sendEmail, emailHTML } from "@wyre-zayroll/dialog";
 import { ServicesError } from "./ServiceErrors";
-import { exclude } from "./utils";
 
 export class AuthService {
   static async adminSignUp(input: ISignUp) {
@@ -115,8 +114,7 @@ export class AuthService {
         });
       }
 
-      const updatedAdmin = exclude(admin, ["password"]);
-      return { updatedAdmin, emailStatus: response };
+      return { admin, emailStatus: response };
     } catch (error) {
       ServicesError(error);
     }
@@ -212,6 +210,7 @@ export class AuthService {
       ServicesError(error);
     }
   }
+
   static async checkIfCompanyExists(companyName?: string) {
     const result = await prisma.company.findFirst({
       where: {

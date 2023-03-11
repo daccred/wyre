@@ -8,7 +8,6 @@ import type { GetServerSideProps, NextPage } from "next";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-
 const loginValidationSchema = z.object({
   email: z.string().email(),
   password: z.string().min(4).max(12),
@@ -54,7 +53,7 @@ export default function Page() {
   return renderForm(
     <>
       <Meta />
-      <View isSubmitting={formState.isSubmitting}/>
+      <View isSubmitting={formState.isSubmitting} />
     </>
   );
 }

@@ -3,7 +3,6 @@ import { Meta } from "../../layouts";
 import View from "../../views/Expenses";
 
 export default function Page() {
-
   return (
     <>
       <Meta />
@@ -12,4 +11,4 @@ export default function Page() {
   );
 }
 
-Page.requireAuth = true
+// Page.requireAuth = true;

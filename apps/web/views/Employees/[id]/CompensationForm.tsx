@@ -3,7 +3,6 @@ import z from "zod";
 import { FormInput, useForm } from "../../../components/forms";
 import styledToast from "../../../components/core/StyledToast";
 
-
 const addEmployeeValidationSchema = z.object({});
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;

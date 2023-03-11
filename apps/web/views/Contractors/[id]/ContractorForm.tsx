@@ -14,7 +14,7 @@ import {
   useForm,
 } from "../../../components/forms";
 import { ProfileIcon } from "./ProviderIcons";
-import { trpc } from "utils/trpc";
+import { trpc } from "../../../utils/trpc";
 
 type ContractorFormProps = {
   contractor: any | null; // update the type to match the employee object type
@@ -34,7 +34,8 @@ type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
 
 export default function ContractorForm({ contractor }: ContractorFormProps) {
   const toast = useToast();
-  const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
+  const { name, email, department, jobRole, category, salary, signBonus } =
+    contractor ?? {};
 
   const { mutate: updateContractor , isLoading } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
@@ -47,17 +48,16 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           
       },
       onError(error: any) {
-          toast({
-              status: "error",
-              description: `${error}`,
-              isClosable: true,
-              duration: 5000,
-              position: 'top-right'
-            });
+        toast({
+          status: "error",
+          description: `${error}`,
+          isClosable: true,
+          duration: 5000,
+          position: "top-right",
+        });
         console.log(error);
       },
-  });
-
+    });
 
   const handleSubmit = async (data: FormInputOptions) => {
     // console.log(JSON.stringify(data));
@@ -81,15 +81,15 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: ({
+    defaultValues: {
       name: name,
-      email: email,      
+      email: email,
       department: department,
       jobRole: jobRole,
       category: category,
       // grossSalary: "",
       // signingBonus: ""
-    }),
+    },
     schema: addContractorValidationSchema,
   });
 
@@ -121,11 +121,11 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           name: name,
           email: email,
           department: department,
-          jobRole: jobRole,    
+          jobRole: jobRole,
           salary: salary,
           signBonus: signBonus,
           status: false, // add status field with the value of false
-          category: category
+          category: category,
         },
       });
     } catch (error) {
@@ -140,13 +140,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar
-          size={"xl"}
-          src={
-            ""
-          }
-          name={name}
-        />
+        <Avatar size={"xl"} src={""} name={name} />
         <HStack>
           <FormInput
             name="name"
@@ -188,7 +182,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Contractor", value: "CONTRACTOR" },{ label: "Employee", value: "EMPLOYEE" },
+              { label: "Contractor", value: "CONTRACTOR" },
+              { label: "Employee", value: "EMPLOYEE" },
             ]}
             defaultValue={contractor}
           />
@@ -203,7 +198,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
             name="department"
             label="Department"
             placeholder="Select Department"
-           defaultValue={department}
+            defaultValue={department}
           />
           <FormInput
             name="jobRole"
@@ -222,8 +217,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           w="fit-content"
           type="submit"
           isLoading={isLoading}
-          _hover={{ bg: '' }}
-          loadingText='Updating'
+          _hover={{ bg: "" }}
+          loadingText="Updating"
         >
           Update Profile
         </Button>
@@ -232,7 +227,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           rightIcon={<ProfileIcon fill={"#210D35"} stroke={"#210D35"} />}
           iconSpacing="3"
           w="fit-content"
-          _hover={{ bg: '' }}
+          _hover={{ bg: "" }}
           onClick={handleTerminate}
           isLoading={isTerminating}
         >

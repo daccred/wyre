@@ -13,18 +13,17 @@ import EmployeeForm from "./EmployeeForm";
 import CompensationForm from "./CompensationForm";
 import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/router";
-import { trpc } from "utils/trpc";
+import { trpc } from "../../../utils/trpc";
 import { GetServerSideProps } from "next/types";
 
 // Define initial state
 const initialState = {
   employee: null,
   isLoading: true,
-  
 };
 
 // Define reducer function
-const reducer = (state:any, action:any) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_EMPLOYEE":
       return {
@@ -51,7 +50,7 @@ const ManageEmployee = ({ employeeData }: any) => {
     if (employee) {
       dispatch({ type: "SET_EMPLOYEE", payload: employee });
     }
-  },[employee]);
+  }, [employee]);
 
   return (
     <>

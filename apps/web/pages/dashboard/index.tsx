@@ -3,7 +3,6 @@ import { Meta } from "../../layouts";
 import View from "../../views/Dashboard";
 
 function Page() {
-
   return (
     <>
       <Meta />

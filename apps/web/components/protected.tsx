@@ -1,7 +1,7 @@
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { Spinner, Center } from '@chakra-ui/react'
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { Spinner, Center } from "@chakra-ui/react";
 
 type Props = {
   children: React.ReactElement;
@@ -18,9 +18,9 @@ type Props = {
 export const ProtectedLayout = ({ children }: Props): JSX.Element => {
   const router = useRouter();
   const { status: sessionStatus } = useSession();
-  const authorized = sessionStatus === 'authenticated';
-  const unAuthorized = sessionStatus === 'unauthenticated';
-  const loading = sessionStatus === 'loading';
+  const authorized = sessionStatus === "authenticated";
+  const unAuthorized = sessionStatus === "unauthenticated";
+  const loading = sessionStatus === "loading";
 
   useEffect(() => {
     // check if the session is loading or the router is not ready
@@ -31,7 +31,7 @@ export const ProtectedLayout = ({ children }: Props): JSX.Element => {
     if (unAuthorized) {
       // console.log('not authorized');
       router.push({
-        pathname: '/login',
+        pathname: "/login",
         query: { returnUrl: router.asPath },
       });
     }
@@ -39,7 +39,12 @@ export const ProtectedLayout = ({ children }: Props): JSX.Element => {
 
   // if the user refreshed the page or somehow navigated to the protected page
   if (loading) {
-    return <Center m={10}> <Spinner thickness='4px'speed='0.5s' /> Loading app...</Center>;
+    return (
+      <Center m={10}>
+        {" "}
+        <Spinner thickness="4px" speed="0.5s" /> Loading app...
+      </Center>
+    );
   }
 
   // if the user is authorized, render the page

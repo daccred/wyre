@@ -2,9 +2,9 @@ import * as React from "react";
 import type { PropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { PinInput, Center } from '@chakra-ui/react';
+import { PinInput, Center } from "@chakra-ui/react";
 import { FormControl, FormControlProps } from "@chakra-ui/form-control";
-import { FormErrorMessage} from "@chakra-ui/react";
+import { FormErrorMessage } from "@chakra-ui/react";
 
 export interface FormPinInputProps extends FormControlProps {
   name: string;
@@ -41,7 +41,10 @@ export const FormPinInput = forwardRef<HTMLInputElement, FormPinInputProps>(
     },
     ref
   ) => {
-    const { control, formState: { errors } } = useFormContext();
+    const {
+      control,
+      formState: { errors },
+    } = useFormContext();
     const error = errors[name]?.message;
 
     return (

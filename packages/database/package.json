@@ -1,45 +1,45 @@
 {
-    "name": "@wyre-zayroll/db",
-    "version": "0.1.0",
-    "license": "MIT",
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist/**"
-    ],
-    "scripts": {
-        "build": "tsc",
-        "clean": "rimraf .turbo node_modules dist",
-        "db:push": "prisma db push",
-        "db-deploy": "prisma migrate deploy",
-        "db-generate": "prisma generate",
-        "db-sync": "prisma migrate dev",
-        "db-migrate": "prisma migrate dev --name",
-        "db-nuke": "docker-compose down --volumes --remove-orphans",
-        "db-reset": "run-s db-nuke db-setup",
-        "db-seed": "prisma db seed",
-        "db-setup": "run-s db-up db-deploy db-seed",
-        "db-studio": "prisma studio",
-        "db-up": "docker-compose up -d",
-        "dx": "npm run  db-setup",
-        "lint:ts": "tsc --pretty --noEmit",
-        "dev": "tsc --watch",
-        "format": "prisma format",
-        "generate": "prisma generate",
-        "lint": "TIMING=1 eslint \"src/**/*.ts\"",
-        "prebuild": "npm run db-generate && npm run db-sync",
-        "predev": "npm run db-generate && npm run db-sync"
-    },
-    "dependencies": {
-        "@prisma/client": "^4.5.0"
-    },
-    "devDependencies": {
-        "eslint-config-custom": "*",
-        "eslint": "^8.12.0",
-        "prisma": "^4.5.0",
-        "rimraf": "^3.0.2",
-        "tsconfig": "*",
-        "typescript": "^4.8.4"
-    }
+  "name": "@wyre-zayroll/db",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf .turbo node_modules dist",
+    "db:push": "prisma db push",
+    "db-deploy": "prisma migrate deploy",
+    "db-generate": "prisma generate",
+    "db-sync": "prisma migrate dev",
+    "db-migrate": "prisma migrate dev --name",
+    "db-nuke": "docker-compose down --volumes --remove-orphans",
+    "db-reset": "run-s db-nuke db-setup",
+    "db-seed": "prisma db seed",
+    "db-setup": "run-s db-up db-deploy db-seed",
+    "db-studio": "prisma studio",
+    "db-up": "docker-compose up -d",
+    "dx": "npm run  db-setup",
+    "lint:ts": "tsc --pretty --noEmit",
+    "dev": "tsc --watch",
+    "format": "prisma format",
+    "generate": "prisma generate",
+    "lint": "TIMING=1 eslint \"src/**/*.ts\"",
+    "prebuild": "npm run db-generate && npm run db-sync",
+    "predev": "npm run db-generate && npm run db-sync"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.5.0"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "*",
+    "eslint": "^8.12.0",
+    "prisma": "^4.5.0",
+    "rimraf": "^3.0.2",
+    "tsconfig": "*",
+    "typescript": "^4.8.4"
+  }
 }

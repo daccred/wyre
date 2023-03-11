@@ -54,7 +54,6 @@ export default function Page() {
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <Stack spacing={6}>
               <FormUpload name="idUpload" />
-          
               <FormInput
                 name="firstName"
                 label="First Name"

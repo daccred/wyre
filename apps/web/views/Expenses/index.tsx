@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import ViewLayout from "../../components/core/ViewLayout";
 import {
   Button,
@@ -76,10 +76,8 @@ const Index: React.FC = () => {
   // };
 
 
-  // search and 
-  useEffect(() => {
-   
-  }, []);
+  // search and
+  useEffect(() => {}, []);
 
   // pagination functions start
   // constants
@@ -120,18 +118,18 @@ const Index: React.FC = () => {
   useEffect(() => {
 
   }, []);
-    
+
   return (
-    <ViewLayout title='Expenses'>
+    <ViewLayout title="Expenses">
       <HStack gap="4" align={"center"}>
-          <Stack
-            borderRadius={"15px"}
-            border={"1px solid"}
-            borderColor="bordergrey"
-            // p="4"
-            bg={"white"}
-            w="100%"
-          >
+        <Stack
+          borderRadius={"15px"}
+          border={"1px solid"}
+          borderColor="bordergrey"
+          // p="4"
+          bg={"white"}
+          w="100%"
+        >
           <Stack spacing={4} p={5}>
             <Text fontWeight="bold" fontSize="18px">
               Expenses
@@ -217,91 +215,89 @@ const Index: React.FC = () => {
                 </Table>
               </TableContainer>
 
-            {dummyDataInUse && dummyDataInUse?.length > 0 && (
-              <Pagination
-                pagesCount={pagesCount}
-                currentPage={currentPage}
-                isDisabled={isDisabled}
-                onPageChange={handlePageChange}
-                
+          {dummyDataInUse && dummyDataInUse?.length > 0 && (
+            <Pagination
+              pagesCount={pagesCount}
+              currentPage={currentPage}
+              isDisabled={isDisabled}
+              onPageChange={handlePageChange}
+            >
+              <PaginationContainer
+                align="center"
+                justify="space-between"
+                p={5}
+                w="full"
               >
-                <PaginationContainer
-                  align="center"
-                  justify="space-between"
-                  p={5}
-                  w="full"
+                <PaginationPrevious
+                  variant={"outline"}
+                  h="40px"
+                  px="12px"
+                  leftIcon={<FiArrowLeft />}
+                  iconSpacing={3}
+                  border={"1px solid #D0D5DD"}
+                  borderRadius="8px"
+                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
                 >
-                  <PaginationPrevious
-                    variant={"outline"}
-                    h="40px"
-                    px="12px"
-                    leftIcon={<FiArrowLeft />}
-                    iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
-                    borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                  >
-                    <Text>Previous</Text>
-                  </PaginationPrevious>
-                  <PaginationPageGroup
-                    isInline
-                    align="center"
-                    separator={
-                      <PaginationSeparator
-                        bg="#EAECF0"
-                        fontSize="sm"
-                        boxSize="10"
-                        jumpSize={11}
-                      />
-                    }
-                  >
-                    {pages.map((page: number) => (
-                      <PaginationPage
-                        w={7}
-                        bg="white"
-                        key={`pagination_page_${page}`}
-                        page={page}
-                        fontSize="sm"
-                        boxSize="10"
-                        fontWeight="bold"
-                        _hover={{
-                          bg: "#EAECF0",
-                        }}
-                        _current={{
-                          bg: "#EAECF0",
-                        }}
-                      />
-                    ))}
-                  </PaginationPageGroup>
-                  <PaginationNext
-                    variant={"outline"}
-                    h="40px"
-                    px="12px"
-                    rightIcon={<FiArrowRight />}
-                    iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
-                    borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                  >
-                    <Text>Next</Text>
-                  </PaginationNext>
-                </PaginationContainer>
-              </Pagination>
-            )}
+                  <Text>Previous</Text>
+                </PaginationPrevious>
+                <PaginationPageGroup
+                  isInline
+                  align="center"
+                  separator={
+                    <PaginationSeparator
+                      bg="#EAECF0"
+                      fontSize="sm"
+                      boxSize="10"
+                      jumpSize={11}
+                    />
+                  }
+                >
+                  {pages.map((page: number) => (
+                    <PaginationPage
+                      w={7}
+                      bg="white"
+                      key={`pagination_page_${page}`}
+                      page={page}
+                      fontSize="sm"
+                      boxSize="10"
+                      fontWeight="bold"
+                      _hover={{
+                        bg: "#EAECF0",
+                      }}
+                      _current={{
+                        bg: "#EAECF0",
+                      }}
+                    />
+                  ))}
+                </PaginationPageGroup>
+                <PaginationNext
+                  variant={"outline"}
+                  h="40px"
+                  px="12px"
+                  rightIcon={<FiArrowRight />}
+                  iconSpacing={3}
+                  border={"1px solid #D0D5DD"}
+                  borderRadius="8px"
+                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
+                >
+                  <Text>Next</Text>
+                </PaginationNext>
+              </PaginationContainer>
+            </Pagination>
+          )}
 
-            {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-              <Center w="100%" p="8" flexDirection={"column"}>
-                <EmptyContractorImage />
-                <Text pr="12" pt="2">
-                  No Expenses
-                </Text>
-              </Center>
-            )}
-          </Stack>
-          
-        </HStack>
+          {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
+            <Center w="100%" p="8" flexDirection={"column"}>
+              <EmptyContractorImage />
+              <Text pr="12" pt="2">
+                No Expenses
+              </Text>
+            </Center>
+          )}
+        </Stack>
+      </HStack>
     </ViewLayout>
-  )
+  );
 };
 
 export default Index;
