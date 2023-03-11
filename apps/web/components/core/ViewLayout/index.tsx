@@ -338,7 +338,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
               src={
                 ""
               }
-              name={sessionData?.user?.name}
+              name={sessionData?.user?.name || undefined}
             />
             <VStack
               display={"flex"}
