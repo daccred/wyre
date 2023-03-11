@@ -145,4 +145,5 @@ export const createPayrollValidationSchema = z.object({
   currency: currencyEnum,
   burden: z.number().optional(),
   employees: z.array(z.string()).optional(),
+  suspend: z.boolean(),
 });

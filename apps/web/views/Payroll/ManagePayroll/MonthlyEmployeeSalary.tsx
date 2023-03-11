@@ -29,12 +29,13 @@ import { monthlyPayrollColumns } from "../utils/tableColumns";
 import { createPayrollValidationSchema } from "../utils/misc";
 import z from "zod";
 import { trpc } from "../../../utils/trpc";
-import { Employee } from "@prisma/client";
+import { Employee, Payroll } from "@prisma/client";
 import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
 import SuccessModal from "../modals/SuccessModal";
 import FormDateInput from "../../../components/forms/components/FormDateInput";
 import SuspendPayroll from "../modals/SuspendPayroll";
 import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
+import { GetServerSideProps } from "next";
 
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 const MonthlyEmployeeSalary = () => {
@@ -49,13 +50,14 @@ const MonthlyEmployeeSalary = () => {
 
   // Get Data from previous page
   const router = useRouter();
-  const selectedRowData = router.query;
+  const rowId = router.query;
 
   //TODO: Why default values doesn't work with this??
   const { data: payroll } = trpc.payroll.getSinglePayroll.useQuery({
-    id: selectedRowData?.id as string,
+    id: rowId?.id as string,
   });
 
+  console.log("payroll", payroll);
   const employeeData = payroll && payroll.employees;
 
   // handles row select in table
@@ -168,6 +170,7 @@ const MonthlyEmployeeSalary = () => {
           currency: data.currency,
           burden: totalSalaries,
           employees: selectedEmployees,
+          suspend: data.suspend,
         },
       });
     } catch (error) {
@@ -185,7 +188,7 @@ const MonthlyEmployeeSalary = () => {
     onSubmit: handleSubmit,
     schema: createPayrollValidationSchema,
     defaultValues: {
-      title: payroll?.title,
+      title: payroll?.title ?? "jjj",
       cycle: payroll?.cycle as "daily" | "bi-weekly" | "monthly",
       auto: payroll?.auto,
       payday: payroll?.payday,
@@ -196,6 +199,7 @@ const MonthlyEmployeeSalary = () => {
         | "CNY"
         | "GBP"
         | "EUR",
+      suspend: payroll?.suspend,
     },
   });
 
@@ -396,3 +400,17 @@ const MonthlyEmployeeSalary = () => {
 };
 
 export default MonthlyEmployeeSalary;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const id = query?.id;
+  const { data: payroll } = trpc.payroll.getSinglePayroll.useQuery({
+    id: id as string,
+  });
+  return {
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+      payroll: payroll,
+    },
+  };
+};

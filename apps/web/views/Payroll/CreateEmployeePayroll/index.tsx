@@ -145,6 +145,7 @@ const CreateEmployeePayroll = () => {
       currency: data.currency,
       burden: totalAmount,
       employees: selectedEmployees,
+      suspend: data.suspend,
     });
   };
 
@@ -157,6 +158,7 @@ const CreateEmployeePayroll = () => {
       auto: false,
       payday: undefined,
       currency: "GHC",
+      suspend: false,
     },
   });
 
