@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta } from "../../layouts";
-import View from "../../views/Expenses";
+import View from "../../views/Reimbursements";
 
 export default function Page() {
   return (
