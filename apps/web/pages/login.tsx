@@ -4,6 +4,7 @@ import View from "../views/Login";
 import z from "zod";
 import { useForm } from "../components/forms";
 import { signIn } from "next-auth/react";
+import type { GetServerSideProps, NextPage } from "next";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -15,8 +16,9 @@ const loginValidationSchema = z.object({
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
 
 export default function Page() {
-  const toast = useToast();
   const router = useRouter();
+  const toast = useToast();
+
   const handleSubmit = React.useCallback(
     async (data: FormInputOptions) => {
       const response = await signIn("credentials", {
@@ -35,7 +37,7 @@ export default function Page() {
           isClosable: true,
         });
       } else {
-        router.push("/demo");
+        router.push("/dashboard");
       }
       // alert(JSON.stringify(data));
     },
@@ -44,8 +46,7 @@ export default function Page() {
 
   const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "", password: "#John007" },
-
+    defaultValues: { email: "", password: "" },
     schema: loginValidationSchema,
   });
 
@@ -56,3 +57,11 @@ export default function Page() {
     </>
   );
 }
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+    },
+  };
+};
