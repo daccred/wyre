@@ -62,7 +62,7 @@ export const ContractorsIcon = (props: HTMLChakraProps<"svg">) => (
     width={21}
     height={21}
     viewBox="0 0 20 21"
-    fill="currentColor"
+    fill="boldgrey"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
@@ -159,7 +159,7 @@ export const EmployeesIcon = (props: HTMLChakraProps<"svg">) => (
     width={21}
     height={21}
     viewBox="0 0 20 21"
-    fill="currentColor"
+    fill="boldgrey"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >

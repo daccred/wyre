@@ -93,9 +93,9 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           <Input
             size={"lg"}
             fontSize="sm"
-            h={"45px"}
+            h={'45px'}
             p="7"
-            border={"1px solid #D2D2D2"}
+            border={'1px solid #D2D2D2'}
             rounded={"5px"}
             bg={"#F7F7F7"}
             color={"#210D35"}
@@ -107,7 +107,6 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
             isDisabled={isSubmitting}
             {...register(name, {
               valueAsNumber: type === "number",
-              // valueAsDate: type === "date"
             })}
             type={type}
             {...props}

@@ -2,7 +2,7 @@ import React from "react";
 import { Meta } from "../layouts";
 import View from "../views/Register";
 import z from "zod";
-import { useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react"
 import { useForm } from "../components/forms";
 import { trpc } from "../utils/trpc";
 import type { GetServerSideProps } from "next";
@@ -53,11 +53,11 @@ export default function Page() {
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right'
       });
-      console.log(error);
+      console.log(error)
     },
-  });
+  })
 
   const Submit = (data: FormInputOptions) => {
     signUp({
@@ -79,7 +79,7 @@ export default function Page() {
   return renderForm(
     <>
       <Meta />
-      <View isSubmitting={isLoading} />
+      <View isSubmitting={isLoading}/>
     </>
   );
 }
