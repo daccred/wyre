@@ -41,7 +41,7 @@ import { useEffect, useState } from "react";
 import AddContractor from "./AddContractor";
 import { useRouter } from "next/router";
 import { trpc } from "utils/trpc";
-
+import useDebounce from "components/hooks/useDebounce";
 
 const Contractors = () => {
   const router = useRouter();
@@ -62,7 +62,7 @@ const Contractors = () => {
   const [dummyDataInUse, setDummyDataInUse]= useState<{[key: string]: string}[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedContractor, setSelectedContractor] = useState<{[key: string]: string}>();
-
+  const debouncedFilterValue = useDebounce(searchTerm, 500);
   const [activeContractorsOnly, setActiveContractorsOnly] = useState(true);
 
   useEffect(()=>{
@@ -86,7 +86,7 @@ const Contractors = () => {
 
   // search and active contractors switch function
   useEffect(() => {
-    if (searchTerm) {
+    if (debouncedFilterValue) {
       const searchData = dummyData?.filter((data) =>
         data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
@@ -102,7 +102,7 @@ const Contractors = () => {
       }
     }
 
-    if (!searchTerm) {
+    if (!debouncedFilterValue) {
       if (activeContractorsOnly) {
         const activeData = dummyData.filter(
           (data) => data?.status === "active"
@@ -113,7 +113,7 @@ const Contractors = () => {
     }
 
     setDummyDataInUse(dummyData);
-  }, [activeContractorsOnly, searchTerm, dummyData]);
+  }, [activeContractorsOnly, searchTerm,debouncedFilterValue, dummyData]);
 
   // pagination functions start
   // constants

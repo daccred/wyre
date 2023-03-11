@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 const signUpValidationSchema = z.object({
   company: z.string().min(1,  "Company name is required"),
   companyPhone: z.number().min(11, ""),
-  country: z.string() ,
+  country: z.string(),
   name: z.string().min(1, "Full name is required"),
   email: z.string().email(),
   role: z.string().min(1,  "Job role is required"),
@@ -30,12 +30,7 @@ type FormInputOptions = z.infer<typeof signUpValidationSchema>;
 export default function Page() {
   const router = useRouter();
   const toast = useToast();
-
-  type User = {
-    id: string;
-    email: string;
-  };
-
+  
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess: (data, variables, context) => {
       const { updatedAdmin } = data!;

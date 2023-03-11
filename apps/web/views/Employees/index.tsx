@@ -41,11 +41,10 @@ import { useEffect, useState } from "react";
 import AddEmployee from "./AddEmployee";
 import { useRouter } from "next/router";
 import { trpc } from "utils/trpc";
+import useDebounce from "components/hooks/useDebounce";
 
 const Employees = () => {
   const { data: employees } = trpc.employee.getEmployees.useQuery();
-  console.log(employees);
-
   const router = useRouter();
 
   const { isOpen:addEmployeeModalIsOpen, onOpen:openAddEmployeeModal, onClose:closeAddEmployeeModal } = useDisclosure();
@@ -54,10 +53,12 @@ const Employees = () => {
   const [dummyData, setDummyData]= useState<{[key: string]: string}[]>([]);
   const [dummyDataInUse, setDummyDataInUse]= useState<{[key: string]: string}[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<{[key: string]: string}>();
-  const [searchTerm, setSearchTerm] = useState('');
+    
+    const [searchTerm, setSearchTerm] = useState('');
 
-  const [activeEmployeesOnly, setActiveEmployeesOnly] = useState(true);
-
+    const [activeEmployeesOnly, setActiveEmployeesOnly] = useState(true);
+    // Add a new state variable for the debounced search term
+    const debouncedFilterValue = useDebounce(searchTerm, 500);
 
   useEffect(()=>{
     if (employees) {
@@ -80,29 +81,29 @@ const Employees = () => {
 
   // search and active employees switch function
   useEffect(()=>{
-    if(searchTerm){
-      const searchData = dummyData?.filter(data=>data?.name?.toLowerCase().includes(searchTerm?.toLowerCase()));
-      if (activeEmployeesOnly){
-        const activeData= searchData.filter(data=>data?.status==='active');
-        setDummyDataInUse(activeData);
-        return
-      }else{
-        setDummyDataInUse(searchData);
-        return
+      if(debouncedFilterValue){
+        const searchData = dummyData?.filter(data=>data?.name?.toLowerCase().includes(searchTerm?.toLowerCase()));
+        if (activeEmployeesOnly){
+          const activeData= searchData.filter(data=>data?.status==='active');
+          setDummyDataInUse(activeData);
+          return
+        }else{
+          setDummyDataInUse(searchData);
+          return
+        }
       }
-    }
 
-    if(!searchTerm){
-      if (activeEmployeesOnly){
-        const activeData= dummyData.filter(data=>data?.status==='active')
-        setDummyDataInUse(activeData);
-        return
+      if(!debouncedFilterValue){
+        if (activeEmployeesOnly){
+          const activeData= dummyData.filter(data=>data?.status==='active')
+          setDummyDataInUse(activeData);
+          return
+        }
       }
-    }
 
     setDummyDataInUse(dummyData)
     
-  },[activeEmployeesOnly, searchTerm, dummyData])
+  },[activeEmployeesOnly, debouncedFilterValue,searchTerm, dummyData])
   
 
   // pagination functions start
