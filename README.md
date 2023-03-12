@@ -1,5 +1,5 @@
 # Wyre
-**Wyre** is an open expense payroll infrastructure. We help businesses to:
+**Wyre** is an open-source expense payroll infrastructure. We help businesses to:
 
 🚀 Digitalize your payroll process without worrying about geographic limitations.
 
@@ -44,3 +44,9 @@ This project is still in early alpha, so we have many features soon to come! Thi
 - **Fiat Rails:** `[paystack, ExpressPayGH, flutterwave]`
 - **Crypto Rails:** `[fluidcoins, lazerpay, coinprofile]`
 - **Mobile Money:** `[MTN Momo API, MPesa]`
+
+## Configurations
+
+## Dependencies
+
+## Licences
