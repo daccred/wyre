@@ -33,8 +33,8 @@ export default function Page() {
   
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess: (data, variables, context) => {
-      const { updatedAdmin } = data!;
-      const { email, id  } = updatedAdmin;
+      const { admin } = data!;
+      const { email, id  } = admin;
       toast({
         status: "success",
         description: `Registration successful. Please check your email ${email} to verify your account.`,

@@ -4,7 +4,7 @@ import View from "../views/Login";
 import z from "zod";
 import { useForm } from "../components/forms";
 import { signIn } from "next-auth/react";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps } from "next";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
