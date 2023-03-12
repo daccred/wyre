@@ -35,12 +35,16 @@ type ManageReimbursementModalTypes = {
   openManageReimbursementModal: () => void;
   manageReimbursementModalIsOpen: boolean;
   closeManageReimbursementModal: () => void;
+  openApproveReimbursementSuccessModal: () => void;
+  data: { [key: string]: string };
 };
 
 export default function ManageReimbursementModal({
   openManageReimbursementModal,
   manageReimbursementModalIsOpen,
   closeManageReimbursementModal,
+  openApproveReimbursementSuccessModal,
+  data,
 }: ManageReimbursementModalTypes) {
   const toast = useToast();
 
@@ -109,29 +113,42 @@ export default function ManageReimbursementModal({
                   <FormInput
                     name="employee/contractor"
                     label="Employee/Contractor"
-                    placeholder="Kelechi Iheanacho"
+                    placeholder="Name"
+                    style={{ textTransform: "capitalize" }}
+                    px={"4"}
+                    value={data?.fullName}
+                    readOnly
                   />
 
                   <FormInput
                     name="amount"
                     label="Amount"
                     placeholder="Enter Amount"
+                    px={"4"}
+                    value={data?.amount}
+                    readOnly
                   />
                 </HStack>
                 <FormInput
                   name="purpose"
                   label="Purpose"
                   placeholder="Enter Purpose"
+                  px={"4"}
+                  value={data?.purpose}
+                  readOnly
                 />
               </Stack>
-              <Center
-                p="4"
-                border="1px solid #d2d2d2"
-                bg="#F7F7F7"
-                borderRadius={"5px"}
-              >
-                <Image src="/images/invoice-wyre.png" alt="" />
-              </Center>
+              <Stack>
+                <Text fontSize={"sm"}>Attachment</Text>
+                <Center
+                  p="4"
+                  border="1px solid #d2d2d2"
+                  bg="#F7F7F7"
+                  borderRadius={"5px"}
+                >
+                  <Image src="/images/invoice-wyre.png" alt="" />
+                </Center>
+              </Stack>
 
               <HStack>
                 <Button
@@ -144,6 +161,7 @@ export default function ManageReimbursementModal({
                   fontSize={"sm"}
                   px="6"
                   _hover={{ bg: "" }}
+                  onClick={openApproveReimbursementSuccessModal}
                 >
                   Approve
                 </Button>
