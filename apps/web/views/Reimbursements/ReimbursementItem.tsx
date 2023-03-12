@@ -5,7 +5,9 @@ import {
   Image,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
+  ModalHeader,
   ModalOverlay,
   Stack,
   Td,
@@ -13,6 +15,7 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import ManageReimbursementModal from "./ManageReimbursementModal";
 
 interface reimbursementItemInterface {
@@ -34,6 +37,12 @@ export default function ReimbursementItem({
     onClose: closeManageReimbursementModal,
   } = useDisclosure();
 
+  const {
+    isOpen: viewImageModalIsOpen,
+    onOpen: openViewImageModal,
+    onClose: closeViewImageModal,
+  } = useDisclosure();
+
   return (
     <>
       <Tr textTransform={"capitalize"}>
@@ -52,6 +61,7 @@ export default function ReimbursementItem({
             fontSize="sm"
             bg="#9f9f9f26"
             px="2"
+            onClick={openViewImageModal}
           >
             <Text
               textOverflow={"ellipsis"}
@@ -97,6 +107,7 @@ export default function ReimbursementItem({
         data={data}
       />
 
+      {/* Approve success modal */}
       <Modal
         onClose={() => {
           closeApproveReimbursementSuccessModal();
@@ -120,6 +131,27 @@ export default function ReimbursementItem({
               </Text>
               <Image src="/addEmployeeSuccess.png" alt="" w="40" />
             </Stack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* View image modal */}
+      <Modal
+        onClose={closeViewImageModal}
+        isOpen={viewImageModalIsOpen}
+        isCentered
+        size={"xl"}
+      >
+        <ModalOverlay />
+        <ModalContent w="100%">
+          <ModalHeader fontWeight="bold" fontSize="md" pb="0">
+            {data?.attachment}
+          </ModalHeader>
+          <ModalCloseButton m="1">
+            <IoCloseCircleOutline fontSize={"28px"} />
+          </ModalCloseButton>
+          <ModalBody p="4">
+            <Image src="/images/invoice-wyre.png" alt="" w="100%" />
           </ModalBody>
         </ModalContent>
       </Modal>

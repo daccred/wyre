@@ -14,19 +14,18 @@ import {
 } from "@chakra-ui/react";
 import z from "zod";
 import { FormInput, useForm } from "../../components/forms";
-import { PeopleIcon } from "./ProviderIcons";
 import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
 // import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
 import { BsCheck2Circle } from "react-icons/bs";
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: "Name is Required" }),
-  email: z.string().email(),
-  department: z.string().min(1, { message: "Deparment is Required" }),
-  jobRole: z.string().min(1, { message: "JobRole is Required" }),
-  grossSalary: z.string().min(1, { message: "Gross salary is Required" }),
-  signingBonus: z.string().min(1, { message: "Bonus is Required" }),
+  // name: z.string().min(1, { message: "Name is Required" }),
+  // email: z.string().email(),
+  // department: z.string().min(1, { message: "Deparment is Required" }),
+  // jobRole: z.string().min(1, { message: "JobRole is Required" }),
+  // grossSalary: z.string().min(1, { message: "Gross salary is Required" }),
+  // signingBonus: z.string().min(1, { message: "Bonus is Required" }),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
