@@ -11,4 +11,4 @@ export default function Page() {
   );
 }
 // add the requireAuth property to the page component
-Page.requireAuth = true;
+Page.requireAuth = true

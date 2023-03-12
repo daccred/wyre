@@ -5,15 +5,16 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Skeleton,
+  Skeleton
 } from "@chakra-ui/react";
 import ViewLayout from "../../../components/core/ViewLayout";
 import ContractorForm from "./ContractorForm";
 import CompensationForm from "./CompensationForm";
 import { FiChevronRight } from "react-icons/fi";
-import { trpc } from "../../../utils/trpc";
+import { trpc } from "utils/trpc";
 import { GetServerSideProps } from "next/types";
 import { useRouter } from "next/router";
+
 
 // Define initial state
 const initialState = {
@@ -22,7 +23,7 @@ const initialState = {
 };
 
 // Define reducer function
-const reducer = (state: any, action: any) => {
+const reducer = (state:any, action:any) => {
   switch (action.type) {
     case "SET_CONTRACTOR":
       return {
@@ -49,7 +50,7 @@ const ManageContractor = ({ contractorData }: any) => {
     if (contractor) {
       dispatch({ type: "SET_CONTRACTOR", payload: contractor });
     }
-  }, [contractor]);
+  },[contractor]);
   return (
     <>
       <ViewLayout title="Manage Contractor">
@@ -60,15 +61,13 @@ const ManageContractor = ({ contractorData }: any) => {
           fontWeight={"semibold"}
         >
           <BreadcrumbItem>
-            <BreadcrumbLink href="/contractors" color={"lightgrey"}>
-              Contractor
-            </BreadcrumbLink>
+            <BreadcrumbLink href="/contractors" color={"lightgrey"}>Contractor</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink
             // href='#'
             >
-              <Skeleton textTransform={"capitalize"} isLoaded={!isLoading}>
+              <Skeleton textTransform={'capitalize'} isLoaded={!isLoading}>
                 {state.contractor?.name}
               </Skeleton>
             </BreadcrumbLink>
@@ -83,7 +82,7 @@ const ManageContractor = ({ contractorData }: any) => {
             bg={"white"}
             w="70%"
           >
-            <ContractorForm contractor={state.contractor || null} />
+            <ContractorForm contractor={state.contractor || null}/>
           </Stack>
           <CompensationForm />
         </HStack>

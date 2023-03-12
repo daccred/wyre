@@ -17,7 +17,7 @@ export interface SignUp {
 export const signUpSchema = loginSchema.extend({
   name: z.string(),
   companyName: z.string(),
-  companyPhone: z.string().optional(),
+  companyPhone: z.string(),
   country: z.string(),
   jobRole: z.string(),
 });
