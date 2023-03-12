@@ -1,22 +1,24 @@
 import * as React from "react";
 import { FormInput, FormNativeSelect } from "../../components/forms";
 import {
-  Button,
-  Flex,
-  Heading,
-  Link,
-  Stack,
-  HStack,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+    Button,
+    Flex,
+    Heading,
+    Link,
+    Stack,
+    HStack,
+    Image,
+    Text,
+} from '@chakra-ui/react';
 import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
   isSubmitting?: boolean;
 };
 
+
 const View: React.FC<Props> = (Props) => {
+
   const { isSubmitting } = Props;
 
   return(
@@ -95,27 +97,27 @@ const View: React.FC<Props> = (Props) => {
             </Stack>
         </Flex>
       </Stack>
+      
 
-      <Flex
-        bgColor="#210D35"
-        color="white"
-        flex={1}
-        align={"center"}
-        justify={"center"}
-      >
-        <HStack flex={1} align={"start"} justify={"end"}>
-          <Stack p={8} maxW={"md"}>
+      <Flex bgColor="#210D35" color="white" flex={1} align={'center'} justify={'center'} >
+        
+        <HStack flex={1} align={'start'} justify={'end'} >
+          <Stack p={8} maxW={'md'}>
             <Heading>Wyre</Heading>
-            <Text>
-              The open-source payroll Infrastructure for African businesses.
-            </Text>
+            <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
-
-          <Image alt={"Image"} src={"images/Payroll.png"} />
+        
+          <Image
+            alt={'Image'}
+            src={
+              'images/Payroll.png'
+            }
+          />
         </HStack>
       </Flex>
+
     </Stack>
-  );
-};
+  )
+}
 
 export default View;

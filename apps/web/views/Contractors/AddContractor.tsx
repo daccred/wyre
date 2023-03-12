@@ -14,8 +14,9 @@ import z from "zod";
 import { FormInput, useForm } from "../../components/forms";
 import { PeopleIcon } from "./ProviderIcons";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "../../utils/trpc";
+import { trpc } from "utils/trpc";
 import { useToast } from "@chakra-ui/react";
+
 
 const addContractorValidationSchema = z.object({
   email: z.string().email(),
@@ -44,22 +45,23 @@ export default function AddContractor({
     const { mutate: addContractor, isLoading } = trpc.employee.createEmployee.useMutation({
         onSuccess(data: any) {
         // Reset the form data to empty values
-
+        
         openAddContractorSuccessModal();
         closeAddContractorModal();
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-        console.log("Error creating contractor:", error);
-      },
-    });
-
+            
+        },
+        onError(error: any) {
+            toast({
+                status: "error",
+                description: `${error}`,
+                isClosable: true,
+                duration: 5000,
+                position: 'top-right'
+              });
+          console.log('Error creating contractor:', error);
+        },
+    })
+    
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
 
@@ -75,7 +77,7 @@ export default function AddContractor({
       });
       
   };
-
+  
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     // defaultValues: { email: "" },
@@ -146,14 +148,14 @@ export default function AddContractor({
               </Text>
 
               <Button
-                isLoading={isLoading}
-                loadingText="Submitting"
-                variant={"darkBtn"}
-                rightIcon={<PeopleIcon fill={"white"} />}
-                iconSpacing="3"
-                w="fit-content"
-                type="submit"
-                _hover={{ bg: "" }}
+                 isLoading={isLoading}
+                 loadingText='Submitting' 
+                 variant={"darkBtn"} 
+                 rightIcon={<PeopleIcon fill={"white"} />} 
+                 iconSpacing="3" 
+                 w="fit-content" 
+                 type="submit" 
+                 _hover={{ bg: '' }}
               >
                 Add Contractor
               </Button>

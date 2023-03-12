@@ -1,6 +1,11 @@
-import React from "react";
+import React from 'react';
 // import Spinner from './spinner';
-import { Button, Flex, Text, Spinner } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Text,
+  Spinner
+} from '@chakra-ui/react';
 
 type LoadingButtonProps = {
   submitting?: boolean;
@@ -11,27 +16,27 @@ type LoadingButtonProps = {
 };
 
 export const LoadingButton: React.FC<LoadingButtonProps> = ({
-  textColor = "white",
-  btnColor = "#210D35",
+  textColor = 'white',
+  btnColor = '#210D35',
   children,
   width,
   submitting = false,
 }) => {
   return (
     <Button
-      type="submit"
+      type='submit'
       isDisabled={submitting}
-      w={width}
-      color="white"
-      bgColor={submitting ? "#010C14" : btnColor}
-      py={7}
+      w={width} color="white" bgColor={submitting ? '#010C14' : btnColor} py={7} 
       _hover={{
-        bg: "#210D35",
+        bg: '#210D35',
       }}
     >
       {submitting ? (
-        <Flex align={"center"}>
-          <Spinner thickness="4px" speed="0.5s" />
+        <Flex align={'center'} >
+          <Spinner 
+            thickness='4px'
+            speed='0.5s'
+          />
           <Text ms={3}>Loading...</Text>
         </Flex>
       ) : (

@@ -58,7 +58,10 @@ export const nextAuthOptions: NextAuthOptions = {
 
           // const verify = await hashString(password)
 
-          const isValidPassword = await verifyHash(password, user.password);
+          const isValidPassword = await verifyHash(
+            password,
+            user.password
+          );
 
           if (!isValidPassword) {
             throw new TRPCError({
