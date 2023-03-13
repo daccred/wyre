@@ -17,7 +17,7 @@ export interface SignUp {
 export const signUpSchema = loginSchema.extend({
   name: z.string(),
   companyName: z.string(),
-  companyPhone: z.string().optional(),
+  companyPhone: z.string(),
   country: z.string(),
   jobRole: z.string(),
 });
@@ -27,7 +27,14 @@ export const verifyEmailSchema = z.object({
   token: z.string(),
 });
 
+export const resetPasswordSchema = z.object({
+  email: z.string().email(),
+  otp: z.string(),
+  newPassword: z.string(),
+});
+
 export type ILogin = z.infer<typeof loginSchema>;
 export type ISignUp = z.infer<typeof signUpSchema>;
 export type IEmail = Pick<z.infer<typeof loginSchema>, "email">;
 export type IVerifyEmail = z.infer<typeof verifyEmailSchema>;
+export type IResetPassword = z.infer<typeof resetPasswordSchema>;

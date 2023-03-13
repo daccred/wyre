@@ -69,7 +69,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
               {...field}
             >
               {options.map((option) => (
-                <option key={option.value} value={option.value}>
+                <option key={option.value} value={option.value} >
                   {option.label}
                 </option>
               ))}
