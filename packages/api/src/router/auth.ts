@@ -1,6 +1,10 @@
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { AuthService } from "../services";
-import { signUpSchema, verifyEmailSchema } from "../interfaces";
+import {
+  resetPasswordSchema,
+  signUpSchema,
+  verifyEmailSchema,
+} from "../interfaces";
 import { z } from "zod";
 
 export const authRouter = createTRPCRouter({
@@ -20,7 +24,7 @@ export const authRouter = createTRPCRouter({
   sendAdminMailVerification: publicProcedure
     .input(z.object({ email: z.string().email(), verifyCode: z.string() }))
     .mutation(async ({ input }) => {
-      const mail = await AuthService.sendAdminMailVerification(
+      const mail = await AuthService.sendEmailVerification(
         input.email,
         input.verifyCode
       );
@@ -31,5 +35,26 @@ export const authRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const verified = await AuthService.verifyAdminEmail(input);
       return verified;
+    }),
+
+  sendResetPasswordMail: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      const mail = await AuthService.sendForgotPasswordEmail(input.email);
+      return mail;
+    }),
+
+  resetPassword: publicProcedure
+    .input(resetPasswordSchema)
+    .mutation(async ({ input }) => {
+      const reset = await AuthService.resetPassword(input);
+      return reset;
+    }),
+
+  resendVerificationMail: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      const mail = await AuthService.resendVerificationEmail(input.email);
+      return mail;
     }),
 });

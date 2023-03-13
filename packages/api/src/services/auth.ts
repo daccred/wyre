@@ -1,9 +1,14 @@
 import { TRPCError } from "@trpc/server";
-import { hashString } from "../utils";
-import { ISignUp, IVerifyEmail } from "../interfaces";
+import { getBaseUrl, hashString, verifyHash } from "../utils";
+import { ISignUp, IVerifyEmail, IResetPassword } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
-import { sendEmail, emailHTML } from "@wyre-zayroll/dialog";
+import {
+  sendEmail,
+  emailHTML,
+  forgotPasswordEmail,
+} from "@wyre-zayroll/dialog";
 import { ServicesError } from "./ServiceErrors";
+import redisClient from "../redis";
 import { exclude } from "./utils";
 
 export class AuthService {
@@ -103,7 +108,7 @@ export class AuthService {
       }
 
       //Send verification code to email address
-      const response = await AuthService.sendAdminMailVerification(
+      const response = await AuthService.sendEmailVerification(
         admin.email,
         confirmCode
       );
@@ -116,6 +121,7 @@ export class AuthService {
       }
 
       const updatedAdmin = exclude(admin, ["password"]);
+
       return { updatedAdmin, emailStatus: response };
     } catch (error) {
       ServicesError(error);
@@ -129,7 +135,6 @@ export class AuthService {
       const admin = await prisma.user.findFirst({
         where: {
           id,
-          // type: "ADMIN" || "SUPER_ADMIN",
         },
         select: {
           verification: true,
@@ -188,10 +193,45 @@ export class AuthService {
     }
   }
 
-  static async sendAdminMailVerification(email: string, verifyCode: string) {
+  static async resendVerificationEmail(email: string) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          email,
+        },
+        select: {
+          verification: true,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Account not found",
+        });
+      }
+      const confirmCode = user.verification.token;
+
+      const response = await AuthService.sendEmailVerification(
+        email,
+        confirmCode
+      );
+
+      if (!response) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to send verification code",
+        });
+      }
+      return response;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+  static async sendEmailVerification(email: string, verifyCode: string) {
     try {
       const admin = await prisma.user.findFirst({
-        where: { email: email },
+        where: { email },
       });
 
       if (!admin)
@@ -208,6 +248,102 @@ export class AuthService {
         htmlBody: verifyEmail,
       });
       return response;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+
+  static async sendForgotPasswordEmail(email: string) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: { email },
+      });
+
+      if (!user) {
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      }
+
+      //Handle password otp
+      const confirmCode = JSON.stringify(
+        Math.floor(100000 + Math.random() * 900000)
+      ); // generates a random 6-digit code
+
+      if (user) {
+        await redisClient.hello();
+        await redisClient.HSET(`otp_${user.id}`, "id", user.id);
+        await redisClient.HSET(`otp_${user.id}`, "email", user.email);
+        await redisClient.HSET(`otp_${user.id}`, "otp", confirmCode);
+        await redisClient.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
+      }
+
+      const confirmLink = `${getBaseUrl()}/reset-password?otp=${confirmCode}&email=${email}`;
+
+      const forgotEmail = forgotPasswordEmail({ confirmCode, confirmLink });
+
+      const response = await sendEmail({
+        from: "admin@tecmie.com",
+        subject: "Reset your password",
+        to: email,
+        textBody: "Email sent",
+        userId: user?.id,
+        htmlBody: forgotEmail,
+      });
+
+      return response;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+
+  static async resetPassword(input: IResetPassword) {
+    try {
+      const { email, otp, newPassword } = input;
+      const user = await prisma.user.findFirst({
+        where: { email },
+      });
+
+      if (!user) {
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      }
+      const userHash = user && (await redisClient.hGetAll(`otp_${user.id}`));
+      if (!userHash?.otp) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "OTP not found",
+        });
+      } else if (userHash.otp !== otp) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "OTP is invalid",
+        });
+      }
+
+      const isSame = await verifyHash(newPassword, user?.password as string);
+
+      if (isSame) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You cannot use the old password as the new password",
+        });
+      }
+
+      const resetPass = await prisma.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          password: await hashString(newPassword),
+        },
+      });
+
+      if (!resetPass) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to reset password",
+        });
+      }
+
+      return user;
     } catch (error) {
       ServicesError(error);
     }

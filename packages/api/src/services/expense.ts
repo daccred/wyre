@@ -28,6 +28,9 @@ export class ExpenseService {
         data: {
           amount: input.amount,
           description: input.description,
+          date: input.date,
+          status: input.status,
+          type: input.type,
           employees: { connect: employees },
         },
       });
@@ -63,6 +66,9 @@ export class ExpenseService {
         where: { id: expenseId },
         data: {
           amount: input.amount,
+          date: input.date,
+          status: input.status,
+          type: input.type,
           description: input.description,
           employees: { connect: employees },
         },

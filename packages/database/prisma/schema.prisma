@@ -79,10 +79,11 @@ model User {
 }
 
 model VerificationToken {
-  id         String   @id @default(cuid())
-  token      String   @unique
-  expires    DateTime
-  user       User[]
+  id          String   @id @default(cuid())
+  token       String   @unique
+  expires     DateTime
+  passwordOtp String?
+  user        User[]
 
   @@unique([id, token])
 }
