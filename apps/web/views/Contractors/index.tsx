@@ -21,8 +21,6 @@ import {
   ModalBody,
   useDisclosure,
   Image,
-  SkeletonText,
-  SkeletonCircle
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -40,13 +38,11 @@ import {
 import { useEffect, useState } from "react";
 import AddContractor from "./AddContractor";
 import { useRouter } from "next/router";
-import { trpc } from "utils/trpc";
-import useDebounce from "components/hooks/useDebounce";
+import { trpc } from "../../utils/trpc";
 
 const Contractors = () => {
   const router = useRouter();
   const { data: contractors } = trpc.employee.getContractors.useQuery();
-
 
   const {
     isOpen: addContractorModalIsOpen,
@@ -58,35 +54,44 @@ const Contractors = () => {
     onOpen: openAddContractorSuccessModal,
     onClose: closeAddContractorSuccessModal,
   } = useDisclosure();
-  const [dummyData, setDummyData]= useState<{[key: string]: string}[]>([]);
-  const [dummyDataInUse, setDummyDataInUse]= useState<{[key: string]: string}[]>([]);
+  const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
+  const [dummyDataInUse, setDummyDataInUse] = useState<
+    { [key: string]: string }[]
+  >([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedContractor, setSelectedContractor] = useState<{[key: string]: string}>();
-  const debouncedFilterValue = useDebounce(searchTerm, 500);
+  const [selectedContractor, setSelectedContractor] = useState<{
+    [key: string]: string;
+  }>();
+
   const [activeContractorsOnly, setActiveContractorsOnly] = useState(true);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (contractors) {
-      const convertedContractors = contractors.map((contractor:any) => ({
+      const convertedContractors = contractors.map((contractor: any) => ({
         id: contractor.id.toString(),
         name: contractor.name,
         email: contractor.email,
         role: contractor.jobRole,
         department: contractor.department,
-        status: contractor.status !== null ? (contractor.status === true ? 'active' : 'terminated') : "",
+        status:
+          contractor.status !== null
+            ? contractor.status === true
+              ? "active"
+              : "terminated"
+            : "",
         category: contractor.category,
         salary: contractor.salary,
         signBonus: contractor.signBonus,
       }));
-      setDummyData(convertedContractors); 
+      setDummyData(convertedContractors);
       setDummyDataInUse(convertedContractors);
       setSelectedContractor(convertedContractors[0]); // Set the initial state for selectedcontractor to the first data in convertedcontractors
     }
-},[contractors]);
+  }, [contractors]);
 
   // search and active contractors switch function
   useEffect(() => {
-    if (debouncedFilterValue) {
+    if (searchTerm) {
       const searchData = dummyData?.filter((data) =>
         data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
@@ -102,7 +107,7 @@ const Contractors = () => {
       }
     }
 
-    if (!debouncedFilterValue) {
+    if (!searchTerm) {
       if (activeContractorsOnly) {
         const activeData = dummyData.filter(
           (data) => data?.status === "active"
@@ -113,7 +118,7 @@ const Contractors = () => {
     }
 
     setDummyDataInUse(dummyData);
-  }, [activeContractorsOnly, searchTerm,debouncedFilterValue, dummyData]);
+  }, [activeContractorsOnly, searchTerm, dummyData]);
 
   // pagination functions start
   // constants
@@ -151,7 +156,7 @@ const Contractors = () => {
 
   // pagination functions end
 
-   return (
+  return (
     <>
       <ViewLayout title="Contractors">
         <HStack gap="4" alignItems={"flex-start"}>
@@ -202,7 +207,6 @@ const Contractors = () => {
                     fontSize={"sm"}
                     placeholder="Search Contractor"
                     value={searchTerm}
-                    defaultChecked
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </HStack>
@@ -210,7 +214,6 @@ const Contractors = () => {
                   <Switch
                     size="sm"
                     colorScheme={"black"}
-                    defaultChecked
                     onChange={(e) =>
                       setActiveContractorsOnly(e?.target?.checked)
                     }
@@ -260,10 +263,14 @@ const Contractors = () => {
                           pageSize * currentPage
                         )
                         .map((data, index) => (
-                          <Tr textTransform={"capitalize"} cursor={"pointer"}
-                          key={index}
-                          onClick={() => setSelectedContractor(data)}
-                          borderBottom={"1px solid"} borderColor="bordergrey">
+                          <Tr
+                            textTransform={"capitalize"}
+                            cursor={"pointer"}
+                            key={index}
+                            onClick={() => setSelectedContractor(data)}
+                            borderBottom={"1px solid"}
+                            borderColor="bordergrey"
+                          >
                             <Td>
                               <HStack>
                                 <Avatar
@@ -283,7 +290,8 @@ const Contractors = () => {
                                 </Text>
                               </HStack>
                             </Td>
-                            <Td textTransform={"lowercase"}
+                            <Td
+                              textTransform={"lowercase"}
                               opacity={data?.status !== "active" ? "35%" : ""}
                             >
                               {data?.category}
@@ -390,7 +398,7 @@ const Contractors = () => {
               </Center>
             )}
           </Stack>
-          {selectedContractor ? 
+          {selectedContractor ? (
             <Flex
               flexDirection={"column"}
               borderRadius={"15px"}
@@ -405,7 +413,11 @@ const Contractors = () => {
                 Contractor Details
               </Text>
               <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
-                <Avatar size={"md"} name={selectedContractor?.name} src={selectedContractor?.imgURL} />
+                <Avatar
+                  size={"md"}
+                  name={selectedContractor?.name}
+                  src={selectedContractor?.imgURL}
+                />
                 <Stack spacing={0} marginTop="0">
                   <Text fontWeight={"semibold"}>Full Name</Text>
                   <Text overflowWrap="break-word">
@@ -423,7 +435,9 @@ const Contractors = () => {
                   <Text>{selectedContractor?.phoneNumber}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text textTransform={"lowercase"} fontWeight={"semibold"}>Category</Text>
+                  <Text textTransform={"lowercase"} fontWeight={"semibold"}>
+                    Category
+                  </Text>
                   <Text overflowWrap="break-word">
                     {selectedContractor?.category}
                   </Text>
@@ -470,19 +484,36 @@ const Contractors = () => {
                 w="100%"
                 mt="10"
                 py="15px"
-                onClick={()=> router.push({pathname:`/contractors/${selectedContractor.id}`, query: { id: selectedContractor.name }})}
+                onClick={() =>
+                  router.push({
+                    pathname: `/contractors/${selectedContractor.id}`,
+                    query: { id: selectedContractor.name },
+                  })
+                }
               >
                 Manage Contractor
               </Button>
             </Flex>
-            :
-            <Flex flexDirection={"column"} borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} flex="1" marginInlineStart="0">
-              <SkeletonText my='4' noOfLines={1} spacing='4' skeletonHeight='4' />
-              <SkeletonCircle size='10' />
-              <SkeletonText mt='4' noOfLines={10} spacing='4' skeletonHeight='3' />
-              <SkeletonText mt='4' noOfLines={1} skeletonHeight='10' />
+          ) : (
+            <Flex
+              flexDirection={"column"}
+              borderRadius={"15px"}
+              border={"1px solid"}
+              borderColor="bordergrey"
+              p="4"
+              bg={"white"}
+              flex="1"
+              marginInlineStart="0"
+            >
+              <Center w="100%" flexDirection={"column"}>
+                <Text fontWeight="bold" fontSize="18px" mb="4">
+                  Contractor Details
+                </Text>
+                <EmptyContractorImage />
+                <Text pt="2">No currrent selected Contractor</Text>
+              </Center>
             </Flex>
-            }
+          )}
         </HStack>
       </ViewLayout>
 

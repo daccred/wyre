@@ -79,11 +79,10 @@ model User {
 }
 
 model VerificationToken {
-  id          String   @id @default(cuid())
-  token       String   @unique
-  expires     DateTime
-  passwordOtp String?
-  user        User[]
+  id         String   @id @default(cuid())
+  token      String   @unique
+  expires    DateTime
+  user       User[]
 
   @@unique([id, token])
 }
@@ -145,15 +144,29 @@ model Payroll {
   cycle       String
   payday      DateTime
   auto        Boolean
+  suspend     Boolean        @default(false)
   burden      Int
   currency    String
   employees   Employee[]
 
 }
 
+enum ExpensType {
+  Reimbursement
+  Payment
+}
+
+enum ExpenseStatus {
+    Failed
+    Pending
+    Success
+  }
 model Expense {
   id          String           @id @default(cuid())
   description String
+  date        DateTime
+  type        ExpensType       @default(Payment)
+  status      ExpenseStatus
   amount      String
   employees   Employee[]
    

@@ -64,7 +64,9 @@ export const FormDateInput = forwardRef<
           <Input
             size={"lg"}
             fontSize="md"
-            rounded={"3xl"}
+            bg={"#F7F7F7"}
+            rounded="md"
+            color={"#210D35"}
             _placeholder={{ fontSize: "sm" }}
             _hover={{ borderColor: "primary" }}
             _focus={{ borderColor: "primary" }}
