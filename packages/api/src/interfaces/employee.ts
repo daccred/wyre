@@ -5,8 +5,10 @@ export const employeeSchema = z.object({
   email: z.string().email(),
   department: z.string(),
   jobRole: z.string(),
+  category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
   salary: z.string(),
   signBonus: z.string(),
+  status: z.boolean().default(true),
 });
 
 export type IEmployeeSchema = z.infer<typeof employeeSchema>;

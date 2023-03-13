@@ -1,14 +1,22 @@
 import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
-import { Invitation } from "../interfaces";
+import { InvitationSchemaType } from "../interfaces";
 import { AuthService } from "./auth";
-import { AdminService } from "./admin";
 import { nanoid } from "nanoid";
+import { ServicesError } from "./ServiceErrors";
 
 export class InvitationService {
-  static async createInvitation(input: Invitation) {
+  static async createInvitation(input: InvitationSchemaType) {
     try {
-      const getAdmin = await AdminService.getAdminByEmail(input.adminId);
+      const getAdmin = await prisma.user.findFirst({
+        where: {
+          email: input.email,
+          type: "ADMIN" || "SUPER_ADMIN",
+        },
+      });
+      if (!getAdmin) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
+      }
       //check if user has sufficient access
       const isSuperAdmin = await AuthService.checkIfSuperAdmin(getAdmin.id);
       if (!isSuperAdmin) {
@@ -21,21 +29,18 @@ export class InvitationService {
       // create the invitation
       const invitation = await prisma.invitation.create({
         data: {
-          email: input.email as string,
-          description: input.description as string,
+          email: input?.email,
+          description: input.description,
           token: nanoid(10),
-          category: input.category as string,
-          adminId: input.adminId as string,
-          companyId: getAdmin.companyId as string,
+          category: input.category,
+          userId: getAdmin.id,
+          companyId: getAdmin.companyId,
         },
       });
       // TODO: send email to the user
       return invitation;
     } catch (error) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: JSON.stringify(error as string),
-      });
+      ServicesError(error);
     }
   }
 
@@ -46,12 +51,16 @@ export class InvitationService {
           companyId: companyId,
         },
       });
+
+      if (!invitations) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No invitations found",
+        });
+      }
       return invitations;
     } catch (error) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: JSON.stringify(error as string),
-      });
+      ServicesError(error);
     }
   }
 
@@ -59,15 +68,18 @@ export class InvitationService {
     try {
       const invitations = await prisma.invitation.findMany({
         where: {
-          adminId: adminId,
+          userId: adminId,
         },
       });
+      if (!invitations) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No invitations found",
+        });
+      }
       return invitations;
     } catch (error) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: JSON.stringify(error as string),
-      });
+      ServicesError(error);
     }
   }
 
@@ -78,12 +90,15 @@ export class InvitationService {
           id: id,
         },
       });
+      if (!invitation) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No invitations found",
+        });
+      }
       return invitation;
     } catch (error) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: JSON.stringify(error as string),
-      });
+      ServicesError(error);
     }
   }
 
@@ -94,12 +109,15 @@ export class InvitationService {
           id: id,
         },
       });
+      if (!invitation) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete invitation",
+        });
+      }
       return invitation;
     } catch (error) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: JSON.stringify(error as string),
-      });
+      ServicesError(error);
     }
   }
 }

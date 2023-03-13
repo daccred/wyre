@@ -4,23 +4,26 @@ import View from "../views/Login";
 import z from "zod";
 import { useForm } from "../components/forms";
 import { signIn } from "next-auth/react";
+import type { GetServerSideProps, NextPage } from "next";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
+  password: z.string().min(4).max(12),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
 
 export default function Page() {
-  const toast = useToast();
   const router = useRouter();
+  const toast = useToast();
+
   const handleSubmit = React.useCallback(
     async (data: FormInputOptions) => {
       const response = await signIn("credentials", {
         email: data.email,
-        password: "admin",
+        password: data.password,
         callbackUrl: "/demo",
         redirect: false,
       });
@@ -34,7 +37,7 @@ export default function Page() {
           isClosable: true,
         });
       } else {
-        router.push("/demo");
+        router.push("/dashboard");
       }
       // alert(JSON.stringify(data));
     },
@@ -43,7 +46,7 @@ export default function Page() {
 
   const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "" },
+    defaultValues: { email: "", password: "" },
     schema: loginValidationSchema,
   });
 
@@ -54,3 +57,11 @@ export default function Page() {
     </>
   );
 }
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+    },
+  };
+};

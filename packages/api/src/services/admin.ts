@@ -1,84 +1,116 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@wyre-zayroll/db/src";
 import { TRPCError } from "@trpc/server";
-import type { Admin } from "../interfaces";
+import type { IUserSchema } from "../interfaces";
+import { ServicesError } from "./ServiceErrors";
 
 export class AdminService {
-  static async getAdminById(id?: string) {
+  // public adminId: string;
+  // constructor(adminId: string) {
+  //   this.adminId = adminId;
+  //   AdminService.isAdmin(adminId)
+  //     .then((res) => res)
+  //     .catch(() => {
+  //       throw new TRPCError({
+  //         code: "UNAUTHORIZED",
+  //         message: "You do not have permission to perform this action",
+  //       });
+  //     });
+  // }
+
+  static async isAdmin(adminId: string) {
     try {
-      const getAdmin = await prisma.admin.findFirst({
+      const admin = await prisma.user.findFirst({
         where: {
-          id,
+          id: adminId,
+          type: "ADMIN",
         },
       });
-      if (getAdmin) {
-        return getAdmin;
+
+      if (!admin) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You do not have permission to perform this action",
+        });
       }
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
-      });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
-
-  static async getAdminByEmail(email?: string) {
+  static async getAdmin(id?: string) {
     try {
-      const getAdmin = await prisma.admin.findFirst({
+      const getuser = await prisma.user.findFirst({
         where: {
-          email,
+          id,
+          type: "ADMIN",
         },
       });
-      if (getAdmin) {
-        return getAdmin;
+      if (getuser) {
+        return getuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Admin not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async updateAdmin(data: Admin, id?: string) {
+  static async getAdminByEmail(email?: string) {
     try {
-      const updateAdmin = await prisma.admin.update({
+      const getuser = await prisma.user.findFirst({
+        where: {
+          email,
+        },
+      });
+      if (getuser) {
+        return getuser;
+      }
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "user not found",
+      });
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+
+  static async updateAdmin(data: IUserSchema, id?: string) {
+    try {
+      const updateuser = await prisma.user.update({
         where: {
           id,
         },
         data,
       });
-      if (updateAdmin) {
-        return updateAdmin;
+      if (updateuser) {
+        return updateuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 
   static async deleteAdmin(id: string) {
     try {
-      const deleteAdmin = await prisma.admin.delete({
+      const deleteuser = await prisma.user.delete({
         where: {
           id,
         },
       });
-      if (deleteAdmin) {
-        return deleteAdmin;
+      if (deleteuser) {
+        return deleteuser;
       }
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "User not found",
       });
     } catch (error) {
-      throw new Error(error as string);
+      ServicesError(error);
     }
   }
 }

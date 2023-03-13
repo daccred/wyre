@@ -10,3 +10,5 @@ export default function Page() {
     </>
   );
 }
+
+Page.requireAuth = true;

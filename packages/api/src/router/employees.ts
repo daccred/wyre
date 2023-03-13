@@ -22,11 +22,11 @@ export const employeeRouter = createTRPCRouter({
       return updateEmployee;
     }),
 
-  deleteEmployee: protectedProcedure.input(z.string()).mutation(({ input }) => {
-    const deleteEmployee = EmployeeService.deleteEmployee(input);
+  // deleteEmployee: protectedProcedure.input(z.string()).mutation(({ input }) => {
+  //   const deleteEmployee = EmployeeService.deleteEmployee(input);
 
-    return deleteEmployee;
-  }),
+  //   return deleteEmployee;
+  // }),
 
   getSingleEmployee: protectedProcedure.input(z.string()).query(({ input }) => {
     const employee = EmployeeService.getSingleEmployee(input);
@@ -36,5 +36,16 @@ export const employeeRouter = createTRPCRouter({
   getEmployees: protectedProcedure.query(() => {
     const employees = EmployeeService.getEmployees();
     return employees;
+  }),
+
+  getSingleContractor: protectedProcedure
+    .input(z.string())
+    .query(({ input }) => {
+      const contractor = EmployeeService.getSingleContractor(input);
+      return contractor;
+    }),
+  getContractors: protectedProcedure.query(() => {
+    const contractors = EmployeeService.getContractors();
+    return contractors;
   }),
 });
