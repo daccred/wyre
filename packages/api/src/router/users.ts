@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { UserSchema } from "../interfaces";
 import { UserService } from "../services";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
@@ -24,10 +25,8 @@ export const userRouter = createTRPCRouter({
     const users = UserService.getUsers();
     return users;
   }),
-  getSingleUser: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(({ input }) => {
-      const user = UserService.getSingleUser(input.id);
-      return user;
-    }),
+  getSingleUser: protectedProcedure.input(z.object({ id: z.string() })).query(({ input }) => {
+    const user = UserService.getSingleUser(input.id);
+    return user;
+  }),
 });

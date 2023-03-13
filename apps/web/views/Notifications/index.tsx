@@ -1,17 +1,7 @@
-import ViewLayout from "../../components/core/ViewLayout";
+import { Avatar, Box, chakra, Flex, Stack, VStack, Divider, Checkbox, Link, Button } from "@chakra-ui/react";
 import { Fragment, useState } from "react";
-import {
-  Avatar,
-  Box,
-  chakra,
-  Flex,
-  Stack,
-  VStack,
-  Divider,
-  Checkbox,
-  Link,
-  Button,
-} from "@chakra-ui/react";
+
+import ViewLayout from "../../components/core/ViewLayout";
 
 interface Notification {
   img: string;
@@ -135,32 +125,19 @@ const NotificationsList = () => {
     setIsAllRead(true);
   };
 
-  const notificationsToDisplay: Notification[] = notifications
-    .slice(0, displayCount)
-    .map((notification) => ({
-      ...notification,
-      isRead: isAllRead || notification.isRead,
-    }));
+  const notificationsToDisplay: Notification[] = notifications.slice(0, displayCount).map((notification) => ({
+    ...notification,
+    isRead: isAllRead || notification.isRead,
+  }));
 
   return (
     <ViewLayout title="Notifications">
-      <Stack
-        borderRadius={"15px"}
-        border={"1px solid"}
-        borderColor="bordergrey"
-        bg={"white"}
-        w="100%"
-      >
+      <Stack borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" bg={"white"} w="100%">
         <Flex justify="space-between" px={4} pt={4} pb={2}>
           <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
             Notifications
           </chakra.h3>
-          <Checkbox
-            colorScheme="purple"
-            size="md"
-            onChange={handleMarkAllRead}
-            isChecked={isAllRead}
-          >
+          <Checkbox colorScheme="purple" size="md" onChange={handleMarkAllRead} isChecked={isAllRead}>
             Mark all as read
           </Checkbox>
         </Flex>
@@ -177,15 +154,9 @@ const NotificationsList = () => {
                 bg={notification.isRead ? "transparent" : "gray.100"}
                 _hover={{
                   bg: notification.isRead ? "transparent" : "gray.200",
-                }}
-              >
+                }}>
                 <Flex justify="space-between" alignItems="center">
-                  <Stack
-                    spacing={0}
-                    direction="row"
-                    alignItems="center"
-                    w="100%"
-                  >
+                  <Stack spacing={0} direction="row" alignItems="center" w="100%">
                     <Flex>
                       <Avatar size="md" name={""} src={notification.img} />
                     </Flex>

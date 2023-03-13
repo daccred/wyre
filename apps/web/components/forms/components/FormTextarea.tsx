@@ -1,12 +1,11 @@
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import type { Input } from "@chakra-ui/input";
+import { Flex, FormErrorMessage, Textarea } from "@chakra-ui/react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";
-import type { Input } from "@chakra-ui/input";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Flex, FormErrorMessage, Textarea } from "@chakra-ui/react";
 
-export interface LabeledTextFieldProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
   /** Field label. */
@@ -23,16 +22,14 @@ export const FormTextarea = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
       formState: { isSubmitting, errors },
     } = useFormContext();
 
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         <Flex align="center" justify="space-between">
           {label && (
-            <FormLabel color={"default"} fontSize="sm" {...labelProps}>
+            <FormLabel color="default" fontSize="sm" {...labelProps}>
               {label}
             </FormLabel>
           )}

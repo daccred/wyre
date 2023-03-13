@@ -1,5 +1,5 @@
 {
-  "name": "@wyre-zayroll/dialog",
+  "name": "@wyrecc/dialog",
   "version": "0.1.0",
   "description": "Module to handle external communications for zayroll eg: email, sms",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "build": "tsc",
     "clean": "rimraf .turbo node_modules dist",
     "lint:ts": "tsc --pretty --noEmit",
-    "lint": "TIMING=1 eslint \"src/**/*.ts\""
+    "lint:es": "TIMING=1 eslint \"src/**/*.ts\""
   },
   "dependencies": {
     "crypt": "^0.0.2",

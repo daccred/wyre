@@ -28,8 +28,7 @@ export interface SchemaOrgJLD {
 const defaultMeta = {
   title: "WYRE",
   siteName: "Make money by predicting outcomes on the bbnaija show",
-  description:
-    "Earn your first NFT and make money by predicting outcomes on the bbnaija show. its easy!",
+  description: "Earn your first NFT and make money by predicting outcomes on the bbnaija show. its easy!",
   url: `${SITE_URL}`,
   image: `https://bbnpolls.xyz/images/Webclip.png`,
   type: "website",
@@ -48,9 +47,7 @@ export default function Seo(props: SeoProps) {
     ...defaultMeta,
     ...props,
   };
-  meta["title"] = props.projectTitle
-    ? `${props.projectTitle} | ${meta.siteName}`
-    : meta.title;
+  meta["title"] = props.projectTitle ? `${props.projectTitle} | ${meta.siteName}` : meta.title;
 
   // Use siteName if there is projectTitle
   // but show full title if there is none
@@ -128,9 +125,7 @@ export default function Seo(props: SeoProps) {
       <meta name="msapplication-tap-highlight" content="no" />
 
       {/* Schema.org tags */}
-      <script type="application/ld+json">
-        {JSON.stringify(schemaOrgJSONLD)}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(schemaOrgJSONLD)}</script>
 
       {/* Open Graph */}
       <meta property="og:type" content={meta.type} />
@@ -146,24 +141,13 @@ export default function Seo(props: SeoProps) {
       <meta name="twitter:description" content={meta.description} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image:summary_photo_image:src" content={meta.image} />
-      <meta
-        name="twitter:image:photo_image_full_size:src"
-        content={meta.image}
-      />
+      <meta name="twitter:image:photo_image_full_size:src" content={meta.image} />
       <meta name="twitter:image:thumbnail_image:src" content={meta.image} />
       {meta.date && (
         <>
           <meta property="article:published_time" content={meta.date} />
-          <meta
-            name="publish_date"
-            property="og:publish_date"
-            content={meta.date}
-          />
-          <meta
-            name="author"
-            property="article:author"
-            content="Theodorus Clarence"
-          />
+          <meta name="publish_date" property="og:publish_date" content={meta.date} />
+          <meta name="author" property="article:author" content="Theodorus Clarence" />
         </>
       )}
 
@@ -172,10 +156,7 @@ export default function Seo(props: SeoProps) {
         <link key={linkProps.href} {...linkProps} />
       ))}
       <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta
-        name="msapplication-TileImage"
-        content="/favicon/ms-icon-144x144.png"
-      />
+      <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
       <meta name="theme-color" content="#ffffff" />
     </Head>
   );

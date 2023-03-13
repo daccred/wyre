@@ -1,19 +1,13 @@
-import React, { useEffect, useReducer } from "react";
-import {
-  HStack,
-  Stack,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Skeleton,
-} from "@chakra-ui/react";
-import ViewLayout from "../../../components/core/ViewLayout";
-import ContractorForm from "./ContractorForm";
-import CompensationForm from "./CompensationForm";
-import { FiChevronRight } from "react-icons/fi";
-import { trpc } from "../../../utils/trpc";
-import { GetServerSideProps } from "next/types";
+import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next/types";
+import React, { useEffect, useReducer } from "react";
+import { FiChevronRight } from "react-icons/fi";
+
+import ViewLayout from "../../../components/core/ViewLayout";
+import { trpc } from "../../../utils/trpc";
+import CompensationForm from "./CompensationForm";
+import ContractorForm from "./ContractorForm";
 
 // Define initial state
 const initialState = {
@@ -43,8 +37,7 @@ const ManageContractor = ({ contractorData }: any) => {
     ...initialState,
     contractor: contractorData,
   });
-  const { data: contractor, isLoading } =
-    trpc.employee.getSingleContractor.useQuery(id as string);
+  const { data: contractor, isLoading } = trpc.employee.getSingleContractor.useQuery(id as string);
 
   useEffect(() => {
     if (contractor) {
@@ -58,8 +51,7 @@ const ManageContractor = ({ contractorData }: any) => {
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
           pb="2"
-          fontWeight={"semibold"}
-        >
+          fontWeight={"semibold"}>
           <BreadcrumbItem>
             <BreadcrumbLink href="/contractors" color={"lightgrey"}>
               Contractor
@@ -82,8 +74,7 @@ const ManageContractor = ({ contractorData }: any) => {
             borderColor="bordergrey"
             p="4"
             bg={"white"}
-            w="70%"
-          >
+            w="70%">
             <ContractorForm contractor={state.contractor || null} />
           </Stack>
           <CompensationForm />
@@ -97,8 +88,7 @@ export default ManageContractor;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const id = query.id as string;
-  const { data: contractor } =
-    await trpc.employee.getSingleContractor.useQuery(id);
+  const { data: contractor } = await trpc.employee.getSingleContractor.useQuery(id);
   return {
     props: {
       requireAuth: false,

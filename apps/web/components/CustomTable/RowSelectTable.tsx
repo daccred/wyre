@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
-import { useMemo, useEffect, useRef, forwardRef } from "react";
-import { useTable, useRowSelect, TableInstance } from "react-table";
-import type { Row } from "react-table";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { useMemo, useEffect, useRef, forwardRef } from "react";
+import { useTable, useRowSelect } from "react-table";
+import type { Row, TableInstance } from "react-table";
 
 interface Columns {
   Header: string;
@@ -12,28 +12,27 @@ interface Columns {
 
 interface Props {
   columns: Columns[];
-  data: {}[];
+  data: Record<string, any>[];
   onRowSelectionChange: (selectedRowIds: Record<string, boolean>) => void;
   onSelectedRowsAmountChange: (amount: number) => void;
   selectedEmployees: string[];
   setSelectedEmployees: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const IndeterminateCheckbox = forwardRef<
-  HTMLInputElement,
-  { indeterminate?: boolean }
->(({ indeterminate = false, ...rest }, ref) => {
-  const defaultRef = useRef<HTMLInputElement>(null);
-  const resolvedRef = ref || defaultRef;
+const IndeterminateCheckbox = forwardRef<HTMLInputElement, { indeterminate?: boolean }>(
+  ({ indeterminate = false, ...rest }, ref) => {
+    const defaultRef = useRef<HTMLInputElement>(null);
+    const resolvedRef = ref || defaultRef;
 
-  useEffect(() => {
-    if (resolvedRef && "current" in resolvedRef && resolvedRef.current) {
-      resolvedRef.current.indeterminate = indeterminate;
-    }
-  }, [resolvedRef, indeterminate]);
+    useEffect(() => {
+      if (resolvedRef && "current" in resolvedRef && resolvedRef.current) {
+        resolvedRef.current.indeterminate = indeterminate;
+      }
+    }, [resolvedRef, indeterminate]);
 
-  return <input type="checkbox" ref={resolvedRef} {...rest} name="employees" />;
-});
+    return <input type="checkbox" ref={resolvedRef} {...rest} name="employees" />;
+  }
+);
 
 export default function RowSelectTable({
   data,
@@ -52,6 +51,7 @@ export default function RowSelectTable({
     state: { selectedRowIds },
   } = useTable(
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       columns,
       data,
@@ -84,9 +84,7 @@ export default function RowSelectTable({
   }, [selectedRowIds, onRowSelectionChange]);
 
   const rowData = useMemo(() => {
-    return (
-      selectedFlatRows?.map((selectedRow) => selectedRow.original.id) ?? []
-    );
+    return selectedFlatRows?.map((selectedRow) => selectedRow.original.id) ?? [];
   }, [selectedFlatRows]);
 
   useEffect(() => {
@@ -112,11 +110,7 @@ export default function RowSelectTable({
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <Th
-                  {...column.getHeaderProps()}
-                  borderTop="none"
-                  backgroundColor="transparent"
-                >
+                <Th {...column.getHeaderProps()} borderTop="none" backgroundColor="transparent">
                   {column.render("Header")}
                 </Th>
               ))}
@@ -129,9 +123,7 @@ export default function RowSelectTable({
             return (
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return (
-                    <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
-                  );
+                  return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
                 })}
               </Tr>
             );

@@ -1,16 +1,8 @@
+import { Button, Flex, Heading, Link, HStack, Stack, Text, useColorModeValue, Image } from "@chakra-ui/react";
 import * as React from "react";
+
 import { FormInput } from "../../components";
-import {
-  Button,
-  Flex,
-  Heading,
-  Link,
-  HStack,
-  Stack,
-  Text,
-  useColorModeValue,
-  Image,
-} from "@chakra-ui/react";
+
 // import Link from "next/link";
 
 type ForgotPasswordFormInputs = {
@@ -35,8 +27,7 @@ const View = () => (
               color={"#010C14"}
               fontWeight={"bold"}
               lineHeight={1.1}
-              fontSize={{ base: "3xl", md: "4xl" }}
-            >
+              fontSize={{ base: "3xl", md: "4xl" }}>
               Reset Password
             </Heading>
             <Text color="#010C14">
@@ -48,11 +39,7 @@ const View = () => (
           </Stack>
 
           <Stack spacing={4}>
-            <FormInput
-              name="email"
-              label="Email Address"
-              placeholder="e.g. john.doe@zayroll.com"
-            />
+            <FormInput name="email" label="Email Address" placeholder="e.g. john.doe@zayroll.com" />
           </Stack>
 
           <Stack spacing={6}>
@@ -62,8 +49,7 @@ const View = () => (
               p="3"
               _hover={{
                 bg: "#210D35",
-              }}
-            >
+              }}>
               Reset Password
             </Button>
           </Stack>
@@ -71,19 +57,11 @@ const View = () => (
       </Flex>
     </Stack>
 
-    <Flex
-      bgColor="#210D35"
-      color="white"
-      flex={1}
-      align={"center"}
-      justify={"center"}
-    >
+    <Flex bgColor="#210D35" color="white" flex={1} align={"center"} justify={"center"}>
       <HStack flex={1} align={"start"} justify={"end"}>
         <Stack p={8} maxW={"md"}>
           <Heading>Zayroll</Heading>
-          <Text>
-            The open-source payroll Infrastructure for African businesses.
-          </Text>
+          <Text>The open-source payroll Infrastructure for African businesses.</Text>
         </Stack>
 
         <Image alt={"Image"} src={"images/Payroll.png"} />

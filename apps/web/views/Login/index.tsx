@@ -1,16 +1,7 @@
-import { FormInput, useForm } from "../../components";
-import {
-  Center,
-  Stack,
-  Text,
-  Button,
-  Flex,
-  Heading,
-  Link,
-  HStack,
-  Image,
-} from "@chakra-ui/react";
+import { Center, Stack, Text, Button, Flex, Heading, Link, HStack, Image } from "@chakra-ui/react";
 import * as React from "react";
+
+import { FormInput, useForm } from "../../components";
 import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
@@ -28,11 +19,7 @@ const View: React.FC<Props> = (Props) => {
         <Flex flex={1} align={{ base: "", md: "start" }} p={12}>
           <Stack spacing={8} w={"full"} maxW={"md"}>
             <Stack>
-              <Text
-                color={"#010C14"}
-                fontWeight={"bold"}
-                fontSize={{ base: "3xl", md: "4xl" }}
-              >
+              <Text color={"#010C14"} fontWeight={"bold"} fontSize={{ base: "3xl", md: "4xl" }}>
                 Login
               </Text>
               <Text color="#010C14">
@@ -52,12 +39,7 @@ const View: React.FC<Props> = (Props) => {
                   placeholder="john-mcdonald@zayroll.com"
                 />
 
-                <FormInput
-                  name="password"
-                  label="Password"
-                  type="password"
-                  placeholder="***************"
-                />
+                <FormInput name="password" label="Password" type="password" placeholder="***************" />
               </Stack>
 
               <Stack>
@@ -74,19 +56,11 @@ const View: React.FC<Props> = (Props) => {
         </Flex>
       </Stack>
 
-      <Flex
-        bgColor="#210D35"
-        color="white"
-        flex={1}
-        align={"center"}
-        justify={"center"}
-      >
+      <Flex bgColor="#210D35" color="white" flex={1} align={"center"} justify={"center"}>
         <HStack flex={1} align={"start"} justify={"end"}>
           <Stack p={8} maxW={"md"}>
             <Heading>Wyre</Heading>
-            <Text>
-              The open-source payroll Infrastructure for African businesses.
-            </Text>
+            <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
 
           <Image alt={"Image"} src={"images/Payroll.png"} />

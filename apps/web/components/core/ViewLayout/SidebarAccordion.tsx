@@ -12,8 +12,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import type { ComponentWithAs, IconProps, FlexProps } from "@chakra-ui/react";
-import type { ReactNode } from "react";
 import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 
 type AccordionMenuProps = {
   name: string;
@@ -28,11 +28,10 @@ interface Props {
 
 export default function SidebarAccordion({ menu }: Props) {
   const router = useRouter();
-  const isActive =
-    router.asPath === menu.href ? true : router.pathname.startsWith(menu.href);
+  const isActive = router.asPath === menu.href ? true : router.pathname.startsWith(menu.href);
   return (
     <Accordion px={4} allowToggle w="full">
-      <AccordionItem border={"none"} p={0}>
+      <AccordionItem border="none" p={0}>
         <h2>
           <AccordionButton p={0} borderRadius="lg">
             <HStack spacing={4} px={4} py="2">
@@ -46,30 +45,18 @@ export default function SidebarAccordion({ menu }: Props) {
                   as={menu.icon}
                 />
               )}
-              <Text
-                color={isActive ? "brand.600" : "boldgrey"}
-                fontWeight={"semibold"}
-              >
+              <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
                 {menu.name}
               </Text>
             </HStack>
 
-            <AccordionIcon
-              color={isActive ? "brand.600" : "boldgrey"}
-              fontSize="2xl"
-              mr={8}
-            />
+            <AccordionIcon color={isActive ? "brand.600" : "boldgrey"} fontSize="2xl" mr={8} />
           </AccordionButton>
         </h2>
 
         <AccordionPanel py={2} px={0} as={Stack}>
           {menu.panels?.map((panel) => (
-            <SidebarAccordionItem
-              key={panel.name}
-              name={panel.name}
-              icon={panel.icon}
-              href={panel.href}
-            />
+            <SidebarAccordionItem key={panel.name} name={panel.name} icon={panel.icon} href={panel.href} />
           ))}
         </AccordionPanel>
       </AccordionItem>
@@ -86,8 +73,7 @@ interface NavItemProps extends FlexProps {
 
 function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
   const router = useRouter();
-  const isActive =
-    router.asPath === href ? true : router.pathname.startsWith(href);
+  const isActive = router.asPath === href ? true : router.pathname.startsWith(href);
 
   return (
     <Link
@@ -99,8 +85,7 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
       _hover={{
         bg: "blackAlpha.100",
         // color: 'white',
-      }}
-    >
+      }}>
       <Flex
         align="center"
         px="6"
@@ -113,8 +98,7 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
         //   bg: "blackAlpha.100",
         //   // color: 'white',
         // }}
-        {...rest}
-      >
+        {...rest}>
         {icon && (
           <Icon
             mr="4"
@@ -126,10 +110,7 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
             as={icon}
           />
         )}
-        <Text
-          color={isActive ? "brand.600" : "boldgrey"}
-          fontWeight={"semibold"}
-        >
+        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
           {name}
         </Text>
       </Flex>

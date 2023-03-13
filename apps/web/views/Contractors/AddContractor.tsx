@@ -10,12 +10,13 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import z from "zod";
-import { FormInput, useForm } from "../../components/forms";
-import { PeopleIcon } from "./ProviderIcons";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import z from "zod";
+
+import { FormInput, useForm } from "../../components/forms";
+import { trpc } from "../../utils/trpc";
+import { PeopleIcon } from "./ProviderIcons";
 
 const addContractorValidationSchema = z.object({
   name: z.string().min(1, { message: "Name is Required" }),
@@ -41,25 +42,24 @@ export default function AddContractor({
 }: addContractorTypes) {
   const toast = useToast();
 
-  const { mutate: addContractor, isLoading } =
-    trpc.employee.createEmployee.useMutation({
-      onSuccess(data: any) {
-        // Reset the form data to empty values
+  const { mutate: addContractor, isLoading } = trpc.employee.createEmployee.useMutation({
+    onSuccess(data: any) {
+      // Reset the form data to empty values
 
-        openAddContractorSuccessModal();
-        closeAddContractorModal();
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-        console.log("Error creating contractor:", error);
-      },
-    });
+      openAddContractorSuccessModal();
+      closeAddContractorModal();
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+      console.log("Error creating contractor:", error);
+    },
+  });
 
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
@@ -88,8 +88,7 @@ export default function AddContractor({
       isOpen={addContractorModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"3xl"}
-    >
+      size={"3xl"}>
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
@@ -102,23 +101,11 @@ export default function AddContractor({
           {renderForm(
             <Stack spacing={"6"} pb="4">
               <Stack>
-                <FormInput
-                  name="email"
-                  label="Email Address"
-                  placeholder="Email Address"
-                />
+                <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>
-                  <FormInput
-                    name="department"
-                    label="Department"
-                    placeholder="Enter Department"
-                  />
+                  <FormInput name="department" label="Department" placeholder="Enter Department" />
 
-                  <FormInput
-                    name="jobRole"
-                    label="Job Role"
-                    placeholder="Enter Job Role"
-                  />
+                  <FormInput name="jobRole" label="Job Role" placeholder="Enter Job Role" />
                 </HStack>
               </Stack>
               <Stack>
@@ -126,23 +113,14 @@ export default function AddContractor({
                   Compensation Details
                 </Text>
                 <HStack>
-                  <FormInput
-                    name="grossSalary"
-                    label="Gross Salary"
-                    placeholder="$0"
-                  />
+                  <FormInput name="grossSalary" label="Gross Salary" placeholder="$0" />
 
-                  <FormInput
-                    name="signingBonus"
-                    label="Signing Bonus"
-                    placeholder="$0"
-                  />
+                  <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
                 </HStack>
               </Stack>
               <Text fontSize={"sm"}>
-                An email invitation will be sent to the contractor upon
-                submission of this form. Subsequent information will be
-                completed by the contractor.
+                An email invitation will be sent to the contractor upon submission of this form. Subsequent
+                information will be completed by the contractor.
               </Text>
 
               <Button
@@ -153,8 +131,7 @@ export default function AddContractor({
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"
-                _hover={{ bg: "" }}
-              >
+                _hover={{ bg: "" }}>
                 Add Contractor
               </Button>
             </Stack>

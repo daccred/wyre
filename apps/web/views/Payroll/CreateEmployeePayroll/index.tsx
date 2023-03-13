@@ -19,21 +19,22 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import ViewLayout from "../../../components/core/ViewLayout";
+import { Employee } from "@prisma/client";
+import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
-import { createEmployeePayrollPath } from "../routes";
-import { useRouter } from "next/dist/client/router";
-import { FormInput, FormNativeSelect, useForm } from "../../../components";
-import { createPayrollColumns } from "../utils/tableColumns";
-import { createPayrollValidationSchema } from "../utils/misc";
 import z from "zod";
-import { trpc } from "../../../utils/trpc";
-import { Employee } from "@prisma/client";
+
+import { FormInput, FormNativeSelect, useForm } from "../../../components";
 import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
-import SuccessModal from "../modals/SuccessModal";
+import ViewLayout from "../../../components/core/ViewLayout";
 import FormDateInput from "../../../components/forms/components/FormDateInput";
+import { trpc } from "../../../utils/trpc";
 import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
+import SuccessModal from "../modals/SuccessModal";
+import { createEmployeePayrollPath } from "../routes";
+import { createPayrollValidationSchema } from "../utils/misc";
+import { createPayrollColumns } from "../utils/tableColumns";
 
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 
@@ -44,11 +45,9 @@ const CreateEmployeePayroll = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([""]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDepartment, setSelectedDepartment] =
-    useState("All departments");
+  const [selectedDepartment, setSelectedDepartment] = useState("All departments");
 
-  const { data: employeeData, isLoading } =
-    trpc.employee.getEmployees.useQuery();
+  const { data: employeeData, isLoading } = trpc.employee.getEmployees.useQuery();
 
   const handleSelectionChange = (selection: any) => {
     setSelectedRowIds(selection);
@@ -84,8 +83,7 @@ const CreateEmployeePayroll = () => {
     let filteredData = employeeData;
     if (selectedDepartment !== "All departments") {
       filteredData = employeeData?.filter(
-        (data) =>
-          data?.department?.toLowerCase() === selectedDepartment?.toLowerCase()
+        (data) => data?.department?.toLowerCase() === selectedDepartment?.toLowerCase()
       );
     }
     const searchData = filteredData?.filter((data) =>
@@ -103,10 +101,7 @@ const CreateEmployeePayroll = () => {
     handleSelectedRowsAmountChange(total);
   }, [selectedRows]);
 
-  const departmentOptions = useMemo(
-    () => ["All departments", "Tech", "Finance", "Operations"],
-    []
-  );
+  const departmentOptions = useMemo(() => ["All departments", "Tech", "Finance", "Operations"], []);
 
   const totalEmployeesSelected = selectedEmployees.length;
 
@@ -118,23 +113,22 @@ const CreateEmployeePayroll = () => {
     onClose: closeSuccessModal,
   } = useDisclosure();
 
-  const { mutate: createPayroll, isLoading: submitting } =
-    trpc.payroll.createPayroll.useMutation({
-      onSuccess(data: any) {
-        // Reset the form data to empty values
+  const { mutate: createPayroll, isLoading: submitting } = trpc.payroll.createPayroll.useMutation({
+    onSuccess(data: any) {
+      // Reset the form data to empty values
 
-        openSuccessModal();
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-      },
-    });
+      openSuccessModal();
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+    },
+  });
 
   const handleSubmit = async (data: FormInputOptions) => {
     createPayroll({
@@ -170,19 +164,15 @@ const CreateEmployeePayroll = () => {
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
           pb="2"
           fontWeight={"semibold"}
-          color="lightgrey"
-        >
+          color="lightgrey">
           <BreadcrumbItem>
             <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink
               href={createEmployeePayrollPath}
-              color={
-                pathname === createEmployeePayrollPath ? "black" : "lightgrey"
-              }
-              isCurrentPage={true}
-            >
+              color={pathname === createEmployeePayrollPath ? "black" : "lightgrey"}
+              isCurrentPage={true}>
               Create Employee Payroll
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -196,11 +186,7 @@ const CreateEmployeePayroll = () => {
               </Heading>
               <Stack spacing={"6"} pb="4">
                 <Stack>
-                  <FormInput
-                    name="title"
-                    label="Payroll Title"
-                    placeholder="Title"
-                  />
+                  <FormInput name="title" label="Payroll Title" placeholder="Title" />
                   <HStack>
                     <FormNativeSelect
                       name="cycle"
@@ -227,23 +213,13 @@ const CreateEmployeePayroll = () => {
 
                 {isLoading ? (
                   <Center>
-                    <Spinner
-                      thickness="4px"
-                      speed="0.65s"
-                      emptyColor="gray.200"
-                      color="blue.500"
-                      size="xl"
-                    />
+                    <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
                   </Center>
                 ) : (
                   <>
                     {employeeData && employeeData?.length > 0 ? (
                       <>
-                        <Grid
-                          templateColumns="30% 25%"
-                          justifyContent="space-between"
-                          my={6}
-                        >
+                        <Grid templateColumns="30% 25%" justifyContent="space-between" my={6}>
                           <GridItem>
                             <HStack gap="1">
                               <FiSearch fontSize={"24px"} />
@@ -263,10 +239,7 @@ const CreateEmployeePayroll = () => {
                           <GridItem>
                             <Select
                               value={selectedDepartment}
-                              onChange={(event) =>
-                                setSelectedDepartment(event.target.value)
-                              }
-                            >
+                              onChange={(event) => setSelectedDepartment(event.target.value)}>
                               {departmentOptions.map((option) => (
                                 <option key={option} value={option}>
                                   {option}
@@ -280,9 +253,7 @@ const CreateEmployeePayroll = () => {
                           columns={createPayrollColumns}
                           data={tableData}
                           onRowSelectionChange={handleSelectionChange}
-                          onSelectedRowsAmountChange={
-                            handleSelectedRowsAmountChange
-                          }
+                          onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
                           selectedEmployees={selectedEmployees}
                           setSelectedEmployees={setSelectedEmployees}
                         />
@@ -299,25 +270,11 @@ const CreateEmployeePayroll = () => {
                 )}
               </Stack>
             </GridItem>
-            <GridItem
-              border="1px solid #D2D2D2"
-              rounded="xl"
-              bg="white"
-              p={4}
-              height="fit-content"
-            >
+            <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4} height="fit-content">
               <Heading as="h4" size="xs" fontSize="xl">
                 Summary
               </Heading>
-              <VStack
-                spacing={1}
-                align="left"
-                bg="brand.700"
-                color="white"
-                rounded="md"
-                p={4}
-                mt={2}
-              >
+              <VStack spacing={1} align="left" bg="brand.700" color="white" rounded="md" p={4} mt={2}>
                 <Text>Payroll Burden</Text>
                 <Text fontSize="xl" fontWeight={700}>
                   {`USD ${totalAmount}`}
@@ -339,8 +296,7 @@ const CreateEmployeePayroll = () => {
                   iconSpacing="3"
                   w="100%"
                   _hover={{ hover: "none" }}
-                  isDisabled={totalEmployeesSelected > 0 ? false : true}
-                >
+                  isDisabled={totalEmployeesSelected > 0 ? false : true}>
                   Create Payroll
                 </Button>
               </Flex>

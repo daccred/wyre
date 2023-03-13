@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -24,6 +23,8 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+
 import { ArrowRightIcon, CalenderIcon, TeamIcon } from "./ProviderIcons";
 
 type Props = {};
@@ -38,9 +39,7 @@ const Preview = (props: Props) => {
       due_date: string;
     }[]
   >([]);
-  const [payrollData, setPayrollData] = useState<{ [key: string]: string }[]>(
-    []
-  );
+  const [payrollData, setPayrollData] = useState<{ [key: string]: string }[]>([]);
   const [annualData, setAnnualData] = useState<{ [key: string]: string }[]>([]);
   const [lineChart, setlineChart] = useState<{ [key: string]: string }[]>([]);
 
@@ -164,17 +163,9 @@ const Preview = (props: Props) => {
 
   return (
     <>
-      <Grid
-        templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }}
-        maxW={{ sm: "100%", md: "100%" }}
-        gap="20px"
-      >
+      <Grid templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }} maxW={{ sm: "100%", md: "100%" }} gap="20px">
         {/* Payroll History */}
-        <Box
-          bg="white"
-          rounded="2xl"
-          overflowX={{ sm: "scroll", xl: "hidden" }}
-        >
+        <Box bg="white" rounded="2xl" overflowX={{ sm: "scroll", xl: "hidden" }}>
           <Flex direction="row" justify="space-between" align="center" p={4}>
             <Text fontSize="lg" fontWeight="bold">
               Payroll History
@@ -201,8 +192,7 @@ const Preview = (props: Props) => {
                   borderRadius: "10px",
                   border: "1px solid transparent",
                 },
-              }}
-            >
+              }}>
               <Table size="md" variant="unstyled">
                 <Thead>
                   <Tr>
@@ -219,8 +209,7 @@ const Preview = (props: Props) => {
                       <Td
                         fontSize="xs"
                         fontWeight="semibold"
-                        color={data?.status === "on time" ? "#FF951C" : ""}
-                      >
+                        color={data?.status === "on time" ? "#FF951C" : ""}>
                         {data?.status}
                       </Td>
                     </Tr>
@@ -236,11 +225,7 @@ const Preview = (props: Props) => {
         </Box>
 
         {/* Currency Breakdown */}
-        <Box
-          bg="white"
-          rounded="2xl"
-          overflowX={{ sm: "scroll", xl: "hidden" }}
-        >
+        <Box bg="white" rounded="2xl" overflowX={{ sm: "scroll", xl: "hidden" }}>
           <Flex direction="column" w="100%" p={4}>
             <Flex direction="row" justify="space-between" align="center">
               <Text fontSize="lg" fontWeight="bold">
@@ -271,8 +256,7 @@ const Preview = (props: Props) => {
                   borderRadius: "20px",
                   border: "6px solid transparent",
                 },
-              }}
-            >
+              }}>
               <Table size="md" variant="unstyled">
                 <Thead>
                   <Tr>
@@ -323,40 +307,24 @@ const Preview = (props: Props) => {
       </Grid>
 
       <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr" }} columnGap="20px">
-        <Box
-          gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }}
-          bg="white"
-          rounded="2xl"
-          p="3"
-          w={"full"}
-        >
+        <Box gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w={"full"}>
           <Flex direction="row" justify="space-between" align="center">
             <Flex direction="column">
               <Text fontSize="lg" fontWeight="bold" mb={3}>
                 Team Members
               </Text>
-              <Text fontSize={12}>
-                You have 12 employees and 5 contractors on payroll
-              </Text>
+              <Text fontSize={12}>You have 12 employees and 5 contractors on payroll</Text>
             </Flex>
             <Icon as={TeamIcon} w={10} h={6} />
           </Flex>
         </Box>
-        <Box
-          gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }}
-          bg="white"
-          rounded="2xl"
-          p="3"
-          w={"full"}
-        >
+        <Box gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w={"full"}>
           <Flex direction="row" justify="space-between" align="center">
             <Flex direction="column">
               <Text fontSize="lg" fontWeight="bold" mb={3}>
                 Upcoming Payroll
               </Text>
-              <Text fontSize={12}>
-                Your next payroll is USD 17,949.28 and due on Jan 28, 2023
-              </Text>
+              <Text fontSize={12}>Your next payroll is USD 17,949.28 and due on Jan 28, 2023</Text>
             </Flex>
             <Icon as={CalenderIcon} w={10} h={8} />
           </Flex>
@@ -365,17 +333,9 @@ const Preview = (props: Props) => {
 
       {/*  */}
 
-      <Grid
-        templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }}
-        gap="20px"
-      >
+      <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }} gap="20px">
         {/* Payroll Summary */}
-        <Box
-          overflowX={{ sm: "scroll", xl: "hidden" }}
-          bg="white"
-          rounded="2xl"
-          p={4}
-        >
+        <Box overflowX={{ sm: "scroll", xl: "hidden" }} bg="white" rounded="2xl" p={4}>
           <Box p="">
             <Flex direction="row" justify="space-between" align="center">
               <Text fontSize="lg" fontWeight="bold" pb="8px">
@@ -401,8 +361,7 @@ const Preview = (props: Props) => {
                       w="100%"
                       fontSize="xs"
                       py={2}
-                      key={index}
-                    ></Flex>
+                      key={index}></Flex>
                   );
                 })
               ) : (
@@ -416,19 +375,8 @@ const Preview = (props: Props) => {
         {/* Annual Payroll */}
         <Box bg="white" rounded="2xl" p="4">
           <Box mb="20px">
-            <Flex
-              direction="column"
-              bg="#210D35"
-              color="white"
-              p={3}
-              rounded="xl"
-            >
-              <Flex
-                direction="row"
-                align="center"
-                justify="space-between"
-                rounded="lg"
-              >
+            <Flex direction="column" bg="#210D35" color="white" p={3} rounded="xl">
+              <Flex direction="row" align="center" justify="space-between" rounded="lg">
                 <Text fontSize="xs" fontWeight="bold">
                   Annual Payroll
                 </Text>
@@ -450,8 +398,7 @@ const Preview = (props: Props) => {
                     w="100%"
                     fontSize="xs"
                     py={2}
-                    key={index}
-                  >
+                    key={index}>
                     <Stat>
                       <StatLabel fontSize="xs" fontWeight="bold" mb={0.5}>
                         {data.label}
@@ -461,8 +408,7 @@ const Preview = (props: Props) => {
                           alignSelf="flex-end"
                           justifySelf="flex-end"
                           textTransform="uppercase"
-                          fontSize="xs"
-                        >
+                          fontSize="xs">
                           usd
                         </StatHelpText>
                         <StatNumber fontSize="xs" ms={2}>
@@ -474,12 +420,8 @@ const Preview = (props: Props) => {
                       size={50}
                       value={Number(data.percentage)}
                       thickness={10}
-                      color={data.color}
-                    >
-                      <CircularProgressLabel
-                        color={data.color}
-                        fontWeight="bold"
-                      >
+                      color={data.color}>
+                      <CircularProgressLabel color={data.color} fontWeight="bold">
                         <Text>{data.percentage + "%"}</Text>
                       </CircularProgressLabel>
                     </CircularProgress>

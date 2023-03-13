@@ -19,14 +19,14 @@ const variants = {
   simple: (props: StyleFunctionProps) => ({
     th: {
       fontWeight: "semibold",
-      fontSize:"14px",
-      color:"lightgrey",
+      fontSize: "14px",
+      color: "lightgrey",
       bg: mode("#F7F7F7", transparentize("gray.700", 0.4)(props.theme))(props),
-      borderColor:'bordergrey'
+      borderColor: "bordergrey",
     },
-    td:{
-      borderColor:'bordergrey'
-    }
+    td: {
+      borderColor: "bordergrey",
+    },
   }),
   striped: (props: StyleFunctionProps) => ({
     th: {
@@ -53,10 +53,7 @@ const variants = {
             borderBottomWidth: "0px",
           },
           td: {
-            bg: mode(
-              "gray.50",
-              transparentize("gray.700", 0.4)(props.theme)
-            )(props),
+            bg: mode("gray.50", transparentize("gray.700", 0.4)(props.theme))(props),
           },
         },
       },

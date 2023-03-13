@@ -1,8 +1,10 @@
+import { prisma } from "@wyrecc/db";
+import { sendEmail, emailHTML } from "@wyrecc/dialog";
+
 import { TRPCError } from "@trpc/server";
-import { hashString } from "../utils";
+
 import { ISignUp, IVerifyEmail } from "../interfaces";
-import { prisma } from "@wyre-zayroll/db";
-import { sendEmail, emailHTML } from "@wyre-zayroll/dialog";
+import { hashString } from "../utils";
 import { ServicesError } from "./ServiceErrors";
 
 export class AuthService {
@@ -22,9 +24,7 @@ export class AuthService {
         });
       }
       // check if company exists
-      const companyExists = await AuthService.checkIfCompanyExists(
-        input.companyName
-      );
+      const companyExists = await AuthService.checkIfCompanyExists(input.companyName);
 
       if (companyExists) {
         throw new TRPCError({
@@ -34,9 +34,7 @@ export class AuthService {
       }
 
       // check if email is an organization
-      const isOrganization = AuthService.checkIfEmailIsOrganization(
-        input.email
-      );
+      const isOrganization = AuthService.checkIfEmailIsOrganization(input.email);
       if (!isOrganization) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -62,9 +60,7 @@ export class AuthService {
       }
 
       //Handle email verification
-      const confirmCode = JSON.stringify(
-        Math.floor(100000 + Math.random() * 900000)
-      ); // generates a random 6-digit code
+      const confirmCode = JSON.stringify(Math.floor(100000 + Math.random() * 900000)); // generates a random 6-digit code
 
       const token = await prisma.verificationToken.create({
         data: {
@@ -102,10 +98,7 @@ export class AuthService {
       }
 
       //Send verification code to email address
-      const response = await AuthService.sendAdminMailVerification(
-        admin.email,
-        confirmCode
-      );
+      const response = await AuthService.sendAdminMailVerification(admin.email, confirmCode);
 
       if (!response) {
         throw new TRPCError({
@@ -192,8 +185,7 @@ export class AuthService {
         where: { email: email },
       });
 
-      if (!admin)
-        new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
+      if (!admin) new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
 
       const verifyEmail = emailHTML({ confirmCode: verifyCode });
 

@@ -22,12 +22,7 @@ const SuccessModal = ({
   message: string;
 }) => {
   return (
-    <Modal
-      onClose={closeSuccessModal}
-      isOpen={successModalIsOpen}
-      isCentered
-      size="sm"
-    >
+    <Modal onClose={closeSuccessModal} isOpen={successModalIsOpen} isCentered size="sm">
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalCloseButton m="1">

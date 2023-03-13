@@ -1,15 +1,8 @@
-import {
-  Box,
-  CircularProgress,
-  CircularProgressLabel,
-  Flex,
-  Heading,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import useHover from "../../../hooks/useHover";
+import { Box, CircularProgress, CircularProgressLabel, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { useRef } from "react";
 import z from "zod";
+
+import useHover from "../../../hooks/useHover";
 
 export const Card = ({
   heading,
@@ -51,16 +44,12 @@ export const Card = ({
       _hover={{ bg: hoverBg, color: hoverColor }}
       cursor="pointer"
       onClick={onClick}
-      ref={ref}
-    >
+      ref={ref}>
       <VStack align="left" spacing={0.5}>
         <Heading as="h4" size="xs" fontSize={headingFontSize || "xl"}>
           {heading}
         </Heading>
-        <Text
-          color={isHovered ? hoverColor : "lightgrey"}
-          fontSize={textFontSize || "md"}
-        >
+        <Text color={isHovered ? hoverColor : "lightgrey"} fontSize={textFontSize || "md"}>
           {text}
         </Text>
       </VStack>
@@ -137,11 +126,9 @@ export const createPayrollValidationSchema = z.object({
   auto: z.boolean().refine((value) => value !== undefined && value !== null, {
     message: "Auto is required",
   }),
-  payday: z
-    .date()
-    .refine((value) => value !== null && !isNaN(value.getTime()), {
-      message: "Payday is required",
-    }),
+  payday: z.date().refine((value) => value !== null && !isNaN(value.getTime()), {
+    message: "Payday is required",
+  }),
   currency: currencyEnum,
   burden: z.number().optional(),
   employees: z.array(z.string()).optional(),

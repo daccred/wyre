@@ -1,7 +1,8 @@
-import React from "react";
 import { Stack, SimpleGrid, Text } from "@chakra-ui/react";
-import Card from "./card";
+import React from "react";
+
 import { LayoutIcon, UserIcon, CreditCardIcon } from "./ProviderIcons";
+import Card from "./card";
 
 type StatData = {
   id: number;

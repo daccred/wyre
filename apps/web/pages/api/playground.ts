@@ -1,6 +1,7 @@
 import type { NextApiHandler } from "next";
 import { nextHandler } from "trpc-playground/handlers/next";
-import { appRouter } from "@wyre-zayroll/api";
+
+import { appRouter } from "@wyrecc/api";
 
 const setupHandler = nextHandler({
   router: appRouter,
