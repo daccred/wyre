@@ -8,12 +8,11 @@
     "lint": "TIMING=1 eslint \"**/*.ts*\""
   },
   "devDependencies": {
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
     "eslint": "^7.32.0",
-    "@wyrecc/eslintex": "*",
+    "@wyrecc/config": "*",
     "react": "^18.2.0",
-    "@wyrecc/tsconfig": "*",
-    "typescript": "^4.8.4"
+    "@wyrecc/tsconfig": "*"
   }
 }

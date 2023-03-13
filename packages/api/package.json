@@ -13,21 +13,17 @@
     "lint:ts": "tsc --pretty --noEmit",
     "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "lint:es": "eslint"
   },
   "dependencies": {
     "@trpc/client": "^10.8.1",
     "@trpc/server": "^10.8.1",
     "@wyrecc/db": "*",
+    "@wyrecc/config": "*",
     "@wyrecc/dialog": "*",
     "next": "^13.1.1",
     "next-auth": "^4.15.1",
     "superjson": "1.9.1",
     "zod": "^3.20.2"
-  },
-  "devDependencies": {
-    "eslint": "^8.32.0",
-    "typescript": "^4.8.4"
   }
 }

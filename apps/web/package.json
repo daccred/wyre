@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "analyze": "ANALYZE=true next build",
+    "analyze:server": "BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "BUNDLE_ANALYZE=browser next build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint:es": "next lint",
+    "lint:ts": "tsc --pretty --noEmit"
   },
   "dependencies": {
     "@ajna/pagination": "^1.4.19",
@@ -54,18 +58,9 @@
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@types/react-table": "^7.7.14",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "7.32.0",
-    "@wyrecc/eslintex": "*",
-    "eslint-config-next": "13.0.2",
-    "husky": "^8.0.3",
-    "prettier": "^2.8.3",
-    "pretty-quick": "^3.1.3",
-    "prisma": "^4.5.0",
-    "release-it": "^15.5.0",
+    "@wyrecc/config": "*",
     "@wyrecc/tsconfig": "*",
-    "typescript": "^4.8.4"
+    "pretty-quick": "^3.1.3"
   },
   "config": {
     "commitizen": {

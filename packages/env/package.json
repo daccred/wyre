@@ -2,7 +2,7 @@
   "name": "@wyrecc/env",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "./src/server.mjs",
+  "main": "./src/index.mjs",
   "module": "./src/server.mjs",
   "files": [
     "src/**"
@@ -17,10 +17,9 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "@wyrecc/eslintex": "*",
     "eslint": "^8.12.0",
     "rimraf": "^3.0.2",
-    "@wyrecc/tsconfig": "*",
-    "typescript": "^4.8.4"
+    "@wyrecc/config": "*",
+    "@wyrecc/tsconfig": "*"
   }
 }

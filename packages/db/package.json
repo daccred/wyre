@@ -35,11 +35,10 @@
     "@prisma/client": "^4.5.0"
   },
   "devDependencies": {
-    "@wyrecc/eslintex": "*",
+    "@wyrecc/config": "*",
     "eslint": "^8.12.0",
     "prisma": "^4.5.0",
     "rimraf": "^3.0.2",
-    "@wyrecc/tsconfig": "*",
-    "typescript": "^4.8.4"
+    "@wyrecc/tsconfig": "*"
   }
 }
