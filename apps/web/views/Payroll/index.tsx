@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Center,
   Grid,
   GridItem,
   Heading,
+  Spinner,
   Stack,
   Text,
   useDisclosure,
@@ -20,6 +22,7 @@ import { trpc } from "../../utils/trpc";
 import { useEffect, useState } from "react";
 import { Payroll } from "@prisma/client";
 import { CustomTable } from "../../components/CustomTable";
+import { EmptyEmployeeImage } from "../../views/Employees/ProviderIcons";
 
 const Payroll = () => {
   const router = useRouter();
@@ -109,11 +112,34 @@ const Payroll = () => {
         <Heading as="h4" size="xs" fontSize="xl">
           Payroll History
         </Heading>
-        <CustomTable
-          // @ts-ignore
-          columns={payrollColumns}
-          data={tableData}
-        />
+        {tableData?.length > 0 ? (
+          <>
+            {isLoading ? (
+              <Center>
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
+              </Center>
+            ) : (
+              <CustomTable
+                // @ts-ignore
+                columns={payrollColumns}
+                data={tableData}
+              />
+            )}
+          </>
+        ) : (
+          <Center w="100%" p="8" flexDirection={"column"}>
+            <EmptyEmployeeImage />
+            <Text pr="12" pt={2}>
+              No Payroll History
+            </Text>
+          </Center>
+        )}
       </Stack>
 
       <PayrollType

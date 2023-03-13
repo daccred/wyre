@@ -32,7 +32,9 @@ const ManagePayroll = () => {
         <Link
           href={{
             pathname: "/payroll/manage-payroll/monthly-employee-salary",
-            query: row,
+            query: {
+              id: row?.id,
+            },
           }}
         >
           <Button

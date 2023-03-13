@@ -1,4 +1,5 @@
 export const managePayrollPath = "/payroll/manage-payroll";
 export const employeeSalaryPath =
   "/payroll/manage-payroll/monthly-employee-salary";
-export const createPayrollPath = "/payroll/create-payroll";
+export const createEmployeePayrollPath = "/payroll/create-employee-payroll";
+export const createContractorPayrollPath = "/payroll/create-contractor-payroll";

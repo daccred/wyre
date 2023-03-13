@@ -13,90 +13,71 @@ import {
   HStack,
   Input,
   Select,
-  Spinner,
   Stack,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import ViewLayout from "../../../components/core/ViewLayout";
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
-import { useRouter } from "next/router";
+import { employeeSalaryPath, managePayrollPath } from "../routes";
+import { useRouter } from "next/dist/client/router";
 import { FormInput, FormNativeSelect, useForm } from "../../../components";
-import { createPayrollColumns } from "../utils/tableColumns";
-import { SalaryProgress } from "../utils/misc";
+import { monthlyPayrollColumns } from "../utils/tableColumns";
+import { createPayrollValidationSchema } from "../utils/misc";
 import z from "zod";
 import { trpc } from "../../../utils/trpc";
-import { Employee } from "@prisma/client";
-import { CustomTable } from "../../../components/CustomTable";
-import { employeeSalaryPath, managePayrollPath } from "../routes";
-import SuspendPayroll from "../modals/SuspendPayroll";
+import { Employee, Payroll } from "@prisma/client";
+import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
 import SuccessModal from "../modals/SuccessModal";
+import FormDateInput from "../../../components/forms/components/FormDateInput";
+import SuspendPayroll from "../modals/SuspendPayroll";
+import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
+import { GetServerSideProps } from "next";
 
-const cycleEnum = z
-  .enum(["daily", "bi-weekly", "monthly"])
-  .refine((value) => value != null, { message: "Cycle is required" });
-const currencyEnum = z
-  .enum(["USD", "GHC", "NGN", "CNY", "GBP", "EUR"])
-  .refine((value) => value !== undefined, { message: "Currency is required" });
-
-export const createPayrollValidationSchema = z.object({
-  title: z.string().nonempty("Title is required"),
-  cycle: cycleEnum,
-  auto: z.boolean().refine((value) => value !== undefined && value !== null, {
-    message: "Auto is required",
-  }),
-  payday: z
-    .date()
-    .refine((value) => value !== null && !isNaN(value.getTime()), {
-      message: "Payday is required",
-    }),
-  currency: currencyEnum,
-  burden: z.number(),
-  employees: z.array(z.string()).nonempty("Employees is required"),
-});
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
-
 const MonthlyEmployeeSalary = () => {
-  const {
-    isOpen: suspendPayrolleModalIsOpen,
-    onOpen: openSuspendPayrollModal,
-    onClose: closeSuspendPayrollModal,
-  } = useDisclosure();
-
-  const {
-    isOpen: successModalIsOpen,
-    onOpen: openSuccessModal,
-    onClose: closeSuccessModal,
-  } = useDisclosure();
-
   const { pathname } = useRouter();
   const [tableData, setTableData] = useState<Employee[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] =
     useState("All departments");
 
-  const departmentOptions = useMemo(
-    () => ["All departments", "Tech", "Finance", "Operations"],
-    []
-  );
-
+  // Get Data from previous page
   const router = useRouter();
-  const data = router.query;
+  const rowId = router.query;
 
-  const { data: employeeData, isLoading } =
-    trpc.employee.getEmployees.useQuery();
+  //TODO: Why default values doesn't work with this??
+  const { data: payroll } = trpc.payroll.getSinglePayroll.useQuery({
+    id: rowId?.id as string,
+  });
 
-  const columns = [
-    ...createPayrollColumns,
-    {
-      Header: "header",
-      accessor: (row: any) => (
-        <Checkbox name="auto" colorScheme="purple" size="md" />
-      ),
-    },
-  ];
+  console.log("payroll", payroll);
+  const employeeData = payroll && payroll.employees;
+
+  // handles row select in table
+  const handleSelectionChange = (selection: any) => {
+    setSelectedRowIds(selection);
+  };
+
+  // handles selected row amount in table
+  const handleSelectedRowsAmountChange = (amount: number) => {
+    setTotalAmount(amount);
+  };
+
+  const selectedRows = useMemo(
+    () =>
+      tableData.filter((row: any) => {
+        // @ts-ignore
+        return selectedRowIds[row.id];
+      }),
+    [selectedRowIds, tableData]
+  );
 
   useEffect(() => {
     if (!employeeData) {
@@ -106,6 +87,7 @@ const MonthlyEmployeeSalary = () => {
     setTableData(employeeData as Employee[]);
   }, [employeeData]);
 
+  // For table search and filter
   useEffect(() => {
     if (!employeeData) {
       return;
@@ -124,19 +106,100 @@ const MonthlyEmployeeSalary = () => {
     setTableData(searchData);
   }, [employeeData, searchTerm, selectedDepartment]);
 
+  // To get the total amount of salaries of selected employees
+  useEffect(() => {
+    const selectedAmounts = selectedRows.map((row: any) => row.salary);
+    const total = selectedAmounts.reduce((sum: number, amount: number) => {
+      return sum + amount;
+    }, 0);
+    handleSelectedRowsAmountChange(total);
+  }, [selectedRows]);
+
+  const departmentOptions = useMemo(
+    () => ["All departments", "Tech", "Finance", "Operations"],
+    []
+  );
+
+  // Get total salaries from the table
+  const totalSalaries = useMemo(() => {
+    return tableData.reduce((total, { salary }) => total + Number(salary), 0);
+  }, [tableData]);
+
+  const totalEmployeesSelected = Object.keys(selectedEmployees).length;
+
+  const toast = useToast();
+
+  const {
+    isOpen: suspendPayrolleModalIsOpen,
+    onOpen: openSuspendPayrollModal,
+    onClose: closeSuspendPayrollModal,
+  } = useDisclosure();
+
+  const {
+    isOpen: successModalIsOpen,
+    onOpen: openSuccessModal,
+    onClose: closeSuccessModal,
+  } = useDisclosure();
+
+  const { mutate: updatePayroll, isLoading } =
+    trpc.payroll.updatePayroll.useMutation({
+      onSuccess(data: any) {
+        // Reset the form data to empty values
+        openSuccessModal();
+      },
+      onError(error: any) {
+        toast({
+          status: "error",
+          description: `${error}`,
+          isClosable: true,
+          duration: 5000,
+          position: "top-right",
+        });
+      },
+    });
+
+  const handleSubmit = async (data: FormInputOptions) => {
+    try {
+      updatePayroll({
+        payrollId: payroll?.id as string,
+        data: {
+          title: data.title,
+          cycle: data.cycle,
+          auto: data.auto,
+          payday: data.payday,
+          currency: data.currency,
+          burden: totalSalaries,
+          employees: selectedEmployees,
+          suspend: data.suspend,
+        },
+      });
+    } catch (error) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+    }
+  };
+
   const { renderForm } = useForm<FormInputOptions>({
-    // onSubmit: handleSubmit,
+    onSubmit: handleSubmit,
     schema: createPayrollValidationSchema,
     defaultValues: {
-      title: data.title as string,
-      cycle: data.cycle as "daily" | "bi-weekly" | "monthly",
-      auto: data.auto as any,
-      payday: new Date(),
-      // Todo: fix currency
-      currency: "USD",
-      burden: 0,
-      // Todo: fix this
-      employees: ["Agnes"],
+      title: payroll?.title ?? "jjj",
+      cycle: payroll?.cycle as "daily" | "bi-weekly" | "monthly",
+      auto: payroll?.auto,
+      payday: payroll?.payday,
+      currency: payroll?.currency as
+        | "USD"
+        | "GHC"
+        | "NGN"
+        | "CNY"
+        | "GBP"
+        | "EUR",
+      suspend: payroll?.suspend,
     },
   });
 
@@ -171,12 +234,11 @@ const MonthlyEmployeeSalary = () => {
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
-
-        <Grid templateColumns="69% 30%" gap={4} mt={4}>
-          {renderForm(
+        {renderForm(
+          <Grid templateColumns="69% 30%" gap={4} mt={4}>
             <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4}>
               <Heading as="h4" size="xs" fontSize="xl">
-                Payroll History
+                Active Payroll
               </Heading>
               <Stack spacing={"6"} pb="4">
                 <Stack>
@@ -197,12 +259,7 @@ const MonthlyEmployeeSalary = () => {
                       ]}
                     />
 
-                    <FormInput
-                      name="payday"
-                      label="Payment Date"
-                      placeholder="Payment Date"
-                      type="date"
-                    />
+                    <FormDateInput name="payday" label="Payment Date" />
                   </HStack>
                 </Stack>
                 <Checkbox name="auto" colorScheme="purple" size="md">
@@ -213,18 +270,7 @@ const MonthlyEmployeeSalary = () => {
                 <Heading as="h4" size="xs" fontSize="xl">
                   Add Employee(s)
                 </Heading>
-
-                {isLoading ? (
-                  <Center>
-                    <Spinner
-                      thickness="4px"
-                      speed="0.65s"
-                      emptyColor="gray.200"
-                      color="blue.500"
-                      size="xl"
-                    />
-                  </Center>
-                ) : (
+                {employeeData && employeeData.length > 0 ? (
                   <>
                     <Grid
                       templateColumns="30% 25%"
@@ -262,81 +308,82 @@ const MonthlyEmployeeSalary = () => {
                         </Select>
                       </GridItem>
                     </Grid>
-                    <CustomTable columns={columns} data={tableData} />
+                    <RowSelectTable
+                      // @ts-ignore
+                      columns={monthlyPayrollColumns}
+                      data={tableData}
+                      onRowSelectionChange={handleSelectionChange}
+                      onSelectedRowsAmountChange={
+                        handleSelectedRowsAmountChange
+                      }
+                      setSelectedEmployees={setSelectedEmployees}
+                    />
                   </>
+                ) : (
+                  <Center w="100%" p="8" flexDirection={"column"}>
+                    <EmptyEmployeeImage />
+                    <Text pr="12" pt={2}>
+                      No Employee Selected for this Payroll
+                    </Text>
+                  </Center>
                 )}
               </Stack>
             </GridItem>
-          )}
 
-          <GridItem
-            border="1px solid #D2D2D2"
-            rounded="xl"
-            bg="white"
-            p={4}
-            height="fit-content"
-          >
-            <Heading as="h4" size="xs" fontSize="xl">
-              Summary
-            </Heading>
+            <GridItem
+              border="1px solid #D2D2D2"
+              rounded="xl"
+              bg="white"
+              p={4}
+              height="fit-content"
+            >
+              <Heading as="h4" size="xs" fontSize="xl">
+                Summary
+              </Heading>
 
-            <SalaryProgress
-              color="#2EC4B6"
-              label="Fiat Burden"
-              value={63}
-              amount="11,308.05"
-            />
-            <SalaryProgress
-              color="#E71D36"
-              label="Crypto Burden"
-              value={34}
-              amount="6,102.75"
-            />
-            <SalaryProgress
-              color="#FF951C"
-              label="Employer Tax"
-              value={3}
-              amount="538.48"
-            />
-            <Box pt={20}>
-              <Flex justify="space-between">
-                <Heading as="h4" size="xs" fontSize="md">
-                  Employee Count
-                </Heading>
-                <Text fontWeight={700}>20</Text>
-              </Flex>
-              <Flex justify="space-between">
-                <Heading as="h4" size="xs" fontSize="md">
-                  Total Amount
-                </Heading>
-                <Text fontWeight={700}>USD 50</Text>
-              </Flex>
-            </Box>
-            <VStack mt={6} spacing={4}>
-              <Button
-                bg="brand.700"
-                color="white"
-                iconSpacing="3"
-                w="100%"
-                _hover={{ hover: "none" }}
-                onClick={() => openSuccessModal()}
-              >
-                Run Payroll
-              </Button>
-              <Button
-                variant="outline"
-                color="brand.700"
-                borderColor="brand.700"
-                iconSpacing="3"
-                w="100%"
-                _hover={{ hover: "none" }}
-                onClick={() => openSuspendPayrollModal()}
-              >
-                Suspend Payroll
-              </Button>
-            </VStack>
-          </GridItem>
-        </Grid>
+              <Box my={8}>
+                <Flex justify="space-between">
+                  <Heading as="h4" size="xs" fontSize="md">
+                    Employee Count
+                  </Heading>
+                  <Text fontWeight={700}>{totalEmployeesSelected} </Text>
+                </Flex>
+                <Flex justify="space-between">
+                  <Heading as="h4" size="xs" fontSize="md">
+                    Total Amount
+                  </Heading>
+                  <Text fontWeight={700}> {`USD ${totalAmount}`}</Text>
+                </Flex>
+              </Box>
+              <VStack mt={6} spacing={4}>
+                <Button
+                  bg="brand.700"
+                  color="white"
+                  type="submit"
+                  isLoading={isLoading}
+                  loadingText="Submitting"
+                  iconSpacing="3"
+                  w="100%"
+                  _hover={{ hover: "none" }}
+                  isDisabled={totalEmployeesSelected > 0 ? false : true}
+                >
+                  Run Payroll
+                </Button>
+                <Button
+                  variant="outline"
+                  color="brand.700"
+                  borderColor="brand.700"
+                  iconSpacing="3"
+                  w="100%"
+                  _hover={{ hover: "none" }}
+                  onClick={() => openSuspendPayrollModal()}
+                >
+                  Suspend Payroll
+                </Button>
+              </VStack>
+            </GridItem>
+          </Grid>
+        )}
 
         <SuspendPayroll
           suspendPayrolleModalIsOpen={suspendPayrolleModalIsOpen}
@@ -353,3 +400,17 @@ const MonthlyEmployeeSalary = () => {
 };
 
 export default MonthlyEmployeeSalary;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const id = query?.id;
+  const { data: payroll } = trpc.payroll.getSinglePayroll.useQuery({
+    id: id as string,
+  });
+  return {
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+      payroll: payroll,
+    },
+  };
+};

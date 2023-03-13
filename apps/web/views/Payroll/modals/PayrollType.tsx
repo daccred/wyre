@@ -55,7 +55,7 @@ const PayrollType = ({
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              onClick={() => router.push("/payroll/create-payroll")}
+              onClick={() => router.push("/payroll/create-employee-payroll")}
             />
             <Card
               heading="For Contractors"
@@ -68,7 +68,7 @@ const PayrollType = ({
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              //   onClick={()=> openAPayrollTypeModal()}
+              onClick={() => router.push("/payroll/create-contractor-payroll")}
             />
           </VStack>
         </ModalBody>
