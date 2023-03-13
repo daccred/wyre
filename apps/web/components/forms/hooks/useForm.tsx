@@ -1,9 +1,7 @@
 /* eslint-disable */
-
-import React, { FormEvent } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { DevTool } from "@hookform/devtools";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { FormEvent } from "react";
 import {
   useForm as useFormReactHookForm,
   FormProvider as FormProviderReactHookForm,
@@ -70,16 +68,8 @@ interface HookParams<T extends FieldValues> extends UseFormProps {
  * @param setError
  */
 const setFormErrorFactory = (setError: {
-  (
-    name: string,
-    error: ErrorOption,
-    options?: { shouldFocus: boolean } | undefined
-  ): void;
-  (
-    name: string,
-    error: ErrorOption,
-    options?: { shouldFocus: boolean } | undefined
-  ): void;
+  (name: string, error: ErrorOption, options?: { shouldFocus: boolean } | undefined): void;
+  (name: string, error: ErrorOption, options?: { shouldFocus: boolean } | undefined): void;
   (arg0: string, arg1: { type: string; message: any }): void;
 }) => {
   return (fieldName: string, err: any) => {
@@ -120,17 +110,9 @@ const defaultFormParams = {
   criteriaMode: "all" as CriteriaMode,
 };
 
-export default function useForm<T extends FieldValues>(
-  params: HookParams<T> = {}
-): HookResponse<T> {
+export default function useForm<T extends FieldValues>(params: HookParams<T> = {}): HookResponse<T> {
   const [withDevTool, useDevTool] = React.useState(false);
-  const {
-    onSubmit,
-    onError,
-    callingSubmitManually = false,
-    schema,
-    ...otherParams
-  } = params;
+  const { onSubmit, onError, callingSubmitManually = false, schema, ...otherParams } = params;
 
   React.useEffect(() => {
     if (process.env.NODE_ENV != "production") {
@@ -168,14 +150,10 @@ export default function useForm<T extends FieldValues>(
   const handleSubmitBound = onSubmit
     ? handleSubmit(onSubmit, onError)
     : // Would be undefined traditionally, but let's make this more developer friendly
-      () =>
-        console.error(
-          "You tried calling `submitForm` but forgot to set `onSubmit` callback for it"
-        );
+      () => console.error("You tried calling `submitForm` but forgot to set `onSubmit` callback for it");
 
   // pair with calling submit manually to prevent default form behaviour
-  const _preventSubmit = (e: FormEvent<HTMLFormElement> | undefined) =>
-    e?.preventDefault();
+  const _preventSubmit = (e: FormEvent<HTMLFormElement> | undefined) => e?.preventDefault();
 
   // Magic 🎉
   const renderForm = (children: React.ReactNode, formProps = {}) => (
@@ -183,14 +161,7 @@ export default function useForm<T extends FieldValues>(
       {/* we are adding the DevTools by default to every form */}
       {withDevTool && <DevTool control={control} placement="bottom-left" />}
 
-      <form
-        onSubmit={
-          onSubmit && !callingSubmitManually
-            ? handleSubmitBound
-            : _preventSubmit
-        }
-        {...formProps}
-      >
+      <form onSubmit={onSubmit && !callingSubmitManually ? handleSubmitBound : _preventSubmit} {...formProps}>
         <fieldset disabled={formState.isSubmitting}>{children}</fieldset>
       </form>
     </FormProviderReactHookForm>
@@ -269,9 +240,5 @@ export function FormProvider(props: { [x: string]: any; children: any }) {
     ...otherProps,
   });
 
-  return (
-    <FormProviderReactHookForm {...useFormReactHookFormPayload}>
-      {children}
-    </FormProviderReactHookForm>
-  );
+  return <FormProviderReactHookForm {...useFormReactHookFormPayload}>{children}</FormProviderReactHookForm>;
 }

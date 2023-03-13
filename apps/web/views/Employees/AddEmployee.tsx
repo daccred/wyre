@@ -10,12 +10,13 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import z from "zod";
-import { FormInput, FormNativeSelect, useForm } from "../../components/forms";
-import { PeopleIcon } from "./ProviderIcons";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import z from "zod";
+
+import { FormInput, FormNativeSelect, useForm } from "../../components/forms";
+import { trpc } from "../../utils/trpc";
+import { PeopleIcon } from "./ProviderIcons";
 
 const addEmployeeValidationSchema = z.object({
   name: z.string().min(1, { message: "name is required" }),
@@ -41,25 +42,24 @@ export default function AddEmployee({
 }: addEmployeeTypes) {
   const toast = useToast();
 
-  const { mutate: addEmployee, isLoading } =
-    trpc.employee.createEmployee.useMutation({
-      onSuccess(data: any) {
-        // Reset the form data to empty values
+  const { mutate: addEmployee, isLoading } = trpc.employee.createEmployee.useMutation({
+    onSuccess(data: any) {
+      // Reset the form data to empty values
 
-        openAddEmployeeSuccessModal();
-        closeAddEmployeeModal();
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-        console.log("Error creating employee:", error);
-      },
-    });
+      openAddEmployeeSuccessModal();
+      closeAddEmployeeModal();
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+      console.log("Error creating employee:", error);
+    },
+  });
 
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
@@ -87,8 +87,7 @@ export default function AddEmployee({
       isOpen={addEmployeeModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"3xl"}
-    >
+      size={"3xl"}>
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
@@ -101,16 +100,8 @@ export default function AddEmployee({
           {renderForm(
             <Stack spacing={"6"} pb="4">
               <Stack>
-                <FormInput
-                  name="name"
-                  label="Full name"
-                  placeholder="Full name"
-                />
-                <FormInput
-                  name="email"
-                  label="Email Address"
-                  placeholder="Email Address"
-                />
+                <FormInput name="name" label="Full name" placeholder="Full name" />
+                <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>
                   <FormNativeSelect
                     name="department"
@@ -122,11 +113,7 @@ export default function AddEmployee({
                     ]}
                   />
 
-                  <FormInput
-                    name="jobRole"
-                    label="Job Role"
-                    placeholder="Enter Job Role"
-                  />
+                  <FormInput name="jobRole" label="Job Role" placeholder="Enter Job Role" />
                 </HStack>
               </Stack>
               <Stack>
@@ -134,23 +121,14 @@ export default function AddEmployee({
                   Compensation Details
                 </Text>
                 <HStack>
-                  <FormInput
-                    name="grossSalary"
-                    label="Gross Salary"
-                    placeholder="$0"
-                  />
+                  <FormInput name="grossSalary" label="Gross Salary" placeholder="$0" />
 
-                  <FormInput
-                    name="signingBonus"
-                    label="Signing Bonus"
-                    placeholder="$0"
-                  />
+                  <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
                 </HStack>
               </Stack>
               <Text fontSize={"sm"}>
-                An email invitation will be sent to the employee upon submission
-                of this form. Subsequent information will be completed by the
-                employee.
+                An email invitation will be sent to the employee upon submission of this form. Subsequent
+                information will be completed by the employee.
               </Text>
 
               <Button

@@ -1,11 +1,6 @@
+import { FormControl, FormErrorMessage, Select, FormLabel } from "@chakra-ui/react";
 import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
 import { forwardRef } from "react";
-import {
-  FormControl,
-  FormErrorMessage,
-  Select,
-  FormLabel,
-} from "@chakra-ui/react";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface OptionProps {
@@ -13,8 +8,7 @@ interface OptionProps {
   readonly label: string;
 }
 
-export interface FormNativeSelectProps
-  extends ComponentPropsWithoutRef<typeof Select> {
+export interface FormNativeSelectProps extends ComponentPropsWithoutRef<typeof Select> {
   /** Field name. */
   name: string;
   /** Field label. */
@@ -31,9 +25,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
       control,
     } = useFormContext();
 
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     const flex = "flex-start";
@@ -46,8 +38,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
         isInvalid={isErrorInField}
         alignItems={flex}
         justifyContent={flex}
-        {...outerProps}
-      >
+        {...outerProps}>
         <FormLabel {...labelProps} color="lightgrey">
           {label}
         </FormLabel>
@@ -56,18 +47,17 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
           control={control}
           render={({ field }) => (
             <Select
-              size={"lg"}
+              size="lg"
               fontSize="sm"
-              bg={"#F7F7F7"}
+              bg="#F7F7F7"
               // rounded={"3xl"}
               minH="57px"
-              borderRadius={"5px"}
+              borderRadius="5px"
               borderColor="#9f9f9f"
               _placeholder={{ fontSize: "sm" }}
               _hover={{ borderColor: "primary" }}
               _focus={{ borderColor: "primary" }}
-              {...field}
-            >
+              {...field}>
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}

@@ -1,7 +1,8 @@
-import * as React from "react";
-import type { WrapperInnerProps, WrapperEnum } from "./tokens";
 import type { ContainerProps, FlexProps } from "@chakra-ui/react";
 import { Flex, Container, Box, useColorModeValue } from "@chakra-ui/react";
+import * as React from "react";
+
+import type { WrapperInnerProps, WrapperEnum } from "./tokens";
 import { MAX_WIDTH, withTokenForInnerWrapperVariant } from "./tokens";
 
 /**
@@ -118,16 +119,12 @@ export const WrapperInner = (props: WrapperInnerProps) => {
       <Box
         bg="bg-surface"
         border={"1px"}
-        borderColor={useColorModeValue(
-          token.borderColor[0],
-          token.borderColor[1]
-        )}
+        borderColor={useColorModeValue(token.borderColor[0], token.borderColor[1])}
         boxShadow={useColorModeValue(token.shadow[0], token.shadow[1])}
         borderRadius="xl"
         px={token.px}
         py={token.py}
-        {...props}
-      >
+        {...props}>
         {props.children}
       </Box>
     </Container>

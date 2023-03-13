@@ -1,4 +1,14 @@
 import {
+  Pagination,
+  usePagination,
+  PaginationPage,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationPageGroup,
+  PaginationContainer,
+  PaginationSeparator,
+} from "@ajna/pagination";
+import {
   Button,
   HStack,
   Input,
@@ -23,23 +33,14 @@ import {
   Image,
   Spinner,
 } from "@chakra-ui/react";
-import ViewLayout from "../../components/core/ViewLayout";
-import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
-import {
-  Pagination,
-  usePagination,
-  PaginationPage,
-  PaginationNext,
-  PaginationPrevious,
-  PaginationPageGroup,
-  PaginationContainer,
-  PaginationSeparator,
-} from "@ajna/pagination";
-import { useEffect, useState } from "react";
-import AddEmployee from "./AddEmployee";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
+
+import ViewLayout from "../../components/core/ViewLayout";
 import { trpc } from "../../utils/trpc";
+import AddEmployee from "./AddEmployee";
+import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
 
 const Employees = () => {
   const { data: employees } = trpc.employee.getEmployees.useQuery();
@@ -59,9 +60,7 @@ const Employees = () => {
   } = useDisclosure();
 
   const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
-  const [dummyDataInUse, setDummyDataInUse] = useState<
-    { [key: string]: string }[]
-  >([]);
+  const [dummyDataInUse, setDummyDataInUse] = useState<{ [key: string]: string }[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<{
     [key: string]: string;
   }>();
@@ -77,12 +76,7 @@ const Employees = () => {
         email: employee.email,
         role: employee.jobRole,
         department: employee.department,
-        status:
-          employee.status !== null
-            ? employee.status === true
-              ? "active"
-              : "terminated"
-            : "",
+        status: employee.status !== null ? (employee.status === true ? "active" : "terminated") : "",
         category: employee.category,
         salary: employee.salary,
         signBonus: employee.signBonus,
@@ -100,9 +94,7 @@ const Employees = () => {
         data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
       if (activeEmployeesOnly) {
-        const activeData = searchData.filter(
-          (data) => data?.status === "active"
-        );
+        const activeData = searchData.filter((data) => data?.status === "active");
         setDummyDataInUse(activeData);
         return;
       } else {
@@ -113,9 +105,7 @@ const Employees = () => {
 
     if (!searchTerm) {
       if (activeEmployeesOnly) {
-        const activeData = dummyData.filter(
-          (data) => data?.status === "active"
-        );
+        const activeData = dummyData.filter((data) => data?.status === "active");
         setDummyDataInUse(activeData);
         return;
       }
@@ -169,8 +159,7 @@ const Employees = () => {
             borderColor="bordergrey"
             py="4"
             bg={"white"}
-            w="70%"
-          >
+            w="70%">
             <Text fontWeight="bold" fontSize="18px" mb="4" px={4}>
               Employees
             </Text>
@@ -180,8 +169,7 @@ const Employees = () => {
                 variant={"darkBtn"}
                 rightIcon={<PlusIcon />}
                 iconSpacing="3"
-                onClick={openAddEmployeeModal}
-              >
+                onClick={openAddEmployeeModal}>
                 Add Employee
               </Button>
               <Stack spacing={"0"} alignItems="flex-end">
@@ -243,8 +231,7 @@ const Employees = () => {
                     border: "6px solid transparent",
                     backgroundClip: "content-box",
                   },
-                }}
-              >
+                }}>
                 <Table variant="unstyled">
                   <Thead>
                     <Tr>
@@ -259,10 +246,7 @@ const Employees = () => {
                     {dummyDataInUse &&
                       dummyDataInUse?.length > 0 &&
                       dummyDataInUse
-                        ?.slice(
-                          pageSize * currentPage - pageSize,
-                          pageSize * currentPage
-                        )
+                        ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                         .map((data, index) => (
                           <Tr
                             textTransform={"capitalize"}
@@ -270,48 +254,24 @@ const Employees = () => {
                             key={index}
                             onClick={() => setSelectedEmployee(data)}
                             borderBottom={"1px solid"}
-                            borderColor="bordergrey"
-                          >
+                            borderColor="bordergrey">
                             <Td>
                               <HStack>
                                 <Avatar
                                   size={"sm"}
                                   src={data?.imgURL}
                                   name={data?.name}
-                                  opacity={
-                                    data?.status !== "active" ? "35%" : ""
-                                  }
+                                  opacity={data?.status !== "active" ? "35%" : ""}
                                 />
-                                <Text
-                                  color={
-                                    data?.status !== "active" ? "#FF951C" : ""
-                                  }
-                                >
-                                  {data?.name}
-                                </Text>
+                                <Text color={data?.status !== "active" ? "#FF951C" : ""}>{data?.name}</Text>
                               </HStack>
                             </Td>
-                            <Td
-                              textTransform={"lowercase"}
-                              opacity={data?.status !== "active" ? "35%" : ""}
-                            >
+                            <Td textTransform={"lowercase"} opacity={data?.status !== "active" ? "35%" : ""}>
                               {data?.category}
                             </Td>
-                            <Td
-                              opacity={data?.status !== "active" ? "35%" : ""}
-                            >
-                              {data?.role}
-                            </Td>
-                            <Td
-                              opacity={data?.status !== "active" ? "35%" : ""}
-                            >
-                              {data?.department}
-                            </Td>
-                            <Td
-                              opacity={data?.status !== "active" ? "35%" : ""}
-                            >
-                              {data?.status}
-                            </Td>
+                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
+                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
+                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
                           </Tr>
                         ))}
                   </Tbody>
@@ -324,15 +284,8 @@ const Employees = () => {
                 pagesCount={pagesCount}
                 currentPage={currentPage}
                 isDisabled={isDisabled}
-                onPageChange={handlePageChange}
-              >
-                <PaginationContainer
-                  align="center"
-                  justify="space-between"
-                  py={2}
-                  px={4}
-                  w="full"
-                >
+                onPageChange={handlePageChange}>
+                <PaginationContainer align="center" justify="space-between" py={2} px={4} w="full">
                   <PaginationPrevious
                     variant={"outline"}
                     h="40px"
@@ -341,22 +294,13 @@ const Employees = () => {
                     iconSpacing={3}
                     border={"1px solid #D0D5DD"}
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                  >
+                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
                     <Text>Previous</Text>
                   </PaginationPrevious>
                   <PaginationPageGroup
                     isInline
                     align="center"
-                    separator={
-                      <PaginationSeparator
-                        bg="#EAECF0"
-                        fontSize="sm"
-                        boxSize="10"
-                        jumpSize={11}
-                      />
-                    }
-                  >
+                    separator={<PaginationSeparator bg="#EAECF0" fontSize="sm" boxSize="10" jumpSize={11} />}>
                     {pages.map((page: number) => (
                       <PaginationPage
                         w={7}
@@ -383,8 +327,7 @@ const Employees = () => {
                     iconSpacing={3}
                     border={"1px solid #D0D5DD"}
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                  >
+                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
                     <Text>Next</Text>
                   </PaginationNext>
                 </PaginationContainer>
@@ -405,15 +348,8 @@ const Employees = () => {
                 pagesCount={pagesCount}
                 currentPage={currentPage}
                 isDisabled={isDisabled}
-                onPageChange={handlePageChange}
-              >
-                <PaginationContainer
-                  align="center"
-                  justify="space-between"
-                  py={2}
-                  px={4}
-                  w="full"
-                >
+                onPageChange={handlePageChange}>
+                <PaginationContainer align="center" justify="space-between" py={2} px={4} w="full">
                   <PaginationPrevious
                     variant={"outline"}
                     h="40px"
@@ -422,22 +358,13 @@ const Employees = () => {
                     iconSpacing={3}
                     border={"1px solid #D0D5DD"}
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                  >
+                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
                     <Text>Previous</Text>
                   </PaginationPrevious>
                   <PaginationPageGroup
                     isInline
                     align="center"
-                    separator={
-                      <PaginationSeparator
-                        bg="#EAECF0"
-                        fontSize="sm"
-                        boxSize="10"
-                        jumpSize={11}
-                      />
-                    }
-                  >
+                    separator={<PaginationSeparator bg="#EAECF0" fontSize="sm" boxSize="10" jumpSize={11} />}>
                     {pages.map((page: number) => (
                       <PaginationPage
                         w={7}
@@ -464,8 +391,7 @@ const Employees = () => {
                     iconSpacing={3}
                     border={"1px solid #D0D5DD"}
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                  >
+                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
                     <Text>Next</Text>
                   </PaginationNext>
                 </PaginationContainer>
@@ -490,22 +416,15 @@ const Employees = () => {
               p="4"
               bg={"white"}
               flex="1"
-              marginInlineStart="0"
-            >
+              marginInlineStart="0">
               <Text fontWeight="bold" fontSize="18px" mb="4">
                 Employee Details
               </Text>
               <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
-                <Avatar
-                  size={"lg"}
-                  name={selectedEmployee?.name}
-                  src={selectedEmployee?.imgURL}
-                />
+                <Avatar size={"lg"} name={selectedEmployee?.name} src={selectedEmployee?.imgURL} />
                 <Stack spacing={0} marginTop="0">
                   <Text fontWeight={"semibold"}>Full Name</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.name}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.name}</Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Email Address</Text>
@@ -525,39 +444,27 @@ const Employees = () => {
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Status</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.status}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.status}</Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Department</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.department}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.department}</Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Job Role</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.role}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.role}</Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Gross Salary</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.salary}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.salary}</Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Location</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.location}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.location}</Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Payment Method</Text>
-                  <Text overflowWrap="break-word">
-                    {selectedEmployee?.paymentMethod}
-                  </Text>
+                  <Text overflowWrap="break-word">{selectedEmployee?.paymentMethod}</Text>
                 </Stack>
               </Stack>
               <Button
@@ -570,8 +477,7 @@ const Employees = () => {
                     pathname: `/employees/${selectedEmployee.id}`,
                     query: { id: selectedEmployee.name },
                   })
-                }
-              >
+                }>
                 Manage Employee
               </Button>
             </Flex>
@@ -584,8 +490,7 @@ const Employees = () => {
               p="4"
               bg={"white"}
               flex="1"
-              marginInlineStart="0"
-            >
+              marginInlineStart="0">
               <Center w="100%" flexDirection={"column"}>
                 <Text fontWeight="bold" fontSize="18px" mb="4">
                   Employee Details
@@ -608,17 +513,11 @@ const Employees = () => {
         onClose={closeAddEmployeeSuccessModal}
         isOpen={addEmployeeSuccessModalIsOpen}
         isCentered
-        size={"sm"}
-      >
+        size={"sm"}>
         <ModalOverlay />
         <ModalContent w="100%">
           <ModalBody>
-            <Stack
-              alignItems={"center"}
-              justifyContent="center"
-              p="4"
-              textAlign="center"
-            >
+            <Stack alignItems={"center"} justifyContent="center" p="4" textAlign="center">
               <Text fontWeight="bold" fontSize="18px">
                 You’ve successfully added an employee to the team member
               </Text>

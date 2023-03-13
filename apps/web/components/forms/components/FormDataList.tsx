@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React from "react";
 import {
   FormControl,
   FormErrorMessage,
@@ -9,9 +8,10 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { HiSearch } from "react-icons/hi";
 import Select, { CSSObjectWithLabel } from "react-select";
-import { Controller, useFormContext } from "react-hook-form";
 
 type Props = {
   /** Field name. */
@@ -26,14 +26,7 @@ type Props = {
   placeholder?: string;
 };
 
-const DataListSelect = ({
-  name,
-  label,
-  options,
-  isMulti,
-  placeholder,
-  leftIcon = true,
-}: Props) => {
+const DataListSelect = ({ name, label, options, isMulti, placeholder, leftIcon = true }: Props) => {
   const {
     formState: { errors },
     control,
@@ -64,9 +57,7 @@ const DataListSelect = ({
             value: any;
           }) => {
             isMulti
-              ? onChange(
-                  selectedOption.map((option: { value: any }) => option.value)
-                )
+              ? onChange(selectedOption.map((option: { value: any }) => option.value))
               : onChange(selectedOption.value);
           };
 
@@ -80,8 +71,7 @@ const DataListSelect = ({
                 color="grayLight"
                 pos="relative"
                 _hover={{ borderColor: "orangeDark" }}
-                _focus={{ borderColor: "orangeDark" }}
-              >
+                _focus={{ borderColor: "orangeDark" }}>
                 <InputGroup display="flex" alignItems="center">
                   {leftIcon && (
                     <InputLeftElement pointerEvents="none">
@@ -97,12 +87,8 @@ const DataListSelect = ({
                     options={getOptions(options)}
                     value={
                       isMulti
-                        ? optionsList.filter((c: { value: any }) =>
-                            value.includes(c.value)
-                          )
-                        : (optionsList.find(
-                            (c: { value: any }) => c.value === value
-                          ) as any)
+                        ? optionsList.filter((c: { value: any }) => value.includes(c.value))
+                        : (optionsList.find((c: { value: any }) => c.value === value) as any)
                     }
                     onChange={handleSelectChange as any}
                     isMulti={isMulti}

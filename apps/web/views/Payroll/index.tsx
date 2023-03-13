@@ -11,20 +11,24 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import ViewLayout from "../../components/core/ViewLayout";
-import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
-import { Card, PayrollTypeCard } from "./utils/misc";
-import { payrollData } from "./utils/dummyData";
-import PayrollType from "./modals/PayrollType";
 import { useRouter } from "next/router";
-import { payrollColumns } from "./utils/tableColumns";
-import { trpc } from "../../utils/trpc";
 import { useEffect, useState } from "react";
-import { Payroll } from "@prisma/client";
-import { CustomTable } from "../../components/CustomTable";
-import { EmptyEmployeeImage } from "../../views/Employees/ProviderIcons";
 
-const Payroll = () => {
+import { CustomTable } from "../../components/CustomTable";
+import ViewLayout from "../../components/core/ViewLayout";
+import { trpc } from "../../utils/trpc";
+import { EmptyEmployeeImage } from "../../views/Employees/ProviderIcons";
+import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
+import PayrollType from "./modals/PayrollType";
+import { payrollData } from "./utils/dummyData";
+import { Card, PayrollTypeCard } from "./utils/misc";
+import { payrollColumns } from "./utils/tableColumns";
+
+// import { Payroll } from "@wyrecc/db";
+
+type Payroll = Record<any, any>;
+
+const View = () => {
   const router = useRouter();
 
   const {
@@ -82,9 +86,7 @@ const Payroll = () => {
             <Box>
               <Text fontWeight={700}>Make Payment</Text>
 
-              <Text fontSize="xs">
-                Edit payroll, pay employees and contractors
-              </Text>
+              <Text fontSize="xs">Edit payroll, pay employees and contractors</Text>
             </Box>
 
             <Button
@@ -94,21 +96,13 @@ const Payroll = () => {
               iconSpacing="3"
               w="fit-content"
               _hover={{ hover: "none" }}
-              onClick={() => router.push("/payroll/manage-payroll")}
-            >
+              onClick={() => router.push("/payroll/manage-payroll")}>
               Manage Payroll
             </Button>
           </VStack>
         </Grid>
       </Box>
-      <Stack
-        rounded="md"
-        p={6}
-        bg="white"
-        w="100%"
-        mt={10}
-        border="1px solid #D2D2D2"
-      >
+      <Stack rounded="md" p={6} bg="white" w="100%" mt={10} border="1px solid #D2D2D2">
         <Heading as="h4" size="xs" fontSize="xl">
           Payroll History
         </Heading>
@@ -116,13 +110,7 @@ const Payroll = () => {
           <>
             {isLoading ? (
               <Center>
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
-                />
+                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
               </Center>
             ) : (
               <CustomTable
@@ -150,4 +138,4 @@ const Payroll = () => {
   );
 };
 
-export default Payroll;
+export default View;

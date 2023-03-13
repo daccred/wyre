@@ -1,6 +1,6 @@
-import React from "react";
 import type { HTMLChakraProps } from "@chakra-ui/react";
 import { chakra } from "@chakra-ui/react";
+import React from "react";
 
 export const MobilePromptImage = (props: HTMLChakraProps<"svg">) => (
   <chakra.svg
@@ -9,8 +9,7 @@ export const MobilePromptImage = (props: HTMLChakraProps<"svg">) => (
     viewBox="0 0 267 267"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+    {...props}>
     <path
       d="M175.595 31.005S133.228 14.36 92.708 37.85c-40.52 23.491-59.984 71.823-76.779 110.506-16.794 38.683-5.447 78.824 26.476 97.872 31.922 19.048 52.583-7.145 96.654-7.22 44.071-.075 56.102 6.798 92.003-18.028 35.901-24.825 40.878-85.68 10.797-131.652-30.08-45.972-66.264-58.323-66.264-58.323z"
       fill="#D2D2D2"
@@ -20,10 +19,7 @@ export const MobilePromptImage = (props: HTMLChakraProps<"svg">) => (
       d="M175.595 31.005S133.228 14.36 92.708 37.85c-40.52 23.491-59.984 71.823-76.779 110.506-16.794 38.683-5.447 78.824 26.476 97.872 31.922 19.048 52.583-7.145 96.654-7.22 44.071-.075 56.102 6.798 92.003-18.028 35.901-24.825 40.878-85.68 10.797-131.652-30.08-45.972-66.264-58.323-66.264-58.323z"
       fill="#fff"
     />
-    <path
-      d="M173.587 51.014l-26.053.688L147 60.84l25.023 4.31s.064-8.544 2.365-13.932"
-      fill="#fff"
-    />
+    <path d="M173.587 51.014l-26.053.688L147 60.84l25.023 4.31s.064-8.544 2.365-13.932" fill="#fff" />
     <path
       d="M173.587 51.014l-26.053.688L147 60.84l25.023 4.31s.064-8.544 2.365-13.932"
       stroke="#210D35"

@@ -1,18 +1,10 @@
-import {
-  Button,
-  Stack,
-  Text,
-  Flex,
-  useToast,
-  Input,
-  HStack,
-  Circle,
-} from "@chakra-ui/react";
-import z from "zod";
-import { FormInput, useForm } from "../../components/forms";
-import styledToast from "../../components/core/StyledToast";
-import { MonoIcon } from "./ProviderIcons";
+import { Button, Stack, Text, Flex, useToast, Input, HStack, Circle } from "@chakra-ui/react";
 import { useState } from "react";
+import z from "zod";
+
+import styledToast from "../../components/core/StyledToast";
+import { FormInput, useForm } from "../../components/forms";
+import { MonoIcon } from "./ProviderIcons";
 
 const apiFormValidationSchema = z.object({});
 
@@ -43,9 +35,7 @@ export default function APIForm() {
     console.log(JSON.stringify(data));
     styledToast({
       status: "success",
-      description: !connected
-        ? "API connected successfully"
-        : "API disconnected successfully",
+      description: !connected ? "API connected successfully" : "API disconnected successfully",
       toast: toast,
     });
     setConnected(!connected);
@@ -67,8 +57,7 @@ export default function APIForm() {
       p="4"
       bg={"white"}
       flex="1"
-      marginInlineStart="0"
-    >
+      marginInlineStart="0">
       <Text fontWeight="bold" fontSize="18px" mb="1">
         API Integrations
       </Text>
@@ -77,8 +66,7 @@ export default function APIForm() {
         fontSize="sm"
         fontWeight={"semibold"}
         alignItems="flex-end"
-        my="4"
-      >
+        my="4">
         <Stack spacing={"0"}>
           <MonoIcon />
           <Text color={"bordergrey"}>Mono</Text>
@@ -87,9 +75,7 @@ export default function APIForm() {
           <Text>Status</Text>
           <HStack>
             <Circle size="2" bg={connected ? "#0AAF60" : "#E71D36"} />
-            <Text color={"bordergrey"}>
-              {connected ? "Connected" : "Disconnected"}
-            </Text>
+            <Text color={"bordergrey"}>{connected ? "Connected" : "Disconnected"}</Text>
           </HStack>
         </Stack>
       </HStack>
@@ -116,8 +102,7 @@ export default function APIForm() {
               py="15px"
               type="submit"
               bg={connected ? "rgba(33, 13, 53, 0.15)" : "brand.700"}
-              color={connected ? "brand.700" : "white"}
-            >
+              color={connected ? "brand.700" : "white"}>
               {!connected ? "Connect" : "Disconnect"}
             </Button>
           </Stack>

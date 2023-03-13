@@ -1,20 +1,14 @@
+import { Box, IconButton, Icon } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { Box, IconButton, Icon, useDisclosure } from "@chakra-ui/react";
-import {
-  useTable,
-  usePagination,
-  useRowSelect,
-  Hooks,
-  CellProps,
-  HeaderProps,
-  useGlobalFilter,
-  useSortBy,
-} from "react-table";
+import { AiOutlineEdit } from "react-icons/ai";
+import type { Hooks, CellProps, HeaderProps } from "react-table";
+import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from "react-table";
+
+import useDebounce from "../hooks/useDebounce";
+
 /* Dependency components */
 // import { TD, UseTableRootProps } from './interface';
 import TableCheckbox from "./TableCheckbox";
-import useDebounce from "../hooks/useDebounce";
-import { AiOutlineEdit } from "react-icons/ai";
 
 interface TD {
   [key: string]: any;
@@ -84,17 +78,11 @@ export const useTableRoot = <T extends TD>({
         maxWidth: 45,
         Aggregated: undefined,
         Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<TD>) => (
-          <TableCheckbox
-            checked={_checked}
-            {...getToggleAllRowsSelectedProps()}
-          />
+          <TableCheckbox checked={_checked} {...getToggleAllRowsSelectedProps()} />
         ),
         Cell: ({ row }: CellProps<TD>) => (
           <Box pos="absolute" zIndex={10}>
-            <TableCheckbox
-              checked={_checked}
-              {...row.getToggleRowSelectedProps()}
-            />
+            <TableCheckbox checked={_checked} {...row.getToggleRowSelectedProps()} />
           </Box>
         ),
       },
@@ -105,8 +93,13 @@ export const useTableRoot = <T extends TD>({
       selectionGroupHeader.canResize = false;
     });
   };
+
+  const noSelectionFallback = function () {
+    return null;
+  };
+
   const isLoading = isQueryLoading || mutationLoading;
-  const _checked = hasCheckBox ? useSelectionUi : () => {};
+  const _checked = hasCheckBox ? useSelectionUi : noSelectionFallback;
   const {
     page,
     nextPage,
@@ -146,7 +139,7 @@ export const useTableRoot = <T extends TD>({
             <IconButton
               aria-label="edit button"
               icon={<Icon as={AiOutlineEdit} />}
-              maxW={"20px"}
+              maxW="20px"
               className="action-button"
               variant="ghost"
               onClick={() => (handleRowClick ? handleRowClick(row) : null)}
@@ -171,10 +164,7 @@ export const useTableRoot = <T extends TD>({
       setRecords(
         data.filter((item: any) => {
           return searchParams?.some((param: any) => {
-            return item[param]
-              ?.toString()
-              .toLowerCase()
-              .includes(debouncedFilterValue.toLowerCase());
+            return item[param]?.toString().toLowerCase().includes(debouncedFilterValue.toLowerCase());
           });
         })
       );

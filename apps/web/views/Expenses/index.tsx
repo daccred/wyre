@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from "react";
-import ViewLayout from "../../components/core/ViewLayout";
+import {
+  Pagination,
+  usePagination,
+  PaginationPage,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationPageGroup,
+  PaginationContainer,
+  PaginationSeparator,
+} from "@ajna/pagination";
 import {
   Button,
   HStack,
@@ -23,24 +31,15 @@ import {
   useDisclosure,
   Image,
 } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
+
+import ViewLayout from "../../components/core/ViewLayout";
 import { EmptyContractorImage, LinkIcon } from "./ProviderIcons";
-import {
-  Pagination,
-  usePagination,
-  PaginationPage,
-  PaginationNext,
-  PaginationPrevious,
-  PaginationPageGroup,
-  PaginationContainer,
-  PaginationSeparator,
-} from "@ajna/pagination";
 
 const Index: React.FC = () => {
   // const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
-  const [dummyDataInUse, setDummyDataInUse] = useState<
-    { [key: string]: string }[]
-  >([]);
+  const [dummyDataInUse, setDummyDataInUse] = useState<{ [key: string]: string }[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   // search and
@@ -126,18 +125,12 @@ const Index: React.FC = () => {
           borderColor="bordergrey"
           // p="4"
           bg={"white"}
-          w="100%"
-        >
+          w="100%">
           <Stack spacing={4} p={5}>
             <Text fontWeight="bold" fontSize="18px">
               Expenses
             </Text>
-            <Button
-              variant={"darkBtn"}
-              rightIcon={<LinkIcon />}
-              iconSpacing="3"
-              w={"fit-content"}
-            >
+            <Button variant={"darkBtn"} rightIcon={<LinkIcon />} iconSpacing="3" w={"fit-content"}>
               Get Payment Link
             </Button>
             <HStack gap="1">
@@ -177,8 +170,7 @@ const Index: React.FC = () => {
                 border: "6px solid transparent",
                 backgroundClip: "content-box",
               },
-            }}
-          >
+            }}>
             <Table size="md" variant="unstyled">
               <Thead>
                 <Tr>
@@ -195,10 +187,7 @@ const Index: React.FC = () => {
                 {dummyDataInUse &&
                   dummyDataInUse?.length > 0 &&
                   dummyDataInUse
-                    ?.slice(
-                      pageSize * currentPage - pageSize,
-                      pageSize * currentPage
-                    )
+                    ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                     .map((data, index) => (
                       <Tr textTransform={"capitalize"} key={index}>
                         <Td>
@@ -223,14 +212,8 @@ const Index: React.FC = () => {
               pagesCount={pagesCount}
               currentPage={currentPage}
               isDisabled={isDisabled}
-              onPageChange={handlePageChange}
-            >
-              <PaginationContainer
-                align="center"
-                justify="space-between"
-                p={5}
-                w="full"
-              >
+              onPageChange={handlePageChange}>
+              <PaginationContainer align="center" justify="space-between" p={5} w="full">
                 <PaginationPrevious
                   variant={"outline"}
                   h="40px"
@@ -239,22 +222,13 @@ const Index: React.FC = () => {
                   iconSpacing={3}
                   border={"1px solid #D0D5DD"}
                   borderRadius="8px"
-                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                >
+                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
                   <Text>Previous</Text>
                 </PaginationPrevious>
                 <PaginationPageGroup
                   isInline
                   align="center"
-                  separator={
-                    <PaginationSeparator
-                      bg="#EAECF0"
-                      fontSize="sm"
-                      boxSize="10"
-                      jumpSize={11}
-                    />
-                  }
-                >
+                  separator={<PaginationSeparator bg="#EAECF0" fontSize="sm" boxSize="10" jumpSize={11} />}>
                   {pages.map((page: number) => (
                     <PaginationPage
                       w={7}
@@ -281,8 +255,7 @@ const Index: React.FC = () => {
                   iconSpacing={3}
                   border={"1px solid #D0D5DD"}
                   borderRadius="8px"
-                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}
-                >
+                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
                   <Text>Next</Text>
                 </PaginationNext>
               </PaginationContainer>

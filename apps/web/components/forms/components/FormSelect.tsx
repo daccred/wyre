@@ -1,9 +1,9 @@
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import type { Input } from "@chakra-ui/input";
+import { Flex, FormErrorMessage } from "@chakra-ui/react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import type { Input } from "@chakra-ui/input";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Flex, useColorModeValue, FormErrorMessage } from "@chakra-ui/react";
 import Select from "react-select";
 
 interface OptionProps {
@@ -11,8 +11,7 @@ interface OptionProps {
   readonly label: string;
 }
 
-export interface LabeledSelectFieldProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface LabeledSelectFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
   /** Field label. */
@@ -26,19 +25,7 @@ export interface LabeledSelectFieldProps
 }
 
 const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
-  (
-    {
-      label,
-      outerProps,
-      labelProps,
-      name,
-      placeholder,
-      width,
-      options,
-      ...props
-    },
-    ref
-  ) => {
+  ({ label, outerProps, labelProps, name, placeholder, width, options, ...props }, ref) => {
     const {
       formState: { isSubmitting, errors },
       control,
@@ -50,7 +37,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps}>
         <Flex align="center" justify="space-between">
-          <FormLabel color={"#666666"} fontSize="sm" {...labelProps}>
+          <FormLabel color="#666666" fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         </Flex>
