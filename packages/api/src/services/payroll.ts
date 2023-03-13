@@ -1,6 +1,6 @@
 import { IPayrollSchema } from "../interfaces/payroll";
 import { TRPCError } from "@trpc/server";
-import { prisma } from "@wyre-zayroll/db";
+import { prisma } from "@wyrecc/db";
 import { ServicesError } from "./ServiceErrors";
 
 export class PayrollService {

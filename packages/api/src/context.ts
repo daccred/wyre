@@ -20,7 +20,7 @@ import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
 
 import { getServerAuthSession } from "./common/get-server-side-auth-session";
-// import { prisma } from "@wyre-zayroll/db";
+// import { prisma } from "@wyrecc/db";
 
 type CreateContextOptions = {
   session: Session | null;

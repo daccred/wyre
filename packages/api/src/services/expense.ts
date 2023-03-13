@@ -1,6 +1,6 @@
 import { IExpenseSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
-import { prisma } from "@wyre-zayroll/db";
+import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 
 export class ExpenseService {

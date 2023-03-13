@@ -1,1 +1,1 @@
-declare module "@wyre-zayroll/env/src/server.mjs";
+declare module "@wyrecc/env/src/server.mjs";

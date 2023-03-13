@@ -1,4 +1,4 @@
-import { prisma } from "@wyre-zayroll/db";
+import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 import type { IUserSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";

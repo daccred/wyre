@@ -1,46 +1,71 @@
 {
-    "private": true,
-    "name": "wyre",
-    "version": "0.1.0",
-    "workspaces": [
-        "apps/*",
-        "packages/*"
+  "name": "wyrecc",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "providers/*"
+  ],
+  "repository": "https://github.com/tecmie/wyre.git",
+  "author": "Tecmie Corporation",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "postinstall": "npm run build",
+    "build": "lerna run build",
+    "build:no-cache": "nx run-many --target=build --all --parallel --no-cache",
+    "bootstrap": "nx run bootstrap",
+    "pack": "nx add",
+    "dev": "nx run-many --target=dev --all --parallel",
+    "refresh": "npm run build && npm run dev",
+    "lint": "nx run-many --target=lint --all --parallel",
+    "lint:ts": "tsc --pretty --noEmit",
+    "graph": "nx run graph",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "pretty-format": "pretty-quick --staged"
+  },
+  "dependencies": {
+    "argon2": "^0.30.3",
+    "nanoid": "^4.0.0",
+    "zod": "^3.19.0"
+  },
+  "devDependencies": {
+    "lerna": "^6.5.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^12.5.0",
+    "prettier": "^2.8.4",
+    "nx": "^15.8.6"
+  },
+  "resolutions": {
+    "@types/node": "16.9.1",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.9"
+  },
+  "lint-staged": {
+    "(apps|providers|packages)/**/*.{js,ts,jsx,tsx}": [
+      "prettier --write",
+      "eslint --fix"
     ],
-    "main": "index.js",
-    "repository": "https://github.com/tecmie/wyre.git",
-    "author": "Tecmie",
-    "license": "MIT",
-    "scripts": {
-        "prepare": "husky install",
-        "postinstall": "npm run build",
-        "build": "nx run-many --target=build --all --parallel",
-        "build:no-cache": "nx run-many --target=build --all --parallel --no-cache",
-        "bootstrap": "nx run bootstrap",
-        "pack": "nx add",
-        "dev": "nx run-many --target=dev --all --parallel",
-        "refresh": "npm run build && npm run dev",
-        "lint": "nx run-many --target=lint --all --parallel",
-        "lint:ts": "tsc --pretty --noEmit",
-        "graph": "nx run graph",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "pretty-format": "pretty-quick --staged"
-    },
-    "devDependencies": {
-        "@types/node": "^18.11.18",
-        "lerna": "^6.5.1",
-        "nx": "15.6.3",
-        "pretty-quick": "^3.1.3"
-    },
-    "dependencies": {
-        "argon2": "^0.30.3",
-        "husky": "^8.0.3",
-        "nanoid": "^4.0.0",
-        "superjson": "1.9.1",
-        "zod": "^3.19.0"
-    },
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-ccgls"
-        }
+    "*.json": [
+      "prettier --write"
+    ],
+    "packages/db/schema.prisma": [
+      "prisma format"
+    ]
+  },
+  "engines": {
+    "node": ">=16.x",
+    "npm": ">=7.0.0",
+    "yarn": ">=1.19.0 < 2.0.0"
+  },
+  "prisma": {
+    "schema": "packages/prisma/schema.prisma",
+    "seed": "ts-node --transpile-only ./packages/prisma/seed.ts"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ccgls"
     }
+  }
 }

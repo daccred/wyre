@@ -1,8 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { hashString } from "../utils";
 import { ISignUp, IVerifyEmail } from "../interfaces";
-import { prisma } from "@wyre-zayroll/db";
-import { sendEmail, emailHTML } from "@wyre-zayroll/dialog";
+import { prisma } from "@wyrecc/db";
+import { sendEmail, emailHTML } from "@wyrecc/dialog";
 import { ServicesError } from "./ServiceErrors";
 
 export class AuthService {

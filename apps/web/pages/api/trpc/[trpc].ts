@@ -1,6 +1,6 @@
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 import { env } from "../../../env/server.mjs";
-import { appRouter, createTRPCContext } from "@wyre-zayroll/api";
+import { appRouter, createTRPCContext } from "@wyrecc/api";
 
 // export API handler
 export default createNextApiHandler({

@@ -1,4 +1,4 @@
-import { prisma } from "@wyre-zayroll/db/src";
+import { prisma } from "@wyrecc/db/src";
 import { TRPCError } from "@trpc/server";
 import { InvitationSchemaType } from "../interfaces";
 import { AuthService } from "./auth";

@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { prisma } from "@wyre-zayroll/db";
+import { prisma } from "@wyrecc/db";
 import { loginSchema } from "./interfaces";
 import { verifyHash } from "./utils";
 import { TRPCError } from "@trpc/server";

@@ -1,5 +1,5 @@
 {
-  "name": "@wyre-zayroll/dialog",
+  "name": "@wyrecc/dialog",
   "version": "0.1.0",
   "description": "Module to handle external communications for zayroll eg: email, sms",
   "license": "MIT",

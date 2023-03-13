@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { prisma } from "@wyre-zayroll/db";
+import { prisma } from "@wyrecc/db";
 import { IEmployeeSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
 

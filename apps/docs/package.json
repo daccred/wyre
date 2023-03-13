@@ -18,8 +18,8 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "eslint": "7.32.0",
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
+    "@wyrecc/eslintex": "*",
+    "@wyrecc/tsconfig": "*",
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
