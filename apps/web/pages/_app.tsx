@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet } from "react-device-detect";
 import MobilePrompt from "../components/core/MobilePrompt";
 
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -40,12 +41,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <ErrorBoundary>
-        <ChakraProvider theme={theme}>
-          {allowDisplay === "web" && !smallerThan640 && (
-            <Component {...pageProps} />
-          )}
-          {(allowDisplay === "mobile" || smallerThan640) && <MobilePrompt />}
-        </ChakraProvider>
+          <ChakraProvider theme={theme}>
+            {allowDisplay === "web" && !smallerThan640 && (
+              <Component {...pageProps} />
+            )}
+            {(allowDisplay === "mobile" || smallerThan640) && <MobilePrompt />}
+          </ChakraProvider>
       </ErrorBoundary>
     </SessionProvider>
   );

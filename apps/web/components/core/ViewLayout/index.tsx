@@ -31,6 +31,7 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import SidebarAccordion from "./SidebarAccordion";
+import { signOut, useSession } from "next-auth/react";
 
 interface LinkItemProps {
   name: string;
@@ -45,7 +46,7 @@ interface LinkAccordionProps {
   panels?: LinkAccordionProps[];
 }
 const DashboardLinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", href: "/test", icon: DashboardIcon },
+  { name: "Dashboard", href: "/dashboard", icon: DashboardIcon },
 ];
 const PayrollLinkItems: Array<LinkItemProps> = [
   { name: "Payroll", href: "/payroll", icon: PayrollIcon },
@@ -63,7 +64,7 @@ const PeopleAccordion: LinkAccordionProps = {
 const PeopleLinkItems: Array<LinkItemProps> = [
   { name: "People", href: "", icon: PeopleIcon },
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
-  { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
+  { name: "Contractors", href: "/contractors",   icon: ContractorsIcon },
 ];
 const ExpensesLinkItems: Array<LinkItemProps> = [
   { name: "Expenses", href: "/expenses", icon: ExpensesIcon },
@@ -84,7 +85,7 @@ export default function ViewLayout({
       <SidebarContent />
       {/* mobilenav */}
       <HeaderNav title={title} />
-      <Box ml={60} p="4">
+      <Box ml={60} p="8">
         {children}
       </Box>
     </Box>
@@ -105,11 +106,11 @@ const SidebarContent = ({ ...rest }) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent={"center"}>
-        <Image src="/wyre-logo.png" alt="" w={10} />
-        <Text fontWeight={"semibold"} fontSize="xl" ml="2">
+      <Flex h="20" alignItems="center" mx="8" justifyContent={"Vtart"}>
+        <Image src="/Zayroll Logo.png" alt="" w={90}/>
+        {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
           Wyre
-        </Text>
+        </Text> */}
       </Flex>
       <VStack mt="16">
         {DashboardLinkItems.map((link) => (
@@ -171,19 +172,19 @@ const SidebarContent = ({ ...rest }) => {
       <HStack
         align="center"
         mb="10"
-        // mx="4"
+        mx="8"
         w="100%"
         borderRadius="lg"
         cursor="pointer"
         position={"absolute"}
         bottom="0"
-        justifyContent="center"
+        justifyContent="start"
       >
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
 
-        <Text color="#E71D36" fontWeight={"semibold"}>
+        <Button color="#E71D36" fontWeight={"semibold"} onClick={() => signOut()}>
           Logout
-        </Text>
+        </Button>
       </HStack>
     </Box>
   );
@@ -271,11 +272,12 @@ interface HeaderNavProps extends FlexProps {
 
 const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
   const router = useRouter();
+  const { data: sessionData } = useSession();
 
   return (
     <Flex
       ml={60}
-      px={{ base: 4, md: 4 }}
+      px={{ base: 4, md: 8 }}
       height="20"
       alignItems="center"
       bg={useColorModeValue("white", "gray.900")}
@@ -295,7 +297,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
           variant="ghost"
           aria-label="open menu"
           icon={
-            <>
+            <Link href="/notifications">
               <BellIcon />
               <Center
                 as={"span"}
@@ -313,7 +315,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
               >
                 4
               </Center>
-            </>
+            </Link>
           }
           borderRadius="full"
           bg="#F7F7F7"
@@ -334,8 +336,9 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             <Avatar
               size={"sm"}
               src={
-                "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                ""
               }
+              name={sessionData?.user?.name || undefined}
             />
             <VStack
               display={"flex"}
@@ -344,7 +347,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
               pr="4"
             >
               <Text fontSize="sm" fontWeight={"bold"}>
-                John McDonald
+              {sessionData?.user?.name}
               </Text>
               <Text fontSize="xs" fontWeight={"medium"} color="boldgrey">
                 Chief People Officer

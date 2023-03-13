@@ -60,7 +60,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
               fontSize="sm"
               bg={"#F7F7F7"}
               // rounded={"3xl"}
-              h="45px"
+              minH="57px"
               borderRadius={"5px"}
               borderColor="#9f9f9f"
               _placeholder={{ fontSize: "sm" }}
@@ -69,7 +69,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
               {...field}
             >
               {options.map((option) => (
-                <option key={option.value} value={option.value}>
+                <option key={option.value} value={option.value} >
                   {option.label}
                 </option>
               ))}
