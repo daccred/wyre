@@ -17,7 +17,6 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
     "@wyrecc/config": "*",
     "@wyrecc/tsconfig": "*"
   }
