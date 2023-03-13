@@ -14,19 +14,18 @@ import {
 } from "@chakra-ui/react";
 import z from "zod";
 import { FormInput, useForm } from "../../components/forms";
-import { PeopleIcon } from "./ProviderIcons";
 import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
 // import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
 import { BsCheck2Circle } from "react-icons/bs";
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: "Name is Required" }),
-  email: z.string().email(),
-  department: z.string().min(1, { message: "Deparment is Required" }),
-  jobRole: z.string().min(1, { message: "JobRole is Required" }),
-  grossSalary: z.string().min(1, { message: "Gross salary is Required" }),
-  signingBonus: z.string().min(1, { message: "Bonus is Required" }),
+  // name: z.string().min(1, { message: "Name is Required" }),
+  // email: z.string().email(),
+  // department: z.string().min(1, { message: "Deparment is Required" }),
+  // jobRole: z.string().min(1, { message: "JobRole is Required" }),
+  // grossSalary: z.string().min(1, { message: "Gross salary is Required" }),
+  // signingBonus: z.string().min(1, { message: "Bonus is Required" }),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
@@ -35,12 +34,16 @@ type ManageReimbursementModalTypes = {
   openManageReimbursementModal: () => void;
   manageReimbursementModalIsOpen: boolean;
   closeManageReimbursementModal: () => void;
+  openApproveReimbursementSuccessModal: () => void;
+  data: { [key: string]: string };
 };
 
 export default function ManageReimbursementModal({
   openManageReimbursementModal,
   manageReimbursementModalIsOpen,
   closeManageReimbursementModal,
+  openApproveReimbursementSuccessModal,
+  data,
 }: ManageReimbursementModalTypes) {
   const toast = useToast();
 
@@ -109,29 +112,42 @@ export default function ManageReimbursementModal({
                   <FormInput
                     name="employee/contractor"
                     label="Employee/Contractor"
-                    placeholder="Kelechi Iheanacho"
+                    placeholder="Name"
+                    style={{ textTransform: "capitalize" }}
+                    px={"4"}
+                    value={data?.fullName}
+                    readOnly
                   />
 
                   <FormInput
                     name="amount"
                     label="Amount"
                     placeholder="Enter Amount"
+                    px={"4"}
+                    value={data?.amount}
+                    readOnly
                   />
                 </HStack>
                 <FormInput
                   name="purpose"
                   label="Purpose"
                   placeholder="Enter Purpose"
+                  px={"4"}
+                  value={data?.purpose}
+                  readOnly
                 />
               </Stack>
-              <Center
-                p="4"
-                border="1px solid #d2d2d2"
-                bg="#F7F7F7"
-                borderRadius={"5px"}
-              >
-                <Image src="/images/invoice-wyre.png" alt="" />
-              </Center>
+              <Stack>
+                <Text fontSize={"sm"}>Attachment</Text>
+                <Center
+                  p="4"
+                  border="1px solid #d2d2d2"
+                  bg="#F7F7F7"
+                  borderRadius={"5px"}
+                >
+                  <Image src="/images/invoice-wyre.png" alt="" />
+                </Center>
+              </Stack>
 
               <HStack>
                 <Button
@@ -144,6 +160,7 @@ export default function ManageReimbursementModal({
                   fontSize={"sm"}
                   px="6"
                   _hover={{ bg: "" }}
+                  onClick={openApproveReimbursementSuccessModal}
                 >
                   Approve
                 </Button>

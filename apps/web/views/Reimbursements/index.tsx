@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ViewLayout from "../../components/core/ViewLayout";
 import {
-  Button,
   HStack,
-  Input,
   Stack,
   Text,
   Table,
@@ -11,28 +9,14 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
   TableContainer,
-  Avatar,
-  Flex,
   Center,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  useDisclosure,
-  Image,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-import {
-  FiSearch,
-  FiArrowRight,
-  FiArrowLeft,
-  FiChevronRight,
-} from "react-icons/fi";
-import { EmptyContractorImage, LinkIcon } from "./ProviderIcons";
+import { FiArrowRight, FiArrowLeft, FiChevronRight } from "react-icons/fi";
+import { EmptyContractorImage } from "./ProviderIcons";
 import {
   Pagination,
   usePagination,
@@ -43,7 +27,7 @@ import {
   PaginationContainer,
   PaginationSeparator,
 } from "@ajna/pagination";
-import ManageReimbursementModal from "./ManageReimbursementModal";
+import ReimbursementItem from "./ReimbursementItem";
 
 const Index: React.FC = () => {
   // const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
@@ -91,12 +75,6 @@ const Index: React.FC = () => {
 
   // pagination functions end
 
-  const {
-    isOpen: manageReimbursementModalIsOpen,
-    onOpen: openManageReimbursementModal,
-    onClose: closeManageReimbursementModal,
-  } = useDisclosure();
-
   useEffect(() => {
     setDummyDataInUse([
       {
@@ -123,6 +101,15 @@ const Index: React.FC = () => {
         amount: "USD 2000",
         attachment: "IMG_2022154-432",
         action: "disapproved",
+        imgURL:
+          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
+      },
+      {
+        fullName: "jane doe",
+        purpose: "Ipsum lorem dolor sit amet consectetur....",
+        amount: "USD 6000",
+        attachment: "IMG_2022154-433",
+        action: "manage",
         imgURL:
           "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
       },
@@ -201,56 +188,7 @@ const Index: React.FC = () => {
                       pageSize * currentPage
                     )
                     .map((data, index) => (
-                      <Tr textTransform={"capitalize"} key={index}>
-                        <Td>
-                          <HStack>
-                            <Avatar size={"sm"} src={data?.imgURL} />
-                            <Text>{data?.fullName}</Text>
-                          </HStack>
-                        </Td>
-                        <Td>{data?.purpose}</Td>
-                        <Td>{data?.amount}</Td>
-                        <Td>
-                          <Button
-                            iconSpacing="3"
-                            w={"120px"}
-                            fontSize="sm"
-                            bg="#9f9f9f26"
-                            px="2"
-                          >
-                            <Text
-                              textOverflow={"ellipsis"}
-                              whiteSpace="nowrap"
-                              overflow={"hidden"}
-                            >
-                              {data?.attachment}
-                            </Text>
-                          </Button>
-                        </Td>
-                        <Td>
-                          {data?.action === "manage" && (
-                            <Button
-                              variant={"darkBtn"}
-                              iconSpacing="3"
-                              w={"120px"}
-                              fontSize="sm"
-                              onClick={openManageReimbursementModal}
-                            >
-                              Manage
-                            </Button>
-                          )}
-                          {data?.action === "approved" && (
-                            <Text w={"120px"} fontSize="sm" color="#0AAF60">
-                              Approved
-                            </Text>
-                          )}
-                          {data?.action === "disapproved" && (
-                            <Text w={"120px"} fontSize="sm" color="#E71D36">
-                              Disapproved
-                            </Text>
-                          )}
-                        </Td>
-                      </Tr>
+                      <ReimbursementItem key={index} data={data} />
                     ))}
               </Tbody>
             </Table>
@@ -337,11 +275,6 @@ const Index: React.FC = () => {
           )}
         </Stack>
       </HStack>
-      <ManageReimbursementModal
-        manageReimbursementModalIsOpen={manageReimbursementModalIsOpen}
-        openManageReimbursementModal={openManageReimbursementModal}
-        closeManageReimbursementModal={closeManageReimbursementModal}
-      />
     </ViewLayout>
   );
 };
