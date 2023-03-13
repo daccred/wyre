@@ -1,6 +1,8 @@
 import { type GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
+
 import { nextAuthOptions } from "../auth";
+
 // import { authOptions } from "../../pages/api/auth/[...nextauth]";
 // import { Button } from "web/pages/index";
 
