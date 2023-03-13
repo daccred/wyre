@@ -12,7 +12,7 @@ interface Columns {
 
 interface Props {
   columns: Columns[];
-  data: {}[];
+  data: Record<string, any>[];
   onRowSelectionChange: (selectedRowIds: Record<string, boolean>) => void;
   onSelectedRowsAmountChange: (amount: number) => void;
   selectedEmployees: string[];
@@ -51,6 +51,7 @@ export default function RowSelectTable({
     state: { selectedRowIds },
   } = useTable(
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       columns,
       data,

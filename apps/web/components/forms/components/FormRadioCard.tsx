@@ -146,7 +146,8 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
           control={control}
           render={({ field }) => (
             <RadioCardGroup
-              //@ts-ignore
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
               defaultValue={options[0].value}
               spacing="3"
               {...field}>

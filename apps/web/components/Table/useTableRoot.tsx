@@ -93,8 +93,13 @@ export const useTableRoot = <T extends TD>({
       selectionGroupHeader.canResize = false;
     });
   };
+
+  const noSelectionFallback = function () {
+    return null;
+  };
+
   const isLoading = isQueryLoading || mutationLoading;
-  const _checked = hasCheckBox ? useSelectionUi : () => {};
+  const _checked = hasCheckBox ? useSelectionUi : noSelectionFallback;
   const {
     page,
     nextPage,
