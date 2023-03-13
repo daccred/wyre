@@ -22,14 +22,14 @@
     "db-setup": "run-s db-up db-deploy db-seed",
     "db-studio": "prisma studio",
     "db-up": "docker-compose up -d",
-    "dx": "npm run  db-setup",
+    "dx": "yarn  db-setup",
     "lint:ts": "tsc --pretty --noEmit",
     "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
     "dev": "tsc --watch",
     "format": "prisma format",
     "generate": "prisma generate",
-    "prebuild": "npm run db-generate && npm run db-sync",
-    "predev": "npm run db-generate && npm run db-sync"
+    "prebuild": "yarn db-generate && yarn db-sync",
+    "predev": "yarn db-generate && yarn db-sync"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0"
