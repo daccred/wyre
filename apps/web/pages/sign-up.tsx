@@ -1,12 +1,13 @@
-import React from "react";
-import { Meta } from "../layouts";
-import View from "../views/Register";
-import z from "zod";
 import { useToast } from "@chakra-ui/react";
-import { useForm } from "../components/forms";
-import { trpc } from "../utils/trpc";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import React from "react";
+import z from "zod";
+
+import { useForm } from "../components/forms";
+import { Meta } from "../layouts";
+import { trpc } from "../utils/trpc";
+import View from "../views/Register";
 
 const signUpValidationSchema = z
   .object({

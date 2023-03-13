@@ -16,5 +16,4 @@ module.exports = {
     "^[./]",
   ],
   importOrderSeparation: true,
-  plugins: [require("./__prettier-plugins")],
 };

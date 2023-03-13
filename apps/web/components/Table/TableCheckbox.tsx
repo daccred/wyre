@@ -11,11 +11,7 @@ type TableCheckboxProps = {
   role?: string | undefined;
 };
 
-const TableCheckbox = ({
-  indeterminate,
-  checked,
-  ...props
-}: TableCheckboxProps) => {
+const TableCheckbox = ({ indeterminate, checked, ...props }: TableCheckboxProps) => {
   return (
     <Checkbox
       ref={props.indeterminate ? props.checkboxRef : null}

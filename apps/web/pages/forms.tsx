@@ -1,15 +1,10 @@
-import React from "react";
-import { Meta } from "../layouts";
-import z from "zod";
-import {
-  FormCheckbox,
-  FormInput,
-  FormInputArray,
-  FormTextArea,
-  useForm,
-} from "../components/forms";
-import FormDateInput from "../components/forms/components/FormDateInput";
 import { Stack, HStack, Button } from "@chakra-ui/react";
+import React from "react";
+import z from "zod";
+
+import { FormCheckbox, FormInput, FormInputArray, FormTextArea, useForm } from "../components/forms";
+import FormDateInput from "../components/forms/components/FormDateInput";
+import { Meta } from "../layouts";
 import * as Layout from "../layouts";
 
 const formValidationSchema = z.object({
@@ -54,11 +49,7 @@ export default function Page() {
           name="eventOutcomes"
         />
 
-        <FormTextArea
-          placeholder={"DSTV website"}
-          name="resolutionSource"
-          label="Resolution Source"
-        />
+        <FormTextArea placeholder={"DSTV website"} name="resolutionSource" label="Resolution Source" />
 
         <FormInput name="resolutionLink" type="url" label="Resolution link" />
         <Button rounded={"3xl"} fontSize={"lg"} fontWeight="medium">

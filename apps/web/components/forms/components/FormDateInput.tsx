@@ -1,15 +1,14 @@
+import type { FormControlProps } from "@chakra-ui/form-control";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
+import { FormErrorMessage, Icon, InputLeftElement } from "@chakra-ui/react";
 import * as React from "react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import type { FormControlProps } from "@chakra-ui/form-control";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
-import { FormErrorMessage, Icon, InputLeftElement } from "@chakra-ui/react";
 
-export interface LabeledTextFieldProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
   /** Field label. */
@@ -22,30 +21,13 @@ export interface LabeledTextFieldProps
   props?: ComponentPropsWithoutRef<typeof Input>;
 }
 
-export const FormDateInput = forwardRef<
-  HTMLInputElement,
-  LabeledTextFieldProps
->(
-  (
-    {
-      label,
-      outerProps,
-      icon,
-      labelProps,
-      name,
-      leftElement,
-      rightElement,
-      ...props
-    },
-    ref
-  ) => {
+export const FormDateInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
+  ({ label, outerProps, icon, labelProps, name, leftElement, rightElement, ...props }, ref) => {
     const {
       register,
       formState: { isSubmitting, errors },
     } = useFormContext();
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     return (

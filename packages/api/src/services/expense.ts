@@ -1,7 +1,9 @@
+import { prisma } from "@wyrecc/db";
+
+import { TRPCError } from "@trpc/server";
+
 import { IExpenseSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
-import { prisma } from "@wyrecc/db";
-import { TRPCError } from "@trpc/server";
 
 export class ExpenseService {
   static async createExpense(input: IExpenseSchema) {

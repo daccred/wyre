@@ -19,23 +19,24 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import ViewLayout from "../../../components/core/ViewLayout";
+import { Employee, Payroll } from "@prisma/client";
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
-import { employeeSalaryPath, managePayrollPath } from "../routes";
-import { useRouter } from "next/dist/client/router";
-import { FormInput, FormNativeSelect, useForm } from "../../../components";
-import { monthlyPayrollColumns } from "../utils/tableColumns";
-import { createPayrollValidationSchema } from "../utils/misc";
 import z from "zod";
-import { trpc } from "../../../utils/trpc";
-import { Employee, Payroll } from "@prisma/client";
+
+import { FormInput, FormNativeSelect, useForm } from "../../../components";
 import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
-import SuccessModal from "../modals/SuccessModal";
+import ViewLayout from "../../../components/core/ViewLayout";
 import FormDateInput from "../../../components/forms/components/FormDateInput";
-import SuspendPayroll from "../modals/SuspendPayroll";
+import { trpc } from "../../../utils/trpc";
 import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
-import { GetServerSideProps } from "next";
+import SuccessModal from "../modals/SuccessModal";
+import SuspendPayroll from "../modals/SuspendPayroll";
+import { employeeSalaryPath, managePayrollPath } from "../routes";
+import { createPayrollValidationSchema } from "../utils/misc";
+import { monthlyPayrollColumns } from "../utils/tableColumns";
 
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 const MonthlyEmployeeSalary = () => {
@@ -45,8 +46,7 @@ const MonthlyEmployeeSalary = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDepartment, setSelectedDepartment] =
-    useState("All departments");
+  const [selectedDepartment, setSelectedDepartment] = useState("All departments");
 
   // Get Data from previous page
   const router = useRouter();
@@ -96,8 +96,7 @@ const MonthlyEmployeeSalary = () => {
     let filteredData = employeeData;
     if (selectedDepartment !== "All departments") {
       filteredData = employeeData?.filter(
-        (data) =>
-          data?.department?.toLowerCase() === selectedDepartment?.toLowerCase()
+        (data) => data?.department?.toLowerCase() === selectedDepartment?.toLowerCase()
       );
     }
     const searchData = filteredData?.filter((data) =>
@@ -115,10 +114,7 @@ const MonthlyEmployeeSalary = () => {
     handleSelectedRowsAmountChange(total);
   }, [selectedRows]);
 
-  const departmentOptions = useMemo(
-    () => ["All departments", "Tech", "Finance", "Operations"],
-    []
-  );
+  const departmentOptions = useMemo(() => ["All departments", "Tech", "Finance", "Operations"], []);
 
   // Get total salaries from the table
   const totalSalaries = useMemo(() => {
@@ -141,22 +137,21 @@ const MonthlyEmployeeSalary = () => {
     onClose: closeSuccessModal,
   } = useDisclosure();
 
-  const { mutate: updatePayroll, isLoading } =
-    trpc.payroll.updatePayroll.useMutation({
-      onSuccess(data: any) {
-        // Reset the form data to empty values
-        openSuccessModal();
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-      },
-    });
+  const { mutate: updatePayroll, isLoading } = trpc.payroll.updatePayroll.useMutation({
+    onSuccess(data: any) {
+      // Reset the form data to empty values
+      openSuccessModal();
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+    },
+  });
 
   const handleSubmit = async (data: FormInputOptions) => {
     try {
@@ -192,13 +187,7 @@ const MonthlyEmployeeSalary = () => {
       cycle: payroll?.cycle as "daily" | "bi-weekly" | "monthly",
       auto: payroll?.auto,
       payday: payroll?.payday,
-      currency: payroll?.currency as
-        | "USD"
-        | "GHC"
-        | "NGN"
-        | "CNY"
-        | "GBP"
-        | "EUR",
+      currency: payroll?.currency as "USD" | "GHC" | "NGN" | "CNY" | "GBP" | "EUR",
       suspend: payroll?.suspend,
     },
   });
@@ -211,16 +200,14 @@ const MonthlyEmployeeSalary = () => {
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
           pb="2"
           fontWeight={"semibold"}
-          color="lightgrey"
-        >
+          color="lightgrey">
           <BreadcrumbItem>
             <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink
               href={managePayrollPath}
-              color={pathname === managePayrollPath ? "black" : "lightgrey"}
-            >
+              color={pathname === managePayrollPath ? "black" : "lightgrey"}>
               Manage Payroll
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -228,8 +215,7 @@ const MonthlyEmployeeSalary = () => {
             <BreadcrumbLink
               href={employeeSalaryPath}
               color={pathname === employeeSalaryPath ? "black" : "lightgrey"}
-              isCurrentPage={true}
-            >
+              isCurrentPage={true}>
               Monthly Employee Salary
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -242,11 +228,7 @@ const MonthlyEmployeeSalary = () => {
               </Heading>
               <Stack spacing={"6"} pb="4">
                 <Stack>
-                  <FormInput
-                    name="title"
-                    label="Payroll Details"
-                    placeholder="Title"
-                  />
+                  <FormInput name="title" label="Payroll Details" placeholder="Title" />
                   <HStack>
                     <FormNativeSelect
                       name="cycle"
@@ -272,11 +254,7 @@ const MonthlyEmployeeSalary = () => {
                 </Heading>
                 {employeeData && employeeData.length > 0 ? (
                   <>
-                    <Grid
-                      templateColumns="30% 25%"
-                      justifyContent="space-between"
-                      my={6}
-                    >
+                    <Grid templateColumns="30% 25%" justifyContent="space-between" my={6}>
                       <GridItem>
                         <HStack gap="1">
                           <FiSearch fontSize={"24px"} />
@@ -296,10 +274,7 @@ const MonthlyEmployeeSalary = () => {
                       <GridItem>
                         <Select
                           value={selectedDepartment}
-                          onChange={(event) =>
-                            setSelectedDepartment(event.target.value)
-                          }
-                        >
+                          onChange={(event) => setSelectedDepartment(event.target.value)}>
                           {departmentOptions.map((option) => (
                             <option key={option} value={option}>
                               {option}
@@ -313,9 +288,7 @@ const MonthlyEmployeeSalary = () => {
                       columns={monthlyPayrollColumns}
                       data={tableData}
                       onRowSelectionChange={handleSelectionChange}
-                      onSelectedRowsAmountChange={
-                        handleSelectedRowsAmountChange
-                      }
+                      onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
                       setSelectedEmployees={setSelectedEmployees}
                     />
                   </>
@@ -330,13 +303,7 @@ const MonthlyEmployeeSalary = () => {
               </Stack>
             </GridItem>
 
-            <GridItem
-              border="1px solid #D2D2D2"
-              rounded="xl"
-              bg="white"
-              p={4}
-              height="fit-content"
-            >
+            <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4} height="fit-content">
               <Heading as="h4" size="xs" fontSize="xl">
                 Summary
               </Heading>
@@ -365,8 +332,7 @@ const MonthlyEmployeeSalary = () => {
                   iconSpacing="3"
                   w="100%"
                   _hover={{ hover: "none" }}
-                  isDisabled={totalEmployeesSelected > 0 ? false : true}
-                >
+                  isDisabled={totalEmployeesSelected > 0 ? false : true}>
                   Run Payroll
                 </Button>
                 <Button
@@ -376,8 +342,7 @@ const MonthlyEmployeeSalary = () => {
                   iconSpacing="3"
                   w="100%"
                   _hover={{ hover: "none" }}
-                  onClick={() => openSuspendPayrollModal()}
-                >
+                  onClick={() => openSuspendPayrollModal()}>
                   Suspend Payroll
                 </Button>
               </VStack>

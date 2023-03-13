@@ -1,9 +1,12 @@
-import { prisma } from "@wyrecc/db/src";
-import { TRPCError } from "@trpc/server";
-import { InvitationSchemaType } from "../interfaces";
-import { AuthService } from "./auth";
 import { nanoid } from "nanoid";
+
+import { prisma } from "@wyrecc/db/src";
+
+import { TRPCError } from "@trpc/server";
+
+import { InvitationSchemaType } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
+import { AuthService } from "./auth";
 
 export class InvitationService {
   static async createInvitation(input: InvitationSchemaType) {

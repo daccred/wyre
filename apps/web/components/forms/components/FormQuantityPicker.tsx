@@ -1,10 +1,4 @@
-import type { FC } from "react";
-import React from "react";
-import type {
-  FormControlProps,
-  IconButtonProps,
-  UseControllableStateProps,
-} from "@chakra-ui/react";
+import type { FormControlProps, IconButtonProps, UseControllableStateProps } from "@chakra-ui/react";
 import {
   Center,
   Flex,
@@ -15,11 +9,13 @@ import {
   Text,
   useControllableState,
 } from "@chakra-ui/react";
-import { FiMinus, FiPlus } from "react-icons/fi";
+import type { FC } from "react";
+import React from "react";
 
 /* Hook into react hook forms */
 import type { Control } from "react-hook-form";
 import { useFormContext, useController } from "react-hook-form";
+import { FiMinus, FiPlus } from "react-icons/fi";
 
 interface FieldErrorProps {
   name?: string;
@@ -66,16 +62,7 @@ interface FormQuantityPickerProps extends UseControllableStateProps<number> {
 }
 
 export const FormQuantityPicker: FC<FormQuantityPickerProps> = (props) => {
-  const {
-    min = 1,
-    max,
-    name,
-    label,
-    required,
-    control,
-    rootProps,
-    ...rest
-  } = props;
+  const { min = 1, max, name, label, required, control, rootProps, ...rest } = props;
   const [value, setValue] = useControllableState(rest);
 
   // const { register, setValue: setFormValue } = useFormContext()
@@ -107,13 +94,7 @@ export const FormQuantityPicker: FC<FormQuantityPickerProps> = (props) => {
           {label}
         </FormLabel>
       )}
-      <Flex
-        borderRadius="xl"
-        px="2"
-        py={2}
-        borderWidth="1px"
-        justifyContent="space-between"
-      >
+      <Flex borderRadius="xl" px="2" py={2} borderWidth="1px" justifyContent="space-between">
         <QuantityPickerButton
           onClick={handleDecrement}
           icon={<FiMinus />}

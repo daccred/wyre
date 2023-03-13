@@ -1,21 +1,19 @@
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
 import {
   FormErrorMessage,
   Icon,
   Button,
   InputLeftElement,
-  Stack,
-  // InputProps,
+  Stack, // InputProps,
 } from "@chakra-ui/react";
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
+import { forwardRef } from "react";
+import { useFormContext, useFieldArray } from "react-hook-form";
 import { CgClose } from "react-icons/cg";
 
-export interface InputFieldArrayProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface InputFieldArrayProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
 
@@ -41,24 +39,8 @@ export interface InputFieldArrayProps
  * @name FormInputArray
  * @description a form input that can create array fields with react hook form
  */
-export const FormInputArray = forwardRef<
-  HTMLInputElement,
-  InputFieldArrayProps
->(
-  (
-    {
-      label,
-      outerProps,
-      icon,
-      limit,
-      labelProps,
-      addMoreText,
-      name,
-      leftElement,
-      ...props
-    },
-    ref
-  ) => {
+export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>(
+  ({ label, outerProps, icon, limit, labelProps, addMoreText, name, leftElement, ...props }, ref) => {
     const {
       register,
       control,
@@ -69,11 +51,8 @@ export const FormInputArray = forwardRef<
       name: name,
     });
 
-    const _handleArrayAppend = () =>
-      limit && fields.length < limit && append(" ");
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const _handleArrayAppend = () => limit && fields.length < limit && append(" ");
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     return (
@@ -126,8 +105,7 @@ export const FormInputArray = forwardRef<
             justifySelf="flex-end"
             justifyContent="flex-end"
             w={"max-content"}
-            onClick={_handleArrayAppend}
-          >
+            onClick={_handleArrayAppend}>
             {addMoreText ?? "+"}
           </Button>
         </Stack>

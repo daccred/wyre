@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import type { ReactNode } from "react";
 import {
   IconButton,
   Avatar,
@@ -8,14 +6,20 @@ import {
   HStack,
   VStack,
   Icon,
-  useColorModeValue,
-  // Link,
+  useColorModeValue, // Link,
   Text,
   Button,
   Image,
   Center,
 } from "@chakra-ui/react";
 import type { ComponentWithAs, IconProps, FlexProps } from "@chakra-ui/react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import type { ReactNode } from "react";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+
 import {
   BellIcon,
   ContractorsIcon,
@@ -27,11 +31,7 @@ import {
   PeopleIcon,
   ExpensesIcon,
 } from "./ProviderIcons";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import SidebarAccordion from "./SidebarAccordion";
-import { signOut, useSession } from "next-auth/react";
 
 interface LinkItemProps {
   name: string;
@@ -48,9 +48,7 @@ interface LinkAccordionProps {
 const DashboardLinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", href: "/dashboard", icon: DashboardIcon },
 ];
-const PayrollLinkItems: Array<LinkItemProps> = [
-  { name: "Payroll", href: "/payroll", icon: PayrollIcon },
-];
+const PayrollLinkItems: Array<LinkItemProps> = [{ name: "Payroll", href: "/payroll", icon: PayrollIcon }];
 
 const PeopleAccordion: LinkAccordionProps = {
   name: "People",
@@ -66,20 +64,12 @@ const PeopleLinkItems: Array<LinkItemProps> = [
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
   { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
 ];
-const ExpensesLinkItems: Array<LinkItemProps> = [
-  { name: "Expenses", href: "/expenses", icon: ExpensesIcon },
-];
+const ExpensesLinkItems: Array<LinkItemProps> = [{ name: "Expenses", href: "/expenses", icon: ExpensesIcon }];
 const DevLinkItems: Array<LinkItemProps> = [
   { name: "Integrations", href: "/integrations", icon: IntegrationsIcon },
 ];
 
-export default function ViewLayout({
-  children,
-  title,
-}: {
-  children: ReactNode;
-  title?: string;
-}) {
+export default function ViewLayout({ children, title }: { children: ReactNode; title?: string }) {
   return (
     <Box minH="100vh" bg={"#F7F7F7"}>
       <SidebarContent />
@@ -104,8 +94,7 @@ const SidebarContent = ({ ...rest }) => {
       w={60}
       pos="fixed"
       h="full"
-      {...rest}
-    >
+      {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent={"Vtart"}>
         <Image src="/Zayroll Logo.png" alt="" w={90} />
         {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
@@ -178,15 +167,10 @@ const SidebarContent = ({ ...rest }) => {
         cursor="pointer"
         position={"absolute"}
         bottom="0"
-        justifyContent="start"
-      >
+        justifyContent="start">
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
 
-        <Button
-          color="#E71D36"
-          fontWeight={"semibold"}
-          onClick={() => signOut()}
-        >
+        <Button color="#E71D36" fontWeight={"semibold"} onClick={() => signOut()}>
           Logout
         </Button>
       </HStack>
@@ -212,10 +196,7 @@ const NavItem = ({
   ...rest
 }: NavItemProps) => {
   const router = useRouter();
-  const isActive =
-    router.asPath === href
-      ? true
-      : router.pathname.startsWith(href) && href !== "";
+  const isActive = router.asPath === href ? true : router.pathname.startsWith(href) && href !== "";
 
   // useEffect(()=>{
   //   if (linkName==='People' && setPeopleMenuVisible){
@@ -224,10 +205,7 @@ const NavItem = ({
   // },[linkName])
 
   return (
-    <Link
-      href={href}
-      style={{ textDecoration: "none", width: "100%", padding: "0 16px" }}
-    >
+    <Link href={href} style={{ textDecoration: "none", width: "100%", padding: "0 16px" }}>
       <Flex
         align="center"
         px="4"
@@ -241,8 +219,7 @@ const NavItem = ({
           bg: "blackAlpha.100",
           // color: 'white',
         }}
-        {...rest}
-      >
+        {...rest}>
         {icon && (
           <Icon
             mr="4"
@@ -254,10 +231,7 @@ const NavItem = ({
             as={icon}
           />
         )}
-        <Text
-          color={isActive ? "brand.600" : "boldgrey"}
-          fontWeight={"semibold"}
-        >
+        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight={"semibold"}>
           {children}
         </Text>
         {linkName === "People" && (
@@ -288,8 +262,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("bordergrey", "gray.700")}
       justifyContent={"space-between"}
-      {...rest}
-    >
+      {...rest}>
       <Text display={"flex"} fontSize="2xl" fontWeight="medium">
         {title}
       </Text>
@@ -315,8 +288,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
                 bgColor={"brand.600"}
                 borderRadius={"full"}
                 zIndex={9999}
-                p={1}
-              >
+                p={1}>
                 4
               </Center>
             </Link>
@@ -335,19 +307,9 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             spacing={4}
             transition="all 0.3s"
             _focus={{ boxShadow: "none" }}
-            onClick={() => router.push("/profile")}
-          >
-            <Avatar
-              size={"sm"}
-              src={""}
-              name={sessionData?.user?.name as string}
-            />
-            <VStack
-              display={"flex"}
-              alignItems="flex-start"
-              spacing="1px"
-              pr="4"
-            >
+            onClick={() => router.push("/profile")}>
+            <Avatar size={"sm"} src={""} name={sessionData?.user?.name as string} />
+            <VStack display={"flex"} alignItems="flex-start" spacing="1px" pr="4">
               <Text fontSize="sm" fontWeight={"bold"}>
                 {sessionData?.user?.name}
               </Text>

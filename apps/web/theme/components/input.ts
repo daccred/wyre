@@ -37,10 +37,7 @@ const variants = {
       },
       _focus: {
         borderColor: "brand.200",
-        boxShadow: `0px 0px 0px 1px ${transparentize(
-          `brand.200`,
-          1.0
-        )(props.theme)}`,
+        boxShadow: `0px 0px 0px 1px ${transparentize(`brand.200`, 1.0)(props.theme)}`,
       },
     },
   }),

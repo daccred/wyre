@@ -1,7 +1,8 @@
-import ViewLayout from "../../components/core/ViewLayout";
 import { Text, useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet } from "react-device-detect";
+
+import ViewLayout from "../../components/core/ViewLayout";
 
 const Test = () => {
   const [smallerThan640] = useMediaQuery("(max-width: 640px)", {
@@ -10,9 +11,7 @@ const Test = () => {
   });
   const [allowDisplay, setAllowDisplay] = useState("loading");
   useEffect(() => {
-    console.log(
-      `isMobile: ${isMobile}, isBrowser: ${isBrowser}, isTablet: ${isTablet}`
-    );
+    console.log(`isMobile: ${isMobile}, isBrowser: ${isBrowser}, isTablet: ${isTablet}`);
     if (isBrowser || isTablet) {
       setAllowDisplay("web");
     }
@@ -24,12 +23,8 @@ const Test = () => {
   return (
     <>
       <ViewLayout>
-        {allowDisplay === "web" && !smallerThan640 && (
-          <Text>This is a test page</Text>
-        )}
-        {(allowDisplay === "mobile" || smallerThan640) && (
-          <Text>mobile page</Text>
-        )}
+        {allowDisplay === "web" && !smallerThan640 && <Text>This is a test page</Text>}
+        {(allowDisplay === "mobile" || smallerThan640) && <Text>mobile page</Text>}
       </ViewLayout>
     </>
   );

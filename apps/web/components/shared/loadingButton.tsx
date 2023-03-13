@@ -1,6 +1,6 @@
-import React from "react";
 // import Spinner from './spinner';
 import { Button, Flex, Text, Spinner } from "@chakra-ui/react";
+import React from "react";
 
 type LoadingButtonProps = {
   submitting?: boolean;
@@ -27,8 +27,7 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
       py={7}
       _hover={{
         bg: "#210D35",
-      }}
-    >
+      }}>
       {submitting ? (
         <Flex align={"center"}>
           <Spinner thickness="4px" speed="0.5s" />

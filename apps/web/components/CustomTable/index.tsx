@@ -1,5 +1,12 @@
-import React from "react";
-import { useTable, Column, usePagination } from "react-table";
+import {
+  Pagination,
+  PaginationContainer,
+  PaginationNext,
+  PaginationPage,
+  PaginationPageGroup,
+  PaginationPrevious,
+  PaginationSeparator,
+} from "@ajna/pagination";
 import {
   Table,
   Thead,
@@ -17,17 +24,10 @@ import {
   Box,
   Icon,
 } from "@chakra-ui/react";
+import React from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import {
-  Pagination,
-  PaginationContainer,
-  PaginationNext,
-  PaginationPage,
-  PaginationPageGroup,
-  PaginationPrevious,
-  PaginationSeparator,
-} from "@ajna/pagination";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { useTable, Column, usePagination } from "react-table";
 
 interface TableProps<T extends object> {
   data: T[];
@@ -35,10 +35,7 @@ interface TableProps<T extends object> {
   pageSize?: number;
 }
 
-export function CustomTable<T extends object>({
-  data,
-  columns,
-}: TableProps<T>) {
+export function CustomTable<T extends object>({ data, columns }: TableProps<T>) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -82,9 +79,7 @@ export function CustomTable<T extends object>({
             return (
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return (
-                    <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
-                  );
+                  return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
                 })}
               </Tr>
             );

@@ -1,15 +1,8 @@
-import {
-  Box,
-  HStack,
-  Image,
-  Input,
-  Stack,
-  Switch,
-  Text,
-} from "@chakra-ui/react";
-import { FiSearch } from "react-icons/fi";
-import ViewLayout from "../../components/core/ViewLayout";
+import { Box, HStack, Image, Input, Stack, Switch, Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { FiSearch } from "react-icons/fi";
+
+import ViewLayout from "../../components/core/ViewLayout";
 import APIForm from "./APIForm";
 import {
   AnchorIcon,
@@ -51,20 +44,17 @@ const Integrations = () => {
   const fiatServices = [
     {
       name: "Paystack",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <PaystackIcon />,
     },
     {
       name: "ExpressPayGH",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <Image src="images/expresspaygh.png" alt="" boxSize={"30px"} />,
     },
     {
       name: "Flutterwave",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <FlutterwaveIcon />,
     },
   ];
@@ -72,20 +62,17 @@ const Integrations = () => {
   const cryptoServices = [
     {
       name: "Fluidcoins",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <FluidCoinsIcon />,
     },
     {
       name: "Lazerpay",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <LazerPayIcon />,
     },
     {
       name: "Coinprofile",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <CoinProfileIcon />,
     },
   ];
@@ -93,14 +80,12 @@ const Integrations = () => {
   const mobileMoneyServices = [
     {
       name: "MTN Momo",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <Image src="images/mtn momo.png" alt="" boxSize={"30px"} />,
     },
     {
       name: "MPesa",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
       logo: <Image src="images/mpesa.png" alt="" boxSize={"30px"} />,
     },
   ];
@@ -108,20 +93,12 @@ const Integrations = () => {
   return (
     <ViewLayout title="Integrations">
       <HStack gap="4" alignItems={"flex-start"}>
-        <Box
-          borderRadius={"15px"}
-          border={"1px solid"}
-          borderColor="bordergrey"
-          p="4"
-          bg={"white"}
-          w="70%"
-        >
+        <Box borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p="4" bg={"white"} w="70%">
           <Text fontWeight="bold" fontSize="18px" mb="1">
             Payment Services
           </Text>
           <Text mb="4" color={"lightgrey"} fontSize="sm">
-            Supercharge your payroll and connect the best tool for making
-            payments globally
+            Supercharge your payroll and connect the best tool for making payments globally
           </Text>
           <HStack gap="1">
             <FiSearch fontSize={"24px"} />
@@ -155,8 +132,7 @@ const Integrations = () => {
                   px="4"
                   bg={"white"}
                   justifyContent="space-between"
-                  fontSize={"sm"}
-                >
+                  fontSize={"sm"}>
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
@@ -181,8 +157,7 @@ const Integrations = () => {
                   px="4"
                   bg={"white"}
                   justifyContent="space-between"
-                  fontSize={"sm"}
-                >
+                  fontSize={"sm"}>
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
@@ -207,8 +182,7 @@ const Integrations = () => {
                   px="4"
                   bg={"white"}
                   justifyContent="space-between"
-                  fontSize={"sm"}
-                >
+                  fontSize={"sm"}>
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
@@ -233,8 +207,7 @@ const Integrations = () => {
                   px="4"
                   bg={"white"}
                   justifyContent="space-between"
-                  fontSize={"sm"}
-                >
+                  fontSize={"sm"}>
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>

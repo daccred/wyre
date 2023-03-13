@@ -1,18 +1,17 @@
-import type { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { ChakraProvider } from "@chakra-ui/react";
-
-import { trpc } from "../utils/trpc";
-import { theme } from "../theme/index";
-import "../styles/globals.css";
-
-import ErrorBoundary from "../views/ErrorBoundary";
-import { useMediaQuery } from "@chakra-ui/react";
+import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet } from "react-device-detect";
+
 import MobilePrompt from "../components/core/MobilePrompt";
 import { ProtectedLayout } from "../components/protected";
+import "../styles/globals.css";
+import { theme } from "../theme/index";
+import { trpc } from "../utils/trpc";
+import ErrorBoundary from "../views/ErrorBoundary";
 
 type AppPropsWithAuth = AppProps & {
   Component: {
@@ -35,9 +34,7 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
   const [allowDisplay, setAllowDisplay] = useState("loading");
 
   useEffect(() => {
-    console.log(
-      `isMobile: ${isMobile}, isBrowser: ${isBrowser}, isTablet: ${isTablet}`
-    );
+    console.log(`isMobile: ${isMobile}, isBrowser: ${isBrowser}, isTablet: ${isTablet}`);
     if (isBrowser || isTablet) {
       setAllowDisplay("web");
     }
@@ -52,17 +49,13 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
         {Component.requireAuth ? (
           <ProtectedLayout>
             <ChakraProvider theme={theme}>
-              {allowDisplay === "web" && !smallerThan640 && (
-                <Component {...restPageProps} />
-              )}
+              {allowDisplay === "web" && !smallerThan640 && <Component {...restPageProps} />}
               {allowDisplay === "mobile" && <MobilePrompt />}
             </ChakraProvider>
           </ProtectedLayout>
         ) : (
           <ChakraProvider theme={theme}>
-            {allowDisplay === "web" && !smallerThan640 && (
-              <Component {...restPageProps} />
-            )}
+            {allowDisplay === "web" && !smallerThan640 && <Component {...restPageProps} />}
             {allowDisplay === "mobile" && <MobilePrompt />}
           </ChakraProvider>
         )}

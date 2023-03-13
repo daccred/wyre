@@ -1,6 +1,6 @@
 # Providers
 
-All of our integrations and apps will be written as providers. Providers would implement a common interface and would be registered with the framework. 
+All of our integrations and apps will be written as providers. Providers would implement a common interface and would be registered with the framework.
 
 The framework would then use the provider to perform the required actions.
 

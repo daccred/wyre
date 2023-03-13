@@ -1,2 +1,4 @@
 # track the symbolic link for env
 !.env
+/dist
+/build

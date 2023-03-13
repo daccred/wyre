@@ -27,9 +27,7 @@ export interface WrapperInnerProps extends BoxProps {
   children: React.ReactNode;
 }
 
-export function withTokenForInnerWrapperVariant(
-  variant: InnerWrapperStyleVariant = "default"
-) {
+export function withTokenForInnerWrapperVariant(variant: InnerWrapperStyleVariant = "default") {
   const yAxisWhiteSpace = { base: "4", lg: "12" };
   const xAxisWhiteSpace = { base: "4", lg: "12" };
 
@@ -57,10 +55,7 @@ export function withTokenForInnerWrapperVariant(
     },
     retro: {
       maxWidth: MAX_WIDTH_BOXED,
-      shadow: [
-        "5px 5px 0px 0px rgba(0,0,0,1)",
-        "6px 6px 0px 0px rgba(10,50,0,1)",
-      ],
+      shadow: ["5px 5px 0px 0px rgba(0,0,0,1)", "6px 6px 0px 0px rgba(10,50,0,1)"],
       borderColor: ["brand.900", "green.300"],
       px: xAxisWhiteSpace,
       py: yAxisWhiteSpace,
@@ -74,10 +69,7 @@ export function withTokenForInnerWrapperVariant(
     },
     "form-retro": {
       maxWidth: MAX_WIDTH_FORM,
-      shadow: [
-        "5px 5px 0px 0px rgba(0,0,0,1)",
-        "6px 6px 0px 0px rgba(10,50,0,1)",
-      ],
+      shadow: ["5px 5px 0px 0px rgba(0,0,0,1)", "6px 6px 0px 0px rgba(10,50,0,1)"],
       borderColor: ["brand.900", "green.300"],
       px: { base: "6", lg: "12" },
       py: yAxisWhiteSpace,

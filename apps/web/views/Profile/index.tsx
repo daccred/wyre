@@ -1,4 +1,3 @@
-import ViewLayout from "../../components/core/ViewLayout";
 import {
   Avatar,
   Box,
@@ -10,11 +9,13 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import styledToast from "../../components/core/StyledToast";
+import { FiUploadCloud } from "react-icons/fi";
 import z from "zod";
+
+import styledToast from "../../components/core/StyledToast";
+import ViewLayout from "../../components/core/ViewLayout";
 import { FormInput, useForm } from "../../components/forms";
 import { ProfileIcon } from "./ProviderIcons";
-import { FiUploadCloud } from "react-icons/fi";
 
 const addEmployeeValidationSchema = z.object({});
 
@@ -67,8 +68,7 @@ const Profile = () => {
               bg={"white"}
               alignItems="center"
               textAlign={"center"}
-              fontSize="sm"
-            >
+              fontSize="sm">
               <IconButton
                 position={"relative"}
                 boxSize="14"
@@ -82,11 +82,7 @@ const Profile = () => {
               />
 
               <Box>
-                <Text
-                  style={{ color: "#8D1CFF" }}
-                  display={"inline-block"}
-                  fontWeight="bold"
-                >
+                <Text style={{ color: "#8D1CFF" }} display={"inline-block"} fontWeight="bold">
                   Click to upload{" "}
                 </Text>{" "}
                 or drag and drop
@@ -96,50 +92,23 @@ const Profile = () => {
           </HStack>
 
           <Stack
-            divider={
-              <StackDivider
-                bg="rgba(159, 159, 159, 0.3)"
-                mt="6 !important"
-                mb="4 !important"
-              />
-            }
+            divider={<StackDivider bg="rgba(159, 159, 159, 0.3)" mt="6 !important" mb="4 !important" />}
             borderTop="1px solid rgba(159, 159, 159, 0.3)"
             borderBottom="1px solid rgba(159, 159, 159, 0.3)"
             pb="6"
             pt="4"
             width="70%"
-            minW={"700px"}
-          >
+            minW={"700px"}>
             <HStack>
-              <FormInput
-                name="firstName"
-                label="First Name"
-                placeholder="First Name"
-              />
-              <FormInput
-                name="lastName"
-                label="Last Name"
-                placeholder="Last Name"
-              />
+              <FormInput name="firstName" label="First Name" placeholder="First Name" />
+              <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
             </HStack>
             <HStack>
-              <FormInput
-                name="email"
-                label="Email Address"
-                placeholder="Email Address"
-              />
-              <FormInput
-                name="phoneNumber"
-                label="Phone Number"
-                placeholder="Phone Number"
-              />
+              <FormInput name="email" label="Email Address" placeholder="Email Address" />
+              <FormInput name="phoneNumber" label="Phone Number" placeholder="Phone Number" />
             </HStack>
             <HStack>
-              <FormInput
-                name="city"
-                label="Company Name"
-                placeholder="Company Name"
-              />
+              <FormInput name="city" label="Company Name" placeholder="Company Name" />
               <FormInput name="country" label="Country" placeholder="Country" />
             </HStack>
             <FormInput name="jobRole" label="Job Role" placeholder="Job Role" />
@@ -152,8 +121,7 @@ const Profile = () => {
             rightIcon={<ProfileIcon fill={"#fff"} stroke={"#fff"} />}
             iconSpacing="3"
             w="fit-content"
-            type="submit"
-          >
+            type="submit">
             Update Profile
           </Button>
           <Button
@@ -161,8 +129,7 @@ const Profile = () => {
             rightIcon={<ProfileIcon fill={"#210D35"} stroke={"#210D35"} />}
             iconSpacing="3"
             w="fit-content"
-            type="submit"
-          >
+            type="submit">
             Reset Password
           </Button>
         </HStack>
