@@ -13,17 +13,9 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet } from "react-device-detect";
 import MobilePrompt from "../components/core/MobilePrompt";
-import { ProtectedLayout } from "components/protected";
-import type { AppProps } from 'next/app';
 
 
-type AppPropsWithAuth = AppProps & {
-  Component: {
-    requireAuth?: boolean;
-  };
-};
-
-const MyApp: AppType<{ session: Session | null } & AppPropsWithAuth> = ({
+const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
@@ -49,24 +41,12 @@ const MyApp: AppType<{ session: Session | null } & AppPropsWithAuth> = ({
   return (
     <SessionProvider session={session}>
       <ErrorBoundary>
-      {Component.requireAuth ? (
-        <ProtectedLayout>
           <ChakraProvider theme={theme}>
             {allowDisplay === "web" && !smallerThan640 && (
               <Component {...pageProps} />
             )}
             {(allowDisplay === "mobile" || smallerThan640) && <MobilePrompt />}
           </ChakraProvider>
-        </ProtectedLayout>
-        ) : (
-          <ChakraProvider theme={theme}>
-            {allowDisplay === "web" && !smallerThan640 && (
-              <Component {...pageProps} />
-            )}
-            {(allowDisplay === "mobile" || smallerThan640) && <MobilePrompt />}
-          </ChakraProvider>
-        )}
-        
       </ErrorBoundary>
     </SessionProvider>
   );

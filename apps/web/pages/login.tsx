@@ -4,7 +4,7 @@ import View from "../views/Login";
 import z from "zod";
 import { useForm } from "../components/forms";
 import { signIn } from "next-auth/react";
-import type { GetServerSideProps, NextPage } from "next";
+import { getServerAuthSession } from "../server/common/get-server-auth-session";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -58,11 +58,21 @@ export default function Page() {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async () => {
+
+
+export const getServerSideProps = async (context:any) => {
+  const session = await getServerAuthSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
   return {
-    props: {
-      requireAuth: false,
-      enableAuth: false,
-    },
+    props: {},
   };
 };

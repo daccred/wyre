@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Meta } from "../layouts";
 import View from "../views/Register";
 import z from "zod";
 import { useToast } from "@chakra-ui/react"
 import { useForm } from "../components/forms";
 import { trpc } from "../utils/trpc";
-import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 
@@ -30,9 +29,9 @@ type FormInputOptions = z.infer<typeof signUpValidationSchema>;
 export default function Page() {
   const router = useRouter();
   const toast = useToast();
-  
+  const [isFormReset, setIsFormReset] = useState(false);
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data:any, variables:any, context:any) => {
       const { updatedAdmin } = data!;
       const { email, id  } = updatedAdmin;
       toast({
@@ -42,10 +41,12 @@ export default function Page() {
         duration: 5000,
         position: 'top-right'
       });
+      setIsFormReset(true); // set the form reset status to true
       router.push({
         pathname: `/verify`,
         query: { id, email },
-  });
+      });
+      
     },
     onError(error: any) {
       toast({
@@ -83,11 +84,3 @@ export default function Page() {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {
-      requireAuth: false,
-      enableAuth: false,
-    },
-  };
-};
