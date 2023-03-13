@@ -23,7 +23,7 @@ interface FieldErrorProps {
 
 const QuantityPickerButton = (props: IconButtonProps) => (
   <IconButton
-    colorScheme={"orange"}
+    colorScheme="orange"
     size="md"
     fontSize="md"
     _focus={{ boxShadow: "none" }}

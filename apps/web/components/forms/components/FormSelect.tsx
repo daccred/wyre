@@ -1,6 +1,6 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import type { Input } from "@chakra-ui/input";
-import { Flex, useColorModeValue, FormErrorMessage } from "@chakra-ui/react";
+import { Flex, FormErrorMessage } from "@chakra-ui/react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext, Controller } from "react-hook-form";
@@ -37,7 +37,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps}>
         <Flex align="center" justify="space-between">
-          <FormLabel color={"#666666"} fontSize="sm" {...labelProps}>
+          <FormLabel color="#666666" fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         </Flex>

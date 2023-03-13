@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { useMemo, useEffect, useRef, forwardRef } from "react";
-import { useTable, useRowSelect, TableInstance } from "react-table";
-import type { Row } from "react-table";
+import { useTable, useRowSelect } from "react-table";
+import type { Row, TableInstance } from "react-table";
 
 interface Columns {
   Header: string;

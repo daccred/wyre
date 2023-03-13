@@ -29,7 +29,7 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
         bg: "#210D35",
       }}>
       {submitting ? (
-        <Flex align={"center"}>
+        <Flex align="center">
           <Spinner thickness="4px" speed="0.5s" />
           <Text ms={3}>Loading...</Text>
         </Flex>

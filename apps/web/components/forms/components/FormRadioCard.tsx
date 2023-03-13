@@ -70,7 +70,7 @@ export const RadioCardGroup = forwardRef(<T extends string>(props: RadioCardGrou
   );
 
   return (
-    <Stack ref={ref} {...getRootProps(rest)} w={"full"} rounded={"3xl"}>
+    <Stack ref={ref} {...getRootProps(rest)} w="full" rounded="3xl">
       {cards}
     </Stack>
   );
@@ -111,7 +111,7 @@ export const RadioCard = (props: RadioCardProps) => {
           ) : (
             <Circle borderWidth="2px" size="4" />
           )}
-          <HStack flex={1} justify={"flex-end"}>
+          <HStack flex={1} justify="flex-end">
             {children}
           </HStack>
         </Stack>

@@ -1,6 +1,7 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
-  extends: ["next", "prettier"],
+  extends: ["next", "prettier", "plugin:@typescript-eslint/recommended"],
+  plugins: ["unused-imports"],
   settings: {
     next: {
       rootDir: ["apps/*/", "packages/*/"],

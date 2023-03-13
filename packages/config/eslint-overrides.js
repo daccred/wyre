@@ -7,19 +7,22 @@ const config = {
   overrides: [
     {
       files: ["*.ts", "*.tsx"],
-      extends: ["plugin:@typescript-eslint/recommended", "plugin:@calcom/eslint/recommended"],
+      extends: ["plugin:@typescript-eslint/recommended"],
       plugins: ["@typescript-eslint"],
       parser: "@typescript-eslint/parser",
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        {
-          prefer: "type-imports",
-          // TODO: enable this once prettier supports it
-          // fixStyle: "inline-type-imports",
-          fixStyle: "separate-type-imports",
-          disallowTypeAnnotations: false,
-        },
-      ],
+      rules: {
+        "unused-imports/no-unused-imports": "error",
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          {
+            prefer: "type-imports",
+            // TODO: enable this once prettier supports it
+            // fixStyle: "inline-type-imports",
+            fixStyle: "separate-type-imports",
+            disallowTypeAnnotations: false,
+          },
+        ],
+      },
     },
   ],
 };

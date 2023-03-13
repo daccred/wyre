@@ -13,7 +13,7 @@
     "lint:ts": "tsc --pretty --noEmit",
     "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
-    "lint:es": "eslint"
+    "lint:es": "eslint --fix"
   },
   "dependencies": {
     "@trpc/client": "^10.8.1",

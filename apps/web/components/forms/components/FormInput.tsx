@@ -64,28 +64,28 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           }}>
           {leftElement && (
             <InputLeftElement>
-              <Center style={{ borderRadius: "50%" }} bg={"#161616"} h="12" w="12">
+              <Center style={{ borderRadius: "50%" }} bg="#161616" h="12" w="12">
                 <Icon as={icon} color="primary.500" />
               </Center>
             </InputLeftElement>
           )}
           {leftElementBank && (
             <InputLeftElement>
-              <Center style={{ borderRadius: "50%" }} bg={"#161616"} h="12" w="12">
+              <Center style={{ borderRadius: "50%" }} bg="#161616" h="12" w="12">
                 {leftElementBankElement}
               </Center>
             </InputLeftElement>
           )}
           <Input
-            size={"lg"}
+            size="lg"
             fontSize="sm"
-            h={"45px"}
+            h="45px"
             p="7"
-            border={"1px solid #D2D2D2"}
-            rounded={"5px"}
-            bg={"#F7F7F7"}
-            color={"#210D35"}
-            fontWeight={"medium"}
+            border="1px solid #D2D2D2"
+            rounded="5px"
+            bg="#F7F7F7"
+            color="#210D35"
+            fontWeight="medium"
             // textDecorationStyle={""}
             _placeholder={{ fontSize: "sm", color: "#D2D2D2" }}
             _hover={{ borderColor: "primary" }}

@@ -31,7 +31,7 @@ export default function SidebarAccordion({ menu }: Props) {
   const isActive = router.asPath === menu.href ? true : router.pathname.startsWith(menu.href);
   return (
     <Accordion px={4} allowToggle w="full">
-      <AccordionItem border={"none"} p={0}>
+      <AccordionItem border="none" p={0}>
         <h2>
           <AccordionButton p={0} borderRadius="lg">
             <HStack spacing={4} px={4} py="2">
@@ -45,7 +45,7 @@ export default function SidebarAccordion({ menu }: Props) {
                   as={menu.icon}
                 />
               )}
-              <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight={"semibold"}>
+              <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
                 {menu.name}
               </Text>
             </HStack>
@@ -110,7 +110,7 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
             as={icon}
           />
         )}
-        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight={"semibold"}>
+        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
           {name}
         </Text>
       </Flex>

@@ -29,7 +29,7 @@ export const FormTextarea = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         <Flex align="center" justify="space-between">
           {label && (
-            <FormLabel color={"default"} fontSize="sm" {...labelProps}>
+            <FormLabel color="default" fontSize="sm" {...labelProps}>
               {label}
             </FormLabel>
           )}

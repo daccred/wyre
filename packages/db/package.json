@@ -24,10 +24,10 @@
     "db-up": "docker-compose up -d",
     "dx": "npm run  db-setup",
     "lint:ts": "tsc --pretty --noEmit",
+    "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
     "dev": "tsc --watch",
     "format": "prisma format",
     "generate": "prisma generate",
-    "lint": "TIMING=1 eslint \"src/**/*.ts\"",
     "prebuild": "npm run db-generate && npm run db-sync",
     "predev": "npm run db-generate && npm run db-sync"
   },
@@ -35,10 +35,9 @@
     "@prisma/client": "^4.5.0"
   },
   "devDependencies": {
-    "@wyrecc/config": "*",
-    "eslint": "^8.12.0",
     "prisma": "^4.5.0",
     "rimraf": "^3.0.2",
+    "@wyrecc/config": "*",
     "@wyrecc/tsconfig": "*"
   }
 }

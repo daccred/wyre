@@ -19,8 +19,8 @@
     "pack": "nx add",
     "dev": "nx run-many --target=dev --all --parallel",
     "refresh": "npm run build && npm run dev",
-    "lint": "nx run-many --target=lint --all --parallel",
-    "lint:ts": "tsc --pretty --noEmit",
+    "lint:es": "lerna run lint:es",
+    "lint:ts": "lerna run lint:ts",
     "graph": "nx run graph",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "pretty-format": "pretty-quick --staged"

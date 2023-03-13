@@ -1,5 +1,6 @@
-import { FormControl, FormControlProps } from "@chakra-ui/form-control";
-import { PinInput, Center } from "@chakra-ui/react";
+import type { FormControlProps } from "@chakra-ui/form-control";
+import { FormControl } from "@chakra-ui/form-control";
+import { PinInput } from "@chakra-ui/react";
 import { FormErrorMessage } from "@chakra-ui/react";
 import * as React from "react";
 import type { PropsWithoutRef } from "react";

@@ -1,5 +1,5 @@
 import { useToast } from "@chakra-ui/react";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";

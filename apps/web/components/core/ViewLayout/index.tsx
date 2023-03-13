@@ -71,7 +71,7 @@ const DevLinkItems: Array<LinkItemProps> = [
 
 export default function ViewLayout({ children, title }: { children: ReactNode; title?: string }) {
   return (
-    <Box minH="100vh" bg={"#F7F7F7"}>
+    <Box minH="100vh" bg="#F7F7F7">
       <SidebarContent />
       {/* mobilenav */}
       <HeaderNav title={title} />
@@ -95,7 +95,7 @@ const SidebarContent = ({ ...rest }) => {
       pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="8" justifyContent={"Vtart"}>
+      <Flex h="20" alignItems="center" mx="8" justifyContent="Vtart">
         <Image src="/Zayroll Logo.png" alt="" w={90} />
         {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
           Wyre
@@ -108,7 +108,7 @@ const SidebarContent = ({ ...rest }) => {
           </NavItem>
         ))}
 
-        <Text alignSelf={"flex-start"} fontSize="sm" pl="8" pt="2">
+        <Text alignSelf="flex-start" fontSize="sm" pl="8" pt="2">
           Admin
         </Text>
         {PayrollLinkItems.map((link) => (
@@ -148,7 +148,7 @@ const SidebarContent = ({ ...rest }) => {
           </NavItem>
         ))}
 
-        <Text alignSelf={"flex-start"} fontSize="sm" pl="8" pt="2">
+        <Text alignSelf="flex-start" fontSize="sm" pl="8" pt="2">
           Developer
         </Text>
         {DevLinkItems.map((link) => (
@@ -165,12 +165,12 @@ const SidebarContent = ({ ...rest }) => {
         w="100%"
         borderRadius="lg"
         cursor="pointer"
-        position={"absolute"}
+        position="absolute"
         bottom="0"
         justifyContent="start">
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
 
-        <Button color="#E71D36" fontWeight={"semibold"} onClick={() => signOut()}>
+        <Button color="#E71D36" fontWeight="semibold" onClick={() => signOut()}>
           Logout
         </Button>
       </HStack>
@@ -231,11 +231,11 @@ const NavItem = ({
             as={icon}
           />
         )}
-        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight={"semibold"}>
+        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
           {children}
         </Text>
         {linkName === "People" && (
-          <Box ml="4" fontSize={"20px"} color={"boldgrey"}>
+          <Box ml="4" fontSize="20px" color="boldgrey">
             {!peopleMenuVisible ? <FiChevronDown /> : <FiChevronUp />}
           </Box>
         )}
@@ -261,15 +261,15 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
       bg={useColorModeValue("white", "gray.900")}
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("bordergrey", "gray.700")}
-      justifyContent={"space-between"}
+      justifyContent="space-between"
       {...rest}>
-      <Text display={"flex"} fontSize="2xl" fontWeight="medium">
+      <Text display="flex" fontSize="2xl" fontWeight="medium">
         {title}
       </Text>
 
       <HStack spacing={4}>
         <IconButton
-          position={"relative"}
+          position="relative"
           size="lg"
           variant="ghost"
           aria-label="open menu"
@@ -277,16 +277,16 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             <Link href="/notifications">
               <BellIcon />
               <Center
-                as={"span"}
-                color={"white"}
-                position={"absolute"}
+                as="span"
+                color="white"
+                position="absolute"
                 top={0}
                 right={0}
-                fontSize={"10px"}
+                fontSize="10px"
                 w="18px"
                 h="18px"
-                bgColor={"brand.600"}
-                borderRadius={"full"}
+                bgColor="brand.600"
+                borderRadius="full"
                 zIndex={9999}
                 p={1}>
                 4
@@ -296,24 +296,24 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
           borderRadius="full"
           bg="#F7F7F7"
         />
-        <Flex alignItems={"center"}>
+        <Flex alignItems="center">
           <HStack
             as={Button}
             variant="ghost"
             bg="#F7F7F7"
-            borderRadius={"35px"}
+            borderRadius="35px"
             py={2}
             px={2}
             spacing={4}
             transition="all 0.3s"
             _focus={{ boxShadow: "none" }}
             onClick={() => router.push("/profile")}>
-            <Avatar size={"sm"} src={""} name={sessionData?.user?.name as string} />
-            <VStack display={"flex"} alignItems="flex-start" spacing="1px" pr="4">
-              <Text fontSize="sm" fontWeight={"bold"}>
+            <Avatar size="sm" src="" name={sessionData?.user?.name as string} />
+            <VStack display="flex" alignItems="flex-start" spacing="1px" pr="4">
+              <Text fontSize="sm" fontWeight="bold">
                 {sessionData?.user?.name}
               </Text>
-              <Text fontSize="xs" fontWeight={"medium"} color="boldgrey">
+              <Text fontSize="xs" fontWeight="medium" color="boldgrey">
                 Chief People Officer
               </Text>
             </VStack>

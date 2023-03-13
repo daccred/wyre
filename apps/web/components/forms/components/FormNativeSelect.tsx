@@ -47,12 +47,12 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
           control={control}
           render={({ field }) => (
             <Select
-              size={"lg"}
+              size="lg"
               fontSize="sm"
-              bg={"#F7F7F7"}
+              bg="#F7F7F7"
               // rounded={"3xl"}
               minH="57px"
-              borderRadius={"5px"}
+              borderRadius="5px"
               borderColor="#9f9f9f"
               _placeholder={{ fontSize: "sm" }}
               _hover={{ borderColor: "primary" }}

@@ -1,16 +1,8 @@
-import { Box, IconButton, Icon, useDisclosure } from "@chakra-ui/react";
+import { Box, IconButton, Icon } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import {
-  useTable,
-  usePagination,
-  useRowSelect,
-  Hooks,
-  CellProps,
-  HeaderProps,
-  useGlobalFilter,
-  useSortBy,
-} from "react-table";
+import type { Hooks, CellProps, HeaderProps } from "react-table";
+import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from "react-table";
 
 import useDebounce from "../hooks/useDebounce";
 
@@ -142,7 +134,7 @@ export const useTableRoot = <T extends TD>({
             <IconButton
               aria-label="edit button"
               icon={<Icon as={AiOutlineEdit} />}
-              maxW={"20px"}
+              maxW="20px"
               className="action-button"
               variant="ghost"
               onClick={() => (handleRowClick ? handleRowClick(row) : null)}

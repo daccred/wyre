@@ -5,12 +5,11 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "TIMING=1 eslint \"**/*.ts*\""
+    "lint:es": "TIMING=1 eslint \"**/*.ts*\" --fix"
   },
   "devDependencies": {
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
-    "eslint": "^7.32.0",
     "@wyrecc/config": "*",
     "react": "^18.2.0",
     "@wyrecc/tsconfig": "*"

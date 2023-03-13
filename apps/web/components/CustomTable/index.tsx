@@ -1,33 +1,8 @@
-import {
-  Pagination,
-  PaginationContainer,
-  PaginationNext,
-  PaginationPage,
-  PaginationPageGroup,
-  PaginationPrevious,
-  PaginationSeparator,
-} from "@ajna/pagination";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  IconButton,
-  ButtonGroup,
-  Button,
-  Stack,
-  Flex,
-  Text,
-  Box,
-  Icon,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Button, Stack, Flex, Text, Icon } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
-import { useTable, Column, usePagination } from "react-table";
+import type { Column } from "react-table";
+import { useTable, usePagination } from "react-table";
 
 interface TableProps<T extends object> {
   data: T[];

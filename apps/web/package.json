@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint:es": "next lint",
+    "lint:es": "next lint --fix",
     "lint:ts": "tsc --pretty --noEmit"
   },
   "dependencies": {

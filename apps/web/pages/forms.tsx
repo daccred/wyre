@@ -32,11 +32,11 @@ export default function Page() {
 
       <Stack spacing={6} mt={12}>
         <FormTextArea name="question" label="Question" type="text" />
-        <HStack minH={"62px"} align={"flex-start"}>
+        <HStack minH="62px" align="flex-start">
           <FormInput type="number" name="amount" label="Amount ($MATIC)" />
           <FormDateInput name="deadline" label="Event deadline" />
         </HStack>
-        <HStack minH={"62px"} align={"flex-start"}>
+        <HStack minH="62px" align="flex-start">
           <FormDateInput name="time" label="Resolution Time" />
           <FormInput name="supply" type="string" label="Max Ticket Supply" />
         </HStack>
@@ -44,15 +44,15 @@ export default function Page() {
         <FormCheckbox label="Limit ticket supply" name="limitMaxTicketSupply" />
         <FormInputArray
           limit={4}
-          addMoreText={"Add more Outcomes"}
+          addMoreText="Add more Outcomes"
           label="Event Outcomes"
           name="eventOutcomes"
         />
 
-        <FormTextArea placeholder={"DSTV website"} name="resolutionSource" label="Resolution Source" />
+        <FormTextArea placeholder="DSTV website" name="resolutionSource" label="Resolution Source" />
 
         <FormInput name="resolutionLink" type="url" label="Resolution link" />
-        <Button rounded={"3xl"} fontSize={"lg"} fontWeight="medium">
+        <Button rounded="3xl" fontSize="lg" fontWeight="medium">
           Submit
         </Button>
       </Stack>

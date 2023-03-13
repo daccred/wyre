@@ -90,7 +90,7 @@ export default function Page() {
                 placeholder="Enter wallet address ..."
                 labelProps={{ color: useColorModeValue("black", "white") }}
               />
-              <Button rounded={"3xl"} type="submit" fontWeight="bold">
+              <Button rounded="3xl" type="submit" fontWeight="bold">
                 Submit
               </Button>
             </Stack>

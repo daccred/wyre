@@ -42,7 +42,7 @@ const FormRadio = forwardRef<HTMLInputElement, FormRadioProps>(
           control={control}
           render={({ field }) => (
             <RadioGroup {...field}>
-              <Stack spacing={2} direction={direction} align={"flex-start"}>
+              <Stack spacing={2} direction={direction} align="flex-start">
                 {options.map((option) => (
                   <Radio key={option} value={option}>
                     {option}
