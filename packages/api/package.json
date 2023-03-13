@@ -18,9 +18,9 @@
   "dependencies": {
     "@trpc/client": "^10.8.1",
     "@trpc/server": "^10.8.1",
-    "@wyrecc/db": "*",
-    "@wyrecc/config": "*",
-    "@wyrecc/dialog": "*",
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/db": "^0.1.0",
+    "@wyrecc/dialog": "^0.1.0",
     "next": "^13.1.1",
     "next-auth": "^4.15.1",
     "superjson": "1.9.1",
