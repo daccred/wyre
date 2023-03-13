@@ -14,11 +14,11 @@ import z from "zod";
 import { FormInput, useForm } from "../../components/forms";
 import { PeopleIcon } from "./ProviderIcons";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "utils/trpc";
+import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
 
-
 const addContractorValidationSchema = z.object({
+  name: z.string().min(1, { message: "Name is Required" }),
   email: z.string().email(),
   department: z.string().min(1, { message: "Deparment is Required" }),
   jobRole: z.string().min(1, { message: "JobRole is Required" }),
@@ -39,45 +39,43 @@ export default function AddContractor({
   addContractorModalIsOpen,
   closeAddContractorModal,
 }: addContractorTypes) {
-  
-  const toast = useToast()
+  const toast = useToast();
 
-    const { mutate: addContractor, isLoading } = trpc.employee.createEmployee.useMutation({
-        onSuccess(data: any) {
+  const { mutate: addContractor, isLoading } =
+    trpc.employee.createEmployee.useMutation({
+      onSuccess(data: any) {
         // Reset the form data to empty values
-        
+
         openAddContractorSuccessModal();
         closeAddContractorModal();
-            
-        },
-        onError(error: any) {
-            toast({
-                status: "error",
-                description: `${error}`,
-                isClosable: true,
-                duration: 5000,
-                position: 'top-right'
-              });
-          console.log('Error creating contractor:', error);
-        },
-    })
-    
+      },
+      onError(error: any) {
+        toast({
+          status: "error",
+          description: `${error}`,
+          isClosable: true,
+          duration: 5000,
+          position: "top-right",
+        });
+        console.log("Error creating contractor:", error);
+      },
+    });
+
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
 
     addContractor({
-        name: '',
-        email: data.email,
-        department: data.department,
-        jobRole: data.jobRole,
-        salary: data.grossSalary,
-        signBonus: data.signingBonus,
-        status: true,
-        category: "CONTRACTOR",
-      });
-      
+      name: data.name,
+      email: data.email,
+      department: data.department,
+      jobRole: data.jobRole,
+      salary: data.grossSalary,
+      signBonus: data.signingBonus,
+      status: true,
+      category: "CONTRACTOR",
+    });
   };
-  
+
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     // defaultValues: { email: "" },
@@ -148,14 +146,14 @@ export default function AddContractor({
               </Text>
 
               <Button
-                 isLoading={isLoading}
-                 loadingText='Submitting' 
-                 variant={"darkBtn"} 
-                 rightIcon={<PeopleIcon fill={"white"} />} 
-                 iconSpacing="3" 
-                 w="fit-content" 
-                 type="submit" 
-                 _hover={{ bg: '' }}
+                isLoading={isLoading}
+                loadingText="Submitting"
+                variant={"darkBtn"}
+                rightIcon={<PeopleIcon fill={"white"} />}
+                iconSpacing="3"
+                w="fit-content"
+                type="submit"
+                _hover={{ bg: "" }}
               >
                 Add Contractor
               </Button>

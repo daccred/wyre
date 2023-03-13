@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { PinInputField, PinInput } from "@chakra-ui/react";
-import { trpc } from "utils/trpc";
+import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next/types";
 
@@ -23,7 +23,7 @@ const View = () => {
   const router = useRouter();
   const { email, id } = router.query;
 
-  // console.log(id, email)
+  console.log(id, email);
 
   const { mutate: verifyEmail, isLoading } =
     trpc.auth.verifyAdminEmail.useMutation({
@@ -54,10 +54,8 @@ const View = () => {
   };
 
   return (
-    <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-      <Stack flex={1}>
-        <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
-
+    <>
+      <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
         <Flex
           p={12}
           flex={1}
@@ -144,7 +142,7 @@ const View = () => {
           <Image alt={"Image"} src={"images/Payroll.png"} />
         </HStack>
       </Flex>
-    </Stack>
+    </>
   );
 };
 

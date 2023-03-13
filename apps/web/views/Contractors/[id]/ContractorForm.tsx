@@ -14,11 +14,11 @@ import {
   useForm,
 } from "../../../components/forms";
 import { ProfileIcon } from "./ProviderIcons";
-import { trpc } from "utils/trpc";
+import { trpc } from "../../../utils/trpc";
 
 type ContractorFormProps = {
   contractor: any | null; // update the type to match the employee object type
-}
+};
 
 const addContractorValidationSchema = z.object({
   name: z.string().min(1, { message: "Required" }).optional().default(""),
@@ -34,44 +34,44 @@ type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
 
 export default function ContractorForm({ contractor }: ContractorFormProps) {
   const toast = useToast();
-  const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
+  const { name, email, department, jobRole, category, salary, signBonus } =
+    contractor ?? {};
 
-  const { mutate: updateContractor , isLoading } = trpc.employee.updateEmployee.useMutation({
-    onSuccess(data: any) {
-      // Reset the form data to empty values
-       styledToast({
-        status: "success",
-        description: "Profile has been updated successfully",
-        toast: toast,
-      });
-          
+  const { mutate: updateContractor, isLoading } =
+    trpc.employee.updateEmployee.useMutation({
+      onSuccess(data: any) {
+        // Reset the form data to empty values
+        styledToast({
+          status: "success",
+          description: "Profile has been updated successfully",
+          toast: toast,
+        });
       },
       onError(error: any) {
-          toast({
-              status: "error",
-              description: `${error}`,
-              isClosable: true,
-              duration: 5000,
-              position: 'top-right'
-            });
+        toast({
+          status: "error",
+          description: `${error}`,
+          isClosable: true,
+          duration: 5000,
+          position: "top-right",
+        });
         console.log(error);
       },
-  });
-
+    });
 
   const handleSubmit = async (data: FormInputOptions) => {
-    // console.log(JSON.stringify(data));
+    console.log(JSON.stringify(data));
     try {
       updateContractor({
         id: contractor.id, // pass the ID of the contractor that you want to update
         data: {
           name: data.name,
           email: data.email,
-          department: data.department, 
+          department: data.department,
           jobRole: data.jobRole,
           salary: contractor.salary,
           signBonus: contractor.signBonus,
-          status: contractor.status,
+          status: true,
           category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
         },
       });
@@ -81,38 +81,39 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: ({
+    defaultValues: {
       name: name,
-      email: email,      
+      email: email,
       department: department,
       jobRole: jobRole,
       category: category,
       // grossSalary: "",
       // signingBonus: ""
-    }),
+    },
     schema: addContractorValidationSchema,
   });
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
-    onSuccess(data: any) {
-      styledToast({
-        status: "success",
-        description: "Employee has been terminated successfully",
-        toast: toast,
-      });
-    },
-    onError(error: any) {
-      toast({
-        status: "error",
-        description: `${error}`,
-        isClosable: true,
-        duration: 5000,
-        position: 'top-right'
-      });
-      console.log(error);
-    },
-  });
-  
+  const { mutate: terminateEmployee, isLoading: isTerminating } =
+    trpc.employee.updateEmployee.useMutation({
+      onSuccess(data: any) {
+        styledToast({
+          status: "success",
+          description: "Employee has been terminated successfully",
+          toast: toast,
+        });
+      },
+      onError(error: any) {
+        toast({
+          status: "error",
+          description: `${error}`,
+          isClosable: true,
+          duration: 5000,
+          position: "top-right",
+        });
+        console.log(error);
+      },
+    });
+
   const handleTerminate = async () => {
     try {
       terminateEmployee({
@@ -121,11 +122,11 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           name: name,
           email: email,
           department: department,
-          jobRole: jobRole,    
+          jobRole: jobRole,
           salary: salary,
           signBonus: signBonus,
           status: false, // add status field with the value of false
-          category: category
+          category: category,
         },
       });
     } catch (error) {
@@ -140,13 +141,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar
-          size={"xl"}
-          src={
-            ""
-          }
-          name={name}
-        />
+        <Avatar size={"xl"} src={""} name={name} />
         <HStack>
           <FormInput
             name="name"
@@ -188,7 +183,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Contractor", value: "CONTRACTOR" },{ label: "Employee", value: "EMPLOYEE" },
+              { label: "Contractor", value: "CONTRACTOR" },
+              { label: "Employee", value: "EMPLOYEE" },
             ]}
             defaultValue={contractor}
           />
@@ -203,7 +199,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
             name="department"
             label="Department"
             placeholder="Select Department"
-           defaultValue={department}
+            defaultValue={department}
           />
           <FormInput
             name="jobRole"
@@ -222,8 +218,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           w="fit-content"
           type="submit"
           isLoading={isLoading}
-          _hover={{ bg: '' }}
-          loadingText='Updating'
+          _hover={{ bg: "" }}
+          loadingText="Updating"
         >
           Update Profile
         </Button>
@@ -232,7 +228,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           rightIcon={<ProfileIcon fill={"#210D35"} stroke={"#210D35"} />}
           iconSpacing="3"
           w="fit-content"
-          _hover={{ bg: '' }}
+          _hover={{ bg: "" }}
           onClick={handleTerminate}
           isLoading={isTerminating}
         >

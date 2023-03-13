@@ -139,9 +139,9 @@ export class PayrollService {
           cycle: input.cycle,
           payday: input.payday,
           auto: input.auto,
+          suspend: input.suspend,
           burden: input.burden,
           currency: input.currency,
-          suspend: input.suspend,
           employees: { connect: employees },
         },
       });

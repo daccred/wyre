@@ -64,7 +64,7 @@ const PeopleAccordion: LinkAccordionProps = {
 const PeopleLinkItems: Array<LinkItemProps> = [
   { name: "People", href: "", icon: PeopleIcon },
   { name: "Employees", href: "/employees", icon: EmployeesIcon },
-  { name: "Contractors", href: "/contractors",   icon: ContractorsIcon },
+  { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
 ];
 const ExpensesLinkItems: Array<LinkItemProps> = [
   { name: "Expenses", href: "/expenses", icon: ExpensesIcon },
@@ -107,7 +107,7 @@ const SidebarContent = ({ ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent={"Vtart"}>
-        <Image src="/Zayroll Logo.png" alt="" w={90}/>
+        <Image src="/Zayroll Logo.png" alt="" w={90} />
         {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
           Wyre
         </Text> */}
@@ -182,7 +182,11 @@ const SidebarContent = ({ ...rest }) => {
       >
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
 
-        <Button color="#E71D36" fontWeight={"semibold"} onClick={() => signOut()}>
+        <Button
+          color="#E71D36"
+          fontWeight={"semibold"}
+          onClick={() => signOut()}
+        >
           Logout
         </Button>
       </HStack>
@@ -335,10 +339,8 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
           >
             <Avatar
               size={"sm"}
-              src={
-                ""
-              }
-              name={sessionData?.user?.name || undefined}
+              src={""}
+              name={sessionData?.user?.name as string}
             />
             <VStack
               display={"flex"}
@@ -347,7 +349,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
               pr="4"
             >
               <Text fontSize="sm" fontWeight={"bold"}>
-              {sessionData?.user?.name}
+                {sessionData?.user?.name}
               </Text>
               <Text fontSize="xs" fontWeight={"medium"} color="boldgrey">
                 Chief People Officer

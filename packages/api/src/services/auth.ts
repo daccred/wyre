@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import { getBaseUrl, hashString, verifyHash } from "../utils";
-import { ISignUp, IVerifyEmail, IResetPassword } from "../interfaces";
+import { hashString, verifyHash } from "../utils";
+import { IResetPassword, ISignUp, IVerifyEmail } from "../interfaces";
 import { prisma } from "@wyre-zayroll/db";
 import {
   sendEmail,
@@ -9,7 +9,6 @@ import {
 } from "@wyre-zayroll/dialog";
 import { ServicesError } from "./ServiceErrors";
 import redisClient from "../redis";
-import { exclude } from "./utils";
 
 export class AuthService {
   static async adminSignUp(input: ISignUp) {
@@ -108,7 +107,7 @@ export class AuthService {
       }
 
       //Send verification code to email address
-      const response = await AuthService.sendEmailVerification(
+      const response = await AuthService.sendAdminMailVerification(
         admin.email,
         confirmCode
       );
@@ -120,9 +119,7 @@ export class AuthService {
         });
       }
 
-      const updatedAdmin = exclude(admin, ["password"]);
-
-      return { updatedAdmin, emailStatus: response };
+      return { admin, emailStatus: response };
     } catch (error) {
       ServicesError(error);
     }
@@ -135,6 +132,7 @@ export class AuthService {
       const admin = await prisma.user.findFirst({
         where: {
           id,
+          // type: "ADMIN" || "SUPER_ADMIN",
         },
         select: {
           verification: true,
@@ -193,45 +191,10 @@ export class AuthService {
     }
   }
 
-  static async resendVerificationEmail(email: string) {
-    try {
-      const user = await prisma.user.findFirst({
-        where: {
-          email,
-        },
-        select: {
-          verification: true,
-        },
-      });
-
-      if (!user) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Account not found",
-        });
-      }
-      const confirmCode = user.verification.token;
-
-      const response = await AuthService.sendEmailVerification(
-        email,
-        confirmCode
-      );
-
-      if (!response) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to send verification code",
-        });
-      }
-      return response;
-    } catch (error) {
-      ServicesError(error);
-    }
-  }
-  static async sendEmailVerification(email: string, verifyCode: string) {
+  static async sendAdminMailVerification(email: string, verifyCode: string) {
     try {
       const admin = await prisma.user.findFirst({
-        where: { email },
+        where: { email: email },
       });
 
       if (!admin)
@@ -276,9 +239,7 @@ export class AuthService {
         await redisClient.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
       }
 
-      const confirmLink = `${getBaseUrl()}/reset-password?otp=${confirmCode}&email=${email}`;
-
-      const forgotEmail = forgotPasswordEmail({ confirmCode, confirmLink });
+      const forgotEmail = forgotPasswordEmail({ confirmCode });
 
       const response = await sendEmail({
         from: "admin@tecmie.com",

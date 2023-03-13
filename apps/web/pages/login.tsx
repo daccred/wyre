@@ -4,10 +4,9 @@ import View from "../views/Login";
 import z from "zod";
 import { useForm } from "../components/forms";
 import { signIn } from "next-auth/react";
-import { getServerAuthSession } from "../server/common/get-server-auth-session";
+import type { GetServerSideProps, NextPage } from "next";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
@@ -54,25 +53,15 @@ export default function Page() {
   return renderForm(
     <>
       <Meta />
-      <View isSubmitting={formState.isSubmitting}/>
+      <View isSubmitting={formState.isSubmitting} />
     </>
   );
 }
-
-
-export const getServerSideProps = async (context:any) => {
-  const session = await getServerAuthSession(context);
-
-  if (session) {
-    return {
-      redirect: {
-        destination: "/dashboard",
-        permanent: false,
-      },
-    };
-  }
-
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
-    props: {},
+    props: {
+      requireAuth: false,
+      enableAuth: false,
+    },
   };
 };

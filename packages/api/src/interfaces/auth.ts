@@ -17,7 +17,7 @@ export interface SignUp {
 export const signUpSchema = loginSchema.extend({
   name: z.string(),
   companyName: z.string(),
-  companyPhone: z.string(),
+  companyPhone: z.string().optional(),
   country: z.string(),
   jobRole: z.string(),
 });
@@ -28,7 +28,7 @@ export const verifyEmailSchema = z.object({
 });
 
 export const resetPasswordSchema = z.object({
-  email: z.string().email(),
+  email: z.string(),
   otp: z.string(),
   newPassword: z.string(),
 });
