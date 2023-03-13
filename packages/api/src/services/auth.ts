@@ -298,27 +298,24 @@ export class AuthService {
   static async resetPassword(input: IResetPassword) {
     try {
       const { email, otp, newPassword } = input;
+
       const user = await prisma.user.findFirst({
         where: { email },
       });
 
       if (!user) {
-        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+        throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
       }
       const userHash = user && (await redisClient.hGetAll(`otp_${user.id}`));
-      if (!userHash?.otp) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "OTP not found",
-        });
-      } else if (userHash.otp !== otp) {
+
+      if (userHash?.otp !== otp) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "OTP is invalid",
+          message: "OTP is invalid. Request another one",
         });
       }
 
-      const isSame = await verifyHash(newPassword, user?.password as string);
+      const isSame = await verifyHash(newPassword, user.password);
 
       if (isSame) {
         throw new TRPCError({

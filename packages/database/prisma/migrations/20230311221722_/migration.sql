@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER');
+
+-- CreateEnum
 CREATE TYPE "WorkerType" AS ENUM ('EMPLOYEE', 'CONTRACTOR');
 
 -- CreateTable
@@ -45,12 +48,12 @@ CREATE TABLE "Session" (
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "email" TEXT,
-    "type" TEXT,
+    "email" TEXT NOT NULL,
     "phone" TEXT,
     "password" TEXT NOT NULL,
+    "type" "Role" NOT NULL DEFAULT 'USER',
     "emailVerified" BOOLEAN DEFAULT false,
-    "verifyId" TEXT,
+    "verifyId" TEXT NOT NULL,
     "image" TEXT,
     "jobRole" TEXT,
     "category" TEXT,
@@ -66,28 +69,9 @@ CREATE TABLE "VerificationToken" (
     "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
+    "passwordOtp" TEXT,
 
     CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Admin" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "phone" TEXT,
-    "password" TEXT NOT NULL,
-    "emailVerified" BOOLEAN DEFAULT false,
-    "verifyId" TEXT,
-    "image" TEXT,
-    "jobRole" TEXT,
-    "category" TEXT,
-    "type" TEXT,
-    "companyId" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -112,7 +96,6 @@ CREATE TABLE "Invitation" (
     "token" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "expires" TIMESTAMP(3),
-    "adminId" TEXT,
     "companyId" TEXT,
     "userId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -122,7 +105,7 @@ CREATE TABLE "Invitation" (
 );
 
 -- CreateTable
-CREATE TABLE "Workers" (
+CREATE TABLE "Employee" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -130,11 +113,12 @@ CREATE TABLE "Workers" (
     "jobRole" TEXT NOT NULL,
     "salary" TEXT NOT NULL,
     "signBonus" TEXT NOT NULL,
-    "status" BOOLEAN,
+    "status" BOOLEAN DEFAULT true,
     "category" "WorkerType" NOT NULL DEFAULT 'EMPLOYEE',
     "payrollId" TEXT,
+    "expenseId" TEXT,
 
-    CONSTRAINT "Workers_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -148,6 +132,21 @@ CREATE TABLE "Payroll" (
     "currency" TEXT NOT NULL,
 
     CONSTRAINT "Payroll_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Expense" (
+    "id" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "amount" TEXT NOT NULL,
+
+    CONSTRAINT "Expense_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_EmployeeToExpense" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
@@ -169,12 +168,6 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 CREATE UNIQUE INDEX "VerificationToken_id_token_key" ON "VerificationToken"("id", "token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Admin_verifyId_key" ON "Admin"("verifyId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Company_companyEmail_key" ON "Company"("companyEmail");
 
 -- CreateIndex
@@ -184,31 +177,25 @@ CREATE UNIQUE INDEX "Invitation_email_key" ON "Invitation"("email");
 CREATE UNIQUE INDEX "Invitation_token_key" ON "Invitation"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Workers_email_key" ON "Workers"("email");
+CREATE UNIQUE INDEX "Employee_email_key" ON "Employee"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_EmployeeToExpense_AB_unique" ON "_EmployeeToExpense"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_EmployeeToExpense_B_index" ON "_EmployeeToExpense"("B");
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Account" ADD CONSTRAINT "Account_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Admin"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Session" ADD CONSTRAINT "Session_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Admin"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_verifyId_fkey" FOREIGN KEY ("verifyId") REFERENCES "VerificationToken"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_verifyId_fkey" FOREIGN KEY ("verifyId") REFERENCES "VerificationToken"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Admin" ADD CONSTRAINT "Admin_verifyId_fkey" FOREIGN KEY ("verifyId") REFERENCES "VerificationToken"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Admin" ADD CONSTRAINT "Admin_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -217,7 +204,10 @@ ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_userId_fkey" FOREIGN KEY ("u
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Employee" ADD CONSTRAINT "Employee_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Workers" ADD CONSTRAINT "Workers_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "_EmployeeToExpense" ADD CONSTRAINT "_EmployeeToExpense_A_fkey" FOREIGN KEY ("A") REFERENCES "Employee"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_EmployeeToExpense" ADD CONSTRAINT "_EmployeeToExpense_B_fkey" FOREIGN KEY ("B") REFERENCES "Expense"("id") ON DELETE CASCADE ON UPDATE CASCADE;
