@@ -1,23 +1,23 @@
 {
-  "name": "@wyre-zayroll/dialog",
-  "version": "0.1.0",
-  "description": "Module to handle external communications for zayroll eg: email, sms",
-  "license": "MIT",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "clean": "rimraf .turbo node_modules dist",
-    "lint:ts": "tsc --pretty --noEmit",
-    "lint": "TIMING=1 eslint \"src/**/*.ts\""
-  },
-  "dependencies": {
-    "crypt": "^0.0.2",
-    "dotenv": "^16.0.3",
-    "postmark": "^3.0.15",
-    "query-string": "^8.1.0"
-  }
+    "name": "@wyre-zayroll/dialog",
+    "version": "0.1.0",
+    "description": "Module to handle external communications for zayroll eg: email, sms",
+    "license": "MIT",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/**"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "clean": "rimraf .turbo node_modules dist",
+        "lint:ts": "tsc --pretty --noEmit",
+        "lint": "TIMING=1 eslint \"src/**/*.ts\""
+    },
+    "dependencies": {
+        "crypt": "^0.0.2",
+        "dotenv": "^16.0.3",
+        "postmark": "^3.0.15",
+        "query-string": "^8.1.0"
+    }
 }

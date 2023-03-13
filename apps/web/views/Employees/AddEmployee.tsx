@@ -13,7 +13,10 @@ import {
 import z from "zod";
 import { FormInput, FormNativeSelect, useForm } from "../../components/forms";
 import { PeopleIcon } from "./ProviderIcons";
-import { IoCloseCircleOutline } from 'react-icons/io5'
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import { trpc } from "utils/trpc";
+import { useToast } from "@chakra-ui/react";
+
 
 const addEmployeeValidationSchema = z.object({
   email: z.string().email(),
@@ -21,7 +24,6 @@ const addEmployeeValidationSchema = z.object({
   jobRole:z.string().min(1, { message: "Required" }),
   grossSalary:z.string().min(1, { message: "Required" }),
   signingBonus:z.string().min(1, { message: "Required" }),
-
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -37,14 +39,47 @@ export default function AddEmployee({
     addEmployeeModalIsOpen,
     closeAddEmployeeModal,
 }:addEmployeeTypes) {
+
+    const toast = useToast()
+
+    const { mutate: addEmployee, isLoading,  } = trpc.employee.createEmployee.useMutation({
+        onSuccess(data: any) {
+        // Reset the form data to empty values
+        
+        openAddEmployeeSuccessModal();
+        closeAddEmployeeModal()
+            
+        },
+        onError(error: any) {
+            toast({
+                status: "error",
+                description: `${error}`,
+                isClosable: true,
+                duration: 5000,
+                position: 'top-right'
+              });
+          console.log('Error creating employee:', error);
+        },
+    })
+    
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
-    openAddEmployeeSuccessModal();
-    closeAddEmployeeModal()
+
+    addEmployee({
+        name: '',
+        email: data.email,
+        department: data.department,
+        jobRole: data.jobRole,
+        salary: data.grossSalary,
+        signBonus: data.signingBonus,
+        status: true,
+        category: "EMPLOYEE",
+      });
   };
+
+
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    // defaultValues: { email: "" },
     schema: addEmployeeValidationSchema,
   });
 
@@ -60,21 +95,18 @@ export default function AddEmployee({
             {renderForm
                 (<Stack spacing={"6"} pb="4">
                     <Stack>
+                     
                         <FormInput
                         name="email"
                         label="Email Address"
                         placeholder="Email Address"
                         />
                         <HStack>
-                            <FormNativeSelect
+                            <FormInput
                             name="department"
                             label="Department"
                             placeholder="Select Department"
-                            options={[
-                                {label:'Tech', value:'tech'},
-                                {label:'Time', value:'time'}
-                            ]}
-                            />
+                           />
 
                             <FormInput
                             name="jobRole"
@@ -101,7 +133,19 @@ export default function AddEmployee({
                     </Stack>
                     <Text fontSize={"sm"}>An email invitation will be sent to the employee upon submission of this form. Subsequent information will be completed by the employee.</Text>
 
-                    <Button variant={"darkBtn"} rightIcon={<PeopleIcon fill={"white"} />} iconSpacing="3" w="fit-content" type="submit" >Add Employee</Button>
+                    <Button 
+                        isLoading={isLoading}
+                        loadingText='Submitting' 
+                        variant={"darkBtn"} 
+                        rightIcon={<PeopleIcon fill={"white"} />} 
+                        iconSpacing="3" 
+                        w="fit-content" 
+                        type="submit" 
+                        _hover={{ bg: '' }}
+                        // spinner={<BeatLoader size={8} color='white' />}
+                    >
+                    Add Employee
+                    </Button>
 
                 </Stack>)
                 }

@@ -21,6 +21,8 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  SkeletonText,
+  SkeletonCircle
 } from "@chakra-ui/react";
 import ViewLayout from "../../components/core/ViewLayout";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -38,9 +40,13 @@ import {
 import { useEffect, useState } from "react";
 import AddContractor from "./AddContractor";
 import { useRouter } from "next/router";
+import { trpc } from "utils/trpc";
+import useDebounce from "components/hooks/useDebounce";
 
 const Contractors = () => {
   const router = useRouter();
+  const { data: contractors } = trpc.employee.getContractors.useQuery();
+
 
   const {
     isOpen: addContractorModalIsOpen,
@@ -52,24 +58,37 @@ const Contractors = () => {
     onOpen: openAddContractorSuccessModal,
     onClose: closeAddContractorSuccessModal,
   } = useDisclosure();
-
-  const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
-  const [dummyDataInUse, setDummyDataInUse] = useState<
-    { [key: string]: string }[]
-  >([]);
+  const [dummyData, setDummyData]= useState<{[key: string]: string}[]>([]);
+  const [dummyDataInUse, setDummyDataInUse]= useState<{[key: string]: string}[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [selectedContractor, setSelectedContractor] = useState<{[key: string]: string}>();
+  const debouncedFilterValue = useDebounce(searchTerm, 500);
   const [activeContractorsOnly, setActiveContractorsOnly] = useState(true);
 
-  const [dummyContractor, setDummyContractor] = useState<{
-    [key: string]: string;
-  }>();
+  useEffect(()=>{
+    if (contractors) {
+      const convertedContractors = contractors.map((contractor:any) => ({
+        id: contractor.id.toString(),
+        name: contractor.name,
+        email: contractor.email,
+        role: contractor.jobRole,
+        department: contractor.department,
+        status: contractor.status !== null ? (contractor.status === true ? 'active' : 'terminated') : "",
+        category: contractor.category,
+        salary: contractor.salary,
+        signBonus: contractor.signBonus,
+      }));
+      setDummyData(convertedContractors); 
+      setDummyDataInUse(convertedContractors);
+      setSelectedContractor(convertedContractors[0]); // Set the initial state for selectedcontractor to the first data in convertedcontractors
+    }
+},[contractors]);
 
   // search and active contractors switch function
   useEffect(() => {
-    if (searchTerm) {
+    if (debouncedFilterValue) {
       const searchData = dummyData?.filter((data) =>
-        data?.fullName?.toLowerCase().includes(searchTerm?.toLowerCase())
+        data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
       if (activeContractorsOnly) {
         const activeData = searchData.filter(
@@ -83,7 +102,7 @@ const Contractors = () => {
       }
     }
 
-    if (!searchTerm) {
+    if (!debouncedFilterValue) {
       if (activeContractorsOnly) {
         const activeData = dummyData.filter(
           (data) => data?.status === "active"
@@ -94,7 +113,7 @@ const Contractors = () => {
     }
 
     setDummyDataInUse(dummyData);
-  }, [activeContractorsOnly, searchTerm, dummyData]);
+  }, [activeContractorsOnly, searchTerm,debouncedFilterValue, dummyData]);
 
   // pagination functions start
   // constants
@@ -132,97 +151,7 @@ const Contractors = () => {
 
   // pagination functions end
 
-  useEffect(() => {
-    // let v=[]
-    // for(let i=0; i<24; i++){
-    //   v.push({
-    //     fullName:'john doe',
-    //     category:'contractor',
-    //     jobRole:'fullstack developer',
-    //     department:'engineering',
-    //     status:'active',
-    //     imgURL:"https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-    //   })
-    // }
-    // setDummyData(v)
-    setDummyData([
-      {
-        fullName: "john doe",
-        category: "contractor",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        status: "inactive",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-      {
-        fullName: "joan doe",
-        category: "contractor",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        status: "active",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-      {
-        fullName: "james doe",
-        category: "contractor",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        status: "active",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-    ]);
-    setDummyDataInUse([
-      {
-        fullName: "john doe",
-        category: "contractor",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        status: "inactive",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-      {
-        fullName: "joan doe",
-        category: "contractor",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        status: "active",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-      {
-        fullName: "james doe",
-        category: "contractor",
-        jobRole: "fullstack developer",
-        department: "engineering",
-        status: "active",
-        imgURL:
-          "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      },
-    ]);
-  }, []);
-
-  useEffect(() => {
-    setDummyContractor({
-      fullName: "john doe",
-      category: "contractor",
-      jobRole: "fullstack developer",
-      department: "engineering",
-      status: "active",
-      imgURL:
-        "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9",
-      email: "Kelechi.Iheanacho@company.com",
-      phoneNumber: "(+44) 800 829 7600",
-      grossSalary: "$4,500",
-      location: "Bay Area, California, USA",
-      paymentMethod: "75% USD, 15% BTC, 10 ETH",
-    });
-  }, []);
-
-  return (
+   return (
     <>
       <ViewLayout title="Contractors">
         <HStack gap="4" alignItems={"flex-start"}>
@@ -273,6 +202,7 @@ const Contractors = () => {
                     fontSize={"sm"}
                     placeholder="Search Contractor"
                     value={searchTerm}
+                    defaultChecked
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </HStack>
@@ -311,7 +241,7 @@ const Contractors = () => {
                   },
                 }}
               >
-                <Table variant="simple">
+                <Table variant="unstyled">
                   <Thead>
                     <Tr>
                       <Th>Full Name</Th>
@@ -330,12 +260,16 @@ const Contractors = () => {
                           pageSize * currentPage
                         )
                         .map((data, index) => (
-                          <Tr textTransform={"capitalize"} key={index}>
+                          <Tr textTransform={"capitalize"} cursor={"pointer"}
+                          key={index}
+                          onClick={() => setSelectedContractor(data)}
+                          borderBottom={"1px solid"} borderColor="bordergrey">
                             <Td>
                               <HStack>
                                 <Avatar
                                   size={"sm"}
                                   src={data?.imgURL}
+                                  name={data?.name}
                                   opacity={
                                     data?.status !== "active" ? "35%" : ""
                                   }
@@ -345,11 +279,11 @@ const Contractors = () => {
                                     data?.status !== "active" ? "#FF951C" : ""
                                   }
                                 >
-                                  {data?.fullName}
+                                  {data?.name}
                                 </Text>
                               </HStack>
                             </Td>
-                            <Td
+                            <Td textTransform={"lowercase"}
                               opacity={data?.status !== "active" ? "35%" : ""}
                             >
                               {data?.category}
@@ -357,7 +291,7 @@ const Contractors = () => {
                             <Td
                               opacity={data?.status !== "active" ? "35%" : ""}
                             >
-                              {data?.jobRole}
+                              {data?.role}
                             </Td>
                             <Td
                               opacity={data?.status !== "active" ? "35%" : ""}
@@ -456,7 +390,7 @@ const Contractors = () => {
               </Center>
             )}
           </Stack>
-          {dummyContractor && (
+          {selectedContractor ? 
             <Flex
               flexDirection={"column"}
               borderRadius={"15px"}
@@ -471,63 +405,63 @@ const Contractors = () => {
                 Contractor Details
               </Text>
               <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
-                <Avatar size={"md"} src={dummyContractor?.imgURL} />
+                <Avatar size={"md"} name={selectedContractor?.name} src={selectedContractor?.imgURL} />
                 <Stack spacing={0} marginTop="0">
                   <Text fontWeight={"semibold"}>Full Name</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.fullName}
+                    {selectedContractor?.name}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Email Address</Text>
                   <Text textTransform={"lowercase"} overflowWrap="anywhere">
-                    {dummyContractor?.email}
+                    {selectedContractor?.email}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Phone Number</Text>
-                  <Text>{dummyContractor?.phoneNumber}</Text>
+                  <Text>{selectedContractor?.phoneNumber}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Category</Text>
+                  <Text textTransform={"lowercase"} fontWeight={"semibold"}>Category</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.category}
+                    {selectedContractor?.category}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Status</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.status}
+                    {selectedContractor?.status}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Department</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.department}
+                    {selectedContractor?.department}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Job Role</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.jobRole}
+                    {selectedContractor?.role}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Gross Salary</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.grossSalary}
+                    {selectedContractor?.salary}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Location</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.location}
+                    {selectedContractor?.location}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight={"semibold"}>Payment Method</Text>
                   <Text overflowWrap="break-word">
-                    {dummyContractor?.paymentMethod}
+                    {selectedContractor?.paymentMethod}
                   </Text>
                 </Stack>
               </Stack>
@@ -536,12 +470,19 @@ const Contractors = () => {
                 w="100%"
                 mt="10"
                 py="15px"
-                onClick={() => router.push("/contractors/manage-contractor")}
+                onClick={()=> router.push({pathname:`/contractors/${selectedContractor.id}`, query: { id: selectedContractor.name }})}
               >
                 Manage Contractor
               </Button>
             </Flex>
-          )}
+            :
+            <Flex flexDirection={"column"} borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p='4' bg={'white'} flex="1" marginInlineStart="0">
+              <SkeletonText my='4' noOfLines={1} spacing='4' skeletonHeight='4' />
+              <SkeletonCircle size='10' />
+              <SkeletonText mt='4' noOfLines={10} spacing='4' skeletonHeight='3' />
+              <SkeletonText mt='4' noOfLines={1} skeletonHeight='10' />
+            </Flex>
+            }
         </HStack>
       </ViewLayout>
 
@@ -569,7 +510,7 @@ const Contractors = () => {
               <Text fontWeight="bold" fontSize="18px">
                 You’ve successfully added an contractor to the team member
               </Text>
-              <Image src="/addContractorSuccess.png" alt="" w="40" />
+              <Image src="/addEmployeeSuccess.png" alt="" w="40" />
             </Stack>
           </ModalBody>
         </ModalContent>

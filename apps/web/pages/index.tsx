@@ -2,9 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-
 import { trpc } from "../utils/trpc";
-
 import styles from "./index.module.css";
 
 const Home: NextPage = () => {
@@ -70,7 +68,6 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
-
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
