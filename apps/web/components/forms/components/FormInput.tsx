@@ -1,16 +1,15 @@
+import type { FormControlProps } from "@chakra-ui/form-control";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
+import { FormErrorMessage, Icon, InputLeftElement } from "@chakra-ui/react";
 import * as React from "react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import type { FormControlProps } from "@chakra-ui/form-control";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
-import { Center } from "@chakra-ui/react";
-import { FormErrorMessage, Icon, InputLeftElement } from "@chakra-ui/react";
 
-export interface LabeledTextFieldProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
   /** Field label. */
@@ -49,9 +48,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
       formState: { isSubmitting, errors },
     } = useFormContext();
     // const error = Array.isArray(errors[name]) ? errors[name]?.types?.join(', ') : errors[name]?.message || errors[name];
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     return (
@@ -64,42 +61,31 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
         <InputGroup
           style={{
             borderColor: "#9f9f9f",
-          }}
-        >
+          }}>
           {leftElement && (
             <InputLeftElement>
-              <Center
-                style={{ borderRadius: "50%" }}
-                bg={"#161616"}
-                h="12"
-                w="12"
-              >
+              <Center style={{ borderRadius: "50%" }} bg="#161616" h="12" w="12">
                 <Icon as={icon} color="primary.500" />
               </Center>
             </InputLeftElement>
           )}
           {leftElementBank && (
             <InputLeftElement>
-              <Center
-                style={{ borderRadius: "50%" }}
-                bg={"#161616"}
-                h="12"
-                w="12"
-              >
+              <Center style={{ borderRadius: "50%" }} bg="#161616" h="12" w="12">
                 {leftElementBankElement}
               </Center>
             </InputLeftElement>
           )}
           <Input
-            size={"lg"}
+            size="lg"
             fontSize="sm"
-            h={"45px"}
+            h="45px"
             p="7"
-            border={"1px solid #D2D2D2"}
-            rounded={"5px"}
-            bg={"#F7F7F7"}
-            color={"#210D35"}
-            fontWeight={"medium"}
+            border="1px solid #D2D2D2"
+            rounded="5px"
+            bg="#F7F7F7"
+            color="#210D35"
+            fontWeight="medium"
             // textDecorationStyle={""}
             _placeholder={{ fontSize: "sm", color: "#D2D2D2" }}
             _hover={{ borderColor: "primary" }}

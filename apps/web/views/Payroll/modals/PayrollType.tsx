@@ -7,23 +7,18 @@ import {
   ModalOverlay,
   VStack,
 } from "@chakra-ui/react";
-import {
-  ContractorsIcon,
-  EmployeesIcon,
-} from "../../../components/core/ViewLayout/ProviderIcons";
 import { useRouter } from "next/router";
 import React from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
+
+import { ContractorsIcon, EmployeesIcon } from "../../../components/core/ViewLayout/ProviderIcons";
 import { Card } from "../utils/misc";
 
 interface IPayrollType {
   closePayrollTypeModal: () => void;
   payrollTypeModalIsOpen: boolean;
 }
-const PayrollType = ({
-  closePayrollTypeModal,
-  payrollTypeModalIsOpen,
-}: IPayrollType) => {
+const PayrollType = ({ closePayrollTypeModal, payrollTypeModalIsOpen }: IPayrollType) => {
   const router = useRouter();
 
   return (
@@ -32,8 +27,7 @@ const PayrollType = ({
       isOpen={payrollTypeModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"sm"}
-    >
+      size={"sm"}>
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">

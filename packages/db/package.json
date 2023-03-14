@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0",
     "prisma": "^4.5.0"
   }
 }

@@ -13,12 +13,8 @@ import {
 import React from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { z } from "zod";
-import {
-  FormInput,
-  FormNativeSelect,
-  useForm,
-  FormCheckbox,
-} from "../../../components/forms";
+
+import { FormInput, FormNativeSelect, useForm, FormCheckbox } from "../../../components/forms";
 
 interface ISuspendPayrolle {
   closeSuspendPayrollModal: () => void;
@@ -32,10 +28,7 @@ export const suspendPayrollValidationSchema = z.object({
 
 type FormInputOptions = z.infer<typeof suspendPayrollValidationSchema>;
 
-const SuspendPayroll = ({
-  closeSuspendPayrollModal,
-  suspendPayrolleModalIsOpen,
-}: ISuspendPayrolle) => {
+const SuspendPayroll = ({ closeSuspendPayrollModal, suspendPayrolleModalIsOpen }: ISuspendPayrolle) => {
   const { renderForm } = useForm<FormInputOptions>({
     // onSubmit: handleSubmit,
     // defaultValues: { email: "" },
@@ -48,8 +41,7 @@ const SuspendPayroll = ({
       isOpen={suspendPayrolleModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"sm"}
-    >
+      size={"sm"}>
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
@@ -65,14 +57,7 @@ const SuspendPayroll = ({
                 <FormInput type="date" name="date" label="Date" />
                 <FormInput type="time" name="time" label="Time" />
               </Stack>
-              <Button
-                mt={4}
-                bg="brand.700"
-                color="white"
-                iconSpacing="3"
-                w="100%"
-                _hover={{ hover: "none" }}
-              >
+              <Button mt={4} bg="brand.700" color="white" iconSpacing="3" w="100%" _hover={{ hover: "none" }}>
                 Schedule Payment
               </Button>
             </Box>

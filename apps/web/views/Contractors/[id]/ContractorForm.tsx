@@ -1,20 +1,10 @@
-import {
-  Avatar,
-  Button,
-  HStack,
-  Stack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import styledToast from "../../../components/core/StyledToast";
+import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
 import z from "zod";
-import {
-  FormInput,
-  FormNativeSelect,
-  useForm,
-} from "../../../components/forms";
-import { ProfileIcon } from "./ProviderIcons";
+
+import styledToast from "../../../components/core/StyledToast";
+import { FormInput, FormNativeSelect, useForm } from "../../../components/forms";
 import { trpc } from "../../../utils/trpc";
+import { ProfileIcon } from "./ProviderIcons";
 
 type ContractorFormProps = {
   contractor: any | null; // update the type to match the employee object type
@@ -34,30 +24,28 @@ type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
 
 export default function ContractorForm({ contractor }: ContractorFormProps) {
   const toast = useToast();
-  const { name, email, department, jobRole, category, salary, signBonus } =
-    contractor ?? {};
+  const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
 
-  const { mutate: updateContractor, isLoading } =
-    trpc.employee.updateEmployee.useMutation({
-      onSuccess(data: any) {
-        // Reset the form data to empty values
-        styledToast({
-          status: "success",
-          description: "Profile has been updated successfully",
-          toast: toast,
-        });
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-        console.log(error);
-      },
-    });
+  const { mutate: updateContractor, isLoading } = trpc.employee.updateEmployee.useMutation({
+    onSuccess(data: any) {
+      // Reset the form data to empty values
+      styledToast({
+        status: "success",
+        description: "Profile has been updated successfully",
+        toast: toast,
+      });
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+      console.log(error);
+    },
+  });
 
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
@@ -93,26 +81,25 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
     schema: addContractorValidationSchema,
   });
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } =
-    trpc.employee.updateEmployee.useMutation({
-      onSuccess(data: any) {
-        styledToast({
-          status: "success",
-          description: "Employee has been terminated successfully",
-          toast: toast,
-        });
-      },
-      onError(error: any) {
-        toast({
-          status: "error",
-          description: `${error}`,
-          isClosable: true,
-          duration: 5000,
-          position: "top-right",
-        });
-        console.log(error);
-      },
-    });
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
+    onSuccess(data: any) {
+      styledToast({
+        status: "success",
+        description: "Employee has been terminated successfully",
+        toast: toast,
+      });
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+      console.log(error);
+    },
+  });
 
   const handleTerminate = async () => {
     try {
@@ -143,30 +130,12 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
       <Stack spacing={3}>
         <Avatar size={"xl"} src={""} name={name} />
         <HStack>
-          <FormInput
-            name="name"
-            label="First Name"
-            placeholder="First Name"
-            defaultValue={name}
-          />
-          <FormInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Last Name"
-          />
+          <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={name} />
+          <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
         </HStack>
         <HStack>
-          <FormInput
-            name="email"
-            label="Email Address"
-            placeholder="Email Address"
-            defaultValue={email}
-          />
-          <FormInput
-            name="phoneNumber"
-            label="Phone Number"
-            placeholder="Phone Number"
-          />
+          <FormInput name="email" label="Email Address" placeholder="Email Address" defaultValue={email} />
+          <FormInput name="phoneNumber" label="Phone Number" placeholder="Phone Number" />
         </HStack>
         <HStack>
           <FormInput name="city" label="City" placeholder="City" />
@@ -188,11 +157,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
             ]}
             defaultValue={contractor}
           />
-          <FormInput
-            name="payrollMethod"
-            label="Payroll Method"
-            placeholder="Payroll Method"
-          />
+          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" />
         </HStack>
         <HStack>
           <FormInput
@@ -201,12 +166,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
             placeholder="Select Department"
             defaultValue={department}
           />
-          <FormInput
-            name="jobRole"
-            label="Job Role"
-            placeholder="Job Role"
-            defaultValue={jobRole}
-          />
+          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" defaultValue={jobRole} />
         </HStack>
       </Stack>
 
@@ -219,8 +179,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           type="submit"
           isLoading={isLoading}
           _hover={{ bg: "" }}
-          loadingText="Updating"
-        >
+          loadingText="Updating">
           Update Profile
         </Button>
         <Button
@@ -230,8 +189,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           w="fit-content"
           _hover={{ bg: "" }}
           onClick={handleTerminate}
-          isLoading={isTerminating}
-        >
+          isLoading={isTerminating}>
           Terminate Contractor
         </Button>
       </HStack>

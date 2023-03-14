@@ -8,16 +8,17 @@ import {
   Spinner,
   Stack,
 } from "@chakra-ui/react";
+import { Payroll } from "@prisma/client";
 import Link from "next/link";
-import ViewLayout from "../../../components/core/ViewLayout";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
+
+import { CustomTable } from "../../../components/CustomTable";
+import ViewLayout from "../../../components/core/ViewLayout";
+import { trpc } from "../../../utils/trpc";
 import { managePayrollPath } from "../routes";
 import { managePayrollColumns } from "../utils/tableColumns";
-import { Payroll } from "@prisma/client";
-import { trpc } from "../../../utils/trpc";
-import { CustomTable } from "../../../components/CustomTable";
 
 const ManagePayroll = () => {
   const { pathname } = useRouter();
@@ -35,15 +36,8 @@ const ManagePayroll = () => {
             query: {
               id: row?.id,
             },
-          }}
-        >
-          <Button
-            bg="brand.700"
-            color="white"
-            iconSpacing="3"
-            w="fit-content"
-            _hover={{ hover: "none" }}
-          >
+          }}>
+          <Button bg="brand.700" color="white" iconSpacing="3" w="fit-content" _hover={{ hover: "none" }}>
             Manage
           </Button>
         </Link>
@@ -68,8 +62,7 @@ const ManagePayroll = () => {
         separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
         pb="2"
         fontWeight={"semibold"}
-        color="lightgrey"
-      >
+        color="lightgrey">
         <BreadcrumbItem>
           <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
         </BreadcrumbItem>
@@ -77,32 +70,18 @@ const ManagePayroll = () => {
           <BreadcrumbLink
             href={managePayrollPath}
             color={pathname === managePayrollPath ? "black" : "lightgrey"}
-            isCurrentPage={true}
-          >
+            isCurrentPage={true}>
             Manage Payroll
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Stack
-        rounded="md"
-        p={6}
-        bg="white"
-        w="100%"
-        mt={10}
-        border="1px solid #D2D2D2"
-      >
+      <Stack rounded="md" p={6} bg="white" w="100%" mt={10} border="1px solid #D2D2D2">
         <Heading as="h4" size="xs" fontSize="xl">
           Active Payroll
         </Heading>
         {isLoading ? (
           <Center>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
+            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
           </Center>
         ) : (
           <CustomTable

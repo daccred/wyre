@@ -16,7 +16,7 @@
  * processing a request
  *
  */
-import { type Session } from "next-auth";
+import { Session } from "next-auth";
 import superjson from "superjson";
 
 /**
@@ -26,11 +26,9 @@ import superjson from "superjson";
  * transformer
  */
 import { initTRPC, TRPCError } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 import { getServerAuthSession } from "./common/get-server-side-auth-session";
-
-// import { prisma } from "@wyrecc/db";
 
 type CreateContextOptions = {
   session: Session | null;

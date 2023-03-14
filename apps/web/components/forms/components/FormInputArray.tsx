@@ -1,21 +1,19 @@
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
 import {
   FormErrorMessage,
   Icon,
   Button,
   InputLeftElement,
-  Stack,
-  // InputProps,
+  Stack, // InputProps,
 } from "@chakra-ui/react";
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
+import { forwardRef } from "react";
+import { useFormContext, useFieldArray } from "react-hook-form";
 import { CgClose } from "react-icons/cg";
 
-export interface InputFieldArrayProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface InputFieldArrayProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
 
@@ -41,24 +39,8 @@ export interface InputFieldArrayProps
  * @name FormInputArray
  * @description a form input that can create array fields with react hook form
  */
-export const FormInputArray = forwardRef<
-  HTMLInputElement,
-  InputFieldArrayProps
->(
-  (
-    {
-      label,
-      outerProps,
-      icon,
-      limit,
-      labelProps,
-      addMoreText,
-      name,
-      leftElement,
-      ...props
-    },
-    ref
-  ) => {
+export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>(
+  ({ label, outerProps, icon, limit, labelProps, addMoreText, name, leftElement, ...props }, ref) => {
     const {
       register,
       control,
@@ -69,17 +51,14 @@ export const FormInputArray = forwardRef<
       name: name,
     });
 
-    const _handleArrayAppend = () =>
-      limit && fields.length < limit && append(" ");
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const _handleArrayAppend = () => limit && fields.length < limit && append(" ");
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         {label && (
-          <FormLabel color={"default"} fontSize="sm" {...labelProps}>
+          <FormLabel color="default" fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         )}
@@ -93,7 +72,7 @@ export const FormInputArray = forwardRef<
                   </InputLeftElement>
                 )}
                 <Input
-                  size={"lg"}
+                  size="lg"
                   fontSize="md"
                   _placeholder={{ fontSize: "sm" }}
                   _hover={{ borderColor: "primary" }}
@@ -106,10 +85,10 @@ export const FormInputArray = forwardRef<
                 <InputRightElement>
                   <Icon
                     p={1}
-                    fontSize={"lg"}
-                    border={"1px"}
-                    rounded={"full"}
-                    cursor={"pointer"}
+                    fontSize="lg"
+                    border="1px"
+                    rounded="full"
+                    cursor="pointer"
                     mt={2}
                     onClick={() => remove(index)}
                     as={CgClose}
@@ -121,13 +100,12 @@ export const FormInputArray = forwardRef<
           <Button
             size="sm"
             isDisabled={fields.length == limit}
-            variant={"ghost"}
-            colorScheme={"orange"}
+            variant="ghost"
+            colorScheme="orange"
             justifySelf="flex-end"
             justifyContent="flex-end"
-            w={"max-content"}
-            onClick={_handleArrayAppend}
-          >
+            w="max-content"
+            onClick={_handleArrayAppend}>
             {addMoreText ?? "+"}
           </Button>
         </Stack>

@@ -12,12 +12,13 @@ import {
   Center,
   Image,
 } from "@chakra-ui/react";
-import z from "zod";
-import { FormInput, useForm } from "../../components/forms";
-import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
 // import { trpc } from "../../utils/trpc";
 import { useToast } from "@chakra-ui/react";
 import { BsCheck2Circle } from "react-icons/bs";
+import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
+import z from "zod";
+
+import { FormInput, useForm } from "../../components/forms";
 
 const addContractorValidationSchema = z.object({
   // name: z.string().min(1, { message: "Name is Required" }),
@@ -94,8 +95,7 @@ export default function ManageReimbursementModal({
       isOpen={manageReimbursementModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"3xl"}
-    >
+      size={"3xl"}>
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
@@ -139,12 +139,7 @@ export default function ManageReimbursementModal({
               </Stack>
               <Stack>
                 <Text fontSize={"sm"}>Attachment</Text>
-                <Center
-                  p="4"
-                  border="1px solid #d2d2d2"
-                  bg="#F7F7F7"
-                  borderRadius={"5px"}
-                >
+                <Center p="4" border="1px solid #d2d2d2" bg="#F7F7F7" borderRadius={"5px"}>
                   <Image src="/images/invoice-wyre.png" alt="" />
                 </Center>
               </Stack>
@@ -160,8 +155,7 @@ export default function ManageReimbursementModal({
                   fontSize={"sm"}
                   px="6"
                   _hover={{ bg: "" }}
-                  onClick={openApproveReimbursementSuccessModal}
-                >
+                  onClick={openApproveReimbursementSuccessModal}>
                   Approve
                 </Button>
                 <Button
@@ -172,8 +166,7 @@ export default function ManageReimbursementModal({
                   borderColor={"#210D35"}
                   w="fit-content"
                   height={"44px"}
-                  fontSize={"sm"}
-                >
+                  fontSize={"sm"}>
                   Disapprove
                 </Button>
               </HStack>

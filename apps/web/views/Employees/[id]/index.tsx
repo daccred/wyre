@@ -1,4 +1,3 @@
-import React, { useEffect, useReducer } from "react";
 import {
   HStack,
   Stack,
@@ -8,13 +7,15 @@ import {
   Skeleton,
   SkeletonText,
 } from "@chakra-ui/react";
-import ViewLayout from "../../../components/core/ViewLayout";
-import EmployeeForm from "./EmployeeForm";
-import CompensationForm from "./CompensationForm";
-import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/router";
-import { trpc } from "../../../utils/trpc";
 import { GetServerSideProps } from "next/types";
+import React, { useEffect, useReducer } from "react";
+import { FiChevronRight } from "react-icons/fi";
+
+import ViewLayout from "../../../components/core/ViewLayout";
+import { trpc } from "../../../utils/trpc";
+import CompensationForm from "./CompensationForm";
+import EmployeeForm from "./EmployeeForm";
 
 // Define initial state
 const initialState = {
@@ -44,8 +45,7 @@ const ManageEmployee = ({ employeeData }: any) => {
     ...initialState,
     employee: employeeData,
   });
-  const { data: employee, isLoading } =
-    trpc.employee.getSingleEmployee.useQuery(id as string);
+  const { data: employee, isLoading } = trpc.employee.getSingleEmployee.useQuery(id as string);
 
   useEffect(() => {
     if (employee) {
@@ -60,8 +60,7 @@ const ManageEmployee = ({ employeeData }: any) => {
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
           pb="2"
-          fontWeight={"semibold"}
-        >
+          fontWeight={"semibold"}>
           <BreadcrumbItem>
             <BreadcrumbLink href="/employees" color={"lightgrey"}>
               Employee
@@ -82,8 +81,7 @@ const ManageEmployee = ({ employeeData }: any) => {
             borderColor="bordergrey"
             p="4"
             bg={"white"}
-            w="70%"
-          >
+            w="70%">
             <EmployeeForm employee={state.employee || null} />
           </Stack>
           <CompensationForm />

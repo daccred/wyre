@@ -60,10 +60,7 @@ const variants = {
       },
       _invalid: {
         borderColor: getColor(props.theme, mode("red.500", "red.300")(props)),
-        boxShadow: `0 0 0 1px ${getColor(
-          props.theme,
-          mode("red.500", "red.300")(props)
-        )}`,
+        boxShadow: `0 0 0 1px ${getColor(props.theme, mode("red.500", "red.300")(props))}`,
       },
       _focus: {
         borderColor: mode("brand.500", "brand.200")(props),

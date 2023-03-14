@@ -1,14 +1,7 @@
-import {
-  Avatar,
-  Button,
-  Checkbox,
-  Flex,
-  Text,
-  Icon,
-  Box,
-} from "@chakra-ui/react";
+import { Avatar, Button, Checkbox, Flex, Text, Icon, Box } from "@chakra-ui/react";
 import moment from "moment";
 import { Row } from "react-table";
+
 import { CheckedIcon } from "../ProviderIcons";
 
 export const payrollColumns = [
@@ -48,8 +41,7 @@ export const payrollColumns = [
             : row?.status === "On Time"
             ? "#FF951C"
             : "black"
-        }
-      >
+        }>
         {row?.status ? row?.status : "-"}
       </Text>
     ),
@@ -68,15 +60,11 @@ export const createPayrollColumns = [
   },
   {
     Header: "Department",
-    accessor: (row: any) => (
-      <Text textTransform="capitalize">{row?.department}</Text>
-    ),
+    accessor: (row: any) => <Text textTransform="capitalize">{row?.department}</Text>,
   },
   {
     Header: "Job Role",
-    accessor: (row: any) => (
-      <Text textTransform="capitalize">{row?.jobRole} </Text>
-    ),
+    accessor: (row: any) => <Text textTransform="capitalize">{row?.jobRole} </Text>,
   },
   {
     Header: "Salary",
@@ -84,9 +72,7 @@ export const createPayrollColumns = [
   },
   {
     Header: "Status",
-    accessor: (row: any) => (
-      <Text>{row?.status === true ? "Active" : "Inactive"} </Text>
-    ),
+    accessor: (row: any) => <Text>{row?.status === true ? "Active" : "Inactive"} </Text>,
   },
 ];
 
@@ -126,9 +112,7 @@ export const employeeSalaryColumns = [
   },
   {
     Header: "Commision",
-    accessor: (row: any) => (
-      <Text color="#0AAF60">{`+${row?.commission}`}</Text>
-    ),
+    accessor: (row: any) => <Text color="#0AAF60">{`+${row?.commission}`}</Text>,
   },
 
   {
@@ -138,9 +122,7 @@ export const employeeSalaryColumns = [
 
   {
     Header: "Deduction",
-    accessor: (row: any) => (
-      <Text color="#E71D36">{`-$${row?.deduction}`}</Text>
-    ),
+    accessor: (row: any) => <Text color="#E71D36">{`-$${row?.deduction}`}</Text>,
   },
 ];
 
@@ -156,9 +138,7 @@ export const monthlyPayrollColumns = [
   },
   {
     Header: "Department",
-    accessor: (row: any) => (
-      <Text textTransform="capitalize">{row?.department}</Text>
-    ),
+    accessor: (row: any) => <Text textTransform="capitalize">{row?.department}</Text>,
   },
   {
     Header: "GrossPay",
@@ -166,14 +146,10 @@ export const monthlyPayrollColumns = [
   },
   {
     Header: "Bonus",
-    accessor: (row: any) => (
-      <Text color="#0AAF60">{`+$${row?.signBonus}`} </Text>
-    ),
+    accessor: (row: any) => <Text color="#0AAF60">{`+$${row?.signBonus}`} </Text>,
   },
   {
     Header: "Status",
-    accessor: (row: any) => (
-      <Text>{row?.status === true ? "Active" : "Inactive"} </Text>
-    ),
+    accessor: (row: any) => <Text>{row?.status === true ? "Active" : "Inactive"} </Text>,
   },
 ];

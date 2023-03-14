@@ -1,15 +1,7 @@
+import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
 import * as React from "react";
+
 import { FormInput, FormNativeSelect } from "../../components/forms";
-import {
-  Button,
-  Flex,
-  Heading,
-  Link,
-  Stack,
-  HStack,
-  Image,
-  Text,
-} from "@chakra-ui/react";
 import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
@@ -27,11 +19,7 @@ const View: React.FC<Props> = (Props) => {
         <Flex flex={1} align={{ base: "", md: "start" }} p={12}>
           <Stack spacing={8} w={"full"} maxW={"md"}>
             <Stack>
-              <Text
-                color={"#010C14"}
-                fontWeight={"bold"}
-                fontSize={{ base: "3xl", md: "4xl" }}
-              >
+              <Text color={"#010C14"} fontWeight={"bold"} fontSize={{ base: "3xl", md: "4xl" }}>
                 Create Account
               </Text>
               <Text color="muted">
@@ -43,12 +31,7 @@ const View: React.FC<Props> = (Props) => {
             </Stack>
 
             <Stack spacing={6}>
-              <FormInput
-                name="company"
-                type="text"
-                label="Company Name"
-                placeholder="e.g. Zayroll LLC"
-              />
+              <FormInput name="company" type="text" label="Company Name" placeholder="e.g. Zayroll LLC" />
               <FormNativeSelect
                 label="Country"
                 name="country"
@@ -57,30 +40,15 @@ const View: React.FC<Props> = (Props) => {
                   { value: "ng", label: "Nigeria" },
                 ]}
               />
-              <FormInput
-                name="name"
-                type="text"
-                label="Full Name"
-                placeholder="e.g. john.doe@zayroll.com"
-              />
+              <FormInput name="name" type="text" label="Full Name" placeholder="e.g. john.doe@zayroll.com" />
               <FormInput
                 name="email"
                 type="email"
                 label="Email Address"
                 placeholder="john-mcdonald@zayroll.com"
               />
-              <FormInput
-                name="role"
-                type="text"
-                label="Job Role"
-                placeholder="e.g. chief people officer"
-              />
-              <FormInput
-                name="password"
-                type="password"
-                label="Password"
-                placeholder="***************"
-              />
+              <FormInput name="role" type="text" label="Job Role" placeholder="e.g. chief people officer" />
+              <FormInput name="password" type="password" label="Password" placeholder="***************" />
               <FormInput
                 name="confirmPassword"
                 type="password"
@@ -88,27 +56,17 @@ const View: React.FC<Props> = (Props) => {
                 placeholder="***************"
               />
 
-              <LoadingButton submitting={isSubmitting}>
-                Create Account
-              </LoadingButton>
+              <LoadingButton submitting={isSubmitting}>Create Account</LoadingButton>
             </Stack>
           </Stack>
         </Flex>
       </Stack>
 
-      <Flex
-        bgColor="#210D35"
-        color="white"
-        flex={1}
-        align={"center"}
-        justify={"center"}
-      >
+      <Flex bgColor="#210D35" color="white" flex={1} align={"center"} justify={"center"}>
         <HStack flex={1} align={"start"} justify={"end"}>
           <Stack p={8} maxW={"md"}>
             <Heading>Wyre</Heading>
-            <Text>
-              The open-source payroll Infrastructure for African businesses.
-            </Text>
+            <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
 
           <Image alt={"Image"} src={"images/Payroll.png"} />

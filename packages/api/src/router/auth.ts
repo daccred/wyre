@@ -1,7 +1,8 @@
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import { AuthService } from "../services";
-import { signUpSchema, verifyEmailSchema } from "../interfaces";
 import { z } from "zod";
+
+import { signUpSchema, verifyEmailSchema } from "../interfaces";
+import { AuthService } from "../services";
+import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const authRouter = createTRPCRouter({
   getSession: publicProcedure.query(({ ctx }) => {
@@ -10,26 +11,19 @@ export const authRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "You are logged in and can see this secret message!";
   }),
-  adminSignUp: publicProcedure
-    .input(signUpSchema)
-    .mutation(async ({ input }) => {
-      const admin = await AuthService.adminSignUp(input);
-      return admin;
-    }),
+  adminSignUp: publicProcedure.input(signUpSchema).mutation(async ({ input }) => {
+    const admin = await AuthService.adminSignUp(input);
+    return admin;
+  }),
 
   sendAdminMailVerification: publicProcedure
     .input(z.object({ email: z.string().email(), verifyCode: z.string() }))
     .mutation(async ({ input }) => {
-      const mail = await AuthService.sendAdminMailVerification(
-        input.email,
-        input.verifyCode
-      );
+      const mail = await AuthService.sendAdminMailVerification(input.email, input.verifyCode);
       return mail;
     }),
-  verifyAdminEmail: publicProcedure
-    .input(verifyEmailSchema)
-    .mutation(async ({ input }) => {
-      const verified = await AuthService.verifyAdminEmail(input);
-      return verified;
-    }),
+  verifyAdminEmail: publicProcedure.input(verifyEmailSchema).mutation(async ({ input }) => {
+    const verified = await AuthService.verifyAdminEmail(input);
+    return verified;
+  }),
 });

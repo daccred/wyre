@@ -13,10 +13,7 @@ function useEventListener<K extends keyof WindowEventMap>(
 
 // Element Event based useEventListener interface
 // eslint-disable-next-line no-redeclare
-function useEventListener<
-  K extends keyof HTMLElementEventMap,
-  T extends HTMLElement = HTMLDivElement
->(
+function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
   eventName: K,
   handler: (event: HTMLElementEventMap[K]) => void,
   element: RefObject<T>,
@@ -39,9 +36,7 @@ function useEventListener<
   T extends HTMLElement | void = void
 >(
   eventName: KW | KH,
-  handler: (
-    event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event
-  ) => void,
+  handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event) => void,
   element?: RefObject<T>,
   options?: boolean | AddEventListenerOptions
 ) {
@@ -60,8 +55,7 @@ function useEventListener<
     }
 
     // Create event listener that calls handler function stored in ref
-    const eventListener: typeof handler = (event) =>
-      savedHandler.current(event);
+    const eventListener: typeof handler = (event) => savedHandler.current(event);
 
     targetElement.addEventListener(eventName, eventListener, options);
 

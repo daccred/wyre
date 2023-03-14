@@ -1,15 +1,7 @@
+import { Button, HStack, Stack, Text, Avatar, Flex, Center, Image } from "@chakra-ui/react";
 import React from "react";
+
 import ViewLayout from "../../components/core/ViewLayout";
-import {
-  Button,
-  HStack,
-  Stack,
-  Text,
-  Avatar,
-  Flex,
-  Center,
-  Image,
-} from "@chakra-ui/react";
 
 type Props = {};
 
@@ -23,8 +15,7 @@ const Reimbursement = (props: Props) => {
           borderColor="bordergrey"
           p="4"
           bg={"white"}
-          w="100%"
-        >
+          w="100%">
           <Stack spacing={4} p={5}>
             <Text fontWeight="bold" fontSize="18px">
               Reimbursement

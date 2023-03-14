@@ -1,7 +1,7 @@
+import { Spinner, Center } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Spinner, Center } from "@chakra-ui/react";
 
 type Props = {
   children: React.ReactElement;
