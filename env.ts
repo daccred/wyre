@@ -28,16 +28,19 @@ const envSchema = z.object({
   // Redis configuration
 
   REDIS_HOST: z.string(),
-  REDIS_PORT: z.number().default(6379),
-  // REDIS_PASSWORD: z.string(),
+  REDIS_PORT: z.string(),
+  REDIS_PASSWORD: z.string(),
   // REDIS_DB: z.number().default(0),
 });
 
-const wyreEnv = envSchema.safeParse(process.env);
+const env = envSchema.safeParse(process.env);
 
-if (!wyreEnv.success) {
-  console.error("❌ Invalid environment variables:", JSON.stringify(wyreEnv.error.format(), null, 4));
+if (!env.success) {
+  console.error(
+    "❌ Invalid environment variables:",
+    JSON.stringify(env.error.format(), null, 4)
+  );
   process.exit(1);
 }
 
-export default wyreEnv.data;
+export default env.data;

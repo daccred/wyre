@@ -12,6 +12,7 @@ import View from "../views/Register";
 const signUpValidationSchema = z
   .object({
     company: z.string().min(1, "Company name is required"),
+    companyPhone: z.string().min(1, "Phone number is required"),
     country: z.string(),
     name: z.string().min(1, "Full name is required"),
     email: z.string().email(),
@@ -77,6 +78,7 @@ export default function Page() {
       password: data.password,
       name: data.name,
       companyName: data.company,
+      companyPhone: data.companyPhone,
       country: data.country,
       jobRole: data.role,
     });

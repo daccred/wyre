@@ -242,7 +242,7 @@ const Index: React.FC = () => {
 
           {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
             <Center w="100%" p="8" flexDirection={"column"}>
-              <EmptyContractorImage />
+              {/* <EmptyContractorImage /> */}
               <Text pr="12" pt="2">
                 No Reimbursements
               </Text>
