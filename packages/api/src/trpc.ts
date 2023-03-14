@@ -16,12 +16,23 @@
  * processing a request
  *
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
-
-import { getServerAuthSession } from "./common/get-server-side-auth-session";
+// import { prisma } from "@wyrecc/db";
 // import { prisma } from "@wyrecc/db";
 import { Prisma, PrismaClient } from "@prisma/client";
+import { type Session } from "next-auth";
+import superjson from "superjson";
+import { ZodError } from "zod";
+
+/**
+ * 2. INITIALIZATION
+ *
+ * This is where the trpc api is initialized, connecting the context and
+ * transformer
+ */
+import { initTRPC, TRPCError } from "@trpc/server";
+import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+
+import { getServerAuthSession } from "./common/get-server-side-auth-session";
 
 type CreateContextOptions = {
   session: Session | null;
@@ -64,16 +75,6 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   });
 };
 
-/**
- * 2. INITIALIZATION
- *
- * This is where the trpc api is initialized, connecting the context and
- * transformer
- */
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import { ZodError } from "zod";
-
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
@@ -82,9 +83,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       data: {
         ...shape.data,
         zodError:
-          error.code === "BAD_REQUEST" && error.cause instanceof ZodError
-            ? error.cause.flatten()
-            : null,
+          error.code === "BAD_REQUEST" && error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
     };
   },

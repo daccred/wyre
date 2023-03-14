@@ -160,7 +160,8 @@ enum ExpenseStatus {
     Failed
     Pending
     Success
-  }
+}
+
 model Expense {
   id          String           @id @default(cuid())
   description String

@@ -18,6 +18,7 @@
     "crypt": "^0.0.2",
     "dotenv": "^16.0.3",
     "postmark": "^3.0.15",
-    "query-string": "^8.1.0"
+    "query-string": "^8.1.0",
+    "@wyrecc/tsconfig": "^0.1.0"
   }
 }
