@@ -4,6 +4,12 @@ CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER');
 -- CreateEnum
 CREATE TYPE "WorkerType" AS ENUM ('EMPLOYEE', 'CONTRACTOR');
 
+-- CreateEnum
+CREATE TYPE "ExpensType" AS ENUM ('Reimbursement', 'Payment');
+
+-- CreateEnum
+CREATE TYPE "ExpenseStatus" AS ENUM ('Failed', 'Pending', 'Success');
+
 -- CreateTable
 CREATE TABLE "Example" (
     "id" TEXT NOT NULL,
@@ -69,7 +75,6 @@ CREATE TABLE "VerificationToken" (
     "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
-    "passwordOtp" TEXT,
 
     CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id")
 );
@@ -128,6 +133,7 @@ CREATE TABLE "Payroll" (
     "cycle" TEXT NOT NULL,
     "payday" TIMESTAMP(3) NOT NULL,
     "auto" BOOLEAN NOT NULL,
+    "suspend" BOOLEAN NOT NULL DEFAULT false,
     "burden" INTEGER NOT NULL,
     "currency" TEXT NOT NULL,
 
@@ -138,6 +144,9 @@ CREATE TABLE "Payroll" (
 CREATE TABLE "Expense" (
     "id" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "type" "ExpensType" NOT NULL DEFAULT 'Payment',
+    "status" "ExpenseStatus" NOT NULL,
     "amount" TEXT NOT NULL,
 
     CONSTRAINT "Expense_pkey" PRIMARY KEY ("id")

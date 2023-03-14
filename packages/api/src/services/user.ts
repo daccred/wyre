@@ -1,8 +1,10 @@
-import { prisma } from "@wyre-zayroll/db";
+import { prisma } from "@wyrecc/db";
+
 import { TRPCError } from "@trpc/server";
+
 import type { IUserSchema } from "../interfaces";
-import { ServicesError } from "./ServiceErrors";
 import { hashString } from "../utils";
+import { ServicesError } from "./ServiceErrors";
 
 export const i = { send_json: true, send_form: false };
 
@@ -24,9 +26,7 @@ export class UserService {
       }
 
       //Handle email verification
-      const confirmCode = JSON.stringify(
-        Math.floor(100000 + Math.random() * 900000)
-      ); // generates a random 6-digit code
+      const confirmCode = JSON.stringify(Math.floor(100000 + Math.random() * 900000)); // generates a random 6-digit code
 
       const token = await prisma.verificationToken.create({
         data: {
