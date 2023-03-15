@@ -4,3 +4,4 @@ export * from "./users";
 export * from "./payroll";
 export * from "./employee";
 export * from "./expense";
+export * from "./contractor";

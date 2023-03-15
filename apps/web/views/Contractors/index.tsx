@@ -43,7 +43,7 @@ import { EmptyContractorImage, PlusIcon } from "./ProviderIcons";
 
 const Contractors = () => {
   const router = useRouter();
-  const { data: contractors } = trpc.employee.getContractors.useQuery();
+  const { data: contractors } = trpc.contractor.getContractors.useQuery();
 
   const {
     isOpen: addContractorModalIsOpen,
@@ -149,62 +149,56 @@ const Contractors = () => {
   return (
     <>
       <ViewLayout title="Contractors">
-        <HStack gap="4" alignItems={"flex-start"}>
-          <Stack
-            borderRadius={"15px"}
-            border={"1px solid"}
-            borderColor="bordergrey"
-            p="4"
-            bg={"white"}
-            w="70%">
+        <HStack gap="4" alignItems="flex-start">
+          <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" p="4" bg="white" w="70%">
             <Text fontWeight="bold" fontSize="18px" mb="4">
               Contractors
             </Text>
 
-            <HStack justifyContent={"space-between"}>
+            <HStack justifyContent="space-between">
               <Button
-                variant={"darkBtn"}
+                variant="darkBtn"
                 rightIcon={<PlusIcon />}
                 iconSpacing="3"
                 onClick={openAddContractorModal}>
                 Add Contractor
               </Button>
-              <Stack spacing={"0"} alignItems="flex-end">
+              <Stack spacing="0" alignItems="flex-end">
                 <Text fontWeight="bold" fontSize="20px">
                   {dummyDataInUse?.length}
                 </Text>
-                <Text fontWeight={"light"} fontSize="xs">
+                <Text fontWeight="light" fontSize="xs">
                   Contractor(s)
                 </Text>
               </Stack>
             </HStack>
 
             {dummyData && dummyData?.length > 0 && (
-              <HStack justifyContent={"space-between"} pt="2">
+              <HStack justifyContent="space-between" pt="2">
                 <HStack gap="1">
-                  <FiSearch fontSize={"24px"} />
+                  <FiSearch fontSize="24px" />
                   <Input
-                    variant={"unstyled"}
-                    border={"0"}
+                    variant="unstyled"
+                    border="0"
                     borderBottom="1px solid"
                     borderRadius={0}
                     px="0"
                     py="1"
                     h="40px"
                     w={{ base: "auto", lg: "250px" }}
-                    fontSize={"sm"}
+                    fontSize="sm"
                     placeholder="Search Contractor"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </HStack>
-                <HStack gap={"2"} alignItems="center">
+                <HStack gap="2" alignItems="center">
                   <Switch
                     size="sm"
-                    colorScheme={"black"}
+                    colorScheme="black"
                     onChange={(e) => setActiveContractorsOnly(e?.target?.checked)}
                   />
-                  <Text fontWeight={"semibold"} fontSize="sm">
+                  <Text fontWeight="semibold" fontSize="sm">
                     Active Contractors
                   </Text>
                 </HStack>
@@ -246,16 +240,16 @@ const Contractors = () => {
                         ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                         .map((data, index) => (
                           <Tr
-                            textTransform={"capitalize"}
-                            cursor={"pointer"}
+                            textTransform="capitalize"
+                            cursor="pointer"
                             key={index}
                             onClick={() => setSelectedContractor(data)}
-                            borderBottom={"1px solid"}
+                            borderBottom="1px solid"
                             borderColor="bordergrey">
                             <Td>
                               <HStack>
                                 <Avatar
-                                  size={"sm"}
+                                  size="sm"
                                   src={data?.imgURL}
                                   name={data?.name}
                                   opacity={data?.status !== "active" ? "35%" : ""}
@@ -263,7 +257,7 @@ const Contractors = () => {
                                 <Text color={data?.status !== "active" ? "#FF951C" : ""}>{data?.name}</Text>
                               </HStack>
                             </Td>
-                            <Td textTransform={"lowercase"} opacity={data?.status !== "active" ? "35%" : ""}>
+                            <Td textTransform="lowercase" opacity={data?.status !== "active" ? "35%" : ""}>
                               {data?.category}
                             </Td>
                             <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
@@ -284,14 +278,14 @@ const Contractors = () => {
                 onPageChange={handlePageChange}>
                 <PaginationContainer align="center" justify="space-between" py={2} w="full">
                   <PaginationPrevious
-                    variant={"outline"}
+                    variant="outline"
                     h="40px"
                     px="12px"
                     leftIcon={<FiArrowLeft />}
                     iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
+                    border="1px solid #D0D5DD"
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                     <Text>Previous</Text>
                   </PaginationPrevious>
                   <PaginationPageGroup
@@ -317,14 +311,14 @@ const Contractors = () => {
                     ))}
                   </PaginationPageGroup>
                   <PaginationNext
-                    variant={"outline"}
+                    variant="outline"
                     h="40px"
                     px="12px"
                     rightIcon={<FiArrowRight />}
                     iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
+                    border="1px solid #D0D5DD"
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                     <Text>Next</Text>
                   </PaginationNext>
                 </PaginationContainer>
@@ -332,7 +326,7 @@ const Contractors = () => {
             )}
 
             {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-              <Center w="100%" p="8" flexDirection={"column"}>
+              <Center w="100%" p="8" flexDirection="column">
                 <EmptyContractorImage />
                 <Text pr="12" pt="2">
                   No Contractor
@@ -342,66 +336,66 @@ const Contractors = () => {
           </Stack>
           {selectedContractor ? (
             <Flex
-              flexDirection={"column"}
-              borderRadius={"15px"}
-              border={"1px solid"}
+              flexDirection="column"
+              borderRadius="15px"
+              border="1px solid"
               borderColor="bordergrey"
               p="4"
-              bg={"white"}
+              bg="white"
               flex="1"
               marginInlineStart="0">
               <Text fontWeight="bold" fontSize="18px" mb="4">
                 Contractor Details
               </Text>
-              <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
-                <Avatar size={"md"} name={selectedContractor?.name} src={selectedContractor?.imgURL} />
+              <Stack fontSize="sm" textTransform="capitalize" spacing="4">
+                <Avatar size="md" name={selectedContractor?.name} src={selectedContractor?.imgURL} />
                 <Stack spacing={0} marginTop="0">
-                  <Text fontWeight={"semibold"}>Full Name</Text>
+                  <Text fontWeight="semibold">Full Name</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.name}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Email Address</Text>
-                  <Text textTransform={"lowercase"} overflowWrap="anywhere">
+                  <Text fontWeight="semibold">Email Address</Text>
+                  <Text textTransform="lowercase" overflowWrap="anywhere">
                     {selectedContractor?.email}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Phone Number</Text>
+                  <Text fontWeight="semibold">Phone Number</Text>
                   <Text>{selectedContractor?.phoneNumber}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text textTransform={"lowercase"} fontWeight={"semibold"}>
+                  <Text textTransform="lowercase" fontWeight="semibold">
                     Category
                   </Text>
                   <Text overflowWrap="break-word">{selectedContractor?.category}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Status</Text>
+                  <Text fontWeight="semibold">Status</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.status}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Department</Text>
+                  <Text fontWeight="semibold">Department</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.department}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Job Role</Text>
+                  <Text fontWeight="semibold">Job Role</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.role}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Gross Salary</Text>
+                  <Text fontWeight="semibold">Gross Salary</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.salary}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Location</Text>
+                  <Text fontWeight="semibold">Location</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.location}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Payment Method</Text>
+                  <Text fontWeight="semibold">Payment Method</Text>
                   <Text overflowWrap="break-word">{selectedContractor?.paymentMethod}</Text>
                 </Stack>
               </Stack>
               <Button
-                variant={"darkBtn"}
+                variant="darkBtn"
                 w="100%"
                 mt="10"
                 py="15px"
@@ -416,15 +410,15 @@ const Contractors = () => {
             </Flex>
           ) : (
             <Flex
-              flexDirection={"column"}
-              borderRadius={"15px"}
-              border={"1px solid"}
+              flexDirection="column"
+              borderRadius="15px"
+              border="1px solid"
               borderColor="bordergrey"
               p="4"
-              bg={"white"}
+              bg="white"
               flex="1"
               marginInlineStart="0">
-              <Center w="100%" flexDirection={"column"}>
+              <Center w="100%" flexDirection="column">
                 <Text fontWeight="bold" fontSize="18px" mb="4">
                   Contractor Details
                 </Text>
@@ -446,11 +440,11 @@ const Contractors = () => {
         onClose={closeAddContractorSuccessModal}
         isOpen={addContractorSuccessModalIsOpen}
         isCentered
-        size={"sm"}>
+        size="sm">
         <ModalOverlay />
         <ModalContent w="100%">
           <ModalBody>
-            <Stack alignItems={"center"} justifyContent="center" p="4" textAlign="center">
+            <Stack alignItems="center" justifyContent="center" p="4" textAlign="center">
               <Text fontWeight="bold" fontSize="18px">
                 You’ve successfully added an contractor to the team member
               </Text>
