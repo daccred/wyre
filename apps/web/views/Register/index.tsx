@@ -10,7 +10,6 @@ import {
     Image,
     Text,
 } from '@chakra-ui/react';
-import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
   isSubmitting?: boolean;
@@ -89,9 +88,18 @@ const View: React.FC<Props> = (Props) => {
                         placeholder="***************"
                       />
                   
-                    <LoadingButton submitting={isSubmitting}>
+                    <Button 
+                      bg={'#010C14'}
+                      color={'white'}
+                      type="submit"
+                      isDisabled={isSubmitting}
+                      isLoading={isSubmitting}
+                      // _hover={{
+                      //   bg: '#210D35',
+                      // }}
+                      _hover={{ bg: '' }}>
                       Create Account
-                    </LoadingButton>
+                    </Button>
                   </Stack>
                 
             </Stack>

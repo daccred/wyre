@@ -1,4 +1,4 @@
-import { FormInput, useForm } from "../../components";
+import { FormInput } from "../../components";
 import {
   Center,
   Stack,
@@ -11,7 +11,6 @@ import {
   Image,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
   isSubmitting: boolean;
@@ -57,9 +56,18 @@ const View: React.FC<Props> = (Props) => {
 
               <Stack>
            
-                <LoadingButton submitting={isSubmitting} >
+                <Button  
+                  bg={'#010C14'}
+                  color={'white'}
+                  type="submit"
+                  isDisabled={isSubmitting}
+                  isLoading={isSubmitting}
+                  // _hover={{
+                  //   bg: '#210D35',
+                  // }}
+                  _hover={{ bg: '' }} >
                     Login
-                </LoadingButton>
+                </Button>
                 <Center>Forgot Password? 
                   <Link color='#8D1CFF' marginLeft={2} href='/forgot-password'>Reset</Link>
                 </Center>

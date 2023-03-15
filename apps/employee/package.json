@@ -25,15 +25,15 @@
         "@wyre-zayroll/db": "*",
         "@wyre-zayroll/dialog": "*",
         "@wyre-zayroll/env": "*",
+        "components": "^1.0.0",
         "cz-ccgls": "^0.4.6",
-        "superjson": "1.9.1",
-        "trpc-playground": "1.0.0-next.0",
-        "ui": "*",
-        "zod": "^3.18.0",
         "react-dropzone": "^14.2.3",
         "react-hook-form": "^7.39.1",
         "react-icons": "^4.6.0",
-        "typescript": "4.9.5"
+        "superjson": "1.9.1",
+        "trpc-playground": "1.0.0-next.0",
+        "typescript": "^4.8.4",
+        "zod": "^3.18.0"
     },
     "devDependencies": {
         "@babel/core": "^7.0.0",
