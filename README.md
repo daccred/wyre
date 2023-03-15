@@ -49,6 +49,10 @@ This project is still in early alpha, so we have many features soon to come! Thi
 
 ## Configurations
 
+**Commitizen:**
+This tool is used to improve commit management. Install commitizen globally `yarn global add commitizen`
+To make a commit, just type `cz` in your terminal and it produces a prompt.
+
 ## Dependencies
 
 ## Licences

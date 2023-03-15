@@ -1,10 +1,11 @@
 import { prisma } from "@wyrecc/db";
-import { sendEmail, emailHTML } from "@wyrecc/dialog";
+import { sendEmail, emailHTML, forgotPasswordEmail } from "@wyrecc/dialog";
 
 import { TRPCError } from "@trpc/server";
 
-import { ISignUp, IVerifyEmail } from "../interfaces";
-import { hashString } from "../utils";
+import { IResetPassword, ISignUp, IVerifyEmail } from "../interfaces";
+import redisClient from "../redis";
+import { hashString, verifyHash } from "../utils";
 import { ServicesError } from "./ServiceErrors";
 
 export class AuthService {
@@ -203,6 +204,94 @@ export class AuthService {
     }
   }
 
+  static async sendForgotPasswordEmail(email: string) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: { email },
+      });
+
+      if (!user) {
+        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      }
+
+      //Handle password otp
+      const confirmCode = JSON.stringify(Math.floor(100000 + Math.random() * 900000)); // generates a random 6-digit code
+
+      if (user) {
+        await redisClient.hello();
+        await redisClient.HSET(`otp_${user.id}`, "id", user.id);
+        await redisClient.HSET(`otp_${user.id}`, "email", user.email);
+        await redisClient.HSET(`otp_${user.id}`, "otp", confirmCode);
+        await redisClient.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
+      }
+
+      const forgotEmail = forgotPasswordEmail({ confirmCode });
+
+      const response = await sendEmail({
+        from: "admin@tecmie.com",
+        subject: "Reset your password",
+        to: email,
+        textBody: "Email sent",
+        userId: user?.id,
+        htmlBody: forgotEmail,
+      });
+
+      return response;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
+
+  static async resetPassword(input: IResetPassword) {
+    try {
+      const { email, otp, newPassword } = input;
+
+      const user = await prisma.user.findFirst({
+        where: { email },
+      });
+
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      }
+      const userHash = user && (await redisClient.hGetAll(`otp_${user.id}`));
+
+      if (userHash?.otp !== otp) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "OTP is invalid. Request another one",
+        });
+      }
+
+      const isSame = await verifyHash(newPassword, user.password);
+
+      if (isSame) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You cannot use the old password as the new password",
+        });
+      }
+
+      const resetPass = await prisma.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          password: await hashString(newPassword),
+        },
+      });
+
+      if (!resetPass) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to reset password",
+        });
+      }
+
+      return user;
+    } catch (error) {
+      ServicesError(error);
+    }
+  }
   static async checkIfCompanyExists(companyName?: string) {
     const result = await prisma.company.findFirst({
       where: {

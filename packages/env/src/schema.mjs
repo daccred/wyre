@@ -19,6 +19,10 @@ export const serverSchema = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   AUTH_EMAIL_SERVER: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  POSTMARK_CLIENT_ID: z.string(),
+  REDIS_URL: z.string(),
+  REDIS_PASSWORD: z.string(),
+  REDIS_PORT: z.number().default(6379),
 });
 
 /**
