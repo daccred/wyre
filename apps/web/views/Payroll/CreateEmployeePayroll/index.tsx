@@ -19,11 +19,11 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { Employee } from "@prisma/client";
+import type { Employee } from "@prisma/client";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
-import z from "zod";
+import type z from "zod";
 
 import { FormInput, FormNativeSelect, useForm } from "../../../components";
 import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
@@ -41,9 +41,9 @@ type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 const CreateEmployeePayroll = () => {
   const { pathname } = useRouter();
   const [tableData, setTableData] = useState<Employee[]>([]);
-  const [selectedEmployees, setSelectedEmployees] = useState<string[]>([""]);
+  const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([""]);
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("All departments");
 
@@ -60,7 +60,6 @@ const CreateEmployeePayroll = () => {
   const selectedRows = useMemo(
     () =>
       tableData.filter((row: any) => {
-        // @ts-ignore
         return selectedRowIds[row.id];
       }),
     [selectedRowIds, tableData]
@@ -114,10 +113,9 @@ const CreateEmployeePayroll = () => {
   } = useDisclosure();
 
   const { mutate: createPayroll, isLoading: submitting } = trpc.payroll.createPayroll.useMutation({
-    onSuccess(data: any) {
-      // Reset the form data to empty values
-
+    onSuccess() {
       openSuccessModal();
+      // Reset the form data to empty values
     },
     onError(error: any) {
       toast({
@@ -160,10 +158,10 @@ const CreateEmployeePayroll = () => {
     <>
       <ViewLayout title="Payroll">
         <Breadcrumb
-          fontSize={"sm"}
-          separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
+          fontSize="sm"
+          separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
           pb="2"
-          fontWeight={"semibold"}
+          fontWeight="semibold"
           color="lightgrey">
           <BreadcrumbItem>
             <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
@@ -184,7 +182,7 @@ const CreateEmployeePayroll = () => {
               <Heading as="h4" size="xs" fontSize="xl" mb={4}>
                 Payroll Details
               </Heading>
-              <Stack spacing={"6"} pb="4">
+              <Stack spacing="6" pb="4">
                 <Stack>
                   <FormInput name="title" label="Payroll Title" placeholder="Title" />
                   <HStack>
@@ -222,14 +220,14 @@ const CreateEmployeePayroll = () => {
                         <Grid templateColumns="30% 25%" justifyContent="space-between" my={6}>
                           <GridItem>
                             <HStack gap="1">
-                              <FiSearch fontSize={"24px"} />
+                              <FiSearch fontSize="24px" />
                               <Input
-                                variant={"unstyled"}
-                                border={"0"}
+                                variant="unstyled"
+                                border="0"
                                 borderBottom="1px solid"
                                 borderRadius={0}
                                 h={12}
-                                fontSize={"sm"}
+                                fontSize="sm"
                                 placeholder="Search Employee"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -249,8 +247,7 @@ const CreateEmployeePayroll = () => {
                           </GridItem>
                         </Grid>
                         <RowSelectTable
-                          // @ts-ignore
-                          columns={createPayrollColumns}
+                          columns={createPayrollColumns as unknown[]}
                           data={tableData}
                           onRowSelectionChange={handleSelectionChange}
                           onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
@@ -259,10 +256,10 @@ const CreateEmployeePayroll = () => {
                         />
                       </>
                     ) : (
-                      <Center w="100%" p="8" flexDirection={"column"}>
+                      <Center w="100%" p="8" flexDirection="column">
                         <EmptyEmployeeImage />
                         <Text pr="12" pt={2}>
-                          You currently have no employee
+                          You currently have no employee. Add an Empoyee to continue
                         </Text>
                       </Center>
                     )}
@@ -308,6 +305,7 @@ const CreateEmployeePayroll = () => {
           successModalIsOpen={successModalIsOpen}
           closeSuccessModal={closeSuccessModal}
           message="Your payment is being processed right away"
+          pathname="/payroll"
         />
       </ViewLayout>
     </>

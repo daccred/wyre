@@ -1,14 +1,6 @@
-import {
-  HStack,
-  Stack,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Skeleton,
-  SkeletonText,
-} from "@chakra-ui/react";
+import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next/types";
+import type { GetServerSideProps } from "next/types";
 import React, { useEffect, useReducer } from "react";
 import { FiChevronRight } from "react-icons/fi";
 
@@ -55,33 +47,27 @@ const ManageEmployee = ({ employeeData }: any) => {
 
   return (
     <>
-      <ViewLayout title={"Employees"}>
+      <ViewLayout title="Employees">
         <Breadcrumb
-          fontSize={"xs"}
-          separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
+          fontSize="xs"
+          separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
           pb="2"
-          fontWeight={"semibold"}>
+          fontWeight="semibold">
           <BreadcrumbItem>
-            <BreadcrumbLink href="/employees" color={"lightgrey"}>
+            <BreadcrumbLink href="/employees" color="lightgrey">
               Employee
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink href="#">
-              <Skeleton textTransform={"capitalize"} isLoaded={isLoading}>
+              <Skeleton textTransform="capitalize" isLoaded={isLoading}>
                 {state.employee?.name}
               </Skeleton>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
-        <HStack gap="4" alignItems={"flex-start"}>
-          <Stack
-            borderRadius={"15px"}
-            border={"1px solid"}
-            borderColor="bordergrey"
-            p="4"
-            bg={"white"}
-            w="70%">
+        <HStack gap="4" alignItems="flex-start">
+          <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" p="4" bg="white" w="70%">
             <EmployeeForm employee={state.employee || null} />
           </Stack>
           <CompensationForm />

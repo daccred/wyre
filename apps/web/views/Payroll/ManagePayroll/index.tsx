@@ -7,12 +7,14 @@ import {
   Heading,
   Spinner,
   Stack,
+  Text,
 } from "@chakra-ui/react";
-import { Payroll } from "@prisma/client";
-import Link from "next/link";
+import type { Payroll } from "@prisma/client";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
+import type { Column } from "react-table";
+import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
 
 import { CustomTable } from "../../../components/CustomTable";
 import ViewLayout from "../../../components/core/ViewLayout";
@@ -24,23 +26,27 @@ const ManagePayroll = () => {
   const { pathname } = useRouter();
 
   const [tableData, setTableData] = useState<Payroll[]>([]);
+  const router = useRouter();
 
   const columns = [
     ...managePayrollColumns,
     {
       Header: "Action",
       accessor: (row: any) => (
-        <Link
-          href={{
-            pathname: "/payroll/manage-payroll/monthly-employee-salary",
-            query: {
-              id: row?.id,
-            },
-          }}>
-          <Button bg="brand.700" color="white" iconSpacing="3" w="fit-content" _hover={{ hover: "none" }}>
-            Manage
-          </Button>
-        </Link>
+        <Button
+          bg="brand.700"
+          color="white"
+          iconSpacing="3"
+          w="fit-content"
+          _hover={{ hover: "none" }}
+          onClick={() =>
+            router.push({
+              pathname: "/payroll/manage-payroll/monthly-employee-salary",
+              query: { id: row?.id },
+            })
+          }>
+          Manage
+        </Button>
       ),
     },
   ];
@@ -58,10 +64,10 @@ const ManagePayroll = () => {
   return (
     <ViewLayout title="Payroll">
       <Breadcrumb
-        fontSize={"sm"}
-        separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
+        fontSize="sm"
+        separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
         pb="2"
-        fontWeight={"semibold"}
+        fontWeight="semibold"
         color="lightgrey">
         <BreadcrumbItem>
           <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
@@ -84,11 +90,18 @@ const ManagePayroll = () => {
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
           </Center>
         ) : (
-          <CustomTable
-            // @ts-ignore
-            columns={columns}
-            data={tableData}
-          />
+          <>
+            {tableData?.length > 0 ? (
+              <CustomTable columns={columns as Column<Payroll>[]} data={tableData} />
+            ) : (
+              <Center w="100%" p="8" flexDirection="column">
+                <EmptyEmployeeImage />
+                <Text pr="12" pt={2}>
+                  You currently have no active payroll
+                </Text>
+              </Center>
+            )}
+          </>
         )}
       </Stack>
     </ViewLayout>

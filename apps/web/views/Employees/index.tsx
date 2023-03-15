@@ -31,7 +31,6 @@ import {
   ModalBody,
   useDisclosure,
   Image,
-  Spinner,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -152,62 +151,56 @@ const Employees = () => {
   return (
     <>
       <ViewLayout title="Employees">
-        <HStack gap="4" alignItems={"flex-start"}>
-          <Stack
-            borderRadius={"15px"}
-            border={"1px solid"}
-            borderColor="bordergrey"
-            py="4"
-            bg={"white"}
-            w="70%">
+        <HStack gap="4" alignItems="flex-start">
+          <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" py="4" bg="white" w="70%">
             <Text fontWeight="bold" fontSize="18px" mb="4" px={4}>
               Employees
             </Text>
 
-            <HStack justifyContent={"space-between"} px={4}>
+            <HStack justifyContent="space-between" px={4}>
               <Button
-                variant={"darkBtn"}
+                variant="darkBtn"
                 rightIcon={<PlusIcon />}
                 iconSpacing="3"
                 onClick={openAddEmployeeModal}>
                 Add Employee
               </Button>
-              <Stack spacing={"0"} alignItems="flex-end">
+              <Stack spacing="0" alignItems="flex-end">
                 <Text fontWeight="bold" fontSize="20px">
                   {dummyDataInUse?.length}
                 </Text>
-                <Text fontWeight={"light"} fontSize="xs">
+                <Text fontWeight="light" fontSize="xs">
                   Employee(s)
                 </Text>
               </Stack>
             </HStack>
 
             {dummyData && dummyData?.length > 0 && (
-              <HStack justifyContent={"space-between"} pt="2" px={4}>
+              <HStack justifyContent="space-between" pt="2" px={4}>
                 <HStack gap="1">
-                  <FiSearch fontSize={"24px"} />
+                  <FiSearch fontSize="24px" />
                   <Input
-                    variant={"unstyled"}
-                    border={"0"}
+                    variant="unstyled"
+                    border="0"
                     borderBottom="1px solid"
                     borderRadius={0}
                     px="0"
                     py="1"
                     h="40px"
                     w={{ base: "auto", lg: "250px" }}
-                    fontSize={"sm"}
+                    fontSize="sm"
                     placeholder="Search Employee"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </HStack>
-                <HStack gap={"2"} alignItems="center">
+                <HStack gap="2" alignItems="center">
                   <Switch
                     size="sm"
-                    colorScheme={"black"}
+                    colorScheme="black"
                     onChange={(e) => setActiveEmployeesOnly(e?.target?.checked)}
                   />
-                  <Text fontWeight={"semibold"} fontSize="sm">
+                  <Text fontWeight="semibold" fontSize="sm">
                     Active Employees
                   </Text>
                 </HStack>
@@ -249,16 +242,16 @@ const Employees = () => {
                         ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                         .map((data, index) => (
                           <Tr
-                            textTransform={"capitalize"}
-                            cursor={"pointer"}
+                            textTransform="capitalize"
+                            cursor="pointer"
                             key={index}
                             onClick={() => setSelectedEmployee(data)}
-                            borderBottom={"1px solid"}
+                            borderBottom="1px solid"
                             borderColor="bordergrey">
                             <Td>
                               <HStack>
                                 <Avatar
-                                  size={"sm"}
+                                  size="sm"
                                   src={data?.imgURL}
                                   name={data?.name}
                                   opacity={data?.status !== "active" ? "35%" : ""}
@@ -266,7 +259,7 @@ const Employees = () => {
                                 <Text color={data?.status !== "active" ? "#FF951C" : ""}>{data?.name}</Text>
                               </HStack>
                             </Td>
-                            <Td textTransform={"lowercase"} opacity={data?.status !== "active" ? "35%" : ""}>
+                            <Td textTransform="lowercase" opacity={data?.status !== "active" ? "35%" : ""}>
                               {data?.category}
                             </Td>
                             <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
@@ -287,14 +280,14 @@ const Employees = () => {
                 onPageChange={handlePageChange}>
                 <PaginationContainer align="center" justify="space-between" py={2} px={4} w="full">
                   <PaginationPrevious
-                    variant={"outline"}
+                    variant="outline"
                     h="40px"
                     px="12px"
                     leftIcon={<FiArrowLeft />}
                     iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
+                    border="1px solid #D0D5DD"
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                     <Text>Previous</Text>
                   </PaginationPrevious>
                   <PaginationPageGroup
@@ -320,14 +313,14 @@ const Employees = () => {
                     ))}
                   </PaginationPageGroup>
                   <PaginationNext
-                    variant={"outline"}
+                    variant="outline"
                     h="40px"
                     px="12px"
                     rightIcon={<FiArrowRight />}
                     iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
+                    border="1px solid #D0D5DD"
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                     <Text>Next</Text>
                   </PaginationNext>
                 </PaginationContainer>
@@ -335,7 +328,7 @@ const Employees = () => {
             )}
 
             {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-              <Center w="100%" p="8" flexDirection={"column"}>
+              <Center w="100%" p="8" flexDirection="column">
                 <EmptyEmployeeImage />
                 <Text pr="12" pt={2}>
                   No Employee
@@ -351,14 +344,14 @@ const Employees = () => {
                 onPageChange={handlePageChange}>
                 <PaginationContainer align="center" justify="space-between" py={2} px={4} w="full">
                   <PaginationPrevious
-                    variant={"outline"}
+                    variant="outline"
                     h="40px"
                     px="12px"
                     leftIcon={<FiArrowLeft />}
                     iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
+                    border="1px solid #D0D5DD"
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                     <Text>Previous</Text>
                   </PaginationPrevious>
                   <PaginationPageGroup
@@ -384,14 +377,14 @@ const Employees = () => {
                     ))}
                   </PaginationPageGroup>
                   <PaginationNext
-                    variant={"outline"}
+                    variant="outline"
                     h="40px"
                     px="12px"
                     rightIcon={<FiArrowRight />}
                     iconSpacing={3}
-                    border={"1px solid #D0D5DD"}
+                    border="1px solid #D0D5DD"
                     borderRadius="8px"
-                    boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                     <Text>Next</Text>
                   </PaginationNext>
                 </PaginationContainer>
@@ -399,7 +392,7 @@ const Employees = () => {
             )}
 
             {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-              <Center w="100%" p="8" flexDirection={"column"}>
+              <Center w="100%" p="8" flexDirection="column">
                 <EmptyEmployeeImage />
                 <Text pr="12" pt="2">
                   No Employee
@@ -409,66 +402,66 @@ const Employees = () => {
           </Stack>
           {selectedEmployee ? (
             <Flex
-              flexDirection={"column"}
-              borderRadius={"15px"}
-              border={"1px solid"}
+              flexDirection="column"
+              borderRadius="15px"
+              border="1px solid"
               borderColor="bordergrey"
               p="4"
-              bg={"white"}
+              bg="white"
               flex="1"
               marginInlineStart="0">
               <Text fontWeight="bold" fontSize="18px" mb="4">
                 Employee Details
               </Text>
-              <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
-                <Avatar size={"lg"} name={selectedEmployee?.name} src={selectedEmployee?.imgURL} />
+              <Stack fontSize="sm" textTransform="capitalize" spacing="4">
+                <Avatar size="lg" name={selectedEmployee?.name} src={selectedEmployee?.imgURL} />
                 <Stack spacing={0} marginTop="0">
-                  <Text fontWeight={"semibold"}>Full Name</Text>
+                  <Text fontWeight="semibold">Full Name</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.name}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Email Address</Text>
-                  <Text textTransform={"lowercase"} overflowWrap="anywhere">
+                  <Text fontWeight="semibold">Email Address</Text>
+                  <Text textTransform="lowercase" overflowWrap="anywhere">
                     {selectedEmployee?.email}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Phone Number</Text>
+                  <Text fontWeight="semibold">Phone Number</Text>
                   <Text>{selectedEmployee?.phoneNumber}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Category</Text>
-                  <Text textTransform={"lowercase"} overflowWrap="break-word">
+                  <Text fontWeight="semibold">Category</Text>
+                  <Text textTransform="lowercase" overflowWrap="break-word">
                     {selectedEmployee?.category}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Status</Text>
+                  <Text fontWeight="semibold">Status</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.status}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Department</Text>
+                  <Text fontWeight="semibold">Department</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.department}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Job Role</Text>
+                  <Text fontWeight="semibold">Job Role</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.role}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Gross Salary</Text>
+                  <Text fontWeight="semibold">Gross Salary</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.salary}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Location</Text>
+                  <Text fontWeight="semibold">Location</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.location}</Text>
                 </Stack>
                 <Stack spacing={0}>
-                  <Text fontWeight={"semibold"}>Payment Method</Text>
+                  <Text fontWeight="semibold">Payment Method</Text>
                   <Text overflowWrap="break-word">{selectedEmployee?.paymentMethod}</Text>
                 </Stack>
               </Stack>
               <Button
-                variant={"darkBtn"}
+                variant="darkBtn"
                 w="100%"
                 mt="10"
                 py="15px"
@@ -483,15 +476,15 @@ const Employees = () => {
             </Flex>
           ) : (
             <Flex
-              flexDirection={"column"}
-              borderRadius={"15px"}
-              border={"1px solid"}
+              flexDirection="column"
+              borderRadius="15px"
+              border="1px solid"
               borderColor="bordergrey"
               p="4"
-              bg={"white"}
+              bg="white"
               flex="1"
               marginInlineStart="0">
-              <Center w="100%" flexDirection={"column"}>
+              <Center w="100%" flexDirection="column">
                 <Text fontWeight="bold" fontSize="18px" mb="4">
                   Employee Details
                 </Text>
@@ -513,11 +506,11 @@ const Employees = () => {
         onClose={closeAddEmployeeSuccessModal}
         isOpen={addEmployeeSuccessModalIsOpen}
         isCentered
-        size={"sm"}>
+        size="sm">
         <ModalOverlay />
         <ModalContent w="100%">
           <ModalBody>
-            <Stack alignItems={"center"} justifyContent="center" p="4" textAlign="center">
+            <Stack alignItems="center" justifyContent="center" p="4" textAlign="center">
               <Text fontWeight="bold" fontSize="18px">
                 You’ve successfully added an employee to the team member
               </Text>
