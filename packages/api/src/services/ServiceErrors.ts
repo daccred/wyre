@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+
 import { TRPCError } from "@trpc/server";
 
 export function ServicesError(error: unknown) {
@@ -24,8 +25,7 @@ export function ServicesError(error: unknown) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       cause: error.name,
-      message:
-        "Prisma Client initialisation failed. Check your database configuration",
+      message: "Prisma Client initialisation failed. Check your database configuration",
     });
   }
   console.warn(error);

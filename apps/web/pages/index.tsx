@@ -1,7 +1,8 @@
 import { type NextPage } from "next";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+
 import { trpc } from "../utils/trpc";
 import styles from "./index.module.css";
 
@@ -68,6 +69,9 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
+
+  console.log(sessionData);
+
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
@@ -77,10 +81,7 @@ const AuthShowcase: React.FC = () => {
     <div className={styles.authShowcase}>
       {sessionData && <p>Logged in as {sessionData?.user?.name}</p>}
       {secretMessage && <p>{secretMessage}</p>}
-      <button
-        className={styles.signInButton}
-        onClick={sessionData ? () => signOut() : () => signIn()}
-      >
+      <button className={styles.signInButton} onClick={sessionData ? () => signOut() : () => signIn()}>
         {sessionData ? "Sign out" : "Sign in"}
       </button>
     </div>
@@ -93,21 +94,12 @@ type TechnologyCardProps = {
   documentation: string;
 };
 
-const TechnologyCard: React.FC<TechnologyCardProps> = ({
-  name,
-  description,
-  documentation,
-}) => {
+const TechnologyCard: React.FC<TechnologyCardProps> = ({ name, description, documentation }) => {
   return (
     <section className={styles.card}>
       <h2 className={styles.cardTitle}>{name}</h2>
       <p className={styles.cardDescription}>{description}</p>
-      <Link
-        className={styles.cardDocumentation}
-        href={documentation}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <Link className={styles.cardDocumentation} href={documentation} target="_blank" rel="noreferrer">
         Documentation
       </Link>
     </section>

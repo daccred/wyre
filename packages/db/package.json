@@ -1,0 +1,42 @@
+{
+  "name": "@wyrecc/db",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf .turbo node_modules dist",
+    "db:push": "prisma db push",
+    "db-deploy": "prisma migrate deploy",
+    "db-generate": "prisma generate",
+    "db-sync": "prisma migrate dev",
+    "db-migrate": "prisma migrate dev --name",
+    "db-nuke": "docker-compose down --volumes --remove-orphans",
+    "db-reset": "run-s db-nuke db-setup",
+    "db-seed": "prisma db seed",
+    "db-setup": "run-s db-up db-deploy db-seed",
+    "db-studio": "prisma studio",
+    "db-up": "docker-compose up -d",
+    "dx": "yarn  db-setup",
+    "lint:ts": "tsc --pretty --noEmit",
+    "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
+    "dev": "tsc --watch",
+    "format": "prisma format",
+    "generate": "prisma generate",
+    "prebuild": "yarn db-generate && yarn db-sync",
+    "predev": "yarn db-generate && yarn db-sync"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.5.0"
+  },
+  "devDependencies": {
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0",
+    "prisma": "^4.5.0"
+  }
+}

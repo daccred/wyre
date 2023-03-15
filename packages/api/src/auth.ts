@@ -1,11 +1,13 @@
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { prisma } from "@wyre-zayroll/db";
-import { loginSchema } from "./interfaces";
-import { verifyHash } from "./utils";
+import { prisma } from "@wyrecc/db";
+
 import { TRPCError } from "@trpc/server";
+
+import { loginSchema } from "./interfaces";
 import { ServicesError } from "./services";
+import { verifyHash } from "./utils";
 
 /**
  * * Important Info
@@ -58,10 +60,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
           // const verify = await hashString(password)
 
-          const isValidPassword = await verifyHash(
-            password,
-            user.password
-          );
+          const isValidPassword = await verifyHash(password, user.password);
 
           if (!isValidPassword) {
             throw new TRPCError({

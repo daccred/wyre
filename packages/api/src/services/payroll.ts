@@ -1,6 +1,8 @@
-import { IPayrollSchema } from "../interfaces/payroll";
+import { prisma } from "@wyrecc/db";
+
 import { TRPCError } from "@trpc/server";
-import { prisma } from "@wyre-zayroll/db";
+
+import { IPayrollSchema } from "../interfaces/payroll";
 import { ServicesError } from "./ServiceErrors";
 
 export class PayrollService {
@@ -43,6 +45,7 @@ export class PayrollService {
           cycle: input.cycle,
           payday: input.payday,
           auto: input.auto,
+          suspend: false,
           burden: input.burden,
           currency: input.currency,
           employees: { connect: employees },
@@ -138,6 +141,7 @@ export class PayrollService {
           cycle: input.cycle,
           payday: input.payday,
           auto: input.auto,
+          suspend: input.suspend,
           burden: input.burden,
           currency: input.currency,
           employees: { connect: employees },

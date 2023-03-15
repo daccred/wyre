@@ -1,63 +1,51 @@
-import {
-  Avatar,
-  Button,
-  HStack,
-  Stack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import styledToast from "../../../components/core/StyledToast";
+import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
 import z from "zod";
-import {
-  FormInput,
-  FormNativeSelect,
-  useForm,
-} from "../../../components/forms";
-import { ProfileIcon } from "./ProviderIcons";
-import { trpc } from "utils/trpc";
 
+import styledToast from "../../../components/core/StyledToast";
+import { FormInput, FormNativeSelect, useForm } from "../../../components/forms";
+import { trpc } from "../../../utils/trpc";
+import { ProfileIcon } from "./ProviderIcons";
 
 type EmployeeFormProps = {
   employee: any | null; // update the type to match the employee object type
-}
+};
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
-  email: z.string().email(),
-  department: z.string().min(1, { message: "Required" }),
-  jobRole: z.string().min(1, { message: "Required" }),
+  name: z.string().min(1, { message: "Required" }).default(""),
+  email: z.string().email().default(""),
+  department: z.string().min(1, { message: "Required" }).default(""),
+  jobRole: z.string().min(1, { message: "Required" }).default(""),
   // grossSalary: z.string().min(1, { message: "Required" }),
   // signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.string(),
+  category: z.string().default(""),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
 
 export default function EmployeeForm({ employee }: EmployeeFormProps) {
   const toast = useToast();
-  console.log(employee)
+  console.log(employee);
   const { name, email, department, jobRole, category, salary, signBonus } = employee ?? {};
 
   const { mutate: updateEmployee, isLoading } = trpc.employee.updateEmployee.useMutation({
     onSuccess(data: any) {
       // Reset the form data to empty values
-       styledToast({
+      styledToast({
         status: "success",
         description: "Profile has been updated successfully",
         toast: toast,
       });
-          
-      },
-      onError(error: any) {
-          toast({
-              status: "error",
-              description: `${error}`,
-              isClosable: true,
-              duration: 5000,
-              position: 'top-right'
-            });
-        console.log(error);
-      },
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+      console.log(error);
+    },
   });
 
   const handleSubmit = async (data: FormInputOptions) => {
@@ -68,17 +56,16 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           name: data.name,
           email: data.email,
           department: data.department,
-          jobRole: data.jobRole,    
+          jobRole: data.jobRole,
           salary: employee.salary,
           signBonus: employee.signBonus,
-          status: employee.status,
+          status: true,
           category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
         },
       });
     } catch (error) {
       console.error(error);
     }
-   
   };
 
   const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
@@ -95,12 +82,12 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: 'top-right'
+        position: "top-right",
       });
       console.log(error);
     },
   });
-  
+
   const handleTerminate = async () => {
     try {
       terminateEmployee({
@@ -109,11 +96,11 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           name: name,
           email: email,
           department: department,
-          jobRole: jobRole,    
+          jobRole: jobRole,
           salary: salary,
           signBonus: signBonus,
           status: false, // add status field with the value of false
-          category: category
+          category: category,
         },
       });
     } catch (error) {
@@ -121,18 +108,17 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
     }
   };
 
-  
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: ({
+    defaultValues: {
       name: name,
-      email: email,      
+      email: email,
       department: department,
       jobRole: jobRole,
       category: category,
       // grossSalary: "",
       // signingBonus: ""
-    }),
+    },
     schema: addEmployeeValidationSchema,
   });
 
@@ -143,38 +129,14 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar
-          size={"xl"}
-          src={
-            ""
-          }
-          name={name}
-        />
+        <Avatar size={"xl"} src={""} name={name} />
         <HStack>
-          <FormInput
-            name="name"
-            label="First Name"
-            placeholder="First Name"
-            defaultValue={name}
-          />
-          <FormInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Last Name"
-          />
+          <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={name} />
+          <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
         </HStack>
         <HStack>
-          <FormInput
-            name="email"
-            label="Email Address"
-            placeholder="Email Address"
-            defaultValue={email} 
-          />
-          <FormInput
-            name="phoneNumber"
-            label="Phone Number"
-            placeholder="Phone Number"
-          />
+          <FormInput name="email" label="Email Address" placeholder="Email Address" defaultValue={email} />
+          <FormInput name="phoneNumber" label="Phone Number" placeholder="Phone Number" />
         </HStack>
         <HStack>
           <FormInput name="city" label="City" placeholder="City" />
@@ -191,29 +153,21 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Employee", value: "EMPLOYEE" },{ label: "Contractor", value: "CONTRACTOR" }
+              { label: "Contractor", value: "CONTRACTOR" },
+              { label: "Employee", value: "EMPLOYEE" },
             ]}
-            defaultValue={category} // set default value to "Employee"
+            defaultValue={"EMPLOYEE"} // set default value to "Employee"
           />
-          <FormInput
-            name="payrollMethod"
-            label="Payroll Method"
-            placeholder="Payroll Method"
-          />
+          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" />
         </HStack>
         <HStack>
           <FormInput
             name="department"
             label="Department"
             placeholder="Enter Department"
-           defaultValue={department}
+            defaultValue={department}
           />
-          <FormInput
-            name="jobRole"
-            label="Job Role"
-            placeholder="Job Role"
-            defaultValue={jobRole}
-          />
+          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" defaultValue={jobRole} />
         </HStack>
       </Stack>
 
@@ -225,21 +179,19 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           w="fit-content"
           type="submit"
           isLoading={isLoading}
-          _hover={{ bg: '' }}
-          loadingText='Updating'
-        >
+          _hover={{ bg: "" }}
+          loadingText="Updating">
           Update Profile
         </Button>
         <Button
           onClick={handleTerminate}
           isLoading={isTerminating}
-          loadingText='Terminating'
+          loadingText="Terminating"
           variant={"greyBtn"}
           rightIcon={<ProfileIcon fill={"#210D35"} stroke={"#210D35"} />}
           iconSpacing="3"
           w="fit-content"
-          _hover={{ bg: '' }}
-        >
+          _hover={{ bg: "" }}>
           Terminate Employee
         </Button>
       </HStack>

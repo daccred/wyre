@@ -9,21 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "http-cache-semantics": "^4.1.0",
     "next": "^13.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui": "*",
-    "http-cache-semantics": "^4.1.0"
+    "ui": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "eslint": "7.32.0",
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
+    "@types/http-cache-semantics": "latest",
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
-    "@types/http-cache-semantics": "latest",
-    "typescript": "^4.8.4"
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0"
   }
 }

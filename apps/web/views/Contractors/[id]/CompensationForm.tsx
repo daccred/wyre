@@ -1,7 +1,8 @@
 import { Button, Stack, Text, Flex, useToast } from "@chakra-ui/react";
 import z from "zod";
-import { FormInput, useForm } from "../../../components/forms";
+
 import styledToast from "../../../components/core/StyledToast";
+import { FormInput, useForm } from "../../../components/forms";
 
 const addContractorValidationSchema = z.object({});
 
@@ -67,8 +68,7 @@ export default function CompensationForm() {
       p="4"
       bg={"white"}
       flex="1"
-      marginInlineStart="0"
-    >
+      marginInlineStart="0">
       <Text fontWeight="bold" fontSize="18px" mb="4">
         Compensation Details
       </Text>
@@ -76,45 +76,23 @@ export default function CompensationForm() {
         <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
           <Stack spacing={0} marginTop="0">
             <Text fontWeight={"semibold"}>Gross Payment</Text>
-            <EditedFormInput
-              name="grossPayment"
-              rightElementText="USD"
-              color="#0AAF60"
-            />
+            <EditedFormInput name="grossPayment" rightElementText="USD" color="#0AAF60" />
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight={"semibold"}>Bonus</Text>
-            <EditedFormInput
-              name="bonus"
-              rightElementText="USD"
-              color="#0AAF60"
-            />
+            <EditedFormInput name="bonus" rightElementText="USD" color="#0AAF60" />
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight={"semibold"}>Commission</Text>
-            <EditedFormInput
-              name="commission"
-              rightElementText="USD"
-              color="#0AAF60"
-            />
+            <EditedFormInput name="commission" rightElementText="USD" color="#0AAF60" />
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight={"semibold"}>Deduction</Text>
-            <EditedFormInput
-              name="deduction"
-              rightElementText="USD"
-              color="#E71D36"
-            />
+            <EditedFormInput name="deduction" rightElementText="USD" color="#E71D36" />
           </Stack>
 
           <Stack pt="6">
-            <Button
-              variant={"darkBtn"}
-              w="100%"
-              mt="10"
-              py="15px"
-              type="submit"
-            >
+            <Button variant={"darkBtn"} w="100%" mt="10" py="15px" type="submit">
               Update Compensation
             </Button>
           </Stack>

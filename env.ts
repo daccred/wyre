@@ -25,8 +25,22 @@ const envSchema = z.object({
 
   // # Postmark environment variables
   POSTMARK_CLIENT_ID: z.string(),
+  // Redis configuration
+
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.string(),
+  REDIS_PASSWORD: z.string(),
+  // REDIS_DB: z.number().default(0),
 });
 
-const env = envSchema.parse(process.env);
+const env = envSchema.safeParse(process.env);
 
-export default env;
+if (!env.success) {
+  console.error(
+    "❌ Invalid environment variables:",
+    JSON.stringify(env.error.format(), null, 4)
+  );
+  process.exit(1);
+}
+
+export default env.data;

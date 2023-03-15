@@ -16,8 +16,7 @@ const baseStyle = {
 const withLine = (props: StyleFunctionProps) => {
   const { orientation, size } = props;
   const isVertical = orientation === "vertical";
-  const borderProp =
-    orientation === "vertical" ? "borderStart" : "borderBottom";
+  const borderProp = orientation === "vertical" ? "borderStart" : "borderBottom";
   const marginProp = isVertical ? "marginStart" : "marginBottom";
 
   const horizontalStyles = {

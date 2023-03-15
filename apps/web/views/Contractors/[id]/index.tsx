@@ -1,20 +1,13 @@
-import React, { useEffect, useReducer } from "react";
-import {
-  HStack,
-  Stack,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Skeleton
-} from "@chakra-ui/react";
-import ViewLayout from "../../../components/core/ViewLayout";
-import ContractorForm from "./ContractorForm";
-import CompensationForm from "./CompensationForm";
-import { FiChevronRight } from "react-icons/fi";
-import { trpc } from "utils/trpc";
-import { GetServerSideProps } from "next/types";
+import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next/types";
+import React, { useEffect, useReducer } from "react";
+import { FiChevronRight } from "react-icons/fi";
 
+import ViewLayout from "../../../components/core/ViewLayout";
+import { trpc } from "../../../utils/trpc";
+import CompensationForm from "./CompensationForm";
+import ContractorForm from "./ContractorForm";
 
 // Define initial state
 const initialState = {
@@ -23,7 +16,7 @@ const initialState = {
 };
 
 // Define reducer function
-const reducer = (state:any, action:any) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_CONTRACTOR":
       return {
@@ -50,24 +43,25 @@ const ManageContractor = ({ contractorData }: any) => {
     if (contractor) {
       dispatch({ type: "SET_CONTRACTOR", payload: contractor });
     }
-  },[contractor]);
+  }, [contractor]);
   return (
     <>
-      <ViewLayout title="Manage Contractor">
+      <ViewLayout title="Contractors">
         <Breadcrumb
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
           pb="2"
-          fontWeight={"semibold"}
-        >
+          fontWeight={"semibold"}>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/contractors" color={"lightgrey"}>Contractor</BreadcrumbLink>
+            <BreadcrumbLink href="/contractors" color={"lightgrey"}>
+              Contractor
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink
             // href='#'
             >
-              <Skeleton textTransform={'capitalize'} isLoaded={!isLoading}>
+              <Skeleton textTransform={"capitalize"} isLoaded={!isLoading}>
                 {state.contractor?.name}
               </Skeleton>
             </BreadcrumbLink>
@@ -80,9 +74,8 @@ const ManageContractor = ({ contractorData }: any) => {
             borderColor="bordergrey"
             p="4"
             bg={"white"}
-            w="70%"
-          >
-            <ContractorForm contractor={state.contractor || null}/>
+            w="70%">
+            <ContractorForm contractor={state.contractor || null} />
           </Stack>
           <CompensationForm />
         </HStack>

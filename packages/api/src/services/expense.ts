@@ -1,7 +1,9 @@
+import { prisma } from "@wyrecc/db";
+
+import { TRPCError } from "@trpc/server";
+
 import { IExpenseSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
-import { prisma } from "@wyre-zayroll/db";
-import { TRPCError } from "@trpc/server";
 
 export class ExpenseService {
   static async createExpense(input: IExpenseSchema) {
@@ -27,6 +29,9 @@ export class ExpenseService {
       const expense = await prisma.expense.create({
         data: {
           amount: input.amount,
+          date: input.date,
+          type: input.type,
+          status: input.status,
           description: input.description,
           employees: { connect: employees },
         },
@@ -62,6 +67,9 @@ export class ExpenseService {
       const expense = await prisma.expense.update({
         where: { id: expenseId },
         data: {
+          date: input.date,
+          type: input.type,
+          status: input.status,
           amount: input.amount,
           description: input.description,
           employees: { connect: employees },

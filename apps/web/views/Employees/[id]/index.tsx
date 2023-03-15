@@ -1,4 +1,3 @@
-import React, { useEffect, useReducer } from "react";
 import {
   HStack,
   Stack,
@@ -8,23 +7,24 @@ import {
   Skeleton,
   SkeletonText,
 } from "@chakra-ui/react";
-import ViewLayout from "../../../components/core/ViewLayout";
-import EmployeeForm from "./EmployeeForm";
-import CompensationForm from "./CompensationForm";
-import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/router";
-import { trpc } from "utils/trpc";
 import { GetServerSideProps } from "next/types";
+import React, { useEffect, useReducer } from "react";
+import { FiChevronRight } from "react-icons/fi";
+
+import ViewLayout from "../../../components/core/ViewLayout";
+import { trpc } from "../../../utils/trpc";
+import CompensationForm from "./CompensationForm";
+import EmployeeForm from "./EmployeeForm";
 
 // Define initial state
 const initialState = {
   employee: null,
   isLoading: true,
-  
 };
 
 // Define reducer function
-const reducer = (state:any, action:any) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_EMPLOYEE":
       return {
@@ -51,17 +51,16 @@ const ManageEmployee = ({ employeeData }: any) => {
     if (employee) {
       dispatch({ type: "SET_EMPLOYEE", payload: employee });
     }
-  },[employee]);
+  }, [employee]);
 
   return (
     <>
-      <ViewLayout title={'Manage Employee'}>
+      <ViewLayout title={"Employees"}>
         <Breadcrumb
           fontSize={"xs"}
           separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
           pb="2"
-          fontWeight={"semibold"}
-        >
+          fontWeight={"semibold"}>
           <BreadcrumbItem>
             <BreadcrumbLink href="/employees" color={"lightgrey"}>
               Employee
@@ -69,7 +68,7 @@ const ManageEmployee = ({ employeeData }: any) => {
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink href="#">
-              <Skeleton textTransform={'capitalize'} isLoaded={!isLoading}>
+              <Skeleton textTransform={"capitalize"} isLoaded={isLoading}>
                 {state.employee?.name}
               </Skeleton>
             </BreadcrumbLink>
@@ -82,8 +81,7 @@ const ManageEmployee = ({ employeeData }: any) => {
             borderColor="bordergrey"
             p="4"
             bg={"white"}
-            w="70%"
-          >
+            w="70%">
             <EmployeeForm employee={state.employee || null} />
           </Stack>
           <CompensationForm />
