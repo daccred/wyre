@@ -1,7 +1,8 @@
 import React from "react";
-
 import { Meta } from "../../../layouts";
 import View from "../../../views/Payroll/ManagePayroll";
+import { withAuth } from "../../../lib/withAuth";
+import { GetServerSideProps } from "next";
 
 export default function Page() {
   return (
@@ -11,3 +12,9 @@ export default function Page() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+  return {
+    props: {},
+  };
+});

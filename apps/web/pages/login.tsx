@@ -57,11 +57,3 @@ export default function Page() {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {
-      requireAuth: false,
-      enableAuth: false,
-    },
-  };
-};

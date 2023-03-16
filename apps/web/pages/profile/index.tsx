@@ -1,7 +1,8 @@
 import React from "react";
-
 import { Meta } from "../../layouts";
 import View from "../../views/Profile";
+import { withAuth } from "../../lib/withAuth";
+import { GetServerSideProps } from "next";
 
 export default function Page() {
   return (
@@ -12,4 +13,8 @@ export default function Page() {
   );
 }
 
-Page.requireAuth = true;
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+  return {
+    props: {},
+  };
+});
