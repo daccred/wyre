@@ -1,17 +1,7 @@
 import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
 import * as React from "react";
-
 import { FormInput, FormNativeSelect } from "../../components/forms";
-import {
-    Button,
-    Flex,
-    Heading,
-    Link,
-    Stack,
-    HStack,
-    Image,
-    Text,
-} from '@chakra-ui/react';
+
 
 type Props = {
   isSubmitting?: boolean;

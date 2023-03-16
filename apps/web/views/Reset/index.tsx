@@ -1,6 +1,5 @@
 import { HStack, Text, Button, Flex, Heading, Stack, Image } from "@chakra-ui/react";
 import * as React from "react";
-
 import { FormInput } from "../../components";
 
 const View = () => (

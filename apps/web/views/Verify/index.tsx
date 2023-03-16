@@ -9,13 +9,11 @@ import {
   Link,
   Center,
   Heading,
-  useToast,
+  useToast,PinInputField, PinInput
 } from "@chakra-ui/react";
-import { PinInputField, PinInput } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next/types";
 import * as React from "react";
-
 import { trpc } from "../../utils/trpc";
 
 const View = () => {
