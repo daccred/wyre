@@ -2,20 +2,14 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { useMemo, useEffect, useRef, forwardRef } from "react";
 import { useTable, useRowSelect } from "react-table";
-import type { Row, TableInstance } from "react-table";
-
-interface Columns {
-  Header: string;
-  accessor?: string;
-  Cell?: (row: Row) => JSX.Element;
-}
+import type { TableInstance } from "react-table";
 
 interface Props {
-  columns: Columns[];
+  columns: unknown[];
   data: Record<string, any>[];
   onRowSelectionChange: (selectedRowIds: Record<string, boolean>) => void;
   onSelectedRowsAmountChange: (amount: number) => void;
-  selectedEmployees: string[];
+  selectedEmployees?: string[];
   setSelectedEmployees: React.Dispatch<React.SetStateAction<string[]>>;
 }
 

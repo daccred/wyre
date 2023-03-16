@@ -19,19 +19,18 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { Employee, Payroll } from "@prisma/client";
-import { GetServerSideProps } from "next";
+import type { Employee } from "@prisma/client";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
-import z from "zod";
+import type z from "zod";
 
 import { FormInput, FormNativeSelect, useForm } from "../../../components";
 import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
 import ViewLayout from "../../../components/core/ViewLayout";
 import FormDateInput from "../../../components/forms/components/FormDateInput";
 import { trpc } from "../../../utils/trpc";
-import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
+import { EmptyEmployeeImage } from "../../Employees/ProviderIcons";
 import SuccessModal from "../modals/SuccessModal";
 import SuspendPayroll from "../modals/SuspendPayroll";
 import { employeeSalaryPath, managePayrollPath } from "../routes";
@@ -39,6 +38,7 @@ import { createPayrollValidationSchema } from "../utils/misc";
 import { monthlyPayrollColumns } from "../utils/tableColumns";
 
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
+
 const MonthlyEmployeeSalary = () => {
   const { pathname } = useRouter();
   const [tableData, setTableData] = useState<Employee[]>([]);
@@ -47,6 +47,11 @@ const MonthlyEmployeeSalary = () => {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("All departments");
+  const [suspendPayroll, setSuspendPayroll] = useState(false);
+
+  const modalMessage = suspendPayroll
+    ? "Your payroll has been suspended"
+    : "Your payment is being processed right away";
 
   // Get Data from previous page
   const router = useRouter();
@@ -57,7 +62,6 @@ const MonthlyEmployeeSalary = () => {
     id: rowId?.id as string,
   });
 
-  console.log("payroll", payroll);
   const employeeData = payroll && payroll.employees;
 
   // handles row select in table
@@ -73,7 +77,6 @@ const MonthlyEmployeeSalary = () => {
   const selectedRows = useMemo(
     () =>
       tableData.filter((row: any) => {
-        // @ts-ignore
         return selectedRowIds[row.id];
       }),
     [selectedRowIds, tableData]
@@ -179,27 +182,40 @@ const MonthlyEmployeeSalary = () => {
     }
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: createPayrollValidationSchema,
-    defaultValues: {
-      title: payroll?.title ?? "jjj",
-      cycle: payroll?.cycle as "daily" | "bi-weekly" | "monthly",
-      auto: payroll?.auto,
-      payday: payroll?.payday,
-      currency: payroll?.currency as "USD" | "GHC" | "NGN" | "CNY" | "GBP" | "EUR",
-      suspend: payroll?.suspend,
-    },
+    // defaultValues: {
+    //   title: payroll?.title,
+    //   cycle: payroll?.cycle as "daily" | "bi-weekly" | "monthly",
+    //   auto: payroll?.auto,
+    //   payday: payroll?.payday,
+    //   currency: payroll?.currency as "USD" | "GHC" | "NGN" | "CNY" | "GBP" | "EUR",
+    //   suspend: payroll?.suspend,
+    // },
   });
+  useEffect(() => {
+    if (payroll) {
+      setFormValue("title", payroll?.title);
+      setFormValue("cycle", payroll?.cycle as "daily" | "bi-weekly" | "monthly");
+      setFormValue("auto", payroll?.auto);
+      // TODO: date doesn't show in input field
+      setFormValue("payday", payroll?.payday);
+
+      setFormValue("currency", payroll?.currency as "USD" | "GHC" | "NGN" | "CNY" | "GBP" | "EUR");
+
+      setFormValue("suspend", suspendPayroll);
+    }
+  }, [payroll, setFormValue, suspendPayroll]);
 
   return (
     <>
       <ViewLayout title="Payroll">
         <Breadcrumb
-          fontSize={"sm"}
-          separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
+          fontSize="sm"
+          separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
           pb="2"
-          fontWeight={"semibold"}
+          fontWeight="semibold"
           color="lightgrey">
           <BreadcrumbItem>
             <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
@@ -226,7 +242,7 @@ const MonthlyEmployeeSalary = () => {
               <Heading as="h4" size="xs" fontSize="xl">
                 Active Payroll
               </Heading>
-              <Stack spacing={"6"} pb="4">
+              <Stack spacing="6" pb="4">
                 <Stack>
                   <FormInput name="title" label="Payroll Details" placeholder="Title" />
                   <HStack>
@@ -257,14 +273,14 @@ const MonthlyEmployeeSalary = () => {
                     <Grid templateColumns="30% 25%" justifyContent="space-between" my={6}>
                       <GridItem>
                         <HStack gap="1">
-                          <FiSearch fontSize={"24px"} />
+                          <FiSearch fontSize="24px" />
                           <Input
-                            variant={"unstyled"}
-                            border={"0"}
+                            variant="unstyled"
+                            border="0"
                             borderBottom="1px solid"
                             borderRadius={0}
                             h={12}
-                            fontSize={"sm"}
+                            fontSize="sm"
                             placeholder="Search Employee"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -284,8 +300,7 @@ const MonthlyEmployeeSalary = () => {
                       </GridItem>
                     </Grid>
                     <RowSelectTable
-                      // @ts-ignore
-                      columns={monthlyPayrollColumns}
+                      columns={monthlyPayrollColumns as unknown[]}
                       data={tableData}
                       onRowSelectionChange={handleSelectionChange}
                       onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
@@ -293,7 +308,7 @@ const MonthlyEmployeeSalary = () => {
                     />
                   </>
                 ) : (
-                  <Center w="100%" p="8" flexDirection={"column"}>
+                  <Center w="100%" p="8" flexDirection="column">
                     <EmptyEmployeeImage />
                     <Text pr="12" pt={2}>
                       No Employee Selected for this Payroll
@@ -336,13 +351,14 @@ const MonthlyEmployeeSalary = () => {
                   Run Payroll
                 </Button>
                 <Button
+                  type="submit"
                   variant="outline"
                   color="brand.700"
                   borderColor="brand.700"
                   iconSpacing="3"
                   w="100%"
                   _hover={{ hover: "none" }}
-                  onClick={() => openSuspendPayrollModal()}>
+                  onClick={() => setSuspendPayroll(true)}>
                   Suspend Payroll
                 </Button>
               </VStack>
@@ -357,7 +373,8 @@ const MonthlyEmployeeSalary = () => {
         <SuccessModal
           successModalIsOpen={successModalIsOpen}
           closeSuccessModal={closeSuccessModal}
-          message="Your payment is being processed right away"
+          message={modalMessage}
+          pathname="/payroll/manage-payroll"
         />
       </ViewLayout>
     </>
@@ -365,17 +382,3 @@ const MonthlyEmployeeSalary = () => {
 };
 
 export default MonthlyEmployeeSalary;
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const id = query?.id;
-  const { data: payroll } = trpc.payroll.getSinglePayroll.useQuery({
-    id: id as string,
-  });
-  return {
-    props: {
-      requireAuth: false,
-      enableAuth: false,
-      payroll: payroll,
-    },
-  };
-};

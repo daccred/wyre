@@ -20,7 +20,6 @@ import { trpc } from "../../utils/trpc";
 import { EmptyEmployeeImage } from "../../views/Employees/ProviderIcons";
 import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
 import PayrollType from "./modals/PayrollType";
-import { payrollData } from "./utils/dummyData";
 import { Card, PayrollTypeCard } from "./utils/misc";
 import { payrollColumns } from "./utils/tableColumns";
 
@@ -58,7 +57,7 @@ const View = () => {
               heading="Create Payroll"
               text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
               icon={<CreateIcon />}
-              onClick={() => openPayrollTypeModal()}
+              onClick={() => router.push("/payroll/create-employee-payroll")}
             />
           </GridItem>
           <GridItem>
@@ -106,27 +105,23 @@ const View = () => {
         <Heading as="h4" size="xs" fontSize="xl">
           Payroll History
         </Heading>
-        {tableData?.length > 0 ? (
+        {isLoading ? (
+          <Center>
+            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+          </Center>
+        ) : (
           <>
-            {isLoading ? (
-              <Center>
-                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-              </Center>
+            {tableData?.length > 0 ? (
+              <CustomTable columns={payrollColumns} data={tableData} />
             ) : (
-              <CustomTable
-                // @ts-ignore
-                columns={payrollColumns}
-                data={tableData}
-              />
+              <Center w="100%" p="8" flexDirection="column">
+                <EmptyEmployeeImage />
+                <Text pr="12" pt={2}>
+                  You currently have no payroll history
+                </Text>
+              </Center>
             )}
           </>
-        ) : (
-          <Center w="100%" p="8" flexDirection={"column"}>
-            <EmptyEmployeeImage />
-            <Text pr="12" pt={2}>
-              No Payroll History
-            </Text>
-          </Center>
         )}
       </Stack>
 

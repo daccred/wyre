@@ -42,7 +42,7 @@ export default function AddContractor({
 }: addContractorTypes) {
   const toast = useToast();
 
-  const { mutate: addContractor, isLoading } = trpc.employee.createEmployee.useMutation({
+  const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
     onSuccess(data: any) {
       // Reset the form data to empty values
 
@@ -69,8 +69,8 @@ export default function AddContractor({
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
-      salary: data.grossSalary,
-      signBonus: data.signingBonus,
+      grossSalary: data.grossSalary,
+      signingBonus: data.signingBonus,
       status: true,
       category: "CONTRACTOR",
     });
@@ -88,19 +88,20 @@ export default function AddContractor({
       isOpen={addContractorModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"3xl"}>
+      size="3xl">
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
           Contract Details
         </ModalHeader>
         <ModalCloseButton m="1">
-          <IoCloseCircleOutline fontSize={"28px"} />
+          <IoCloseCircleOutline fontSize="28px" />
         </ModalCloseButton>
         <ModalBody>
           {renderForm(
-            <Stack spacing={"6"} pb="4">
+            <Stack spacing="6" pb="4">
               <Stack>
+                <FormInput name="name" label="Full Name" placeholder="Name" />
                 <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>
                   <FormInput name="department" label="Department" placeholder="Enter Department" />
@@ -118,7 +119,7 @@ export default function AddContractor({
                   <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
                 </HStack>
               </Stack>
-              <Text fontSize={"sm"}>
+              <Text fontSize="sm">
                 An email invitation will be sent to the contractor upon submission of this form. Subsequent
                 information will be completed by the contractor.
               </Text>
@@ -126,8 +127,8 @@ export default function AddContractor({
               <Button
                 isLoading={isLoading}
                 loadingText="Submitting"
-                variant={"darkBtn"}
-                rightIcon={<PeopleIcon fill={"white"} />}
+                variant="darkBtn"
+                rightIcon={<PeopleIcon fill="white" />}
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"

@@ -1,3 +1,4 @@
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -55,65 +56,64 @@ enum Role {
   ADMIN
   USER
 }
+
 model User {
-  id            String       @id @default(cuid())
+  id            String            @id @default(cuid())
   name          String
-  email         String       @unique
+  email         String            @unique
   phone         String?
   password      String
-  type          Role         @default(USER)
-  emailVerified Boolean?     @default(false)
-  verifyId      String       @unique
+  type          Role              @default(USER)
+  emailVerified Boolean?          @default(false)
+  verifyId      String            @unique
   verification  VerificationToken @relation(fields: [verifyId], references: [id])
   image         String?
   jobRole       String?
   category      String?
-  company       Company?     @relation(fields: [companyId], references: [id])
+  company       Company?          @relation(fields: [companyId], references: [id])
   companyId     String?
-  accounts      Account[]     
+  accounts      Account[]
   sessions      Session[]
   invitations   Invitation[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
 }
 
 model VerificationToken {
-  id         String   @id @default(cuid())
-  token      String   @unique
-  expires    DateTime
-  user       User[]
+  id      String   @id @default(cuid())
+  token   String   @unique
+  expires DateTime
+  user    User[]
 
   @@unique([id, token])
 }
 
-
 model Company {
-  id           String         @id @default(cuid())
+  id           String       @id @default(cuid())
   companyName  String
-  companyEmail String         @unique
+  companyEmail String       @unique
   companyPhone String?
   country      String?
   address      String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   users        User[]
   invitations  Invitation[]
 }
 
 model Invitation {
-  id          String          @id @default(cuid())
-  email       String          @unique
+  id          String    @id @default(cuid())
+  email       String    @unique
   description String?
-  token       String          @unique
+  token       String    @unique
   category    String
   expires     DateTime?
   companyId   String?
   userId      String?
-  user        User?           @relation(fields: [userId], references: [id])
-  company     Company?        @relation(fields: [companyId], references: [id])
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  user        User?     @relation(fields: [userId], references: [id])
+  company     Company?  @relation(fields: [companyId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum WorkerType {
@@ -122,33 +122,31 @@ enum WorkerType {
 }
 
 model Employee {
-  id          String          @id @default(cuid())
-  name        String
-  email       String          @unique
-  department  String
-  jobRole     String  
-  salary      String
-  signBonus   String
-  status      Boolean?        @default(true)
-  category    WorkerType      @default(EMPLOYEE)
-  payrollId   String?
-  payroll     Payroll?        @relation(fields: [payrollId], references: [id])
-  expenseId   String?
-  expense     Expense[]        
+  id         String     @id @default(cuid())
+  name       String
+  email      String     @unique
+  department String
+  jobRole    String
+  salary     String
+  signBonus  String
+  status     Boolean?   @default(true)
+  category   WorkerType @default(EMPLOYEE)
+  payrollId  String?
+  payroll    Payroll?   @relation(fields: [payrollId], references: [id])
+  expenseId  String?
+  expense    Expense[]
 }
 
-
 model Payroll {
-  id          String          @id @default(cuid())
-  title       String
-  cycle       String
-  payday      DateTime
-  auto        Boolean
-  suspend     Boolean        @default(false)
-  burden      Int
-  currency    String
-  employees   Employee[]
-
+  id        String     @id @default(cuid())
+  title     String
+  cycle     String
+  payday    DateTime
+  auto      Boolean
+  suspend   Boolean    @default(false)
+  burden    Int
+  currency  String
+  employees Employee[]
 }
 
 enum ExpensType {
@@ -157,18 +155,17 @@ enum ExpensType {
 }
 
 enum ExpenseStatus {
-    Failed
-    Pending
-    Success
+  Failed
+  Pending
+  Success
 }
 
 model Expense {
-  id          String           @id @default(cuid())
+  id          String        @id @default(cuid())
   description String
   date        DateTime
-  type        ExpensType       @default(Payment)
+  type        ExpensType    @default(Payment)
   status      ExpenseStatus
   amount      String
   employees   Employee[]
-   
 }
