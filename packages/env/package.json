@@ -17,7 +17,7 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "@wyrecc/config": "*",
-    "@wyrecc/tsconfig": "*"
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0"
   }
 }

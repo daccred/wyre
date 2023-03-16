@@ -9,5 +9,6 @@
       "message": "chore(release): publish - ci skip"
     }
   },
-    "version": "0.0.0"
-  }
+  "loglevel": "verbose",
+  "version": "0.1.0"
+}

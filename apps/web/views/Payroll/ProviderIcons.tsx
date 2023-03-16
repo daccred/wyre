@@ -1,4 +1,5 @@
-import { HTMLChakraProps, chakra } from "@chakra-ui/react";
+import type { HTMLChakraProps } from "@chakra-ui/react";
+import { chakra } from "@chakra-ui/react";
 
 export const CreateIcon = (props: HTMLChakraProps<"svg">) => (
   <chakra.svg

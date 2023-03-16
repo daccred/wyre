@@ -1,8 +1,5 @@
-import { Avatar, Button, Checkbox, Flex, Text, Icon, Box } from "@chakra-ui/react";
+import { Avatar, Flex, Text } from "@chakra-ui/react";
 import moment from "moment";
-import { Row } from "react-table";
-
-import { CheckedIcon } from "../ProviderIcons";
 
 export const payrollColumns = [
   {
