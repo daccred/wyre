@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Meta } from "../../layouts";
-import View from "../../views/Notifications/Reimbursement";
+import View from "../../views/employee/Request";
 
 export default function Page() {
   return (
@@ -11,6 +11,3 @@ export default function Page() {
     </>
   );
 }
-
-// add the requireAuth property to the page component
-Page.requireAuth = true;

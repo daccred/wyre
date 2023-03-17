@@ -2,7 +2,6 @@ import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from "@chakra
 import * as React from "react";
 
 import { FormInput, FormNativeSelect } from "../../components/forms";
-import { LoadingButton } from "../../components/shared/loadingButton";
 
 type Props = {
   isSubmitting?: boolean;
@@ -48,6 +47,7 @@ const View: React.FC<Props> = (Props) => {
                 placeholder="john-mcdonald@zayroll.com"
               />
               <FormInput name="role" type="text" label="Job Role" placeholder="e.g. chief people officer" />
+              <FormInput name="companyPhone" type="number" label="Company Phone" placeholder="phone number" />
               <FormInput name="password" type="password" label="Password" placeholder="***************" />
               <FormInput
                 name="confirmPassword"
@@ -56,7 +56,18 @@ const View: React.FC<Props> = (Props) => {
                 placeholder="***************"
               />
 
-              <LoadingButton submitting={isSubmitting}>Create Account</LoadingButton>
+              <Button
+                bg={"#010C14"}
+                color={"white"}
+                type="submit"
+                isDisabled={isSubmitting}
+                isLoading={isSubmitting}
+                // _hover={{
+                //   bg: '#210D35',
+                // }}
+                _hover={{ bg: "" }}>
+                Create Account
+              </Button>
             </Stack>
           </Stack>
         </Flex>

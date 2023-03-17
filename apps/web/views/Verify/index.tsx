@@ -10,8 +10,9 @@ import {
   Center,
   Heading,
   useToast,
+  PinInputField,
+  PinInput,
 } from "@chakra-ui/react";
-import { PinInputField, PinInput } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next/types";
 import * as React from "react";

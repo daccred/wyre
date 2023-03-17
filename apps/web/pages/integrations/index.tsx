@@ -1,6 +1,8 @@
+import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Meta } from "../../layouts";
+import { withAuth } from "../../lib/withAuth";
 import View from "../../views/Integrations";
 
 export default function Page() {
@@ -11,5 +13,9 @@ export default function Page() {
     </>
   );
 }
-// add the requireAuth property to the page component
-Page.requireAuth = true;
+
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+  return {
+    props: {},
+  };
+});
