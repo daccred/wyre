@@ -17,11 +17,12 @@
  *
  */
 // import { prisma } from "@wyrecc/db";
-import { prisma } from "@wyrecc/db";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { type Session } from "next-auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
+
+import { prisma } from "@wyrecc/db";
 
 /**
  * 2. INITIALIZATION

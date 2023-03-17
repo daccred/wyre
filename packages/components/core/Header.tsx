@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 import { LogoutIcon } from "./providerIcon";
 
-
 interface LinkItemProps {
   href: string;
   name?: string;
@@ -72,7 +71,9 @@ const Header = ({ children }: { children: React.ReactNode }) => {
                 ))}
               </HStack>
             </Flex>
-            <Box mt={16} width='100%'>{children}</Box>
+            <Box mt={16} width="100%">
+              {children}
+            </Box>
           </Box>
         </GridItem>
         <GridItem>
