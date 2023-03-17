@@ -23,9 +23,9 @@ export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof I
   icon?: ComponentWithAs<"svg", IconProps>;
   leftElementBank?: boolean;
   leftElementBankElement?: JSX.Element;
+  props?: ComponentPropsWithoutRef<typeof Input>;
   rightElementText?: string;
   rightElementTextStyle?: React.CSSProperties;
-  children?: React.ReactNode;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
@@ -43,6 +43,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
       leftElementBankElement,
       rightElementTextStyle,
       rightElementText,
+      ...props
     },
     ref
   ) => {
@@ -97,6 +98,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
               valueAsNumber: type === "number",
             })}
             type={type}
+            {...props}
           />
           {rightElement && (
             <InputRightElement>
