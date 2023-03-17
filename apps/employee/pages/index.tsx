@@ -16,11 +16,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/" />
       </Head>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex h={16} alignItems="center" justifyContent="space-between">
           <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
 
-          <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
+          <Flex alignItems="center">
+            <Stack direction="row" spacing={7}>
               <AuthShowcase />
             </Stack>
           </Flex>
@@ -52,7 +52,7 @@ const AuthShowcase: React.FC = () => {
         bg="primary.main"
         color="white"
         onClick={sessionData ? () => signOut() : () => signIn()}
-        width={"fit-content"}>
+        width="fit-content">
         {sessionData ? "Sign out" : "Sign in"}
       </Button>
     </Stack>

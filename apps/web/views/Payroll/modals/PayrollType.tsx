@@ -27,14 +27,14 @@ const PayrollType = ({ closePayrollTypeModal, payrollTypeModalIsOpen }: IPayroll
       isOpen={payrollTypeModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"sm"}>
+      size="sm">
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
           Select Payroll Type
         </ModalHeader>
         <ModalCloseButton m="1">
-          <IoCloseCircleOutline fontSize={"28px"} />
+          <IoCloseCircleOutline fontSize="28px" />
         </ModalCloseButton>
         <ModalBody pb={6}>
           <VStack spacing={4}>

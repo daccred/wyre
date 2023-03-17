@@ -38,12 +38,12 @@ const statData: StatData[] = [
 
 const Onbording = () => {
   return (
-    <Stack spacing={"6"}>
+    <Stack spacing="6">
       <Stack>
         <Text fontWeight="bold" fontSize="2xl" mb="1">
           Get Started
         </Text>
-        <Text color={"lightgrey"} fontSize="sm">
+        <Text color="lightgrey" fontSize="sm">
           With these few steps, you can setup your Zayroll account
         </Text>
       </Stack>

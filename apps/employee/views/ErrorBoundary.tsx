@@ -35,7 +35,7 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <Flex bg="orange.50" align="center" justify="center" h="100vh">
           <WrapperInner variant="retro">
-            <Button as={"a"} href="/" p={4} my={4} size="2xl" variant="brand" bg="black">
+            <Button as="a" href="/" p={4} my={4} size="2xl" variant="brand" bg="black">
               <Heading size="md" variant="gradient">
                 Todo Error Boundary
               </Heading>

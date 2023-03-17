@@ -37,7 +37,7 @@ const Integrations = () => {
     {
       name: "OnePipe",
       subtitle: "Launch or embed financial service in days not weeks",
-      logo: <Image src="images/onepipe.png" alt="" boxSize={"30px"} />,
+      logo: <Image src="images/onepipe.png" alt="" boxSize="30px" />,
     },
   ];
 
@@ -50,7 +50,7 @@ const Integrations = () => {
     {
       name: "ExpressPayGH",
       subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
-      logo: <Image src="images/expresspaygh.png" alt="" boxSize={"30px"} />,
+      logo: <Image src="images/expresspaygh.png" alt="" boxSize="30px" />,
     },
     {
       name: "Flutterwave",
@@ -81,63 +81,63 @@ const Integrations = () => {
     {
       name: "MTN Momo",
       subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
-      logo: <Image src="images/mtn momo.png" alt="" boxSize={"30px"} />,
+      logo: <Image src="images/mtn momo.png" alt="" boxSize="30px" />,
     },
     {
       name: "MPesa",
       subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
-      logo: <Image src="images/mpesa.png" alt="" boxSize={"30px"} />,
+      logo: <Image src="images/mpesa.png" alt="" boxSize="30px" />,
     },
   ];
 
   return (
     <ViewLayout title="Integrations">
-      <HStack gap="4" alignItems={"flex-start"}>
-        <Box borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" p="4" bg={"white"} w="70%">
+      <HStack gap="4" alignItems="flex-start">
+        <Box borderRadius="15px" border="1px solid" borderColor="bordergrey" p="4" bg="white" w="70%">
           <Text fontWeight="bold" fontSize="18px" mb="1">
             Payment Services
           </Text>
-          <Text mb="4" color={"lightgrey"} fontSize="sm">
+          <Text mb="4" color="lightgrey" fontSize="sm">
             Supercharge your payroll and connect the best tool for making payments globally
           </Text>
           <HStack gap="1">
-            <FiSearch fontSize={"24px"} />
+            <FiSearch fontSize="24px" />
             <Input
-              variant={"unstyled"}
-              border={"0"}
+              variant="unstyled"
+              border="0"
               borderBottom="1px solid"
               borderRadius={0}
               px="0"
               py="1"
               h="40px"
               w={{ base: "auto", lg: "250px" }}
-              fontSize={"sm"}
+              fontSize="sm"
               placeholder="Search Payment Service"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </HStack>
 
-          <Stack mt="4" spacing={"3"}>
+          <Stack mt="4" spacing="3">
             <Text fontWeight="semibold" pt="4">
               Open Banking
             </Text>
             {openServices &&
               openServices?.map((service) => (
                 <HStack
-                  borderRadius={"10px"}
-                  border={"1px solid"}
+                  borderRadius="10px"
+                  border="1px solid"
                   borderColor="bordergrey"
                   py="3"
                   px="4"
-                  bg={"white"}
+                  bg="white"
                   justifyContent="space-between"
-                  fontSize={"sm"}>
+                  fontSize="sm">
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
                       <Text fontWeight="bold">{service.name}</Text>
-                      <Text color={"lightgrey"}>{service.subtitle}</Text>
+                      <Text color="lightgrey">{service.subtitle}</Text>
                     </Stack>
                   </HStack>
                   <Switch />
@@ -150,19 +150,19 @@ const Integrations = () => {
             {fiatServices &&
               fiatServices?.map((service) => (
                 <HStack
-                  borderRadius={"10px"}
-                  border={"1px solid"}
+                  borderRadius="10px"
+                  border="1px solid"
                   borderColor="bordergrey"
                   py="3"
                   px="4"
-                  bg={"white"}
+                  bg="white"
                   justifyContent="space-between"
-                  fontSize={"sm"}>
+                  fontSize="sm">
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
                       <Text fontWeight="bold">{service.name}</Text>
-                      <Text color={"lightgrey"}>{service.subtitle}</Text>
+                      <Text color="lightgrey">{service.subtitle}</Text>
                     </Stack>
                   </HStack>
                   <Switch />
@@ -175,19 +175,19 @@ const Integrations = () => {
             {cryptoServices &&
               cryptoServices?.map((service) => (
                 <HStack
-                  borderRadius={"10px"}
-                  border={"1px solid"}
+                  borderRadius="10px"
+                  border="1px solid"
                   borderColor="bordergrey"
                   py="3"
                   px="4"
-                  bg={"white"}
+                  bg="white"
                   justifyContent="space-between"
-                  fontSize={"sm"}>
+                  fontSize="sm">
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
                       <Text fontWeight="bold">{service.name}</Text>
-                      <Text color={"lightgrey"}>{service.subtitle}</Text>
+                      <Text color="lightgrey">{service.subtitle}</Text>
                     </Stack>
                   </HStack>
                   <Switch />
@@ -200,19 +200,19 @@ const Integrations = () => {
             {mobileMoneyServices &&
               mobileMoneyServices?.map((service) => (
                 <HStack
-                  borderRadius={"10px"}
-                  border={"1px solid"}
+                  borderRadius="10px"
+                  border="1px solid"
                   borderColor="bordergrey"
                   py="3"
                   px="4"
-                  bg={"white"}
+                  bg="white"
                   justifyContent="space-between"
-                  fontSize={"sm"}>
+                  fontSize="sm">
                   <HStack spacing={4}>
                     {service.logo}
                     <Stack spacing={0}>
                       <Text fontWeight="bold">{service.name}</Text>
-                      <Text color={"lightgrey"}>{service.subtitle}</Text>
+                      <Text color="lightgrey">{service.subtitle}</Text>
                     </Stack>
                   </HStack>
                   <Switch />

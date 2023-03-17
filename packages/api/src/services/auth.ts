@@ -3,7 +3,7 @@ import { sendEmail, emailHTML, forgotPasswordEmail } from "@wyrecc/dialog";
 
 import { TRPCError } from "@trpc/server";
 
-import { IResetPassword, ISignUp, IVerifyEmail } from "../interfaces";
+import type { IResetPassword, ISignUp, IVerifyEmail } from "../interfaces";
 import redisClient from "../redis";
 import { hashString, verifyHash } from "../utils";
 import { ServicesError } from "./ServiceErrors";

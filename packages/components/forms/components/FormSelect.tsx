@@ -37,7 +37,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps}>
         <Flex align="center" justify="space-between">
-          <FormLabel color={"#666666"} fontSize="sm" {...labelProps}>
+          <FormLabel color="#666666" fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         </Flex>

@@ -6,7 +6,7 @@ const View = () => {
   return (
     <Header>
       <Center>
-        <Text fontSize={"3xl"}>Home</Text>
+        <Text fontSize="3xl">Home</Text>
       </Center>
     </Header>
   );

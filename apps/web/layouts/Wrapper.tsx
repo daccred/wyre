@@ -15,7 +15,7 @@ export const NextPageLayout: React.FC<FlexProps> = (props): JSX.Element => {
 
   return (
     <Container
-      as={"main"}
+      as="main"
       mx={{ base: "0", md: "auto" }}
       px={0}
       minH="100vh"
@@ -62,8 +62,8 @@ export const Contain: React.FC<WrapperProps> = (props): JSX.Element => {
 
   return (
     <Flex
-      w={"full"}
-      height={"full"}
+      w="full"
+      height="full"
       direction="column"
       mx={{ base: "0", md: "auto" }}
       px={{ base: 4, md: 8, lg: 12, xl: 12 }}
@@ -78,7 +78,7 @@ export const Contain: React.FC<WrapperProps> = (props): JSX.Element => {
 export const Mobile: React.FC<WrapperProps> = (props): JSX.Element => {
   return (
     <Container
-      maxW={"2xl"}
+      maxW="2xl"
       willChange="background, color"
       transition="background 450ms ease 0s"
       pb={{ base: 16, md: 24 }}
@@ -93,9 +93,9 @@ export const Inner: React.FC<WrapperProps> = (props): JSX.Element => {
 
   return (
     <Flex
-      w={"full"}
-      height={"full"}
-      maxW={"6xl"}
+      w="full"
+      height="full"
+      maxW="6xl"
       direction="column"
       pb={{ base: 24, md: 32 }}
       mx={{ base: "0", md: "auto" }}
@@ -118,7 +118,7 @@ export const WrapperInner = (props: WrapperInnerProps) => {
     <Container py={{ base: "8", md: "12" }} maxWidth={token.maxWidth}>
       <Box
         bg="bg-surface"
-        border={"1px"}
+        border="1px"
         borderColor={useColorModeValue(token.borderColor[0], token.borderColor[1])}
         boxShadow={useColorModeValue(token.shadow[0], token.shadow[1])}
         borderRadius="xl"

@@ -2,7 +2,7 @@ import { prisma } from "@wyrecc/db";
 
 import { TRPCError } from "@trpc/server";
 
-import { IExpenseSchema } from "../interfaces";
+import type { IExpenseSchema } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
 
 export class ExpenseService {

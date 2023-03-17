@@ -14,7 +14,7 @@ import {
   PinInput,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next/types";
+import type { GetServerSideProps } from "next/types";
 import * as React from "react";
 
 import { trpc } from "../../utils/trpc";
@@ -56,11 +56,11 @@ const View = () => {
 
   return (
     <>
-      <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-        <Flex p={12} flex={1} align={"start"} justify={{ base: "", md: "", xl: "" }}>
-          <Stack spacing={8} w={"full"} maxW={"sm"}>
+      <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+        <Flex p={12} flex={1} align="start" justify={{ base: "", md: "", xl: "" }}>
+          <Stack spacing={8} w="full" maxW="sm">
             <Stack>
-              <Text color={"#010C14"} fontWeight={"bold"} fontSize={{ base: "3xl", md: "4xl" }}>
+              <Text color="#010C14" fontWeight="bold" fontSize={{ base: "3xl", md: "4xl" }}>
                 Email Verification
               </Text>
               <Text color="#010C14">Kindly enter the verification code we sent to your email address</Text>
@@ -87,8 +87,8 @@ const View = () => {
               </FormControl>
               <Stack spacing={6}>
                 <Button
-                  bg={"#010C14"}
-                  color={"white"}
+                  bg="#010C14"
+                  color="white"
                   type="submit"
                   isDisabled={pinInputData.length < 6}
                   isLoading={isLoading}
@@ -103,7 +103,7 @@ const View = () => {
 
               <Text>
                 {"Didn’t receive a verification code? "}
-                <Link href="/" color={"#8D1CFF"}>
+                <Link href="/" color="#8D1CFF">
                   Resend
                 </Link>
               </Text>
@@ -112,14 +112,14 @@ const View = () => {
         </Flex>
       </Stack>
 
-      <Flex bgColor="#210D35" color="white" flex={1} align={"center"} justify={"center"}>
-        <HStack flex={1} align={"start"} justify={"end"}>
-          <Stack p={8} maxW={"md"}>
+      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
+        <HStack flex={1} align="start" justify="end">
+          <Stack p={8} maxW="md">
             <Heading>Wyre</Heading>
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
 
-          <Image alt={"Image"} src={"images/Payroll.png"} />
+          <Image alt="Image" src="images/Payroll.png" />
         </HStack>
       </Flex>
     </>

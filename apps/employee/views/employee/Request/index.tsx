@@ -8,7 +8,7 @@ const Index = (props: Props) => {
   return (
     <Header>
       <Center>
-        <Text fontSize={"3xl"}>Request</Text>
+        <Text fontSize="3xl">Request</Text>
       </Center>
     </Header>
   );

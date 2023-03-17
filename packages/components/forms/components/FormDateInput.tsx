@@ -33,7 +33,7 @@ export const FormDateInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         {label && (
-          <FormLabel color={"default"} fontSize="sm" {...labelProps}>
+          <FormLabel color="default" fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         )}
@@ -44,14 +44,14 @@ export const FormDateInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>
             </InputLeftElement>
           )}
           <Input
-            size={"lg"}
+            size="lg"
             fontSize="md"
-            rounded={"3xl"}
+            rounded="3xl"
             _placeholder={{ fontSize: "sm" }}
             _hover={{ borderColor: "primary" }}
             _focus={{ borderColor: "primary" }}
             isDisabled={isSubmitting}
-            type={"datetime-local"}
+            type="datetime-local"
             {...register(name, {
               valueAsDate: true,
             })}

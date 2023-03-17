@@ -58,7 +58,7 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         {label && (
-          <FormLabel color={"default"} fontSize="sm" {...labelProps}>
+          <FormLabel color="default" fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         )}
@@ -72,7 +72,7 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
                   </InputLeftElement>
                 )}
                 <Input
-                  size={"lg"}
+                  size="lg"
                   fontSize="md"
                   _placeholder={{ fontSize: "sm" }}
                   _hover={{ borderColor: "primary" }}
@@ -85,10 +85,10 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
                 <InputRightElement>
                   <Icon
                     p={1}
-                    fontSize={"lg"}
-                    border={"1px"}
-                    rounded={"full"}
-                    cursor={"pointer"}
+                    fontSize="lg"
+                    border="1px"
+                    rounded="full"
+                    cursor="pointer"
                     mt={2}
                     onClick={() => remove(index)}
                     as={CgClose}
@@ -100,11 +100,11 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
           <Button
             size="sm"
             isDisabled={fields.length == limit}
-            variant={"ghost"}
-            colorScheme={"orange"}
+            variant="ghost"
+            colorScheme="orange"
             justifySelf="flex-end"
             justifyContent="flex-end"
-            w={"max-content"}
+            w="max-content"
             onClick={_handleArrayAppend}>
             {addMoreText ?? "+"}
           </Button>

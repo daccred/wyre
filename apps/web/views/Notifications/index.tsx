@@ -132,7 +132,7 @@ const NotificationsList = () => {
 
   return (
     <ViewLayout title="Notifications">
-      <Stack borderRadius={"15px"} border={"1px solid"} borderColor="bordergrey" bg={"white"} w="100%">
+      <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" bg="white" w="100%">
         <Flex justify="space-between" px={4} pt={4} pb={2}>
           <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
             Notifications
@@ -158,7 +158,7 @@ const NotificationsList = () => {
                 <Flex justify="space-between" alignItems="center">
                   <Stack spacing={0} direction="row" alignItems="center" w="100%">
                     <Flex>
-                      <Avatar size="md" name={""} src={notification.img} />
+                      <Avatar size="md" name="" src={notification.img} />
                     </Flex>
                     <Flex direction="column" p={2}>
                       <NotificationLink label={notification.title} />
@@ -169,7 +169,7 @@ const NotificationsList = () => {
                   </Stack>
                 </Flex>
 
-                <Box fontSize={"sm"}>
+                <Box fontSize="sm">
                   <chakra.p fontWeight="medium" fontSize="sm">
                     {notification.created_at}
                   </chakra.p>

@@ -95,18 +95,18 @@ export default function ManageReimbursementModal({
       isOpen={manageReimbursementModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"3xl"}>
+      size="3xl">
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
           Manage Reimbursement
         </ModalHeader>
         <ModalCloseButton m="1">
-          <IoCloseCircleOutline fontSize={"28px"} />
+          <IoCloseCircleOutline fontSize="28px" />
         </ModalCloseButton>
         <ModalBody>
           {renderForm(
-            <Stack spacing={"6"} pb="4">
+            <Stack spacing="6" pb="4">
               <Stack>
                 <HStack>
                   <FormInput
@@ -114,7 +114,7 @@ export default function ManageReimbursementModal({
                     label="Employee/Contractor"
                     placeholder="Name"
                     style={{ textTransform: "capitalize" }}
-                    px={"4"}
+                    px="4"
                     value={data?.fullName}
                     readOnly
                   />
@@ -123,7 +123,7 @@ export default function ManageReimbursementModal({
                     name="amount"
                     label="Amount"
                     placeholder="Enter Amount"
-                    px={"4"}
+                    px="4"
                     value={data?.amount}
                     readOnly
                   />
@@ -132,14 +132,14 @@ export default function ManageReimbursementModal({
                   name="purpose"
                   label="Purpose"
                   placeholder="Enter Purpose"
-                  px={"4"}
+                  px="4"
                   value={data?.purpose}
                   readOnly
                 />
               </Stack>
               <Stack>
-                <Text fontSize={"sm"}>Attachment</Text>
-                <Center p="4" border="1px solid #d2d2d2" bg="#F7F7F7" borderRadius={"5px"}>
+                <Text fontSize="sm">Attachment</Text>
+                <Center p="4" border="1px solid #d2d2d2" bg="#F7F7F7" borderRadius="5px">
                   <Image src="/images/invoice-wyre.png" alt="" />
                 </Center>
               </Stack>
@@ -147,12 +147,12 @@ export default function ManageReimbursementModal({
               <HStack>
                 <Button
                   loadingText="Submitting"
-                  variant={"darkBtn"}
-                  rightIcon={<BsCheck2Circle color={"white"} fontSize="20px" />}
+                  variant="darkBtn"
+                  rightIcon={<BsCheck2Circle color="white" fontSize="20px" />}
                   iconSpacing="3"
                   // w="fit-content"
                   type="submit"
-                  fontSize={"sm"}
+                  fontSize="sm"
                   px="6"
                   _hover={{ bg: "" }}
                   onClick={openApproveReimbursementSuccessModal}>
@@ -160,13 +160,13 @@ export default function ManageReimbursementModal({
                 </Button>
                 <Button
                   loadingText="Submitting"
-                  variant={"outline"}
-                  rightIcon={<IoClose color={"#210D35"} fontSize="20px" />}
+                  variant="outline"
+                  rightIcon={<IoClose color="#210D35" fontSize="20px" />}
                   iconSpacing="3"
-                  borderColor={"#210D35"}
+                  borderColor="#210D35"
                   w="fit-content"
-                  height={"44px"}
-                  fontSize={"sm"}>
+                  height="44px"
+                  fontSize="sm">
                   Disapprove
                 </Button>
               </HStack>

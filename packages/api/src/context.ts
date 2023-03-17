@@ -16,7 +16,7 @@
  * processing a request
  *
  */
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import superjson from "superjson";
 
 /**
@@ -26,7 +26,7 @@ import superjson from "superjson";
  * transformer
  */
 import { initTRPC, TRPCError } from "@trpc/server";
-import { CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 import { getServerAuthSession } from "./common/get-server-side-auth-session";
 

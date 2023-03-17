@@ -1,4 +1,5 @@
-import { RefObject, useState } from "react";
+import type { RefObject } from "react";
+import { useState } from "react";
 
 // See: https://usehooks-ts.com/react-hook/use-event-listener
 import useEventListener from "./useEventListener";

@@ -1,4 +1,4 @@
-import { Button, Stack, Text, Flex, useToast, Input, HStack, Circle } from "@chakra-ui/react";
+import { Button, Stack, Text, Flex, useToast, HStack, Circle } from "@chakra-ui/react";
 import { useState } from "react";
 import z from "zod";
 
@@ -14,15 +14,15 @@ const EditedFormInput = ({ name, type }: { name: string; type?: string }) => {
   return (
     <FormInput
       name={name}
-      variant={"unstyled"}
-      border={"0"}
+      variant="unstyled"
+      border="0"
       borderBottom="1px solid #666666"
       borderRadius={0}
       px="0"
       py="1"
       style={{ height: "28px" }}
       bg="transparent"
-      fontSize={"sm"}
+      fontSize="sm"
       type={type}
     />
   );
@@ -50,53 +50,48 @@ export default function APIForm() {
 
   return (
     <Flex
-      flexDirection={"column"}
-      borderRadius={"15px"}
-      border={"1px solid"}
+      flexDirection="column"
+      borderRadius="15px"
+      border="1px solid"
       borderColor="bordergrey"
       p="4"
-      bg={"white"}
+      bg="white"
       flex="1"
       marginInlineStart="0">
       <Text fontWeight="bold" fontSize="18px" mb="1">
         API Integrations
       </Text>
-      <HStack
-        justifyContent={"space-between"}
-        fontSize="sm"
-        fontWeight={"semibold"}
-        alignItems="flex-end"
-        my="4">
-        <Stack spacing={"0"}>
+      <HStack justifyContent="space-between" fontSize="sm" fontWeight="semibold" alignItems="flex-end" my="4">
+        <Stack spacing="0">
           <MonoIcon />
-          <Text color={"bordergrey"}>Mono</Text>
+          <Text color="bordergrey">Mono</Text>
         </Stack>
-        <Stack textAlign={"right"} spacing={"0"}>
+        <Stack textAlign="right" spacing="0">
           <Text>Status</Text>
           <HStack>
             <Circle size="2" bg={connected ? "#0AAF60" : "#E71D36"} />
-            <Text color={"bordergrey"}>{connected ? "Connected" : "Disconnected"}</Text>
+            <Text color="bordergrey">{connected ? "Connected" : "Disconnected"}</Text>
           </HStack>
         </Stack>
       </HStack>
       {renderForm(
-        <Stack fontSize="sm" textTransform={"capitalize"} spacing={"4"}>
+        <Stack fontSize="sm" textTransform="capitalize" spacing="4">
           <Stack spacing={0} marginTop="0">
-            <Text fontWeight={"semibold"}>URL</Text>
+            <Text fontWeight="semibold">URL</Text>
             <EditedFormInput name="url" />
           </Stack>
           <Stack spacing={0} marginTop="0">
-            <Text fontWeight={"semibold"}>Public Key</Text>
+            <Text fontWeight="semibold">Public Key</Text>
             <EditedFormInput name="publicKey" />
           </Stack>
           <Stack spacing={0} marginTop="0">
-            <Text fontWeight={"semibold"}>Private Key</Text>
+            <Text fontWeight="semibold">Private Key</Text>
             <EditedFormInput name="privateKey" type="password" />
           </Stack>
 
           <Stack pt="6">
             <Button
-              variant={"darkBtn"}
+              variant="darkBtn"
               w="100%"
               mt="10"
               py="15px"
