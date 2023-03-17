@@ -1,20 +1,7 @@
-import {
-  Box,
-  Flex,
-  Avatar,
-  Link,
-  Button,
-  Image,
-  useColorModeValue,
-  Stack,
-  useColorMode,
-  Center,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Button, Image, useColorModeValue, Stack, Center, Text } from "@chakra-ui/react";
 import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import { ReactNode } from "react";
 
 import { trpc } from "../utils/trpc";
 
