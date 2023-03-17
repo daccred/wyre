@@ -25,6 +25,7 @@ export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof I
   leftElementBankElement?: JSX.Element;
   rightElementText?: string;
   rightElementTextStyle?: React.CSSProperties;
+  children?: React.ReactNode;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
