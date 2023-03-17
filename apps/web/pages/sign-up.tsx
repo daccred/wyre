@@ -1,5 +1,4 @@
 import { useToast } from "@chakra-ui/react";
-import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import z from "zod";

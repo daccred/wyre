@@ -6,12 +6,11 @@ type Props = {};
 
 const Index = (props: Props) => {
   return (
-    <>
-      <Header />
+    <Header>
       <Center>
         <Text fontSize={"3xl"}>Request</Text>
       </Center>
-    </>
+    </Header>
   );
 };
 
