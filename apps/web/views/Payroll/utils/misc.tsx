@@ -2,7 +2,7 @@ import { Box, CircularProgress, CircularProgressLabel, Flex, Heading, Text, VSta
 import { useRef } from "react";
 import z from "zod";
 
-import useHover from "../../../hooks/useHover";
+import useHover from "../../../../../packages/components/hooks/useHover";
 
 export const Card = ({
   heading,
