@@ -96,7 +96,6 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
               valueAsNumber: type === "number",
             })}
             type={type}
-            {...props}
           />
           {rightElement && (
             <InputRightElement>
