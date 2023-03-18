@@ -1,5 +1,6 @@
 import type { ThemeConfig } from "@chakra-ui/react";
 import { extendTheme, theme as baseTheme } from "@chakra-ui/react";
+
 import * as components from "./components";
 import * as foundations from "./foundations";
 
@@ -33,7 +34,7 @@ export const theme: Record<string, any> = extendTheme({
       600: "#8215f8",
       700: "#7100f0",
       800: "#6100eb",
-      900: "#4200e5"
+      900: "#4200e5",
     },
     boldgrey: "#9F9F9F",
     lightgrey: "#666666",

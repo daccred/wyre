@@ -1,9 +1,9 @@
 import { useToast } from "@chakra-ui/react";
-import type { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 import z from "zod";
+
 import { useForm } from "../components/forms";
 import { Meta } from "../layouts";
 import View from "../views/Login";

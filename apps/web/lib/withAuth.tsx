@@ -1,4 +1,5 @@
-import { GetServerSideProps, GetServerSidePropsResult } from "next";
+import type { GetServerSideProps, GetServerSidePropsResult } from "next";
+
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 export const withAuth = (getServerSidePropsFunc: GetServerSideProps) => {

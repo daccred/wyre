@@ -8,13 +8,12 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
-  VStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { z } from "zod";
 
-import { FormInput, FormNativeSelect, useForm, FormCheckbox } from "../../../components/forms";
+import { FormInput, useForm } from "../../../components/forms";
 
 interface ISuspendPayrolle {
   closeSuspendPayrollModal: () => void;
@@ -41,14 +40,14 @@ const SuspendPayroll = ({ closeSuspendPayrollModal, suspendPayrolleModalIsOpen }
       isOpen={suspendPayrolleModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"sm"}>
+      size="sm">
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
           Run Payroll Later
         </ModalHeader>
         <ModalCloseButton m="1">
-          <IoCloseCircleOutline fontSize={"28px"} />
+          <IoCloseCircleOutline fontSize="28px" />
         </ModalCloseButton>
         <ModalBody pb={6}>
           {renderForm(

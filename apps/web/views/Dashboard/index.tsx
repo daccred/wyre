@@ -9,7 +9,7 @@ const Index: React.FC = () => {
   const [isNew, setIsNew] = useState(true);
   return (
     <ViewLayout title="Dashboard">
-      <Stack spacing={"6"}>{isNew ? <Onboarding /> : <Preview />}</Stack>
+      <Stack spacing="6">{isNew ? <Onboarding /> : <Preview />}</Stack>
     </ViewLayout>
   );
 };

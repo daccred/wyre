@@ -8,7 +8,6 @@ import {
   Grid,
   Icon,
   Center,
-  Stack,
   Stat,
   StatHelpText,
   StatLabel,
@@ -170,7 +169,7 @@ const Preview = (props: Props) => {
             <Text fontSize="lg" fontWeight="bold">
               Payroll History
             </Text>
-            <Flex justify={"center"} align="center">
+            <Flex justify="center" align="center">
               <Text fontSize="sm" color="purple.600" fontWeight="normal">
                 See More
               </Text>
@@ -203,7 +202,7 @@ const Preview = (props: Props) => {
                 </Thead>
                 <Tbody>
                   {payrollData.map((data, index) => (
-                    <Tr textTransform={"capitalize"} key={index}>
+                    <Tr textTransform="capitalize" key={index}>
                       <Td fontSize="xs">{data?.desc}</Td>
                       <Td fontSize="xs">{formateDate(data?.paid_at)}</Td>
                       <Td
@@ -270,7 +269,7 @@ const Preview = (props: Props) => {
 
                 <Tbody>
                   {data?.map((item, index) => (
-                    <Tr textTransform={"capitalize"} key={index}>
+                    <Tr textTransform="capitalize" key={index}>
                       <Td fontSize="xs">{item?.currency}</Td>
                       <Td fontSize="xs" isNumeric>
                         {item?.amount}
@@ -307,7 +306,7 @@ const Preview = (props: Props) => {
       </Grid>
 
       <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr" }} columnGap="20px">
-        <Box gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w={"full"}>
+        <Box gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w="full">
           <Flex direction="row" justify="space-between" align="center">
             <Flex direction="column">
               <Text fontSize="lg" fontWeight="bold" mb={3}>
@@ -318,7 +317,7 @@ const Preview = (props: Props) => {
             <Icon as={TeamIcon} w={10} h={6} />
           </Flex>
         </Box>
-        <Box gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w={"full"}>
+        <Box gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w="full">
           <Flex direction="row" justify="space-between" align="center">
             <Flex direction="column">
               <Text fontSize="lg" fontWeight="bold" mb={3}>
@@ -341,7 +340,7 @@ const Preview = (props: Props) => {
               <Text fontSize="lg" fontWeight="bold" pb="8px">
                 Payroll Summary
               </Text>
-              <Flex justify={"center"} align="center">
+              <Flex justify="center" align="center">
                 <select name="" id="">
                   <option value="2022">2022</option>
                   <option value="2023">2023</option>
@@ -361,7 +360,8 @@ const Preview = (props: Props) => {
                       w="100%"
                       fontSize="xs"
                       py={2}
-                      key={index}></Flex>
+                      key={index}
+                    />
                   );
                 })
               ) : (
@@ -383,7 +383,7 @@ const Preview = (props: Props) => {
                 <Text fontSize="xs">2022</Text>
               </Flex>
               <Flex direction="row" fontSize="16" fontWeight="bold">
-                USD <Text ml="2">{"215,386.55"}</Text>
+                USD <Text ml="2">215,386.55</Text>
               </Flex>
             </Flex>
           </Box>

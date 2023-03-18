@@ -1,8 +1,9 @@
+import { useForm } from "components/forms";
 import React from "react";
+import z from "zod";
+
 import { Meta } from "../../layouts";
 import View from "../../views/employee/Reset";
-import z from "zod";
-import { useForm } from "components/forms";
 
 const resetValidationSchema = z.object({
   email: z.string(),

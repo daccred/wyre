@@ -1,8 +1,9 @@
+import { useForm } from "components/forms";
 import React from "react";
+import z from "zod";
+
 import { Meta } from "../../layouts";
 import View from "../../views/employee/ForgotPassword";
-import z from "zod";
-import { useForm } from "components/forms";
 
 const forgotValidationSchema = z.object({
   email: z.string(),

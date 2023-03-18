@@ -1,6 +1,6 @@
 import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next/types";
+import type { GetServerSideProps } from "next/types";
 import React, { useEffect, useReducer } from "react";
 import { FiChevronRight } from "react-icons/fi";
 
@@ -48,12 +48,12 @@ const ManageContractor = ({ contractorData }: any) => {
     <>
       <ViewLayout title="Contractors">
         <Breadcrumb
-          fontSize={"xs"}
-          separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
+          fontSize="xs"
+          separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
           pb="2"
-          fontWeight={"semibold"}>
+          fontWeight="semibold">
           <BreadcrumbItem>
-            <BreadcrumbLink href="/contractors" color={"lightgrey"}>
+            <BreadcrumbLink href="/contractors" color="lightgrey">
               Contractor
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -61,20 +61,14 @@ const ManageContractor = ({ contractorData }: any) => {
             <BreadcrumbLink
             // href='#'
             >
-              <Skeleton textTransform={"capitalize"} isLoaded={!isLoading}>
+              <Skeleton textTransform="capitalize" isLoaded={!isLoading}>
                 {state.contractor?.name}
               </Skeleton>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
-        <HStack gap="4" alignItems={"flex-start"}>
-          <Stack
-            borderRadius={"15px"}
-            border={"1px solid"}
-            borderColor="bordergrey"
-            p="4"
-            bg={"white"}
-            w="70%">
+        <HStack gap="4" alignItems="flex-start">
+          <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" p="4" bg="white" w="70%">
             <ContractorForm contractor={state.contractor || null} />
           </Stack>
           <CompensationForm />

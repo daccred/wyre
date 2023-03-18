@@ -45,10 +45,7 @@ const variants = {
     color: "emphasized",
     bg: mode("white", "gray.800")(props),
     _hover: {
-      bg: mode(
-        darken("gray.50", 1)(props.theme),
-        transparentize("gray.700", 0.4)(props.theme)
-      )(props),
+      bg: mode(darken("gray.50", 1)(props.theme), transparentize("gray.700", 0.4)(props.theme))(props),
     },
     _checked: {
       bg: mode("gray.100", "gray.700")(props),
@@ -60,16 +57,10 @@ const variants = {
   ghost: (props: StyleFunctionProps) => ({
     color: "emphasized",
     _hover: {
-      bg: mode(
-        darken("gray.50", 1)(props.theme),
-        darken("gray.700", 4)(props.theme)
-      )(props),
+      bg: mode(darken("gray.50", 1)(props.theme), darken("gray.700", 4)(props.theme))(props),
     },
     _active: {
-      bg: mode(
-        darken("gray.50", 1)(props.theme),
-        darken("gray.700", 4)(props.theme)
-      )(props),
+      bg: mode(darken("gray.50", 1)(props.theme), darken("gray.700", 4)(props.theme))(props),
     },
     _activeLink: {
       bg: mode("gray.100", "gray.700")(props),
@@ -99,22 +90,13 @@ const variants = {
       };
     }
     return {
-      color: mode(
-        `${props.colorScheme}.600`,
-        `${props.colorScheme}.200`
-      )(props),
+      color: mode(`${props.colorScheme}.600`, `${props.colorScheme}.200`)(props),
       _hover: {
-        color: mode(
-          `${props.colorScheme}.700`,
-          `${props.colorScheme}.300`
-        )(props),
+        color: mode(`${props.colorScheme}.700`, `${props.colorScheme}.300`)(props),
         textDecoration: "none",
       },
       _active: {
-        color: mode(
-          `${props.colorScheme}.700`,
-          `${props.colorScheme}.300`
-        )(props),
+        color: mode(`${props.colorScheme}.700`, `${props.colorScheme}.300`)(props),
       },
     };
   },

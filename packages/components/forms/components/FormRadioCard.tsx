@@ -1,6 +1,4 @@
-import * as React from "react";
-import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
-import { forwardRef } from "react";
+import type { Input } from "@chakra-ui/input";
 import type { StackProps, BoxProps, UseRadioProps } from "@chakra-ui/react";
 import {
   FormControl,
@@ -18,8 +16,10 @@ import {
   useStyleConfig,
   HStack,
 } from "@chakra-ui/react";
+import * as React from "react";
+import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
+import { forwardRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import type { Input } from "@chakra-ui/input";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface RadioCardGroupProps<T> extends Omit<StackProps, "onChange"> {
@@ -36,8 +36,7 @@ export interface FormRadioCardOptionProps {
   metadata?: string | number;
 }
 
-export interface FormRadioCardProps
-  extends ComponentPropsWithoutRef<typeof Input> {
+export interface FormRadioCardProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
   /** Field label. */
@@ -47,37 +46,35 @@ export interface FormRadioCardProps
   options: FormRadioCardOptionProps[];
 }
 
-export const RadioCardGroup = forwardRef(
-  <T extends string>(props: RadioCardGroupProps<T>, ref: any) => {
-    const { children, name, defaultValue, value, onChange, ...rest } = props;
-    const { getRootProps, getRadioProps } = useRadioGroup({
-      name,
-      defaultValue,
-      value,
-      onChange,
-    });
+export const RadioCardGroup = forwardRef(<T extends string>(props: RadioCardGroupProps<T>, ref: any) => {
+  const { children, name, defaultValue, value, onChange, ...rest } = props;
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name,
+    defaultValue,
+    value,
+    onChange,
+  });
 
-    const cards = React.useMemo(
-      () =>
-        React.Children.toArray(children)
-          .filter<React.ReactElement<RadioCardProps>>(React.isValidElement)
-          .map((card) => {
-            return React.cloneElement(card, {
-              radioProps: getRadioProps({
-                value: card.props.value,
-              }),
-            });
-          }),
-      [children, getRadioProps]
-    );
+  const cards = React.useMemo(
+    () =>
+      React.Children.toArray(children)
+        .filter<React.ReactElement<RadioCardProps>>(React.isValidElement)
+        .map((card) => {
+          return React.cloneElement(card, {
+            radioProps: getRadioProps({
+              value: card.props.value,
+            }),
+          });
+        }),
+    [children, getRadioProps]
+  );
 
-    return (
-      <Stack ref={ref} {...getRootProps(rest)} w={"full"} rounded={"3xl"}>
-        {cards}
-      </Stack>
-    );
-  }
-);
+  return (
+    <Stack ref={ref} {...getRootProps(rest)} w="full" rounded="3xl">
+      {cards}
+    </Stack>
+  );
+});
 
 interface RadioCardProps extends BoxProps {
   value: string;
@@ -86,8 +83,7 @@ interface RadioCardProps extends BoxProps {
 
 export const RadioCard = (props: RadioCardProps) => {
   const { radioProps, children, ...rest } = props;
-  const { getInputProps, getCheckboxProps, getLabelProps, state } =
-    useRadio(radioProps);
+  const { getInputProps, getCheckboxProps, getLabelProps, state } = useRadio(radioProps);
   const id = useId(undefined, "radio-button");
 
   const styles = useStyleConfig("RadioCard", props);
@@ -104,8 +100,7 @@ export const RadioCard = (props: RadioCardProps) => {
           boxShadow: "outline",
           zIndex: 1,
         },
-      }}
-    >
+      }}>
       <chakra.input {...inputProps} aria-labelledby={id} />
       <Box sx={styles} {...checkboxProps} {...rest}>
         <Stack direction="row">
@@ -116,7 +111,7 @@ export const RadioCard = (props: RadioCardProps) => {
           ) : (
             <Circle borderWidth="2px" size="4" />
           )}
-          <HStack flex={1} justify={"flex-end"}>
+          <HStack flex={1} justify="flex-end">
             {children}
           </HStack>
         </Stack>
@@ -131,9 +126,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
       formState: { errors },
       control,
     } = useFormContext();
-    const error = Array.isArray(errors)
-      ? errors[name]?.message
-      : errors[name]?.message?.toString();
+    const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
     const flex = "flex-start";
@@ -146,8 +139,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
         alignItems={flex}
         justifyContent={flex}
         {...outerProps}
-        isInvalid={isErrorInField}
-      >
+        isInvalid={isErrorInField}>
         <FormLabel {...labelProps}>{label}</FormLabel>
         <Controller
           name={name}
@@ -157,8 +149,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
               //@ts-ignore
               defaultValue={options[0].value}
               spacing="3"
-              {...field}
-            >
+              {...field}>
               {options.map((option) => (
                 <RadioCard key={option.value} value={option.value}>
                   <Text color="muted" fontSize="sm">

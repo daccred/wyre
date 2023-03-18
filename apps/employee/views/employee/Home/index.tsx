@@ -1,18 +1,15 @@
-import { Box, Center, Text } from '@chakra-ui/react';
-import Header from 'components/core/Header';
-import React from 'react'
+import { Center, Text } from "@chakra-ui/react";
+import Header from "components/core/Header";
+import React from "react";
 
-type Props = {}
-
-const Index = (props: Props) => {
+const View = () => {
   return (
-    <>
-        <Header/>
-        <Center>
-            <Text fontSize={'3xl'}>Home</Text>
-        </Center>
-    </>
-  )
-}
+    <Header>
+      <Center>
+        <Text fontSize="3xl">Home</Text>
+      </Center>
+    </Header>
+  );
+};
 
-export default Index;
+export default View;

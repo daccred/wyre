@@ -122,13 +122,13 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
   };
 
   return renderForm(
-    <Stack spacing={"6"} pb="4" mt="-0.5rem">
+    <Stack spacing="6" pb="4" mt="-0.5rem">
       <Text fontWeight="bold" fontSize="18px">
         Personal Details
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size={"xl"} src={""} name={name} />
+        <Avatar size="xl" src="" name={name} />
         <HStack>
           <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={name} />
           <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
@@ -170,10 +170,10 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
         </HStack>
       </Stack>
 
-      <HStack spacing={"4"} pt="4">
+      <HStack spacing="4" pt="4">
         <Button
-          variant={"darkBtn"}
-          rightIcon={<ProfileIcon fill={"#fff"} stroke={"#fff"} />}
+          variant="darkBtn"
+          rightIcon={<ProfileIcon fill="#fff" stroke="#fff" />}
           iconSpacing="3"
           w="fit-content"
           type="submit"
@@ -183,8 +183,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           Update Profile
         </Button>
         <Button
-          variant={"greyBtn"}
-          rightIcon={<ProfileIcon fill={"#210D35"} stroke={"#210D35"} />}
+          variant="greyBtn"
+          rightIcon={<ProfileIcon fill="#210D35" stroke="#210D35" />}
           iconSpacing="3"
           w="fit-content"
           _hover={{ bg: "" }}

@@ -1,8 +1,9 @@
 import React from "react";
+import z from "zod";
+
 import { useForm } from "../components/forms";
 import { Meta } from "../layouts";
 import View from "../views/ForgotPassword";
-import z from "zod";
 
 const loginValidationSchema = z.object({
   email: z.string(),

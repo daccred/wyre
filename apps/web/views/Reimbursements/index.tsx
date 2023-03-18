@@ -27,7 +27,6 @@ import React, { useState, useEffect } from "react";
 import { FiArrowRight, FiArrowLeft, FiChevronRight } from "react-icons/fi";
 
 import ViewLayout from "../../components/core/ViewLayout";
-import { EmptyContractorImage } from "./ProviderIcons";
 import ReimbursementItem from "./ReimbursementItem";
 
 const Index: React.FC = () => {
@@ -118,12 +117,12 @@ const Index: React.FC = () => {
   return (
     <ViewLayout title="Expenses">
       <Breadcrumb
-        fontSize={"xs"}
-        separator={<FiChevronRight color="#d2d2d2" fontSize={"16px"} />}
+        fontSize="xs"
+        separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
         pb="2"
-        fontWeight={"semibold"}>
+        fontWeight="semibold">
         <BreadcrumbItem>
-          <BreadcrumbLink href="/expenses" color={"lightgrey"}>
+          <BreadcrumbLink href="/expenses" color="lightgrey">
             Expenses
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -135,13 +134,13 @@ const Index: React.FC = () => {
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <HStack gap="4" align={"center"}>
+      <HStack gap="4" align="center">
         <Stack
-          borderRadius={"15px"}
-          border={"1px solid"}
+          borderRadius="15px"
+          border="1px solid"
           borderColor="bordergrey"
           // p="4"
-          bg={"white"}
+          bg="white"
           w="100%">
           <Stack spacing={4} p={5}>
             <Text fontWeight="bold" fontSize="18px">
@@ -193,14 +192,14 @@ const Index: React.FC = () => {
               onPageChange={handlePageChange}>
               <PaginationContainer align="center" justify="space-between" p={5} w="full">
                 <PaginationPrevious
-                  variant={"outline"}
+                  variant="outline"
                   h="40px"
                   px="12px"
                   leftIcon={<FiArrowLeft />}
                   iconSpacing={3}
-                  border={"1px solid #D0D5DD"}
+                  border="1px solid #D0D5DD"
                   borderRadius="8px"
-                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                  boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                   <Text>Previous</Text>
                 </PaginationPrevious>
                 <PaginationPageGroup
@@ -226,14 +225,14 @@ const Index: React.FC = () => {
                   ))}
                 </PaginationPageGroup>
                 <PaginationNext
-                  variant={"outline"}
+                  variant="outline"
                   h="40px"
                   px="12px"
                   rightIcon={<FiArrowRight />}
                   iconSpacing={3}
-                  border={"1px solid #D0D5DD"}
+                  border="1px solid #D0D5DD"
                   borderRadius="8px"
-                  boxShadow={"0px 1px 2px rgba(16, 24, 40, 0.05)"}>
+                  boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
                   <Text>Next</Text>
                 </PaginationNext>
               </PaginationContainer>
@@ -241,7 +240,7 @@ const Index: React.FC = () => {
           )}
 
           {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-            <Center w="100%" p="8" flexDirection={"column"}>
+            <Center w="100%" p="8" flexDirection="column">
               {/* <EmptyContractorImage /> */}
               <Text pr="12" pt="2">
                 No Reimbursements

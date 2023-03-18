@@ -64,7 +64,7 @@ export default function AddContractor({
     console.log(JSON.stringify(data));
 
     addContractor({
-      name: '',
+      name: "",
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
