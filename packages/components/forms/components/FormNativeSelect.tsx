@@ -22,14 +22,17 @@ export interface FormNativeSelectProps
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
   labelProps?: ComponentPropsWithoutRef<"label">;
   options: OptionProps[];
+  height?: string;
 }
 
 const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
-  ({ name, label, options, outerProps, labelProps }, ref) => {
+  ({ name, label, options, outerProps, labelProps, height="57px" }, ref) => {
     const {
-      formState: { errors },
+      formState,
       control,
     } = useFormContext();
+
+    const errors = formState?.errors || {}; // use default empty object if formState is falsy
 
     const error = Array.isArray(errors)
       ? errors[name]?.message
@@ -59,8 +62,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
               size={"lg"}
               fontSize="sm"
               bg={"#F7F7F7"}
-              // rounded={"3xl"}
-              minH="57px"
+              minH={height}
               borderRadius={"5px"}
               borderColor="#9f9f9f"
               _placeholder={{ fontSize: "sm" }}

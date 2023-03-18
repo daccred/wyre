@@ -1,16 +1,41 @@
-import { Box, Center, Text } from '@chakra-ui/react';
+import {Box, Text } from '@chakra-ui/react';
 import Header from 'components/core/Header';
 import React from 'react'
+import Transactions from './transaction';
 
-type Props = {}
+interface StatData {
+  balance: string;
+  label: string;
+}
 
-const Index = (props: Props) => {
+const statData: StatData[] = [
+  {
+    balance: "USD 2,400.00",
+    label: 'Gross Salary',
+  }
+];
+
+const Card = () => {
+  return (
+    <Box p={8} bg="#210D35" rounded="15px" my={3}>
+      <Text color="#FDFFFC">
+        {statData[0]?.label}
+      </Text>
+      <Text fontWeight="bold" color="#FDFFFC" fontSize="4xl">{statData[0]?.balance}</Text>
+    </Box>
+  );
+};
+
+
+const Index = () => {
   return (
     <>
         <Header/>
-        <Center>
-            <Text fontSize={'3xl'}>Home</Text>
-        </Center>
+        <Box w={'100%'} maxW="442px" mx={'auto'} my="5" >
+            <Text fontSize={'3xl'} fontWeight="bold" color="#210D35">Compensation</Text>
+            <Card/>
+            <Transactions/>
+        </Box>
     </>
   )
 }

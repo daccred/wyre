@@ -20,7 +20,7 @@ import { trpc } from "../utils/trpc";
 
  const Home: NextPage = () => {
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-
+  const { data: sessionData } = useSession();
 
   return (
     <>
@@ -35,15 +35,18 @@ import { trpc } from "../utils/trpc";
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
-           <AuthShowcase />
+          
+            <Button bg="primary.main" _hover={{ bg:'' }} color="white" onClick={sessionData ? () => signOut() : () => signIn()} width={"fit-content"}>{sessionData ? "Sign out" : "Sign in"}</Button>
+
             </Stack>
           </Flex>
         </Flex>
       </Box>
       <Center>
-        <Text my={10} fontWeight={700} fontSize='2xl'>
+        <Text my={10} fontWeight={'bold'} fontSize='2xl'>
           {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading...</p>}
-        </Text>
+        </Text> 
+        <AuthShowcase />
       </Center>
     </>
   )
@@ -62,7 +65,6 @@ const AuthShowcase: React.FC = () => {
     <Stack>
       {sessionData && <p>Logged in as {sessionData?.user?.name}</p>}
       {secretMessage && <p>{secretMessage}</p>}
-      <Button bg="primary.main" color="white" onClick={sessionData ? () => signOut() : () => signIn()} width={"fit-content"}>{sessionData ? "Sign out" : "Sign in"}</Button>
     </Stack>
   );
 };
