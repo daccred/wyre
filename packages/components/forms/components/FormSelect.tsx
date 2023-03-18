@@ -49,7 +49,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
 
     return (
       <FormControl ref={ref} {...outerProps}>
-        <Flex align="center" justify="space-between" >
+        <Flex align="center" justify="space-between">
           <FormLabel
             color={'#666666'}
             fontSize="sm"
@@ -61,7 +61,6 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
         <Controller
           name={name}
           control={control}
-         
           render={({ field }) => (
             <Select
               placeholder={placeholder}
@@ -95,7 +94,7 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
                     padding: '10px',
                     border: "1px solid #D2D2D2",
                     borderRadius: "5px",
-                    backgroundColor: "#F7F7F7", width:'fit-content',
+                    backgroundColor: "#F7F7F7",
                     "&:hover": {
                       borderColor: "gray",
                     },

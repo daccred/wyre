@@ -27,9 +27,8 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
   return (
     <Link href={href} style={{ textDecoration: "none", width: "100%" }}>
       <Flex
-        alignItems="center"
-        justifyContent={'center'}
-        px={8}
+        align="center"
+        px="6"
         py={3}
         w="100%"
         rounded="full"
@@ -41,7 +40,7 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
         }}
         {...rest}>
        
-        <Text color={isActive ? "white" : "#210D35"} fontWeight="bold">
+       <Text color={isActive ? "white" : ""} fontWeight="bold">
           {name}
         </Text>
       </Flex>
@@ -58,8 +57,8 @@ const Header = ()=> {
   ];
   
     return (
-      <Box w="full" py={5}>
-        <Box mx="auto" maxW="1400px">
+      <Box w="full" py={4}>
+        <Box h="5rem" mx="auto" maxW="1300px">
           <Flex
             w="full"
             h="full"
@@ -67,17 +66,18 @@ const Header = ()=> {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Flex>
+            <Flex align="flex-start">
               <Link href="/">
                 <Image src='/Zayroll Logo.png'/>
               </Link>
             </Flex>
+            <Flex>
               <HStack
                 spacing="8"
-                p={'7px'}
-                w="100%"
-                maxW="442px"
-                display="flex"
+                p={2}
+                display={{
+                  md: "flex",
+                }}
                 bg="gray.100"
                 rounded={'full'}
               >
@@ -85,8 +85,9 @@ const Header = ()=> {
                 <NavItem key={link.name} href={link.href} name={link.name} />
               ))}
               </HStack>
+            </Flex>
+           <Flex justify="flex-end" align="center">
 
-           <Flex>
               <Button color="#E71D36" bg={'none'} _hover={{bg: "none", color: 'none',}} fontWeight="bold" onClick={() => signOut()}>
                  <Icon fontSize="24" mr={2} as={LogoutIcon} /> Logout
               </Button>
