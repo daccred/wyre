@@ -1,9 +1,10 @@
-import { Box, Flex, HStack, Icon, Button, Image, Text, Container, Grid, GridItem } from "@chakra-ui/react";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { Box, Flex, HStack, Icon, Button, Image, Text, Container, Grid, GridItem } from '@chakra-ui/react';
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
-import { LogoutIcon } from "./providerIcon";
+import { LogoutIcon } from './providerIcon';
 
 interface LinkItemProps {
   href: string;
@@ -13,10 +14,10 @@ interface LinkItemProps {
 const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
   const router = useRouter();
 
-  const isActive = router.asPath === href ? true : router.pathname.startsWith(href) && href !== "";
+  const isActive = router.asPath === href ? true : router.pathname.startsWith(href) && href !== '';
 
   return (
-    <Link href={href} style={{ textDecoration: "none", width: "100%" }}>
+    <Link href={href} style={{ textDecoration: 'none', width: '100%' }}>
       <Flex
         align="center"
         px={10}
@@ -24,13 +25,13 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
         w="100%"
         rounded="full"
         cursor="pointer"
-        bg={isActive ? "primary.main" : ""}
+        bg={isActive ? 'primary.main' : ''}
         _hover={{
-          bg: "primary.main",
-          color: "white",
+          bg: 'primary.main',
+          color: 'white',
         }}
         {...rest}>
-        <Text color={isActive ? "white" : ""} fontWeight="bold">
+        <Text color={isActive ? 'white' : ''} fontWeight="bold">
           {name}
         </Text>
       </Flex>
@@ -40,9 +41,9 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
 
 const Header = ({ children }: { children: React.ReactNode }) => {
   const LinkItems = [
-    { name: "Home", href: "/employee/home" },
-    { name: "Request", href: "/employee/request" },
-    { name: "Account", href: "/employee/account" },
+    { name: 'Home', href: '/employee/home' },
+    { name: 'Request', href: '/employee/request' },
+    { name: 'Account', href: '/employee/account' },
   ];
 
   return (
@@ -59,10 +60,10 @@ const Header = ({ children }: { children: React.ReactNode }) => {
           <Box>
             <Flex>
               <HStack
-                spacing="8"
+                spacing="5"
                 p={2}
                 display={{
-                  md: "flex",
+                  md: 'flex',
                 }}
                 bg="gray.100"
                 rounded="full">
@@ -81,12 +82,12 @@ const Header = ({ children }: { children: React.ReactNode }) => {
             <Button
               color="#E71D36"
               bg="none"
-              _hover={{ bg: "none", color: "none" }}
+              _hover={{ bg: 'none', color: 'none' }}
               fontWeight="bold"
               onClick={() => signOut()}>
               <Icon fontSize="24" mr={2} as={LogoutIcon} /> Logout
             </Button>
-          </Flex>{" "}
+          </Flex>{' '}
         </GridItem>
       </Grid>
     </Container>
