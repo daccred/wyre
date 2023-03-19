@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       </Box>
       <Center>
         <Text my={10} fontWeight={700} fontSize="2xl">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading...</p>}
+          {hello.data ? <Text>{hello.data.greeting}</Text> : <Text>Loading...</Text>}
         </Text>
       </Center>
     </>
