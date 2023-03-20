@@ -1,16 +1,4 @@
-import {
-  Flex,
-  Heading,
-  Link,
-  Text,
-  Icon,
-  VStack,
-  Stack,
-  Avatar,
-  Grid,
-  GridItem,
-  Button,
-} from "@chakra-ui/react";
+import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem, Button } from "@chakra-ui/react";
 import { FormInput, FormSelect, useForm } from "components";
 import Header from "components/core/Header";
 import React from "react";
