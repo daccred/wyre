@@ -30,14 +30,13 @@ type FormInputOptions = z.infer<typeof reimbursementValidationSchema>;
 
 const Index = () => {
   const {
-    isOpen: addEmployeeSuccessModalIsOpen,
-    onOpen: openAddEmployeeSuccessModal,
-    onClose: closeAddEmployeeSuccessModal,
+    isOpen: addSuccessModalIsOpen,
+    onOpen: openSuccessModal,
+    onClose: closeSuccessModal,
   } = useDisclosure();
 
   const Submit = (data: FormInputOptions) => {
-    openAddEmployeeSuccessModal();
-    closeAddEmployeeSuccessModal();
+    openSuccessModal();
   };
 
   const { renderForm, formState } = useForm<FormInputOptions>({
@@ -90,8 +89,8 @@ const Index = () => {
         </Box>
       </Header>
       <Modal
-        onClose={closeAddEmployeeSuccessModal}
-        isOpen={addEmployeeSuccessModalIsOpen}
+        onClose={closeSuccessModal}
+        isOpen={addSuccessModalIsOpen}
         isCentered
         size="sm">
         <ModalOverlay />
@@ -99,7 +98,7 @@ const Index = () => {
           <ModalBody>
             <Stack alignItems="center" justifyContent="center" p="4" textAlign="center">
               <Text fontWeight="bold" fontSize="18px">
-                You’ve successfully added an employee to the team member
+                You’ve successfully
               </Text>
             </Stack>
           </ModalBody>
