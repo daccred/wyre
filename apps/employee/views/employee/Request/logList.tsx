@@ -1,21 +1,21 @@
 import { Flex, Stack, Box, Icon, Text, Grid, Skeleton, HStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { GoPrimitiveDot } from "react-icons/go";
 
 import { IndicatorIcon } from "./providerIcon";
 
-interface Transaction {
+interface Request {
   id: number;
   description: string;
   dateTime: string;
   amount: string;
   icon: string;
   created_at: string;
+  status: string;
 }
 
-interface TransactionsListProps {
-  transactions: Transaction[];
+interface RequestListProps {
+  requests: Request[];
   isLoading: boolean;
 }
 
@@ -51,16 +51,14 @@ const PulseCards = () => {
   );
 };
 
-const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) => {
-  const router = useRouter();
-
+const LogList = ({ requests, isLoading }: RequestListProps) => {
   return (
     <Box w="100%">
       {isLoading ? (
         <PulseCards />
       ) : (
         <>
-          {transactions.map((transaction, index) => (
+          {requests.map((request, index) => (
             <Fragment key={index}>
               <Grid
                 templateRows="auto"
@@ -73,13 +71,7 @@ const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) =>
                 bg="#F7F7F7"
                 my={3}
                 _hover={{ bg: "gray.200" }}
-                cursor="pointer"
-                onClick={() =>
-                  router.push({
-                    pathname: `/employee/home/${transaction.id}`,
-                    query: { id: transaction.id },
-                  })
-                }>
+                cursor="pointer">
                 <Stack spacing={0} direction="row" alignItems="center">
                   <Flex px={3}>
                     <Icon as={IndicatorIcon} w={5} h={5} />
@@ -92,22 +84,33 @@ const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) =>
                       lineHeight="20px"
                       mb="2"
                       noOfLines={1}
-                      dangerouslySetInnerHTML={{ __html: transaction.description }}
+                      dangerouslySetInnerHTML={{ __html: request.description }}
                     />
                     <Flex
                       color="#666666"
                       fontSize={{ base: "12px", sm: "12px" }}
                       alignItems="center"
                       lineHeight="13px">
-                      {transaction.dateTime} <Icon as={GoPrimitiveDot} w={4} h={4} mx={1} color="#666666" />{" "}
-                      {transaction.created_at}
+                      {request.dateTime} <Icon as={GoPrimitiveDot} w={4} h={4} mx={1} color="#666666" />{" "}
+                      {request.created_at}
                     </Flex>
                   </Flex>
                 </Stack>
 
-                <Flex fontSize={{ base: "12px", sm: "14px" }} lineHeight="20px" fontWeight="semibold">
-                  <Text>{transaction.amount}</Text>
-                </Flex>
+                <Stack spacing={0} direction="column" alignItems="center">
+                  <Flex
+                    direction="column"
+                    fontSize={{ base: "12px", sm: "14px" }}
+                    lineHeight="20px"
+                    fontWeight="semibold">
+                    <Text>{request.amount}</Text>
+                  </Flex>
+                  <Text
+                    textTransform="capitalize"
+                    color={request.status === "pending" ? "#FF951C" : "green.500"}>
+                    {request.status}
+                  </Text>
+                </Stack>
               </Grid>
             </Fragment>
           ))}
@@ -117,4 +120,4 @@ const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) =>
   );
 };
 
-export default TransactionsList;
+export default LogList;
