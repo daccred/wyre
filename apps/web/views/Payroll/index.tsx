@@ -27,8 +27,6 @@ type Payroll = Record<any, any>;
 const View = () => {
   const router = useRouter();
 
-
-
   const [tableData, setTableData] = useState<Payroll[]>([]);
 
   const { data: payroll, isLoading } = trpc.payroll.getPayrolls.useQuery();
@@ -117,8 +115,6 @@ const View = () => {
           </>
         )}
       </Stack>
-
-    
     </ViewLayout>
   );
 };

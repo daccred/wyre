@@ -88,11 +88,7 @@ const Index = () => {
           )}
         </Box>
       </Header>
-      <Modal
-        onClose={closeSuccessModal}
-        isOpen={addSuccessModalIsOpen}
-        isCentered
-        size="sm">
+      <Modal onClose={closeSuccessModal} isOpen={addSuccessModalIsOpen} isCentered size="sm">
         <ModalOverlay />
         <ModalContent w="100%">
           <ModalBody>

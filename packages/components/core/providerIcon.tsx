@@ -229,9 +229,9 @@ export const Mobile = (props: HTMLChakraProps<"svg">) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-  <path d="M17 2H7C5.897 2 5 2.897 5 4V20C5 21.103 5.897 22 7 22H17C18.103 22 19 21.103 19 20V4C19 2.897 18.103 2 17 2ZM7 16.999V5H17L17.002 16.999H7Z" fill="#8E1CFF"/>
+    <path
+      d="M17 2H7C5.897 2 5 2.897 5 4V20C5 21.103 5.897 22 7 22H17C18.103 22 19 21.103 19 20V4C19 2.897 18.103 2 17 2ZM7 16.999V5H17L17.002 16.999H7Z"
+      fill="#8E1CFF"
+    />
   </chakra.svg>
 );
-
-
-

@@ -17,7 +17,7 @@ type Props = {
 };
 
 const FormUpload = forwardRef<HTMLInputElement, Props>(
-  ({ name, label, accept, required, labelProps, disabled  }, ref) => {
+  ({ name, label, accept, required, labelProps, disabled }, ref) => {
     const [isTouched, setTouched] = useState(false);
     const {
       register,
@@ -119,7 +119,7 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
             {...getRootProps({
               className: "dropzone",
               onClick: () => setTouched(true),
-            })}>  
+            })}>
             {files?.length >= 1 ? (
               <Box>{thumbs}</Box>
             ) : (

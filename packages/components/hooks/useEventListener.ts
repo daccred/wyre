@@ -1,5 +1,6 @@
 import type { RefObject } from "react";
 import { useEffect, useRef } from "react";
+
 import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 
 // See: https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
