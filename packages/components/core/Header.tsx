@@ -39,7 +39,7 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
   );
 };
 
-const Header = ({ children }: { children: React.ReactNode }) => {
+const Header = ({ children }: { children: any }) => {
   const LinkItems = [
     { name: "Home", href: "/employee/home" },
     { name: "Request", href: "/employee/request" },
