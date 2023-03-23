@@ -15,7 +15,7 @@ import {
 import moment from "moment";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-import ManageExpenseModal from "../ManageExpenses/ManageExpenseModal";
+import ManageExpenseModal from "../modals/ManageExpenseModal";
 
 export const textTruncate = (length: number, string: string) => {
   const truncatedText = `${string?.substring(0, length)} ...`;
@@ -113,7 +113,7 @@ export const manageExpensesColumn = (
     Header: "Attachment",
     accessor: (row: any) => (
       <>
-        <Button iconSpacing="3" w="120px" fontSize="sm" bg="#9f9f9f26" px="2" onClick={openViewImageModal}>
+        <Button fontSize="sm" bg="#9f9f9f26" onClick={openViewImageModal}>
           <Text textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
             {row?.attachment?.name}
           </Text>
@@ -164,5 +164,29 @@ export const manageExpensesColumn = (
         )}
       </>
     ),
+  },
+];
+
+export const generateLinkColumn = [
+  {
+    id: 1,
+    Header: "Full Name",
+    accessor: (row: any) => (
+      <Flex align="center">
+        <Avatar size="sm" src={row?.imgURL} name={row?.name} bg="brand.700" color="white" />
+        <Text ml={2}>{row?.name} </Text>
+      </Flex>
+    ),
+  },
+  {
+    id: 2,
+    Header: "Department",
+    accessor: "department",
+  },
+
+  {
+    id: 3,
+    Header: "Job Role",
+    accessor: "jobRole",
   },
 ];

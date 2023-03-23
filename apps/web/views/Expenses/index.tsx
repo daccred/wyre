@@ -1,4 +1,4 @@
-import { Box, Center, Grid, GridItem, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Heading, Spinner, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { CustomTable } from "components/CustomTable";
 import ViewLayout from "components/core/ViewLayout";
 import { useRouter } from "next/router";
@@ -8,10 +8,17 @@ import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
 import { Card } from "views/Payroll/utils/misc";
 
 import { LinkIcon, ManageExpensesIcon } from "./ProviderIcons";
+import GeneratePaymentLinkModal from "./modals/GeneratePaymentLinkModal";
 import { expenses } from "./utils/dummyData";
 import { expensesColumn } from "./utils/tableColumns";
 
 const View = () => {
+  const {
+    isOpen: generatePaymentLinModalIsOpen,
+    onOpen: opengeneratePaymentLinkModal,
+    onClose: closeGeneratePaymnetLinkModal,
+  } = useDisclosure();
+
   const router = useRouter();
   const isLoading = false;
   // TODO: Remove this after api integration
@@ -46,6 +53,7 @@ const View = () => {
               icon={<LinkIcon />}
               textFontSize="sm"
               padding={4}
+              onClick={() => opengeneratePaymentLinkModal()}
             />
           </GridItem>
         </Grid>
@@ -73,6 +81,11 @@ const View = () => {
           </>
         )}
       </Stack>
+
+      <GeneratePaymentLinkModal
+        generatePaymentLinModalIsOpen={generatePaymentLinModalIsOpen}
+        closeGeneratePaymnetLinkModal={closeGeneratePaymnetLinkModal}
+      />
     </ViewLayout>
   );
 };

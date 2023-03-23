@@ -53,7 +53,7 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <Td {...cell.getCellProps()} py={2} px={0}>
+                    <Td {...cell.getCellProps()} py={4} px={0}>
                       {cell.render("Cell")}
                     </Td>
                   );
