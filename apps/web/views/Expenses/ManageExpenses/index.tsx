@@ -96,7 +96,7 @@ const View = () => {
               <Center w="100%" p="8" flexDirection="column">
                 <EmptyEmployeeImage />
                 <Text pr="12" pt={2}>
-                  You currently have no active payroll
+                  You currently have no expenses
                 </Text>
               </Center>
             )}
