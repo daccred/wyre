@@ -13,10 +13,11 @@ type Props = {
   accept?: Accept;
   required?: boolean;
   labelProps?: ComponentPropsWithoutRef<"label">;
+  disabled?: boolean; // new disabled prop
 };
 
 const FormUpload = forwardRef<HTMLInputElement, Props>(
-  ({ name, label, accept, required, labelProps }, ref) => {
+  ({ name, label, accept, required, labelProps, disabled }, ref) => {
     const [isTouched, setTouched] = useState(false);
     const {
       register,
@@ -123,7 +124,7 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
               <Box>{thumbs}</Box>
             ) : (
               <Flex align="center" justify="space-between" w="full">
-                <input {...getInputProps()} />
+                <input {...getInputProps({ disabled: true })} />
                 <Text fontSize="sm">Click to upload document</Text>
                 <Icon as={HiOutlineCloudUpload} boxSize={5} />
               </Flex>

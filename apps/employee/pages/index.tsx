@@ -27,9 +27,9 @@ const Home: NextPage = () => {
         </Flex>
       </Box>
       <Center>
-        <Text my={10} fontWeight={700} fontSize="2xl">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading...</p>}
-        </Text>
+        <Box my={10} fontWeight={700} fontSize="2xl">
+          {hello?.data ? <Text>{hello?.data.greeting}</Text> : <Text>Loading...</Text>}
+        </Box>
       </Center>
     </>
   );
@@ -46,8 +46,8 @@ const AuthShowcase: React.FC = () => {
 
   return (
     <Stack>
-      {sessionData && <p>Logged in as {sessionData?.user?.name}</p>}
-      {secretMessage && <p>{secretMessage}</p>}
+      {sessionData && <Text>Logged in as {sessionData?.user?.name}</Text>}
+      {secretMessage && <Text>{secretMessage}</Text>}
       <Button
         bg="primary.main"
         color="white"

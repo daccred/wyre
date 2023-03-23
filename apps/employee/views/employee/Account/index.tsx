@@ -14,12 +14,12 @@ const accountItems = [
   {
     name: "Contract Terms",
     subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "contract-terms",
+    path: "account/contract-terms",
   },
   {
     name: "Payment Method",
     subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "manage-profile",
+    path: "account/payment-method",
   },
   {
     name: "Complete KYC",

@@ -2,6 +2,7 @@ import { Box, Flex, HStack, Icon, Button, Image, Text, Container, Grid, GridItem
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 
 import { LogoutIcon } from "./providerIcon";
 
@@ -38,7 +39,7 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
   );
 };
 
-const Header = ({ children }: { children: React.ReactNode }) => {
+const Header = ({ children }: { children: any }) => {
   const LinkItems = [
     { name: "Home", href: "/employee/home" },
     { name: "Request", href: "/employee/request" },
@@ -59,7 +60,7 @@ const Header = ({ children }: { children: React.ReactNode }) => {
           <Box>
             <Flex>
               <HStack
-                spacing="8"
+                spacing="5"
                 p={2}
                 display={{
                   md: "flex",
