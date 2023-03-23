@@ -1,4 +1,10 @@
-import { Avatar, Button, HStack, Stack, Text, useToast,
+import {
+  Avatar,
+  Button,
+  HStack,
+  Stack,
+  Text,
+  useToast,
   useTab,
   useMultiStyleConfig,
   Tabs,
@@ -8,7 +14,8 @@ import { Avatar, Button, HStack, Stack, Text, useToast,
   Grid,
   GridItem,
   Icon,
-  Flex, } from "@chakra-ui/react";
+  Flex,
+} from "@chakra-ui/react";
 import type { Ref } from "react";
 import React from "react";
 import { GoPrimitiveDot } from "react-icons/go";
