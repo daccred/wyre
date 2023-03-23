@@ -17,14 +17,12 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
     headerGroups,
     page,
     prepareRow,
-    pageCount,
-    gotoPage,
     nextPage,
     previousPage,
     canPreviousPage,
     canNextPage,
     pageOptions,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable(
     {
       columns,
@@ -41,7 +39,7 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <Th fontSize="md" py={6}>
+                <Th fontSize="md" py={4} bg="transparent" borderTop="none" px={0}>
                   {column.render("Header")}
                 </Th>
               ))}
@@ -49,12 +47,16 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
+                  return (
+                    <Td {...cell.getCellProps()} py={2} px={0}>
+                      {cell.render("Cell")}
+                    </Td>
+                  );
                 })}
               </Tr>
             );
