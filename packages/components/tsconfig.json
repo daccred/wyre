@@ -1,8 +1,9 @@
 {
+  "extends": "@wyrecc/tsconfig/react-library.json",
   "compilerOptions": {
+    "outDir": "dist",
     "jsx": "react"
   },
-  "extends": "@wyrecc/tsconfig/react-library.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
 }

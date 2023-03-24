@@ -1,3 +1,5 @@
+import React, { forwardRef } from "react";
+
 import type { RangeSliderProps } from "@chakra-ui/react";
 import { RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack } from "@chakra-ui/react";
 

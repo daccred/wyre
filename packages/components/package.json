@@ -1,11 +1,23 @@
 {
   "name": "components",
   "version": "1.0.0",
-  "description": "share form components",
+  "description": "shared ui components for wyre",
   "license": "MIT",
-  "main": "./index.tsx",
+  "main": "dist/index.js",
+  "directories": {
+    "dist": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
-    "lint": "TIMING=1 eslint \"**/*.ts*\""
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf node_modules dist",
+    "dev": "tsc --watch",
+    "lint:es": "TIMING=1 eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
+    "lint:ts": "tsc --pretty --noEmit"
   },
   "types": "./index.tsx",
   "devDependencies": {

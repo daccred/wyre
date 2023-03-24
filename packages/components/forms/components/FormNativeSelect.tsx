@@ -1,6 +1,7 @@
 import { FormControl, FormErrorMessage, Select, FormLabel } from "@chakra-ui/react";
 import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
+
 import { Controller, useFormContext } from "react-hook-form";
 
 interface OptionProps {

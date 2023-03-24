@@ -1,14 +1,14 @@
-import { Box, IconButton, Icon } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { Box, IconButton, Icon } from "@chakra-ui/react";
 import { AiOutlineEdit } from "react-icons/ai";
 import type { Hooks, CellProps, HeaderProps } from "react-table";
 import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from "react-table";
 
-import useDebounce from "../hooks/useDebounce";
+import { useDebounce } from "../hooks/use-debounce";
 
 /* Dependency components */
 // import { TD, UseTableRootProps } from './interface';
-import TableCheckbox from "./TableCheckbox";
+import TableCheckbox from "./table-checkbox";
 
 interface TD {
   [key: string]: any;
