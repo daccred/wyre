@@ -3,7 +3,7 @@ import z from "zod";
 
 import { useForm } from "../components/forms";
 import { Meta } from "../layouts";
-import View from "../views/Forgot-password";
+import View from "../views/ForgotPassword";
 
 const loginValidationSchema = z.object({
   email: z.string(),

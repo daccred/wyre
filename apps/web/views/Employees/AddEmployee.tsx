@@ -14,12 +14,11 @@ import { useToast } from "@chakra-ui/react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import z from "zod";
 
-import { FormInput, FormNativeSelect, useForm } from "../../components/forms";
+import { FormInput, useForm } from "../../components/forms";
 import { trpc } from "../../utils/trpc";
 import { PeopleIcon } from "./ProviderIcons";
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "name is required" }),
   email: z.string().email(),
   department: z.string().min(1, { message: "Required" }),
   jobRole: z.string().min(1, { message: "Required" }),
@@ -65,7 +64,7 @@ export default function AddEmployee({
     console.log(JSON.stringify(data));
 
     addEmployee({
-      name: data.name,
+      name: "",
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
@@ -87,31 +86,22 @@ export default function AddEmployee({
       isOpen={addEmployeeModalIsOpen}
       closeOnOverlayClick={false}
       isCentered
-      size={"3xl"}>
+      size="3xl">
       <ModalOverlay />
       <ModalContent w="100%">
         <ModalHeader fontWeight="bold" fontSize="18px">
           Contract Details
         </ModalHeader>
         <ModalCloseButton m="1">
-          <IoCloseCircleOutline fontSize={"28px"} />
+          <IoCloseCircleOutline fontSize="28px" />
         </ModalCloseButton>
         <ModalBody>
           {renderForm(
-            <Stack spacing={"6"} pb="4">
+            <Stack spacing="6" pb="4">
               <Stack>
-                <FormInput name="name" label="Full name" placeholder="Full name" />
                 <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>
-                  <FormNativeSelect
-                    name="department"
-                    label="Department"
-                    placeholder="Select Department"
-                    options={[
-                      { label: "Tech", value: "tech" },
-                      { label: "Time", value: "time" },
-                    ]}
-                  />
+                  <FormInput name="department" label="Department" placeholder="Enter Department" />
 
                   <FormInput name="jobRole" label="Job Role" placeholder="Enter Job Role" />
                 </HStack>
@@ -126,7 +116,7 @@ export default function AddEmployee({
                   <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
                 </HStack>
               </Stack>
-              <Text fontSize={"sm"}>
+              <Text fontSize="sm">
                 An email invitation will be sent to the employee upon submission of this form. Subsequent
                 information will be completed by the employee.
               </Text>
@@ -134,8 +124,8 @@ export default function AddEmployee({
               <Button
                 isLoading={isLoading}
                 loadingText="Submitting"
-                variant={"darkBtn"}
-                rightIcon={<PeopleIcon fill={"white"} />}
+                variant="darkBtn"
+                rightIcon={<PeopleIcon fill="white" />}
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"

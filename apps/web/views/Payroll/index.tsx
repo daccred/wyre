@@ -19,22 +19,13 @@ import ViewLayout from "../../components/core/ViewLayout";
 import { trpc } from "../../utils/trpc";
 import { EmptyEmployeeImage } from "../../views/Employees/ProviderIcons";
 import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
-import PayrollType from "./modals/PayrollType";
 import { Card, PayrollTypeCard } from "./utils/misc";
 import { payrollColumns } from "./utils/tableColumns";
-
-// import { Payroll } from "@wyrecc/db";
 
 type Payroll = Record<any, any>;
 
 const View = () => {
   const router = useRouter();
-
-  const {
-    isOpen: payrollTypeModalIsOpen,
-    onOpen: openPayrollTypeModal,
-    onClose: closePayrollTypeModal,
-  } = useDisclosure();
 
   const [tableData, setTableData] = useState<Payroll[]>([]);
 
@@ -124,11 +115,6 @@ const View = () => {
           </>
         )}
       </Stack>
-
-      <PayrollType
-        payrollTypeModalIsOpen={payrollTypeModalIsOpen}
-        closePayrollTypeModal={closePayrollTypeModal}
-      />
     </ViewLayout>
   );
 };

@@ -4,7 +4,7 @@ import { prisma } from "@wyrecc/db/src";
 
 import { TRPCError } from "@trpc/server";
 
-import { InvitationSchemaType } from "../interfaces";
+import type { InvitationSchemaType } from "../interfaces";
 import { ServicesError } from "./ServiceErrors";
 import { AuthService } from "./auth";
 

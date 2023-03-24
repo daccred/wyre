@@ -5,11 +5,11 @@ import { useForm } from "../components/forms";
 import { Meta } from "../layouts";
 import View from "../views/Reset";
 
-const loginValidationSchema = z.object({
+const ValidationSchema = z.object({
   email: z.string(),
 });
 
-type FormInputOptions = z.infer<typeof loginValidationSchema>;
+type FormInputOptions = z.infer<typeof ValidationSchema>;
 
 export default function Page() {
   const handleSubmit = async (data: FormInputOptions) => {
@@ -18,7 +18,7 @@ export default function Page() {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     defaultValues: { email: "" },
-    schema: loginValidationSchema,
+    schema: ValidationSchema,
   });
 
   return renderForm(

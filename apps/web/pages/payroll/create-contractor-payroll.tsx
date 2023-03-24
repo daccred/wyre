@@ -1,6 +1,8 @@
+import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { Meta } from "../../layouts";
+import { withAuth } from "../../lib/withAuth";
 import View from "../../views/Payroll/CreateContractorPayroll";
 
 export default function Page() {
@@ -11,3 +13,9 @@ export default function Page() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+  return {
+    props: {},
+  };
+});

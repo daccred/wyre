@@ -7,21 +7,14 @@ import { useEffect, useState } from "react";
 import { isMobile, isBrowser, isTablet } from "react-device-detect";
 
 import MobilePrompt from "../components/core/MobilePrompt";
-import { ProtectedLayout } from "../components/protected";
 import "../styles/globals.css";
 import { theme } from "../theme/index";
 import { trpc } from "../utils/trpc";
 import ErrorBoundary from "../views/ErrorBoundary";
 
-type AppPropsWithAuth = AppProps & {
-  Component: {
-    requireAuth?: boolean;
-  };
-};
-
-type MyAppProps = {
+type MyAppProps = AppProps & {
   session: Session | null;
-} & AppPropsWithAuth;
+};
 
 const MyApp = ({ Component, pageProps }: MyAppProps) => {
   const { session, ...restPageProps } = pageProps;
@@ -46,19 +39,10 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
   return (
     <SessionProvider session={session}>
       <ErrorBoundary>
-        {Component.requireAuth ? (
-          <ProtectedLayout>
-            <ChakraProvider theme={theme}>
-              {allowDisplay === "web" && !smallerThan640 && <Component {...restPageProps} />}
-              {allowDisplay === "mobile" && <MobilePrompt />}
-            </ChakraProvider>
-          </ProtectedLayout>
-        ) : (
-          <ChakraProvider theme={theme}>
-            {allowDisplay === "web" && !smallerThan640 && <Component {...restPageProps} />}
-            {allowDisplay === "mobile" && <MobilePrompt />}
-          </ChakraProvider>
-        )}
+        <ChakraProvider theme={theme}>
+          {allowDisplay === "web" && !smallerThan640 && <Component {...restPageProps} />}
+          {allowDisplay === "mobile" && <MobilePrompt />}
+        </ChakraProvider>
       </ErrorBoundary>
     </SessionProvider>
   );

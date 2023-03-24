@@ -44,24 +44,18 @@ export default function ReimbursementItem({ data }: reimbursementItemInterface) 
 
   return (
     <>
-      <Tr textTransform={"capitalize"}>
+      <Tr textTransform="capitalize">
         <Td>
           <HStack>
-            <Avatar size={"sm"} src={data?.imgURL} />
+            <Avatar size="sm" src={data?.imgURL} />
             <Text>{data?.fullName}</Text>
           </HStack>
         </Td>
         <Td>{data?.purpose}</Td>
         <Td>{data?.amount}</Td>
         <Td>
-          <Button
-            iconSpacing="3"
-            w={"120px"}
-            fontSize="sm"
-            bg="#9f9f9f26"
-            px="2"
-            onClick={openViewImageModal}>
-            <Text textOverflow={"ellipsis"} whiteSpace="nowrap" overflow={"hidden"}>
+          <Button iconSpacing="3" w="120px" fontSize="sm" bg="#9f9f9f26" px="2" onClick={openViewImageModal}>
+            <Text textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
               {data?.attachment}
             </Text>
           </Button>
@@ -69,21 +63,21 @@ export default function ReimbursementItem({ data }: reimbursementItemInterface) 
         <Td>
           {data?.action === "manage" && (
             <Button
-              variant={"darkBtn"}
+              variant="darkBtn"
               iconSpacing="3"
-              w={"120px"}
+              w="120px"
               fontSize="sm"
               onClick={openManageReimbursementModal}>
               Manage
             </Button>
           )}
           {data?.action === "approved" && (
-            <Text w={"120px"} fontSize="sm" color="#0AAF60">
+            <Text w="120px" fontSize="sm" color="#0AAF60">
               Approved
             </Text>
           )}
           {data?.action === "disapproved" && (
-            <Text w={"120px"} fontSize="sm" color="#E71D36">
+            <Text w="120px" fontSize="sm" color="#E71D36">
               Disapproved
             </Text>
           )}
@@ -106,11 +100,11 @@ export default function ReimbursementItem({ data }: reimbursementItemInterface) 
         }}
         isOpen={approveReimbursementSuccessModalIsOpen}
         isCentered
-        size={"sm"}>
+        size="sm">
         <ModalOverlay />
         <ModalContent w="100%">
           <ModalBody>
-            <Stack alignItems={"center"} justifyContent="center" p="4" textAlign="center">
+            <Stack alignItems="center" justifyContent="center" p="4" textAlign="center">
               <Text fontWeight="bold" fontSize="18px">
                 You’ve successfully approved this reimbursement request
               </Text>
@@ -121,14 +115,14 @@ export default function ReimbursementItem({ data }: reimbursementItemInterface) 
       </Modal>
 
       {/* View image modal */}
-      <Modal onClose={closeViewImageModal} isOpen={viewImageModalIsOpen} isCentered size={"xl"}>
+      <Modal onClose={closeViewImageModal} isOpen={viewImageModalIsOpen} isCentered size="xl">
         <ModalOverlay />
         <ModalContent w="100%">
           <ModalHeader fontWeight="bold" fontSize="md" pb="0">
             {data?.attachment}
           </ModalHeader>
           <ModalCloseButton m="1">
-            <IoCloseCircleOutline fontSize={"28px"} />
+            <IoCloseCircleOutline fontSize="28px" />
           </ModalCloseButton>
           <ModalBody p="4">
             <Image src="/images/invoice-wyre.png" alt="" w="100%" />
