@@ -13,7 +13,6 @@ import React, { forwardRef } from "react";
 import { useFormContext, useFieldArray } from "react-hook-form";
 import { CgClose } from "react-icons/cg";
 
-
 export interface InputFieldArrayProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
