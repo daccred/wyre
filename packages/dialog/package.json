@@ -4,21 +4,21 @@
   "description": "Module to handle external communications for zayroll eg: email, sms",
   "license": "MIT",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
   ],
   "scripts": {
     "build": "tsc",
     "clean": "rimraf .turbo node_modules dist",
-    "lint:ts": "tsc --pretty --noEmit",
-    "lint:es": "TIMING=1 eslint \"src/**/*.ts\""
+    "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
+    "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "./dist/index.d.ts",
   "dependencies": {
+    "@wyrecc/tsconfig": "^0.1.0",
     "crypt": "^0.0.2",
     "dotenv": "^16.0.3",
     "postmark": "^3.0.15",
-    "query-string": "^8.1.0",
-    "@wyrecc/tsconfig": "^0.1.0"
+    "query-string": "^8.1.0"
   }
 }

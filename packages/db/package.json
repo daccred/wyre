@@ -4,33 +4,33 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
   ],
   "scripts": {
+    "prebuild": "npm run db-generate && npm run db-sync",
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf .turbo node_modules dist",
-    "db:push": "prisma db push",
     "db-deploy": "prisma migrate deploy",
     "db-generate": "prisma generate",
-    "db-sync": "prisma migrate dev",
     "db-migrate": "prisma migrate dev --name",
     "db-nuke": "docker-compose down --volumes --remove-orphans",
     "db-reset": "run-s db-nuke db-setup",
     "db-seed": "prisma db seed",
     "db-setup": "run-s db-up db-deploy db-seed",
     "db-studio": "prisma studio",
+    "db-sync": "prisma migrate dev",
     "db-up": "docker-compose up -d",
-    "dx": "npm run  db-setup",
-    "lint:ts": "tsc --pretty --noEmit",
-    "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
+    "db:push": "prisma db push",
+    "predev": "npm run db-generate && npm run db-sync",
     "dev": "tsc --watch",
+    "dx": "npm run  db-setup",
     "format": "prisma format",
     "generate": "prisma generate",
-    "prebuild": "npm run db-generate && npm run db-sync",
-    "predev": "npm run db-generate && npm run db-sync"
+    "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
+    "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@prisma/client": "^4.5.0"
   },

@@ -1,20 +1,20 @@
 {
   "name": "@wyrecc/api",
   "version": "0.1.0",
+  "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
   ],
-  "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "lint:ts": "tsc --pretty --noEmit",
-    "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
-    "lint:es": "eslint --fix"
+    "dev": "tsc --watch",
+    "lint:es": "eslint --fix",
+    "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@trpc/client": "^10.8.1",
     "@trpc/server": "^10.8.1",

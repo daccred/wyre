@@ -1,14 +1,14 @@
 {
   "name": "@wyrecc/config",
   "version": "0.1.0",
-  "sideEffects": false,
-  "main": "index.js",
   "license": "MIT",
+  "main": "index.js",
   "files": [
-    "eslint-preset.js",
     "eslint-overrides.js",
+    "eslint-preset.js",
     "prettier-preset.js"
   ],
+  "sideEffects": false,
   "dependencies": {
     "eslint-config-next": "^13.2.1",
     "eslint-config-prettier": "^8.6.0",
