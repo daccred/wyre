@@ -185,14 +185,6 @@ const MonthlyEmployeeSalary = () => {
   const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: createPayrollValidationSchema,
-    // defaultValues: {
-    //   title: payroll?.title,
-    //   cycle: payroll?.cycle as "daily" | "bi-weekly" | "monthly",
-    //   auto: payroll?.auto,
-    //   payday: payroll?.payday,
-    //   currency: payroll?.currency as "USD" | "GHC" | "NGN" | "CNY" | "GBP" | "EUR",
-    //   suspend: payroll?.suspend,
-    // },
   });
   useEffect(() => {
     if (payroll) {
