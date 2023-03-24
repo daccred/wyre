@@ -2,14 +2,13 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Button,
   Center,
   Heading,
   Spinner,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import type { Payroll } from "@prisma/client";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
@@ -18,51 +17,39 @@ import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
 
 import { CustomTable } from "../../../components/CustomTable";
 import ViewLayout from "../../../components/core/ViewLayout";
-import { trpc } from "../../../utils/trpc";
-import { managePayrollPath } from "../routes";
-import { managePayrollColumns } from "../utils/tableColumns";
+import { expenses } from "../utils/dummyData";
+import { manageExpensesColumn } from "../utils/tableColumns";
 
 const View = () => {
+  const {
+    isOpen: viewImageModalIsOpen,
+    onOpen: openViewImageModal,
+    onClose: closeViewImageModal,
+  } = useDisclosure();
+
+  const {
+    isOpen: manageExpenseModalIsOpen,
+    onOpen: openManageExpenseModal,
+    onClose: closeManageExpenseModal,
+  } = useDisclosure();
+
   const { pathname } = useRouter();
 
-  const [tableData, setTableData] = useState<Payroll[]>([]);
-  const router = useRouter();
+  const [tableData, setTableData] = useState<any[]>([]);
 
-  const columns = [
-    ...managePayrollColumns,
-    {
-      Header: "Action",
-      accessor: (row: any) => (
-        <Button
-          bg="brand.700"
-          color="white"
-          iconSpacing="3"
-          w="fit-content"
-          _hover={{ hover: "none" }}
-          onClick={() =>
-            router.push({
-              pathname: "/payroll/manage-payroll/monthly-employee-salary",
-              query: { id: row?.id },
-            })
-          }>
-          Manage
-        </Button>
-      ),
-    },
-  ];
-
-  const { data: payroll, isLoading } = trpc.payroll.getPayrolls.useQuery();
+  // TODO: Remove this after api integration
+  const isLoading = false;
 
   useEffect(() => {
-    if (!payroll) {
+    if (!expenses) {
       return;
     }
 
-    setTableData(payroll as Payroll[]);
-  }, [payroll]);
+    setTableData(expenses);
+  }, []);
 
   return (
-    <ViewLayout title="Payroll">
+    <ViewLayout title="Expenses">
       <Breadcrumb
         fontSize="sm"
         separator={<FiChevronRight color="#d2d2d2" fontSize="16px" />}
@@ -70,20 +57,20 @@ const View = () => {
         fontWeight="semibold"
         color="lightgrey">
         <BreadcrumbItem>
-          <BreadcrumbLink href="/payroll">Payroll</BreadcrumbLink>
+          <BreadcrumbLink href="/expenses">Expenses</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink
-            href={managePayrollPath}
-            color={pathname === managePayrollPath ? "black" : "lightgrey"}
+            href="/expenses/manage-expenses"
+            color={pathname === "/expenses/manage-expenses" ? "black" : "lightgrey"}
             isCurrentPage={true}>
-            Manage Payroll
+            Manage Expenses
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Stack rounded="md" p={6} bg="white" w="100%" mt={3} border="1px solid #D2D2D2">
         <Heading as="h4" size="xs" fontSize="xl">
-          Active Payroll
+          Expense List
         </Heading>
         {isLoading ? (
           <Center>
@@ -92,12 +79,24 @@ const View = () => {
         ) : (
           <>
             {tableData?.length > 0 ? (
-              <CustomTable columns={columns as Column<Payroll>[]} data={tableData} />
+              <CustomTable
+                columns={
+                  manageExpensesColumn(
+                    viewImageModalIsOpen,
+                    openViewImageModal,
+                    closeViewImageModal,
+                    manageExpenseModalIsOpen,
+                    openManageExpenseModal,
+                    closeManageExpenseModal
+                  ) as unknown as Column<any>[]
+                }
+                data={tableData}
+              />
             ) : (
               <Center w="100%" p="8" flexDirection="column">
                 <EmptyEmployeeImage />
                 <Text pr="12" pt={2}>
-                  You currently have no active payroll
+                  You currently have no expenses
                 </Text>
               </Center>
             )}

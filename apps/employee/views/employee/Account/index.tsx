@@ -21,11 +21,6 @@ const accountItems = [
     subText: "Cursus diam amet non arcu in ultricies a fringilla",
     path: "account/payment-method",
   },
-  {
-    name: "Complete KYC",
-    subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "complete-kyc",
-  },
 ];
 
 const View = () => {
