@@ -11,7 +11,7 @@ import View from "../views/Register";
 const signUpValidationSchema = z
   .object({
     company: z.string().min(1, "Company name is required"),
-    companyPhone: z.string().min(1, "Phone number is required"),
+    companyPhone: z.number().min(1, "Phone number is required"),
     country: z.string(),
     name: z.string().min(1, "Full name is required"),
     email: z.string().email(),
@@ -34,12 +34,10 @@ export default function Page() {
   const router = useRouter();
   const toast = useToast();
 
-  type User = {
-    id: string;
-    email: string;
-    // verifyId: string | null;
-    // other properties
-  };
+  // type User = {
+  //   id: string;
+  //   email: string;
+  // };
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess: (data) => {
@@ -59,7 +57,7 @@ export default function Page() {
         });
       }
     },
-    onError(error: any) {
+    onError(error: unknown) {
       toast({
         status: "error",
         description: `${error}`,
@@ -77,7 +75,7 @@ export default function Page() {
       password: data.password,
       name: data.name,
       companyName: data.company,
-      companyPhone: data.companyPhone,
+      companyPhone: data.companyPhone ? String(data.companyPhone) : undefined, // convert number to string
       country: data.country,
       jobRole: data.role,
     });
