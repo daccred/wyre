@@ -3,7 +3,7 @@ import { prisma } from "@wyrecc/db/src";
 import { TRPCError } from "@trpc/server";
 
 import type { IUserSchema } from "../interfaces";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export class AdminService {
   // public adminId: string;
@@ -35,7 +35,7 @@ export class AdminService {
         });
       }
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async getAdmin(id?: string) {
@@ -54,7 +54,7 @@ export class AdminService {
         message: "Admin not found",
       });
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -73,7 +73,7 @@ export class AdminService {
         message: "user not found",
       });
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -93,7 +93,7 @@ export class AdminService {
         message: "User not found",
       });
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -112,7 +112,7 @@ export class AdminService {
         message: "User not found",
       });
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

@@ -11,9 +11,12 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "strict": true,
-    "target": "es2021"
+    "target": "es2021",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+    }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": [ "src/**/*"],
+  "exclude": ["node_modules"]
 }

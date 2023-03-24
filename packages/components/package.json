@@ -1,5 +1,5 @@
 {
-  "name": "components",
+  "name": "@wyrecc/components",
   "version": "1.0.0",
   "description": "shared ui components for wyre",
   "license": "MIT",

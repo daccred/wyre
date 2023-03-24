@@ -34,7 +34,9 @@
   "dependencies": {
     "argon2": "^0.30.3",
     "nanoid": "^4.0.0",
-    "next": "^13.1.1",
+    "superjson": "1.9.1",
+    "next": "^13.2.1",
+    "next-auth": "^4.19.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "^3.20.2"

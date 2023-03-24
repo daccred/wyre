@@ -1,4 +1,4 @@
-export * from "./ServiceErrors";
+export * from "../utils/server-error";
 export * from "./admin";
 export * from "./auth";
 export * from "./invitation";
