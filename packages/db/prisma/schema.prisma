@@ -1,4 +1,3 @@
-
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -14,7 +13,6 @@ datasource db {
   // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
 }
-
 
 model Example {
   id        String   @id @default(cuid())
@@ -58,9 +56,16 @@ enum Role {
   USER
 }
 
+enum PayrollMethod {
+  CRYPTO
+  BANK
+  MOBILEMONEY
+}
+
 model User {
   id            String            @id @default(cuid())
-  name          String
+  firstName     String
+  lastName      String
   email         String            @unique
   phone         String?
   password      String
@@ -122,20 +127,28 @@ enum WorkerType {
   CONTRACTOR
 }
 
-model Employee {
-  id         String     @id @default(cuid())
-  name       String
-  email      String     @unique
-  department String
-  jobRole    String
-  salary     String
-  signBonus  String
-  status     Boolean?   @default(true)
-  category   WorkerType @default(EMPLOYEE)
-  payrollId  String?
-  payroll    Payroll?   @relation(fields: [payrollId], references: [id])
-  expenseId  String?
-  expense    Expense[]
+model Team {
+  id              String         @id @default(cuid())
+  firstName       String?
+  lastName        String?
+  phone           String?
+  country         String?
+  email           String         @unique
+  department      String
+  jobRole         String
+  salary          String
+  signBonus       String
+  status          Boolean?       @default(true)
+  teamCategory    WorkerType     @default(EMPLOYEE)
+  payrollId       String?
+  payroll         Payroll?       @relation(fields: [payrollId], references: [id])
+  expenseId       String?
+  expense         Expense[]
+  payrollMethod   PayrollMethod?
+  payrollMethodId String?
+  CryptoWallet    CryptoWallet[]
+  Bank            Bank[]
+  MobileMoney     MobileMoney[]
 }
 
 model Payroll {
@@ -147,7 +160,7 @@ model Payroll {
   suspend   Boolean    @default(false)
   burden    Int
   currency  String
-  employees Employee[]
+  employees Team[]
 }
 
 enum ExpensType {
@@ -168,5 +181,38 @@ model Expense {
   type        ExpensType    @default(Payment)
   status      ExpenseStatus
   amount      String
-  employees   Employee[]
+  employees   Team[]
+}
+
+model CryptoWallet {
+  id         String   @id @default(cuid())
+  userId     String
+  currency   String
+  address    String
+  network    String
+  allocation String
+  user       Team @relation(fields: [userId], references: [id])
+}
+
+model Bank {
+  id            String   @id @default(cuid())
+  userId        String
+  bankName      String
+  accountNumber String
+  bankCode      String
+  country       String
+  swiftCode     String
+  routingNumber String
+  accountType   String
+  allocation    Int
+  user          Team @relation(fields: [userId], references: [id])
+}
+
+model MobileMoney {
+  id         String   @id @default(cuid())
+  userId     String
+  provider   String
+  phoneNumbe String
+  allocation Int
+  user       Team @relation(fields: [userId], references: [id])
 }
