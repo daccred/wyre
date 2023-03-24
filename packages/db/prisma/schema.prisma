@@ -5,6 +5,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// learn more https://www.npmjs.com/package/prisma-zod-generator
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./zod"
+}
+
 datasource db {
   provider = "postgresql"
   // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below

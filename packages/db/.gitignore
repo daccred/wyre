@@ -2,3 +2,4 @@
 .env
 /dist
 /build
+/prisma/zod

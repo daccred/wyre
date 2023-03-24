@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "license": "MIT",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist/**"
+    "dist/**",
+    "prisma",
+    "package.json"
   ],
   "scripts": {
     "prebuild": "npm run db-generate && npm run db-sync",
@@ -24,19 +26,19 @@
     "db:push": "prisma db push",
     "predev": "npm run db-generate && npm run db-sync",
     "dev": "tsc --watch",
-    "dx": "npm run  db-setup",
+    "dx": "npm run db-setup",
     "format": "prisma format",
     "generate": "prisma generate",
     "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
     "lint:ts": "tsc --pretty --noEmit"
   },
-  "types": "./dist/index.d.ts",
   "dependencies": {
-    "@prisma/client": "^4.5.0"
+    "@prisma/client": "^4.8.0",
+    "prisma-zod-generator": "^0.8.11"
   },
   "devDependencies": {
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0",
-    "prisma": "^4.5.0"
+    "@wyrecc/config": "0.1.0",
+    "@wyrecc/tsconfig": "0.1.0",
+    "prisma": "4.8.0"
   }
 }
