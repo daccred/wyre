@@ -4,7 +4,7 @@ import { contractorSchema } from "../interfaces";
 import { ContractorService } from "../services/contractor";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-export const ContractorRouter = createTRPCRouter({
+export const contractorRouter = createTRPCRouter({
   createContractor: protectedProcedure.input(contractorSchema).mutation(async ({ input }) => {
     const contractor = ContractorService.createContractor(input);
     return contractor;

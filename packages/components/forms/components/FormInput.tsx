@@ -1,10 +1,16 @@
 import type { FormControlProps } from "@chakra-ui/form-control";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
 import { Center } from "@chakra-ui/react";
-import { FormErrorMessage, Icon, InputLeftElement } from "@chakra-ui/react";
-import * as React from "react";
+import {
+  FormErrorMessage,
+  Icon,
+  InputLeftElement,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
+import React from "react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";

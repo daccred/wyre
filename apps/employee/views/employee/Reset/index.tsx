@@ -1,6 +1,7 @@
 import { HStack, Text, Button, Flex, Heading, Stack, Image } from "@chakra-ui/react";
-import { FormInput } from "components/forms";
 import * as React from "react";
+
+import { FormInput } from "@wyrecc/components/forms";
 
 const View = () => (
   <Stack minH="100vh" direction={{ base: "column", md: "row" }}>

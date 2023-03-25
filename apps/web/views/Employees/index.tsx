@@ -42,7 +42,7 @@ import AddEmployee from "./AddEmployee";
 import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
 
 const Employees = () => {
-  const { data: employees } = trpc.employee.getEmployees.useQuery();
+  const { data: employees } = trpc.team.getEmployees.useQuery();
   console.log(employees);
 
   const router = useRouter();

@@ -7,9 +7,8 @@ import { prisma } from "@wyrecc/db";
 
 import { TRPCError } from "@trpc/server";
 
-import { loginSchema } from "~/interfaces";
-import { verifyHash } from "~/utils";
-import { ServerError } from "~/utils/server-error";
+import { loginSchema } from "./interfaces";
+import { ServerError, verifyHash } from "./utils";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

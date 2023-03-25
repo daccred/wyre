@@ -1,6 +1,7 @@
 import { Center, Stack, Text, Button, Flex, Heading, Link, HStack, Image } from "@chakra-ui/react";
-import { FormInput } from "components/forms";
 import * as React from "react";
+
+import { FormInput } from "@wyrecc/components/forms";
 
 type Props = {
   isSubmitting: boolean;

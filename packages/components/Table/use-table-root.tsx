@@ -1,44 +1,37 @@
-import { Box, IconButton, Icon } from "@chakra-ui/react";
+// import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-import type { Hooks, CellProps, HeaderProps } from "react-table";
+// import { AiOutlineEdit } from "react-icons/ai";
+// import type { Hooks, CellProps, HeaderProps } from "react-table";
 import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from "react-table";
+import type { Column } from "react-table";
 
 import { useDebounce } from "../hooks/use-debounce";
 
 /* Dependency components */
 // import { TD, UseTableRootProps } from './interface';
-import TableCheckbox from "./table-checkbox";
+// import TableCheckbox from "./table-checkbox";
 
 interface TD {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface UseTableRootProps<T extends TD> {
   data: T[];
   rootPageIndex?: number;
   rootPageSize?: number;
-  columns: any[];
-  handleRowClick?: (row: any) => void;
+  columns: Readonly<Column<T>[]>;
+  handleRowClick?: (row: React.MouseEvent<HTMLInputElement>) => void;
   hasCheckBox?: boolean;
   searchParams?: string[];
-  mutationFn?: any;
+  mutationFn?: (value: unknown) => void;
   mutationLoading?: boolean;
 }
 
-const defaultUseTableRootProps: UseTableRootProps<any> = {
-  data: [],
-  rootPageIndex: 0,
-  rootPageSize: 100,
-  columns: [],
-};
-
 export const useTableRoot = <T extends TD>({
-  data = defaultUseTableRootProps.data,
-  rootPageIndex = defaultUseTableRootProps.rootPageIndex,
-  rootPageSize = defaultUseTableRootProps.rootPageSize,
-  columns = defaultUseTableRootProps.columns,
-  handleRowClick,
+  data,
+  rootPageIndex = 0,
+  rootPageSize = 100,
+  columns,
   hasCheckBox,
   searchParams,
   mutationFn,
@@ -51,7 +44,7 @@ export const useTableRoot = <T extends TD>({
    */
   const _data = React.useMemo(() => data, [data]);
   const _columns = React.useMemo(() => columns, [columns]);
-  const [_records, setRecords] = React.useState<any[]>(_data);
+  const [_records, setRecords] = React.useState<T[]>(_data);
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const [isQueryLoading, setQueryLoading] = React.useState(true);
   const [skipPageReset, setSkipPageReset] = React.useState(false);
@@ -67,34 +60,34 @@ export const useTableRoot = <T extends TD>({
     setQueryLoading(false);
   }, [_data]);
 
-  const useSelectionUi = (hooks: Hooks<TD>) => {
-    hooks.allColumns.push((columns: any, instance: any) => [
-      {
-        id: "_selector",
-        disableResizing: true,
-        disableGroupBy: true,
-        minWidth: 45,
-        width: 45,
-        maxWidth: 45,
-        Aggregated: undefined,
-        Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<TD>) => (
-          <TableCheckbox checked={_checked} {...getToggleAllRowsSelectedProps()} />
-        ),
-        Cell: ({ row }: CellProps<TD>) => (
-          <Box pos="absolute" zIndex={10}>
-            <TableCheckbox checked={_checked} {...row.getToggleRowSelectedProps()} />
-          </Box>
-        ),
-      },
-      ...columns,
-    ]);
-    hooks.useInstanceBeforeDimensions.push((headerGroups: any) => {
-      const selectionGroupHeader = headerGroups.headers[0];
-      selectionGroupHeader.canResize = false;
-    });
-  };
+  // const useSelectionUi = (hooks: Hooks<T extends object ? TD : TD>) => {
+  //   hooks.allColumns.push((columns) => [
+  //     {
+  //       id: "_selector",
+  //       disableResizing: true,
+  //       disableGroupBy: true,
+  //       minWidth: 45,
+  //       width: 45,
+  //       maxWidth: 45,
+  //       Aggregated: undefined,
+  //       Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<TD>) => (
+  //         <TableCheckbox checked={_checked} {...getToggleAllRowsSelectedProps()} />
+  //       ),
+  //       Cell: ({ row }: CellProps<TD>) => (
+  //         <Box pos="absolute" zIndex={10}>
+  //           <TableCheckbox checked={_checked} {...row.getToggleRowSelectedProps()} />
+  //         </Box>
+  //       ),
+  //     },
+  //     ...columns,
+  //   ]);
+  //   hooks.useInstanceBeforeDimensions.push((headerGroups) => {
+  //     const selectionGroupHeader = headerGroups.headers[0];
+  //     selectionGroupHeader.canResize = false;
+  //   });
+  // };
   const isLoading = isQueryLoading || mutationLoading;
-  const _checked = hasCheckBox ? useSelectionUi : () => {};
+  // const _checked = useSelectionUi;
   const {
     page,
     nextPage,
@@ -117,39 +110,40 @@ export const useTableRoot = <T extends TD>({
       initialState: { pageIndex: rootPageIndex, pageSize: rootPageSize },
       autoResetPage: !skipPageReset,
     },
+
+    // _checked,
     useGlobalFilter,
     useSortBy,
     usePagination,
-    useRowSelect,
-    _checked,
-    (hooks: any) => {
-      hooks.allColumns.push((columns: any) => [
-        ...columns,
-        {
-          accessor: "edit",
-          id: "edit",
-          Header: "",
-          width: "20px",
-          Cell: ({ row }: any) => (
-            <IconButton
-              aria-label="edit button"
-              icon={<Icon as={AiOutlineEdit} />}
-              maxW="20px"
-              className="action-button"
-              variant="ghost"
-              onClick={() => (handleRowClick ? handleRowClick(row) : null)}
-            />
-          ),
-        },
-      ]);
-    }
+    useRowSelect
+    // (hooks) => {
+    //   hooks.allColumns.push((columns) => [
+    //     ...columns,
+    //     {
+    //       accessor: "edit",
+    //       id: "edit",
+    //       Header: "",
+    //       width: "20px",
+    //       Cell: ({ row }) => (
+    //         <IconButton
+    //           aria-label="edit button"
+    //           icon={<Icon as={AiOutlineEdit} />}
+    //           maxW="20px"
+    //           className="action-button"
+    //           variant="ghost"
+    //           onClick={() => (handleRowClick ? handleRowClick(row) : null)}
+    //         />
+    //       ),
+    //     },
+    //   ]);
+    // }
   );
 
   /* The mutation handler for bulk delete */
   const deleteSelectedRows = async () => {
     if (mutationFn) {
-      await mutationFn({
-        bulk: selectedFlatRows.map((row: any) => row.original),
+      mutationFn({
+        bulk: selectedFlatRows.map((row) => row.original),
       });
     }
   };
@@ -157,8 +151,8 @@ export const useTableRoot = <T extends TD>({
   useEffect(() => {
     if (debouncedFilterValue) {
       setRecords(
-        data.filter((item: any) => {
-          return searchParams?.some((param: any) => {
+        data.filter((item) => {
+          return searchParams?.some((param) => {
             return item[param]?.toString().toLowerCase().includes(debouncedFilterValue.toLowerCase());
           });
         })
@@ -200,7 +194,7 @@ export const useTableRoot = <T extends TD>({
     searchValue: debouncedFilterValue,
     executeTableSearch: handleSearch,
     executeBulkDelete: deleteSelectedRows,
-    selectedRows: selectedFlatRows.map((row: any) => row.original),
+    selectedRows: selectedFlatRows.map((row) => row.original),
   };
 };
 export type UseTableRootReturnProps = ReturnType<typeof useTableRoot>;

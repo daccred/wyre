@@ -76,8 +76,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
 
   const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
 
-  const { mutate: updateContractor, isLoading } = trpc.employee.updateEmployee.useMutation({
-    onSuccess(data: any) {
+  const { mutate: updateContractor, isLoading } = trpc.team.updateEmployee.useMutation({
+    onSuccess() {
       // Reset the form data to empty values
       styledToast({
         status: "success",
@@ -131,8 +131,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
     schema: addContractorValidationSchema,
   });
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
-    onSuccess(data: any) {
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updateEmployee.useMutation({
+    onSuccess() {
       styledToast({
         status: "success",
         description: "Employee has been terminated successfully",

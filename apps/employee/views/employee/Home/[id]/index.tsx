@@ -1,7 +1,8 @@
 import { Box, Breadcrumb, Text, Flex, BreadcrumbLink, Icon, SimpleGrid } from "@chakra-ui/react";
-import Header from "components/core/Header";
 import React from "react";
 import { GoPrimitiveDot } from "react-icons/go";
+
+import Header from "@wyrecc/components/core/Header";
 
 import { ArrowRightIcon, IndicatorIcon } from "../providerIcon";
 

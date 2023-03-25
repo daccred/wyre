@@ -77,7 +77,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
 
   const { name, email, department, jobRole, category, salary, signBonus } = employee ?? {};
 
-  const { mutate: updateEmployee, isLoading } = trpc.employee.updateEmployee.useMutation({
+  const { mutate: updateEmployee, isLoading } = trpc.team.updateEmployee.useMutation({
     onSuccess() {
       // Reset the form data to empty values
       styledToast({
@@ -118,7 +118,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
     }
   };
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updateEmployee.useMutation({
     onSuccess() {
       styledToast({
         status: "success",
