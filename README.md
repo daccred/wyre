@@ -61,7 +61,7 @@ To make a commit, just type `cz` in your terminal and it produces a prompt.
 - [Chakra UI](https://chakra-ui.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/)
-- [Zod]
+- [Zod](https://zod.dev/)
 - [Typescript](https://www.typescriptlang.org/)
 - [tRPC](https://trpc.io/)
 - [React Hook Form](https://react-hook-form.com/)
