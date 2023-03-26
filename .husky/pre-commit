@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint:ts && npm run pretty-format && git add .
+yarn lint:ts && yarn pretty-format & yarn prisma format && git add .

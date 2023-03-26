@@ -1,5 +1,6 @@
 import type { HTMLChakraProps } from "@chakra-ui/react";
 import { chakra } from "@chakra-ui/react";
+import React from "react";
 
 export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
   <chakra.svg

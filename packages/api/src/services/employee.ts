@@ -3,12 +3,12 @@ import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 
 import type { IEmployeeSchema } from "../interfaces";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export class EmployeeService {
   static async createEmployee(input: IEmployeeSchema) {
     try {
-      const employeeExists = await prisma.employee.findUnique({
+      const employeeExists = await prisma.team.findUnique({
         where: {
           email: input.email,
         },
@@ -20,15 +20,16 @@ export class EmployeeService {
           message: "employee already exists",
         });
       }
-      const employee = await prisma.employee.create({
+      const employee = await prisma.team.create({
         data: {
-          name: input.name,
+          firstName: input.name,
+          lastName: input.name,
           email: input.email,
           department: input.department,
           jobRole: input.jobRole,
           salary: input.salary,
           signBonus: input.signBonus,
-          category: input.category,
+          teamCategory: input.category,
         },
       });
 
@@ -40,21 +41,22 @@ export class EmployeeService {
 
       return employee;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async updateEmployee(employeeId: string, input: IEmployeeSchema) {
     try {
-      const employee = await prisma.employee.update({
+      const employee = await prisma.team.update({
         where: { id: employeeId },
         data: {
-          name: input.name,
+          firstName: input.name,
+          lastName: input.name,
           email: input.email,
           department: input.department,
           jobRole: input.jobRole,
           salary: input.salary,
           status: input.status,
-          category: input.category,
+          teamCategory: input.category,
         },
       });
 
@@ -66,12 +68,12 @@ export class EmployeeService {
 
       return employee;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async deleteEmployee(employeeId: string) {
     try {
-      const employee = await prisma.employee.delete({
+      const employee = await prisma.team.delete({
         where: { id: employeeId },
       });
 
@@ -83,14 +85,14 @@ export class EmployeeService {
       }
       return "employee deleted successfully";
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
   static async getSingleEmployee(employeeId: string) {
     try {
-      const employee = await prisma.employee.findFirst({
-        where: { category: "EMPLOYEE", id: employeeId },
+      const employee = await prisma.team.findFirst({
+        where: { teamCategory: "EMPLOYEE", id: employeeId },
         include: { expense: true, payroll: true },
       });
 
@@ -102,14 +104,14 @@ export class EmployeeService {
       }
       return employee;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
   static async getSingleContractor(employeeId: string) {
     try {
-      const employee = await prisma.employee.findFirst({
-        where: { category: "CONTRACTOR", id: employeeId },
+      const employee = await prisma.team.findFirst({
+        where: { teamCategory: "CONTRACTOR", id: employeeId },
       });
 
       if (!employee) {
@@ -120,13 +122,13 @@ export class EmployeeService {
       }
       return employee;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async getEmployees() {
     try {
-      const employees = await prisma.employee.findMany({
-        where: { category: "EMPLOYEE" },
+      const employees = await prisma.team.findMany({
+        where: { teamCategory: "EMPLOYEE" },
       });
 
       if (!employees) {
@@ -138,13 +140,13 @@ export class EmployeeService {
 
       return employees;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async getContractors() {
     try {
-      const employees = await prisma.employee.findMany({
-        where: { category: "CONTRACTOR" },
+      const employees = await prisma.team.findMany({
+        where: { teamCategory: "CONTRACTOR" },
       });
 
       if (!employees) {
@@ -156,7 +158,7 @@ export class EmployeeService {
 
       return employees;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

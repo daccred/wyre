@@ -9,7 +9,7 @@ import {
   Stack, // InputProps,
 } from "@chakra-ui/react";
 import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { useFormContext, useFieldArray } from "react-hook-form";
 import { CgClose } from "react-icons/cg";
 

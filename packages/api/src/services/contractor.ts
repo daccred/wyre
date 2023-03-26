@@ -3,13 +3,13 @@ import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 
 import type { contractorSchemaType } from "../interfaces";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export class ContractorService {
   public static async createContractor(payload: contractorSchemaType) {
     try {
-      const contractorExist = await prisma.employee.findFirst({
-        where: { email: payload.email, category: "CONTRACTOR" },
+      const contractorExist = await prisma.team.findFirst({
+        where: { email: payload.email, teamCategory: "CONTRACTOR" },
       });
 
       if (contractorExist) {
@@ -17,15 +17,16 @@ export class ContractorService {
       }
 
       // create contractor
-      const contractor = await prisma.employee.create({
+      const contractor = await prisma.team.create({
         data: {
-          name: payload.name,
+          firstName: payload.name,
+          lastName: payload.name,
           email: payload.email,
           department: payload.department,
           jobRole: payload.jobRole,
           salary: payload.grossSalary,
           signBonus: payload.signingBonus,
-          category: "CONTRACTOR",
+          teamCategory: "CONTRACTOR",
           status: true,
         },
       });
@@ -36,30 +37,30 @@ export class ContractorService {
 
       return contractor;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
   // get all contractors
   static async getAllContractors() {
     try {
-      const contractors = await prisma.employee.findMany({ where: { category: "CONTRACTOR" } });
+      const contractors = await prisma.team.findMany({ where: { teamCategory: "CONTRACTOR" } });
       return contractors;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
   // get contractor by id
   static async getContractorById(id: string) {
     try {
-      const contractor = await prisma.employee.findUnique({ where: { id } });
+      const contractor = await prisma.team.findUnique({ where: { id } });
 
       if (!contractor) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Contractor not found" });
       }
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

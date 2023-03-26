@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import { TRPCError } from "@trpc/server";
 
-export function ServicesError(error: unknown) {
+export function ServerError(error: unknown) {
   if (error instanceof TRPCError) {
     throw new TRPCError({ code: error.code, message: error.message });
   }

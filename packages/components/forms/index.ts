@@ -1,6 +1,6 @@
 /* Form exports */
-export { default as useForm } from "./hooks/useForm";
-export * from "./hooks/useForm";
+export { default as useForm } from "./hooks/use-form";
+export * from "./hooks/use-form";
 
 export { default as FormInput } from "./components/FormInput";
 export { default as DataListSelect } from "./components/FormDataList";

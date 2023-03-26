@@ -55,4 +55,20 @@ To make a commit, just type `cz` in your terminal and it produces a prompt.
 
 ## Dependencies
 
+- [Node.js](https://nodejs.org/en/)
+- [Nextjs](https://nextjs.org/)
+- [Prisma](https://www.prisma.io/)
+- [Chakra UI](https://chakra-ui.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [Zod]
+- [Typescript](https://www.typescriptlang.org/)
+- [tRPC](https://trpc.io/)
+- [React Hook Form](https://react-hook-form.com/)
+- [React Query](https://react-query.tanstack.com/)
+- [Lerna](https://lerna.js.org/)
+- [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
+
 ## Licences
+
+MIT @ Tecmie Corporation

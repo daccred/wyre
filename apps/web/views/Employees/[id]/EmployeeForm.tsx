@@ -181,11 +181,11 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
       <Stack spacing={3}>
         <Avatar size="xl" src="" name={name} />
         <HStack>
-          <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={name} />
+          <FormInput name="name" label="First Name" placeholder="First Name" />
           <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
         </HStack>
         <HStack>
-          <FormInput name="email" label="Email Address" placeholder="Email Address" defaultValue={email} />
+          <FormInput name="email" label="Email Address" placeholder="Email Address" />
           <FormInput name="phoneNumber" label="Phone Number" placeholder="Phone Number" />
         </HStack>
         <HStack>
@@ -206,7 +206,6 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
               { label: "Contractor", value: "CONTRACTOR" },
               { label: "Employee", value: "EMPLOYEE" },
             ]}
-            defaultValue="EMPLOYEE" // set default value to "Employee"
           />
           <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" />
         </HStack>
@@ -217,7 +216,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
             placeholder="Enter Department"
             defaultValue={department}
           />
-          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" defaultValue={jobRole} />
+          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" />
         </HStack>
         <Tabs variant="unstyled">
           <Text fontWeight="bold" fontSize="18px" my={4}>
@@ -235,7 +234,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
                   <GridItem>
                     <FormSelect
                       label="Select Country"
-                      name="country"
+                      name="bankCountry"
                       options={[
                         { value: "GH", label: "Ghana" },
                         { value: "NIG", label: "Nigeria" },
@@ -334,7 +333,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
                   </GridItem>
                   <GridItem>
                     <FormInput
-                      name="phoneNumber"
+                      name="mobileNumber"
                       type="number"
                       label="Phone Number"
                       placeholder="e.g. 0987456321"

@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 
 import type { IUserSchema } from "../interfaces";
 import { hashString } from "../utils";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export const i = { send_json: true, send_form: false };
 
@@ -44,7 +44,8 @@ export class UserService {
       // create user
       const user = await prisma.user.create({
         data: {
-          name: input.name,
+          firstName: input.name,
+          lastName: input.name,
           email: input.email,
           password: await hashString(input.password),
           jobRole: input.jobRole,
@@ -57,7 +58,7 @@ export class UserService {
       });
       return user;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async getSingleUser(id: string) {
@@ -114,7 +115,7 @@ export class UserService {
         message: "User not found",
       });
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -133,7 +134,7 @@ export class UserService {
         message: "User not found",
       });
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

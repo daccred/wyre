@@ -1,4 +1,5 @@
 import { Checkbox } from "@chakra-ui/react";
+import React from "react";
 
 type TableCheckboxProps = {
   checked: any;

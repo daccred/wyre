@@ -6,7 +6,7 @@ import { TRPCError } from "@trpc/server";
 import type { IResetPassword, ISignUp, IVerifyEmail } from "../interfaces";
 import redisClient from "../redis";
 import { hashString, verifyHash } from "../utils";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export class AuthService {
   static async adminSignUp(input: ISignUp) {
@@ -80,7 +80,8 @@ export class AuthService {
       // create admin
       const admin = await prisma.user.create({
         data: {
-          name: input.name,
+          firstName: input.name,
+          lastName: input.name,
           email: input.email,
           phone: input.companyPhone,
           password: await hashString(input.password),
@@ -110,7 +111,7 @@ export class AuthService {
 
       return { admin, emailStatus: response };
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -161,7 +162,8 @@ export class AuthService {
           },
 
           select: {
-            name: true,
+            firstName: true,
+            lastName: true,
             email: true,
             phone: true,
             emailVerified: true,
@@ -176,7 +178,7 @@ export class AuthService {
         });
       }
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -200,7 +202,7 @@ export class AuthService {
       });
       return response;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -238,7 +240,7 @@ export class AuthService {
 
       return response;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -289,7 +291,7 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
   static async checkIfCompanyExists(companyName?: string) {
@@ -351,7 +353,7 @@ export class AuthService {
       }
       return true;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -371,7 +373,7 @@ export class AuthService {
       }
       return true;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
     const result = await prisma.user.findFirst({
       where: {
