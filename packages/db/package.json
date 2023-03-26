@@ -33,12 +33,12 @@
     "lint:ts": "tsc --pretty --noEmit"
   },
   "dependencies": {
-    "@prisma/client": "^4.8.0",
+    "@prisma/client": "^4.11.0",
     "prisma-zod-generator": "^0.8.11"
   },
   "devDependencies": {
     "@wyrecc/config": "0.1.0",
     "@wyrecc/tsconfig": "0.1.0",
-    "prisma": "4.8.0"
+    "prisma": "^4.11.0"
   }
 }

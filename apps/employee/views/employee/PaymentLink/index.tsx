@@ -11,9 +11,10 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { FormInput, FormSelect, useForm } from "components";
 import React from "react";
 import z from "zod";
+
+import { FormInput, FormSelect, useForm } from "@wyrecc/components";
 
 import PaymentMethodType from "../Account/Modals/PaymentMethodType";
 

@@ -1,7 +1,8 @@
 import { Text, Flex, Box, Center } from "@chakra-ui/react";
-import { FormSelect } from "components";
-import { useForm } from "components/forms";
 import React, { useReducer } from "react";
+
+import { FormSelect } from "@wyrecc/components";
+import { useForm } from "@wyrecc/components/forms";
 
 import { EmptyPayrollImage } from "./providerIcon";
 import TransactionsList from "./transactionList";

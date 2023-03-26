@@ -7,10 +7,11 @@ import {
   ModalOverlay,
   VStack,
 } from "@chakra-ui/react";
-import { Bank, CryptoWallet, Mobile } from "components/core/providerIcon";
 import { useRouter } from "next/router";
 import React from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
+
+import { Bank, CryptoWallet, Mobile } from "@wyrecc/components/core/providerIcon";
 
 import { Card } from "./misc";
 

@@ -1,9 +1,10 @@
 import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem, Button } from "@chakra-ui/react";
-import { FormInput, FormSelect, useForm } from "components";
-import Header from "components/core/Header";
 import React from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import z from "zod";
+
+import { FormInput, FormSelect, useForm } from "@wyrecc/components";
+import Header from "@wyrecc/components/core/Header";
 
 const manageProfileValidationSchema = z.object({
   country: z.string().min(1, "Country is required"),
@@ -21,6 +22,7 @@ type FormInputOptions = z.infer<typeof manageProfileValidationSchema>;
 const View = () => {
   const Submit = (data: FormInputOptions) => {
     // signUp({});
+    console.log(data);
   };
 
   const { renderForm } = useForm<FormInputOptions>({

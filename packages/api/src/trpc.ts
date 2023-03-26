@@ -20,7 +20,7 @@ import { type Session } from "next-auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { prisma } from "@wyrecc/db";
+// import { prisma } from "@wyrecc/db";
 
 /**
  * 2. INITIALIZATION
@@ -51,7 +51,7 @@ type CreateContextOptions = {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    prisma,
+    // prisma,
   };
 };
 

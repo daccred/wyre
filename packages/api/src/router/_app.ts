@@ -1,11 +1,11 @@
 import { createTRPCRouter } from "../trpc";
 import { authRouter } from "./auth";
-import { ContractorRouter } from "./contractor";
-import { employeeRouter } from "./employees";
+import { contractorRouter } from "./contractor";
 import { exampleRouter } from "./example";
 import { expenseRouter } from "./expense";
 import { invitationRouter } from "./invitation";
 import { payrollRouter } from "./payroll";
+import { teamRouter } from "./team";
 import { userRouter } from "./users";
 
 export const appRouter = createTRPCRouter({
@@ -14,9 +14,9 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   invitations: invitationRouter,
   payroll: payrollRouter,
-  employee: employeeRouter,
+  team: teamRouter,
   expenses: expenseRouter,
-  contractor: ContractorRouter,
+  contractor: contractorRouter,
 });
 
 // export type definition of API

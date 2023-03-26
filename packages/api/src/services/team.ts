@@ -2,25 +2,25 @@ import { prisma } from "@wyrecc/db";
 
 import { TRPCError } from "@trpc/server";
 
-import type { IEmployeeSchema } from "../interfaces";
+import type { ITeamSchema } from "../interfaces";
 import { ServerError } from "../utils/server-error";
 
-export class EmployeeService {
-  static async createEmployee(input: IEmployeeSchema) {
+export class TeamService {
+  static async createEmployee(input: ITeamSchema) {
     try {
-      const employeeExists = await prisma.team.findUnique({
+      const teamExists = await prisma.team.findUnique({
         where: {
           email: input.email,
         },
       });
 
-      if (employeeExists) {
+      if (teamExists) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "employee already exists",
+          message: "team already exists",
         });
       }
-      const employee = await prisma.team.create({
+      const team = await prisma.team.create({
         data: {
           firstName: input.name,
           lastName: input.name,
@@ -33,21 +33,21 @@ export class EmployeeService {
         },
       });
 
-      if (!employee)
+      if (!team)
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create employee",
+          message: "Failed to create team",
         });
 
-      return employee;
+      return team;
     } catch (error) {
       ServerError(error);
     }
   }
-  static async updateEmployee(employeeId: string, input: IEmployeeSchema) {
+  static async updateEmployee(teamId: string, input: ITeamSchema) {
     try {
-      const employee = await prisma.team.update({
-        where: { id: employeeId },
+      const team = await prisma.team.update({
+        where: { id: teamId },
         data: {
           firstName: input.name,
           lastName: input.name,
@@ -60,103 +60,103 @@ export class EmployeeService {
         },
       });
 
-      if (!employee)
+      if (!team)
         throw new TRPCError({
           code: "PRECONDITION_FAILED",
-          message: "Failed to update employee",
+          message: "Failed to update team",
         });
 
-      return employee;
+      return team;
     } catch (error) {
       ServerError(error);
     }
   }
-  static async deleteEmployee(employeeId: string) {
+  static async deleteEmployee(teamId: string) {
     try {
-      const employee = await prisma.team.delete({
-        where: { id: employeeId },
+      const team = await prisma.team.delete({
+        where: { id: teamId },
       });
 
-      if (!employee) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Failed to delete employee",
+          message: "Failed to delete team",
         });
       }
-      return "employee deleted successfully";
+      return "team deleted successfully";
     } catch (error) {
       ServerError(error);
     }
   }
 
-  static async getSingleEmployee(employeeId: string) {
+  static async getSingleEmployee(teamId: string) {
     try {
-      const employee = await prisma.team.findFirst({
-        where: { teamCategory: "EMPLOYEE", id: employeeId },
+      const team = await prisma.team.findFirst({
+        where: { teamCategory: "EMPLOYEE", id: teamId },
         include: { expense: true, payroll: true },
       });
 
-      if (!employee) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Employee not found",
+          message: "Team not found",
         });
       }
-      return employee;
+      return team;
     } catch (error) {
       ServerError(error);
     }
   }
 
-  static async getSingleContractor(employeeId: string) {
+  static async getSingleContractor(teamId: string) {
     try {
-      const employee = await prisma.team.findFirst({
-        where: { teamCategory: "CONTRACTOR", id: employeeId },
+      const team = await prisma.team.findFirst({
+        where: { teamCategory: "CONTRACTOR", id: teamId },
       });
 
-      if (!employee) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Employee not found",
+          message: "Team not found",
         });
       }
-      return employee;
+      return team;
     } catch (error) {
       ServerError(error);
     }
   }
   static async getEmployees() {
     try {
-      const employees = await prisma.team.findMany({
+      const teams = await prisma.team.findMany({
         where: { teamCategory: "EMPLOYEE" },
       });
 
-      if (!employees) {
+      if (!teams) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Employees not found",
+          message: "Teams not found",
         });
       }
 
-      return employees;
+      return teams;
     } catch (error) {
       ServerError(error);
     }
   }
   static async getContractors() {
     try {
-      const employees = await prisma.team.findMany({
+      const teams = await prisma.team.findMany({
         where: { teamCategory: "CONTRACTOR" },
       });
 
-      if (!employees) {
+      if (!teams) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Employees not found",
+          message: "Teams not found",
         });
       }
 
-      return employees;
+      return teams;
     } catch (error) {
       ServerError(error);
     }

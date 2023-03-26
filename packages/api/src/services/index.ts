@@ -4,6 +4,6 @@ export * from "./auth";
 export * from "./invitation";
 export * from "./user";
 export * from "./payroll";
-export * from "./employee";
+export * from "./team";
 export * from "./expense";
 export * from "./mailer";

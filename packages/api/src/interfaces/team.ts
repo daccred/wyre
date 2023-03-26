@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const employeeSchema = z.object({
+export const teamSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   department: z.string(),
@@ -11,4 +11,4 @@ export const employeeSchema = z.object({
   status: z.boolean().default(true),
 });
 
-export type IEmployeeSchema = z.infer<typeof employeeSchema>;
+export type ITeamSchema = z.infer<typeof teamSchema>;
