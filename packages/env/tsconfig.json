@@ -1,12 +1,14 @@
 {
+  "extends": "@wyrecc/tsconfig/base.json",
   "compilerOptions": {
-    "target": "ES5",
-    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "outDir": "dist",
-    "skipLibCheck": true
+    "strict": true,
   },
-
-  "include": ["./src**/*"],
-  "exclude": ["**/node_modules"]
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
 }

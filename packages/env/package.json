@@ -2,22 +2,24 @@
   "name": "@wyrecc/env",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "./src/index.mjs",
-  "module": "./src/server.mjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**"
+    "*.ts",
+    "dist"
   ],
   "scripts": {
-    "clean": "rimraf .turbo node_modules dist",
+    "build": "tsc",
     "lint:ts": "tsc --pretty --noEmit",
-    "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
-    "build": "tsc"
+    "clean": "rimraf node_modules dist",
+    "lint:es": "TIMING=1 eslint \"*.ts\""
   },
   "dependencies": {
     "zod": "^3.20.2"
   },
   "devDependencies": {
     "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0"
+    "@wyrecc/tsconfig": "^0.1.0",
+    "dotenv": "^16.0.3"
   }
 }

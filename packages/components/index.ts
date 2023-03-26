@@ -1,2 +1,2 @@
 export * from "./forms";
-export * from "./hooks/useDebounce";
+export * from "./hooks/use-debounce";
