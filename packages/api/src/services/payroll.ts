@@ -3,7 +3,7 @@ import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 
 import type { IPayrollSchema } from "../interfaces/payroll";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export class PayrollService {
   static async createPayroll(input: IPayrollSchema) {
@@ -20,9 +20,9 @@ export class PayrollService {
           message: `Payroll with name ${input.title} already exists`,
         });
       }
-      const employees = await prisma.employee.findMany({
+      const employees = await prisma.team.findMany({
         where: {
-          category: "EMPLOYEE",
+          teamCategory: "EMPLOYEE",
           id: {
             in: input.employees,
           },
@@ -61,7 +61,7 @@ export class PayrollService {
 
       return payroll;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -83,7 +83,7 @@ export class PayrollService {
         });
       return payroll;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -101,7 +101,7 @@ export class PayrollService {
         });
       return payrolls;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -121,7 +121,7 @@ export class PayrollService {
         });
       }
 
-      const employees = await prisma.employee.findMany({
+      const employees = await prisma.team.findMany({
         where: {
           id: {
             in: input.employees,
@@ -155,7 +155,7 @@ export class PayrollService {
       }
       return payroll;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -175,7 +175,7 @@ export class PayrollService {
       }
       return "Payroll deleted successfully";
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -202,7 +202,7 @@ export class PayrollService {
       }
       return "Employee removed successfully";
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

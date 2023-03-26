@@ -22,7 +22,7 @@ import { trpc } from "../../../utils/trpc";
 import { managePayrollPath } from "../routes";
 import { managePayrollColumns } from "../utils/tableColumns";
 
-const ManagePayroll = () => {
+const View = () => {
   const { pathname } = useRouter();
 
   const [tableData, setTableData] = useState<Payroll[]>([]);
@@ -81,7 +81,7 @@ const ManagePayroll = () => {
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Stack rounded="md" p={6} bg="white" w="100%" mt={10} border="1px solid #D2D2D2">
+      <Stack rounded="md" p={6} bg="white" w="100%" mt={3} border="1px solid #D2D2D2">
         <Heading as="h4" size="xs" fontSize="xl">
           Active Payroll
         </Heading>
@@ -108,4 +108,4 @@ const ManagePayroll = () => {
   );
 };
 
-export default ManagePayroll;
+export default View;

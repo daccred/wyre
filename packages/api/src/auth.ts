@@ -1,3 +1,5 @@
+// import type { NextAuthOptions } from "next-auth";
+import type { DefaultSession, DefaultUser } from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -6,14 +8,49 @@ import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 
 import { loginSchema } from "./interfaces";
-import { ServicesError } from "./services";
-import { verifyHash } from "./utils";
+import { ServerError, verifyHash } from "./utils";
 
 /**
- * * Important Info
- * TODO: Extend session object to accept more user data
- **/
+ * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
+ * object and keep type safety.
+ *
+ * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
+ */
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user?: User;
+  }
+  /**
+   * The shape of the user object returned in the OAuth providers' `profile` callback,
+   * or the second parameter of the `session` callback, when using a database.
+   */
+  interface User extends DefaultUser {
+    fname?: string;
+    lname?: string;
+    userType?: string;
+    phone?: string;
+    password?: string;
+    emailVerified?: boolean;
+    category?: string;
+    role: string | null;
+    companyId?: string;
+  }
 
+  /**
+   * Usually contains information about the provider being used
+   * and also extends `TokenSet`, which is different tokens returned by OAuth Providers.
+   */
+  //  interface Account {}
+
+  /** The OAuth profile returned from your provider */
+  //  interface Profile {}
+}
+
+/**
+ * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
+ *
+ * @see https://next-auth.js.org/configuration/options
+ */
 export const nextAuthOptions: NextAuthOptions = {
   // adapter: PrismaAdapter(prisma),
 
@@ -58,8 +95,6 @@ export const nextAuthOptions: NextAuthOptions = {
             });
           }
 
-          // const verify = await hashString(password)
-
           const isValidPassword = await verifyHash(password, user.password);
 
           if (!isValidPassword) {
@@ -70,16 +105,18 @@ export const nextAuthOptions: NextAuthOptions = {
           }
           return {
             id: user.id,
-            name: user.name,
+            fname: user.firstName,
+            lname: user.lastName,
             image: user.image,
             userType: user.type,
             emailVerified: user.emailVerified,
+            name: `${user.firstName} ${user.lastName}`,
             email: user.email,
-            jobRole: user.jobRole,
+            role: user.jobRole,
           };
         } catch (error) {
           if (error instanceof TRPCError) {
-            ServicesError(error);
+            ServerError(error);
           }
           throw new Error(error as string);
         }

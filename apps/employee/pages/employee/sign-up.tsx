@@ -1,8 +1,9 @@
 import { useToast } from "@chakra-ui/react";
-import { useForm } from "components/forms";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import z from "zod";
+
+import { useForm } from "@wyrecc/components/forms";
 
 import { Meta } from "../../layouts";
 import { trpc } from "../../utils/trpc";
@@ -33,7 +34,7 @@ export default function Page() {
   const [isFormReset, setIsFormReset] = useState(false);
   const { mutate: signUp, isLoading } = trpc.user.addUser.useMutation({
     onSuccess: (data: any, variables: any, context: any) => {
-      const { updatedAdmin } = data!;
+      const { updatedAdmin } = data;
       const { email, id } = updatedAdmin;
       toast({
         status: "success",

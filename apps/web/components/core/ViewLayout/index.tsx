@@ -16,7 +16,7 @@ import type { ComponentWithAs, IconProps, FlexProps } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import type { ReactNode } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
@@ -59,11 +59,11 @@ const PeopleAccordion: LinkAccordionProps = {
     { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
   ],
 };
-const PeopleLinkItems: Array<LinkItemProps> = [
-  { name: "People", href: "", icon: PeopleIcon },
-  { name: "Employees", href: "/employees", icon: EmployeesIcon },
-  { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
-];
+// const PeopleLinkItems: Array<LinkItemProps> = [
+//   { name: "People", href: "", icon: PeopleIcon },
+//   { name: "Employees", href: "/employees", icon: EmployeesIcon },
+//   { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
+// ];
 const ExpensesLinkItems: Array<LinkItemProps> = [{ name: "Expenses", href: "/expenses", icon: ExpensesIcon }];
 const DevLinkItems: Array<LinkItemProps> = [
   { name: "Integrations", href: "/integrations", icon: IntegrationsIcon },
@@ -83,7 +83,7 @@ export default function ViewLayout({ children, title }: { children: ReactNode; t
 }
 
 const SidebarContent = ({ ...rest }) => {
-  const [peopleMenuVisible, setPeopleMenuVisible] = useState(false);
+  // const [peopleMenuVisible, setPeopleMenuVisible] = useState(false);
 
   return (
     <Box
@@ -192,7 +192,7 @@ const NavItem = ({
   href,
   linkName,
   peopleMenuVisible,
-  setPeopleMenuVisible,
+  // setPeopleMenuVisible,
   ...rest
 }: NavItemProps) => {
   const router = useRouter();

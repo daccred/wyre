@@ -25,12 +25,19 @@ export const DarkModeSwitch = () => {
   );
 };
 
+interface FormProps {
+  firstName: string;
+  email: string;
+  twitter: string;
+  last: string;
+}
+
 export default function Page() {
-  const methods = useForm<any>();
+  const methods = useForm<FormProps>();
   const { data: session } = useSession();
   console.log(session);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormProps) => {
     console.warn(data);
   };
 

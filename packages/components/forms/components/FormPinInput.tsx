@@ -2,7 +2,7 @@ import type { FormControlProps } from "@chakra-ui/form-control";
 import { FormControl } from "@chakra-ui/form-control";
 import { PinInput } from "@chakra-ui/react";
 import { FormErrorMessage } from "@chakra-ui/react";
-import * as React from "react";
+import React from "react";
 import type { PropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { useFormContext, Controller } from "react-hook-form";
@@ -26,15 +26,15 @@ export interface FormPinInputProps extends FormControlProps {
 export const FormPinInput = forwardRef<HTMLInputElement, FormPinInputProps>(
   (
     {
-      spacing,
+      // spacing,
       size,
       name,
       otp,
       placeholder,
-      onChange,
+      // onChange,
       mask,
       manageFocus,
-      isInvalid,
+      // isInvalid,
       isDisabled,
       errorBorderColor,
       outerProps,

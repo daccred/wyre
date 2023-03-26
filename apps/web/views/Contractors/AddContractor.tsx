@@ -19,6 +19,7 @@ import { trpc } from "../../utils/trpc";
 import { PeopleIcon } from "./ProviderIcons";
 
 const addContractorValidationSchema = z.object({
+  name: z.string().min(1, { message: "Required" }),
   email: z.string().email(),
   department: z.string().min(1, { message: "Deparment is Required" }),
   jobRole: z.string().min(1, { message: "JobRole is Required" }),
@@ -42,7 +43,7 @@ export default function AddContractor({
   const toast = useToast();
 
   const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
-    onSuccess(data: any) {
+    onSuccess() {
       // Reset the form data to empty values
 
       openAddContractorSuccessModal();
@@ -64,7 +65,7 @@ export default function AddContractor({
     console.log(JSON.stringify(data));
 
     addContractor({
-      name: "",
+      name: data.name,
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
@@ -100,6 +101,8 @@ export default function AddContractor({
           {renderForm(
             <Stack spacing="6" pb="4">
               <Stack>
+                <FormInput name="name" label="Full Name" placeholder="John Doe" />
+
                 <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>
                   <FormInput name="department" label="Department" placeholder="Enter Department" />

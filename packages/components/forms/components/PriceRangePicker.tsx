@@ -1,5 +1,6 @@
 import type { RangeSliderProps } from "@chakra-ui/react";
 import { RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack } from "@chakra-ui/react";
+import React, { forwardRef } from "react";
 
 export const PriceRangePicker = (props: RangeSliderProps) => {
   const value = props.defaultValue || props.value;

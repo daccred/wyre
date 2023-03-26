@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Grid,
-  GridItem,
-  Heading,
-  Spinner,
-  Stack,
-  Text,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Grid, GridItem, Heading, Spinner, Stack, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -42,24 +30,7 @@ const View = () => {
   return (
     <ViewLayout title="Payroll">
       <Box>
-        <Grid templateColumns="repeat(2, 1fr)" gap={10}>
-          <GridItem>
-            <Card
-              heading="Create Payroll"
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
-              icon={<CreateIcon />}
-              onClick={() => router.push("/payroll/create-employee-payroll")}
-            />
-          </GridItem>
-          <GridItem>
-            <Card
-              heading="One-Off Payment"
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
-              icon={<InstantPayment />}
-            />
-          </GridItem>
-        </Grid>
-        <Grid templateColumns="repeat(3, 1fr)" gap={5} mt={8}>
+        <Grid templateColumns="repeat(3, 1fr)" gap={5}>
           <PayrollTypeCard
             type="Fiat Payroll"
             date="Jan, 2023"
@@ -91,8 +62,26 @@ const View = () => {
             </Button>
           </VStack>
         </Grid>
+
+        <Grid templateColumns="repeat(2, 1fr)" gap={10} mt={8}>
+          <GridItem>
+            <Card
+              heading="Create Payroll"
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
+              icon={<CreateIcon />}
+              onClick={() => router.push("/payroll/create-employee-payroll")}
+            />
+          </GridItem>
+          <GridItem>
+            <Card
+              heading="One-Off Payment"
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
+              icon={<InstantPayment />}
+            />
+          </GridItem>
+        </Grid>
       </Box>
-      <Stack rounded="md" p={6} bg="white" w="100%" mt={10} border="1px solid #D2D2D2">
+      <Stack rounded="md" spacing={6} p={6} bg="white" w="100%" mt={10} border="1px solid #D2D2D2">
         <Heading as="h4" size="xs" fontSize="xl">
           Payroll History
         </Heading>

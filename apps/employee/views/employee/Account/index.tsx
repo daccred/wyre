@@ -1,9 +1,10 @@
 import { Flex, Heading, Icon, Text, VStack } from "@chakra-ui/react";
-import Header from "components/core/Header";
-import { ContractorIcon } from "components/core/providerIcon";
 import { useRouter } from "next/router";
 import React from "react";
 import { FiChevronRight } from "react-icons/fi";
+
+import Header from "@wyrecc/components/core/Header";
+import { ContractorIcon } from "@wyrecc/components/core/providerIcon";
 
 const accountItems = [
   {
@@ -20,11 +21,6 @@ const accountItems = [
     name: "Payment Method",
     subText: "Cursus diam amet non arcu in ultricies a fringilla",
     path: "account/payment-method",
-  },
-  {
-    name: "Complete KYC",
-    subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "complete-kyc",
   },
 ];
 

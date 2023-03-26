@@ -42,7 +42,7 @@ import AddEmployee from "./AddEmployee";
 import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
 
 const Employees = () => {
-  const { data: employees } = trpc.employee.getEmployees.useQuery();
+  const { data: employees } = trpc.team.getEmployees.useQuery();
   console.log(employees);
 
   const router = useRouter();
@@ -270,70 +270,6 @@ const Employees = () => {
                   </Tbody>
                 </Table>
               </TableContainer>
-            )}
-
-            {dummyDataInUse && dummyDataInUse?.length > 0 && (
-              <Pagination
-                pagesCount={pagesCount}
-                currentPage={currentPage}
-                isDisabled={isDisabled}
-                onPageChange={handlePageChange}>
-                <PaginationContainer align="center" justify="space-between" py={2} px={4} w="full">
-                  <PaginationPrevious
-                    variant="outline"
-                    h="40px"
-                    px="12px"
-                    leftIcon={<FiArrowLeft />}
-                    iconSpacing={3}
-                    border="1px solid #D0D5DD"
-                    borderRadius="8px"
-                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
-                    <Text>Previous</Text>
-                  </PaginationPrevious>
-                  <PaginationPageGroup
-                    isInline
-                    align="center"
-                    separator={<PaginationSeparator bg="#EAECF0" fontSize="sm" boxSize="10" jumpSize={11} />}>
-                    {pages.map((page: number) => (
-                      <PaginationPage
-                        w={7}
-                        bg="white"
-                        key={`pagination_page_${page}`}
-                        page={page}
-                        fontSize="sm"
-                        boxSize="10"
-                        fontWeight="bold"
-                        _hover={{
-                          bg: "#EAECF0",
-                        }}
-                        _current={{
-                          bg: "#EAECF0",
-                        }}
-                      />
-                    ))}
-                  </PaginationPageGroup>
-                  <PaginationNext
-                    variant="outline"
-                    h="40px"
-                    px="12px"
-                    rightIcon={<FiArrowRight />}
-                    iconSpacing={3}
-                    border="1px solid #D0D5DD"
-                    borderRadius="8px"
-                    boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)">
-                    <Text>Next</Text>
-                  </PaginationNext>
-                </PaginationContainer>
-              </Pagination>
-            )}
-
-            {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-              <Center w="100%" p="8" flexDirection="column">
-                <EmptyEmployeeImage />
-                <Text pr="12" pt={2}>
-                  No Employee
-                </Text>
-              </Center>
             )}
 
             {dummyDataInUse && dummyDataInUse?.length > 0 && (

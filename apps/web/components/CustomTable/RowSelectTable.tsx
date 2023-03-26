@@ -7,10 +7,10 @@ import type { TableInstance } from "react-table";
 interface Props {
   columns: unknown[];
   data: Record<string, any>[];
-  onRowSelectionChange: (selectedRowIds: Record<string, boolean>) => void;
-  onSelectedRowsAmountChange: (amount: number) => void;
+  onRowSelectionChange?: (selectedRowIds: Record<string, boolean>) => void;
+  onSelectedRowsAmountChange?: (amount: number) => void;
   selectedEmployees?: string[];
-  setSelectedEmployees: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedEmployees?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const IndeterminateCheckbox = forwardRef<HTMLInputElement, { indeterminate?: boolean }>(
@@ -74,7 +74,7 @@ export default function RowSelectTable({
   ) as TableInstance<Record<string, unknown>>;
 
   useEffect(() => {
-    onRowSelectionChange(selectedRowIds);
+    onRowSelectionChange && onRowSelectionChange(selectedRowIds);
   }, [selectedRowIds, onRowSelectionChange]);
 
   const rowData = useMemo(() => {
@@ -82,7 +82,7 @@ export default function RowSelectTable({
   }, [selectedFlatRows]);
 
   useEffect(() => {
-    setSelectedEmployees(() => [...rowData] as string[]);
+    setSelectedEmployees && setSelectedEmployees(() => [...rowData] as string[]);
   }, [rowData, setSelectedEmployees]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function RowSelectTable({
         selectedAmount += Number(salary);
       }
     });
-    onSelectedRowsAmountChange(selectedAmount);
+    onSelectedRowsAmountChange && onSelectedRowsAmountChange(selectedAmount);
   }, [rows, selectedRowIds, onSelectedRowsAmountChange]);
 
   return (

@@ -5,6 +5,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// learn more https://www.npmjs.com/package/prisma-zod-generator
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./zod"
+}
+
 datasource db {
   provider = "postgresql"
   // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
@@ -152,12 +158,12 @@ model Team {
 }
 
 model Payroll {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   title     String
   cycle     String
   payday    DateTime
   auto      Boolean
-  suspend   Boolean    @default(false)
+  suspend   Boolean  @default(false)
   burden    Int
   currency  String
   employees Team[]
@@ -185,17 +191,17 @@ model Expense {
 }
 
 model CryptoWallet {
-  id         String   @id @default(cuid())
+  id         String @id @default(cuid())
   userId     String
   currency   String
   address    String
   network    String
   allocation String
-  user       Team @relation(fields: [userId], references: [id])
+  user       Team   @relation(fields: [userId], references: [id])
 }
 
 model Bank {
-  id            String   @id @default(cuid())
+  id            String @id @default(cuid())
   userId        String
   bankName      String
   accountNumber String
@@ -205,14 +211,14 @@ model Bank {
   routingNumber String
   accountType   String
   allocation    Int
-  user          Team @relation(fields: [userId], references: [id])
+  user          Team   @relation(fields: [userId], references: [id])
 }
 
 model MobileMoney {
-  id         String   @id @default(cuid())
+  id         String @id @default(cuid())
   userId     String
   provider   String
   phoneNumbe String
   allocation Int
-  user       Team @relation(fields: [userId], references: [id])
+  user       Team   @relation(fields: [userId], references: [id])
 }

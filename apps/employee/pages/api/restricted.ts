@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 
-import { getServerAuthSession } from "../../server/common/get-server-auth-session";
+import { getServerAuthSession } from "@wyrecc/api";
 
 const restricted = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerAuthSession({ req, res });

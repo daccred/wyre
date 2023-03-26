@@ -3,12 +3,12 @@ import { prisma } from "@wyrecc/db";
 import { TRPCError } from "@trpc/server";
 
 import type { IExpenseSchema } from "../interfaces";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 
 export class ExpenseService {
   static async createExpense(input: IExpenseSchema) {
     try {
-      const employees = await prisma.employee.findMany({
+      const employees = await prisma.team.findMany({
         where: {
           id: {
             in: input.employees,
@@ -46,16 +46,16 @@ export class ExpenseService {
 
       return expense;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
       console.error(error);
     }
   }
 
   static async updateExpense(expenseId: string, input: IExpenseSchema) {
     try {
-      const employees = await prisma.employee.findMany({
+      const employees = await prisma.team.findMany({
         where: {
-          category: "EMPLOYEE",
+          teamCategory: "EMPLOYEE",
           id: {
             in: input.employees,
           },
@@ -85,7 +85,7 @@ export class ExpenseService {
 
       return expense;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -103,7 +103,7 @@ export class ExpenseService {
       }
       return expense;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -120,7 +120,7 @@ export class ExpenseService {
         });
       }
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -137,7 +137,7 @@ export class ExpenseService {
       }
       return expenses;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

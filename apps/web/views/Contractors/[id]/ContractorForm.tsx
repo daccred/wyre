@@ -1,8 +1,28 @@
-import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  HStack,
+  Stack,
+  Text,
+  useToast,
+  useTab,
+  useMultiStyleConfig,
+  Tabs,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Grid,
+  GridItem,
+  Icon,
+  Flex,
+} from "@chakra-ui/react";
+import type { Ref } from "react";
+import React from "react";
+import { GoPrimitiveDot } from "react-icons/go";
 import z from "zod";
 
 import styledToast from "../../../components/core/StyledToast";
-import { FormInput, FormNativeSelect, useForm } from "../../../components/forms";
+import { FormInput, FormSelect, useForm } from "../../../components/forms";
 import { trpc } from "../../../utils/trpc";
 import { ProfileIcon } from "./ProviderIcons";
 
@@ -22,12 +42,42 @@ const addContractorValidationSchema = z.object({
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
 
+interface CustomTabProps extends React.HTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+}
+
 export default function ContractorForm({ contractor }: ContractorFormProps) {
   const toast = useToast();
+
+  const CustomTab = React.forwardRef(({ children, ...props }: CustomTabProps, ref: Ref<HTMLElement>) => {
+    const tabProps = useTab({ ...props, ref });
+    const isSelected = !!tabProps["aria-selected"];
+
+    const styles = useMultiStyleConfig("Tabs", tabProps);
+
+    return (
+      <Button __css={styles.tab} {...tabProps}>
+        <Flex
+          alignItems="center"
+          fontWeight={isSelected ? "bold" : "normal"}
+          color={isSelected ? "#8D1CFF" : " #D2D2D2"}>
+          {children}
+          {isSelected ? (
+            <Icon as={GoPrimitiveDot} w={5} h={5} ml={2} />
+          ) : (
+            <Icon as={GoPrimitiveDot} w={5} h={5} />
+          )}
+        </Flex>
+      </Button>
+    );
+  });
+
+  CustomTab.displayName = "CustomTab";
+
   const { name, email, department, jobRole, category, salary, signBonus } = contractor ?? {};
 
-  const { mutate: updateContractor, isLoading } = trpc.employee.updateEmployee.useMutation({
-    onSuccess(data: any) {
+  const { mutate: updateContractor, isLoading } = trpc.team.updateEmployee.useMutation({
+    onSuccess() {
       // Reset the form data to empty values
       styledToast({
         status: "success",
@@ -81,8 +131,8 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
     schema: addContractorValidationSchema,
   });
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.employee.updateEmployee.useMutation({
-    onSuccess(data: any) {
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updateEmployee.useMutation({
+    onSuccess() {
       styledToast({
         status: "success",
         description: "Employee has been terminated successfully",
@@ -147,7 +197,7 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           Contract Details
         </Text>
         <HStack>
-          <FormNativeSelect
+          <FormSelect
             name="category"
             label="Category"
             placeholder="Select Category"
@@ -168,6 +218,140 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           />
           <FormInput name="jobRole" label="Job Role" placeholder="Job Role" defaultValue={jobRole} />
         </HStack>
+        <Tabs variant="unstyled">
+          <Text fontWeight="bold" fontSize="18px" my={4}>
+            Payment Method
+          </Text>
+          <TabList>
+            <CustomTab>Bank Payment</CustomTab>
+            <CustomTab>Crypto Payment</CustomTab>
+            <CustomTab>Mobile Money</CustomTab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Stack>
+                <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+                  <GridItem>
+                    <FormSelect
+                      label="Select Country"
+                      name="country"
+                      options={[
+                        { value: "GH", label: "Ghana" },
+                        { value: "NIG", label: "Nigeria" },
+                      ]}
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormSelect
+                      label="Select Bank"
+                      name="bankName"
+                      options={[
+                        { value: "Access", label: "Access Bank" },
+                        { value: "Stanbic", label: "Stanbic Bank" },
+                        { value: "Ecobank", label: "EcoBank" },
+                        { value: "Fidelity", label: "Fidelity Bank" },
+                      ]}
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormInput
+                      name="accountNumber"
+                      type="number"
+                      label="Account Number"
+                      placeholder="e.g. 0123456789"
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormSelect
+                      label="Account Type"
+                      name="accountType"
+                      options={[
+                        { value: "Savings", label: "Savings Account" },
+                        { value: "Current", label: "Current Account" },
+                      ]}
+                    />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <FormInput
+                      type="number"
+                      name="salaryPercentage"
+                      label="Salary Allocation in %  (no decimal)"
+                      placeholder="e.g 15"
+                    />
+                  </GridItem>
+                </Grid>
+              </Stack>
+            </TabPanel>
+            <TabPanel>
+              <Stack spacing="6" pb="4">
+                <Grid gap={4}>
+                  <GridItem>
+                    <FormSelect
+                      label="Select Cryptocurrency"
+                      name="cryptocurrency"
+                      options={[
+                        { value: "BTC", label: "Bitcoin(BTC)" },
+                        { value: "ETH", label: "Ethereum(ETH)" },
+                        { value: "USDT", label: "Tether (USDT)" },
+                        { value: "BNB", label: "Binance Coin (BNB)" },
+                        { value: "USDC", label: "U.S. Dollar Coin (USDC)" },
+                      ]}
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormInput
+                      name="walletAddress"
+                      type="text"
+                      label="Wallet Address"
+                      placeholder="e.g. Ox000000000000000000000000000000000..."
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormInput
+                      type="number"
+                      name="salaryPercentage"
+                      label="Salary Allocation in %  (no decimal)"
+                      placeholder="e.g 15"
+                    />
+                  </GridItem>
+                </Grid>
+              </Stack>
+            </TabPanel>
+            <TabPanel>
+              <Stack spacing="6" pb="4">
+                <Grid gap={4}>
+                  <GridItem>
+                    <FormSelect
+                      label="Select Mobile Money Provider"
+                      name="mobileMoneyProvider"
+                      options={[
+                        { value: "MTN", label: "MTN" },
+                        { value: "VODAFONE", label: "VODAFONE" },
+                        { value: "AIRTELTIGO", label: "AIRTELTIGO" },
+                      ]}
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormInput
+                      name="phoneNumber"
+                      type="number"
+                      label="Phone Number"
+                      placeholder="e.g. 0987456321"
+                    />
+                  </GridItem>
+                  <GridItem>
+                    <FormInput
+                      type="number"
+                      name="salaryPercentage"
+                      label="Salary Allocation in %  (no decimal)"
+                      placeholder="e.g 15"
+                    />
+                  </GridItem>
+                </Grid>
+              </Stack>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Stack>
 
       <HStack spacing="4" pt="4">

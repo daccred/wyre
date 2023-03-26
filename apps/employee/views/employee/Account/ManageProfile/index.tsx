@@ -11,11 +11,12 @@ import {
   GridItem,
   Button,
 } from "@chakra-ui/react";
-import { FormInput, useForm } from "components";
-import Header from "components/core/Header";
 import React from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import z from "zod";
+
+import { FormInput, useForm } from "@wyrecc/components";
+import Header from "@wyrecc/components/core/Header";
 
 const manageProfileValidationSchema = z.object({
   lastName: z.string().min(1, "Last name is required"),

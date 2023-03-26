@@ -5,7 +5,7 @@ import { prisma } from "@wyrecc/db/src";
 import { TRPCError } from "@trpc/server";
 
 import type { InvitationSchemaType } from "../interfaces";
-import { ServicesError } from "./ServiceErrors";
+import { ServerError } from "../utils/server-error";
 import { AuthService } from "./auth";
 
 export class InvitationService {
@@ -43,7 +43,7 @@ export class InvitationService {
       // TODO: send email to the user
       return invitation;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -63,7 +63,7 @@ export class InvitationService {
       }
       return invitations;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -82,7 +82,7 @@ export class InvitationService {
       }
       return invitations;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -101,7 +101,7 @@ export class InvitationService {
       }
       return invitation;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 
@@ -120,7 +120,7 @@ export class InvitationService {
       }
       return invitation;
     } catch (error) {
-      ServicesError(error);
+      ServerError(error);
     }
   }
 }

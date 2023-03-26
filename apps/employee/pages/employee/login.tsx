@@ -1,9 +1,10 @@
 import { useToast } from "@chakra-ui/react";
-import { useForm } from "components/forms";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 import z from "zod";
+
+import { useForm } from "@wyrecc/components/forms";
 
 import { Meta } from "../../layouts";
 import View from "../../views/employee/Login";

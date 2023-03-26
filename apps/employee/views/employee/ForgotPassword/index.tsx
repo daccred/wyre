@@ -1,6 +1,7 @@
 import { Button, Flex, Heading, Link, HStack, Stack, Text, Image } from "@chakra-ui/react";
-import { FormInput } from "components/forms";
 import * as React from "react";
+
+import { FormInput } from "@wyrecc/components/forms";
 
 // import Link from "next/link";
 

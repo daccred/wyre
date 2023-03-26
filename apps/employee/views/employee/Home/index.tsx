@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
-import Header from "components/core/Header";
 import React from "react";
+
+import Header from "@wyrecc/components/core/Header";
 
 import Transactions from "./transaction";
 
