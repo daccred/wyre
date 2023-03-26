@@ -5,10 +5,8 @@ import { prisma } from "@wyrecc/db";
 
 import { TRPCError } from "@trpc/server";
 
-import type { IPaymentLinkSchema, PrivateLinkAccess } from "~/interfaces";
-import { generateFiveDigitCode } from "~/utils";
-
-import { ServerError } from ".";
+import type { IPaymentLinkSchema, PrivateLinkAccess } from "../interfaces";
+import { generateFiveDigitCode, ServerError } from "../utils";
 import { EncryptionService } from "./encryption";
 
 export class PaymentService {

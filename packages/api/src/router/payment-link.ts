@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { paymentLinkSchema, privateLinkAccessSchema } from "~/interfaces";
-import { PaymentService } from "~/services";
-import { createTRPCRouter, protectedProcedure } from "~/trpc";
+import { paymentLinkSchema, privateLinkAccessSchema } from "../interfaces";
+import { PaymentService } from "../services";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const paymentLinkRouter = createTRPCRouter({
   createPaymentLink: protectedProcedure.input(paymentLinkSchema).mutation(async ({ input }) => {
