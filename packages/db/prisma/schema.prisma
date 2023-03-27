@@ -69,26 +69,30 @@ enum PayrollMethod {
 }
 
 model User {
-  id            String            @id @default(cuid())
-  firstName     String
-  lastName      String
-  email         String            @unique
-  phone         String?
-  password      String
-  type          Role              @default(USER)
-  emailVerified Boolean?          @default(false)
-  verifyId      String            @unique
-  verification  VerificationToken @relation(fields: [verifyId], references: [id])
-  image         String?
-  jobRole       String?
-  category      String?
-  company       Company?          @relation(fields: [companyId], references: [id])
-  companyId     String?
-  accounts      Account[]
-  sessions      Session[]
-  invitations   Invitation[]
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  id                 String              @id @default(cuid())
+  firstName          String
+  lastName           String
+  email              String              @unique
+  phone              String?
+  password           String
+  type               Role                @default(USER)
+  emailVerified      Boolean?            @default(false)
+  verifyId           String              @unique
+  verification       VerificationToken   @relation(fields: [verifyId], references: [id])
+  image              String?
+  jobRole            String?
+  category           String?
+  company            Company?            @relation(fields: [companyId], references: [id])
+  companyId          String?
+  accounts           Account[]
+  sessions           Session[]
+  invitations        Invitation[]
+  paymentLinks       PaymentLink[]
+  transactions       Transaction[]
+  wyreRequests       WyreRequest[]
+  failedWyreRequests FailedWyreRequest[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
 }
 
 model VerificationToken {
@@ -221,4 +225,94 @@ model MobileMoney {
   phoneNumbe String
   allocation Int
   user       Team   @relation(fields: [userId], references: [id])
+}
+
+enum PaymentLinkStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PaymentLinkType {
+  PUBLIC
+  PRIVATE
+}
+
+model PaymentLink {
+  id                String             @id @default(cuid())
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  amount            Int
+  description       String?
+  type              PaymentLinkType?   @default(PUBLIC)
+  password          String?
+  encryptedPassword String?
+  currency          String?            @default("NGN")
+  status            PaymentLinkStatus? @default(ACTIVE)
+  linkId            String             @unique
+  user              User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String?
+  wyreRequest       WyreRequest[]
+}
+
+model WyreRequest {
+  id                     String        @id @default(cuid())
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  link                   PaymentLink?  @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  linkId                 String?
+  amount                 Int?
+  requesterEmail         String?
+  requesterPhoneNumber   String?
+  requesterAccountNumber String?
+  bankName               String?
+  requesterName          String?
+  reference              String?
+  to                     String?
+  user                   User?         @relation(fields: [to], references: [id], onDelete: Cascade)
+  status                 String?       @default("PENDING")
+  description            String?
+  transactions           Transaction[]
+}
+
+model Transaction {
+  id                  String                @id @default(cuid())
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  amount              Int?
+  currency            String?               @default("NGN")
+  status              String?               @default("PENDING")
+  reference           String?
+  receiverEmail       String?
+  description         String?
+  receiverPhoneNumber String?
+  receiverName        String?
+  user                User?                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String?
+  usdTransferCode     String?
+  wyreRequest         WyreRequest?          @relation(fields: [wyreRequestId], references: [id], onDelete: Cascade)
+  wyreRequestId       String?
+  outBoundTransaction OutBoundTransaction[]
+}
+
+model OutBoundTransaction {
+  id                   String       @id @default(cuid())
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  status               String?      @default("PENDING")
+  inboundTransaction   Transaction? @relation(fields: [inboundTransactionId], references: [id], onDelete: Cascade)
+  inboundTransactionId String?
+  reference            String?
+}
+
+model FailedWyreRequest {
+  id                   String   @id @default(cuid())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  linkId               String?
+  requesterEmail       String?
+  requesterPhoneNumber String?
+  requesterName        String?
+  owner                String?
+  user                 User?    @relation(fields: [owner], references: [id], onDelete: Cascade)
+  attempts             Int?     @default(0)
 }

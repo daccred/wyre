@@ -5,3 +5,4 @@ export * from "./payroll";
 export * from "./team";
 export * from "./expense";
 export * from "./contractor";
+export * from "./payment-link";

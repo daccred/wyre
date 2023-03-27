@@ -32,6 +32,20 @@ This project is still in early alpha, so we have many features soon to come! Thi
 - Tax withholding and remmittance
 - Employee salary advance
 
+## Repo Directory
+
+| Directory                            | Description                                                                                                      |
+| -----------------------------        | ---------------------------------------------------------------------------------------------------------------- |
+| [`admin`](/apps/web)                 | Contains the administrative section for managing company payroll                                                 |
+| [`employee`](/apps/employee)         | User application for employees to access their payroll dashboard                                                 |
+| [`api`](/packages/api)               | Package for handling all apis for the appls                                                                      |
+| [`shared ui`](/packages/components)  | Shared UI components for applications                                                                            |
+| [`config`](/packages/config)         | Base dev dependencies and presets for repo                                                                       |
+| [`db`](/packages/db)                 | Database schema configured with prisma                                                                           |
+| [`dialog`](/packages/dialog)         | Repo package for managing all external communications eg: emails, sms                                            |
+| [`env`](/packages/env)               | Environment variables configuration and validation                                                               |
+| [`tsconfig`](/packages/tsconfig)     | Tsconfig configuration and extensions                                                                            |
+
 ## Technologies Used
 
 - **Database:** Neon.dev (serverless PostgreSQL)
@@ -61,7 +75,7 @@ To make a commit, just type `cz` in your terminal and it produces a prompt.
 - [Chakra UI](https://chakra-ui.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/)
-- [Zod]
+- [Zod](https://zod.dev/)
 - [Typescript](https://www.typescriptlang.org/)
 - [tRPC](https://trpc.io/)
 - [React Hook Form](https://react-hook-form.com/)

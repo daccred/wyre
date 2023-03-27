@@ -7,3 +7,4 @@ export * from "./payroll";
 export * from "./team";
 export * from "./expense";
 export * from "./mailer";
+export * from "./payment-link";

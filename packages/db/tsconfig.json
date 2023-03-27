@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "strict": true,
-    "target": "es2021"
+    "target": "es2021",
+    "baseUrl": "."
   },
   "include": ["."],
   "exclude": ["dist", "prisma/zod", "build", "node_modules"]
