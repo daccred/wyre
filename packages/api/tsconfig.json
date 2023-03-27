@@ -4,19 +4,14 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": [
-      "es2021"
-    ],
+    "lib": ["es2021"],
     "module": "esnext",
     "moduleResolution": "node",
     "outDir": "dist",
     "strict": true,
     "target": "es2021",
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["src/*"],
-    }
+    "baseUrl": "."
   },
-  "include": [ "src/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

@@ -19,7 +19,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import type { Employee } from "@prisma/client";
+import type { Team } from "@prisma/client";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FiChevronRight, FiSearch } from "react-icons/fi";
@@ -40,14 +40,14 @@ type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 
 const CreateEmployeePayroll = () => {
   const { pathname } = useRouter();
-  const [tableData, setTableData] = useState<Employee[]>([]);
+  const [tableData, setTableData] = useState<Team[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("All departments");
 
-  const { data: employeeData, isLoading } = trpc.employee.getEmployees.useQuery();
+  const { data: employeeData, isLoading } = trpc.team.getEmployees.useQuery();
 
   const handleSelectionChange = (selection: any) => {
     setSelectedRowIds(selection);
@@ -70,7 +70,7 @@ const CreateEmployeePayroll = () => {
       return;
     }
 
-    setTableData(employeeData as Employee[]);
+    setTableData(employeeData as Team[]);
   }, [employeeData]);
 
   // For table search and filter
@@ -86,7 +86,7 @@ const CreateEmployeePayroll = () => {
       );
     }
     const searchData = filteredData?.filter((data) =>
-      data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+      data?.firstName?.toLowerCase().includes(searchTerm?.toLowerCase())
     );
     setTableData(searchData);
   }, [employeeData, searchTerm, selectedDepartment]);

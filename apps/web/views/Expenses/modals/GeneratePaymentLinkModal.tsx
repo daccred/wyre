@@ -15,8 +15,7 @@ import {
   FormLabel,
   useDisclosure,
 } from "@chakra-ui/react";
-import type { Employee } from "@prisma/client";
-import { useForm } from "components";
+import type { Team } from "@prisma/client";
 import RowSelectTable from "components/CustomTable/RowSelectTable";
 import React, { useEffect, useMemo, useState } from "react";
 import { BiLinkAlt } from "react-icons/bi";
@@ -25,6 +24,8 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { trpc } from "utils/trpc";
 import SuccessModal from "views/Payroll/modals/SuccessModal";
 import z from "zod";
+
+import { useForm } from "@wyrecc/components";
 
 import { generateLinkColumn } from "../utils/tableColumns";
 
@@ -45,12 +46,12 @@ const GeneratePaymentLinkModal = ({
     onClose: closeSuccessModal,
   } = useDisclosure();
 
-  const [tableData, setTableData] = useState<Employee[]>([]);
+  const [tableData, setTableData] = useState<Team[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: contractorData } = trpc.employee.getContractors.useQuery();
-  const { data: employeeData } = trpc.employee.getEmployees.useQuery();
+  const { data: contractorData } = trpc.team.getContractors.useQuery();
+  const { data: employeeData } = trpc.team.getEmployees.useQuery();
 
   const teamData = useMemo(() => {
     if (employeeData && contractorData) {
@@ -67,7 +68,7 @@ const GeneratePaymentLinkModal = ({
 
     if (searchTerm) {
       const searchData = teamData?.filter((data) =>
-        data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+        data?.firstName?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
       setTableData(searchData);
     } else setTableData(teamData);

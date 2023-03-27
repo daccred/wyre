@@ -43,7 +43,7 @@ export default function AddContractor({
   const toast = useToast();
 
   const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
-    onSuccess(data: any) {
+    onSuccess() {
       // Reset the form data to empty values
 
       openAddContractorSuccessModal();

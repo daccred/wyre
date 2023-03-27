@@ -5,7 +5,7 @@ import { trpc } from "../utils/trpc";
 
 export default function Page() {
   const router = useRouter();
-  const { id, token, expires } = router.query;
+  const { id, token } = router.query;
   const mutation = trpc.auth.verifyAdminEmail.useMutation();
 
   React.useEffect(() => {

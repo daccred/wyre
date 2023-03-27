@@ -42,8 +42,8 @@ export default function AddEmployee({
 }: addEmployeeTypes) {
   const toast = useToast();
 
-  const { mutate: addEmployee, isLoading } = trpc.employee.createEmployee.useMutation({
-    onSuccess(data: any) {
+  const { mutate: addEmployee, isLoading } = trpc.team.createEmployee.useMutation({
+    onSuccess() {
       // Reset the form data to empty values
 
       openAddEmployeeSuccessModal();

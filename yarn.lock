@@ -1811,7 +1811,7 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
 
-"@prisma/client@^4.5.0", "@prisma/client@^4.8.0", "@prisma/client@>=2.26.0 || >=3":
+"@prisma/client@^4.11.0", "@prisma/client@^4.5.0", "@prisma/client@^4.8.0":
   version "4.11.0"
   resolved "https://registry.npmjs.org/@prisma/client/-/client-4.11.0.tgz"
   integrity sha512-0INHYkQIqgAjrt7NzhYpeDQi8x3Nvylc2uDngKyFDDj1tTRQ4uV1HnVmd1sQEraeVAN63SOK0dgCKQHlvjL0KA==
@@ -7214,19 +7214,12 @@ prisma-zod-generator@^0.8.11:
     tslib "^2.4.1"
     zod "^3.20.2"
 
-prisma@*, prisma@^4.5.0:
+prisma@^4.11.0, prisma@^4.5.0:
   version "4.11.0"
-  resolved "https://registry.npmjs.org/prisma/-/prisma-4.11.0.tgz"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.11.0.tgz#9695ba4129a43eab3e76b5f7a033c6c020377725"
   integrity sha512-4zZmBXssPUEiX+GeL0MUq/Yyie4ltiKmGu7jCJFnYMamNrrulTBc+D+QwAQSJ01tyzeGHlD13kOnqPwRipnlNw==
   dependencies:
     "@prisma/engines" "4.11.0"
-
-prisma@4.8.0:
-  version "4.8.0"
-  resolved "https://registry.npmjs.org/prisma/-/prisma-4.8.0.tgz"
-  integrity sha512-DWIhxvxt8f4h6MDd35mz7BJff+fu7HItW3WPDIEpCR3RzcOWyiHBbLQW5/DOgmf+pRLTjwXQob7kuTZVYUAw5w==
-  dependencies:
-    "@prisma/engines" "4.8.0"
 
 proc-log@^2.0.0, proc-log@^2.0.1:
   version "2.0.1"
@@ -7460,7 +7453,7 @@ react-style-singleton@^2.2.1:
 
 react-table@^7.8.0:
   version "7.8.0"
-  resolved "https://registry.npmjs.org/react-table/-/react-table-7.8.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.8.0.tgz#07858c01c1718c09f7f1aed7034fcfd7bda907d2"
   integrity sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA==
 
 react-transition-group@^4.3.0:

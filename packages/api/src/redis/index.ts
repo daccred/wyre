@@ -1,12 +1,14 @@
 import { createClient } from "redis";
 
+import { env } from "@wyrecc/env";
+
 const redisClient = createClient({
   socket: {
-    host: process.env.REDIS_URL,
-    port: Number(process.env.REDIS_PORT),
+    host: env.REDIS_URL,
+    port: parseInt(env.REDIS_PORT, 10),
   },
 
-  password: process.env.REDIS_PASSWORD,
+  password: env.REDIS_PASSWORD,
 });
 redisClient.on("error", (err) => console.warn(err));
 redisClient

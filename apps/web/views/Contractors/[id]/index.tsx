@@ -37,7 +37,7 @@ const ManageContractor = ({ contractorData }: any) => {
     ...initialState,
     contractor: contractorData,
   });
-  const { data: contractor, isLoading } = trpc.employee.getSingleContractor.useQuery(id as string);
+  const { data: contractor, isLoading } = trpc.team.getSingleContractor.useQuery(id as string);
 
   useEffect(() => {
     if (contractor) {
@@ -82,7 +82,7 @@ export default ManageContractor;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const id = query.id as string;
-  const { data: contractor } = await trpc.employee.getSingleContractor.useQuery(id);
+  const { data: contractor } = await trpc.team.getSingleContractor.useQuery(id);
   return {
     props: {
       requireAuth: false,
