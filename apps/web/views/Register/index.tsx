@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
 import * as React from "react";
 
-import { FormInput, FormNativeSelect } from "../../components/forms";
+import { FormInput, FormSelect } from "../../components/forms";
 
 type Props = {
   isSubmitting?: boolean;
@@ -31,7 +31,7 @@ const View: React.FC<Props> = (Props) => {
 
             <Stack spacing={6}>
               <FormInput name="company" type="text" label="Company Name" placeholder="e.g. Zayroll LLC" />
-              <FormNativeSelect
+              <FormSelect
                 label="Country"
                 name="country"
                 options={[
@@ -62,9 +62,6 @@ const View: React.FC<Props> = (Props) => {
                 type="submit"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
-                // _hover={{
-                //   bg: '#210D35',
-                // }}
                 _hover={{ bg: "" }}>
                 Create Account
               </Button>
