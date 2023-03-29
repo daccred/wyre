@@ -9,7 +9,7 @@ export const expenseSchema = z.object({
   employeeId: z.string(),
   attachment: z.object({
     title: z.string(),
-    file: z.string(),
+    url: z.string(),
   }),
 });
 

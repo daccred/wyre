@@ -191,7 +191,7 @@ enum ExpensePaymentMethod {
 model ExpenseAttchment {
   id        String   @id @default(cuid())
   title     String
-  file      String
+  url       String
   expenseId String   @unique
   expense   Expense? @relation(fields: [expenseId], references: [id], onDelete: Cascade)
 }

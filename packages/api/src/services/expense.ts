@@ -27,10 +27,7 @@ export class ExpenseService {
       }
 
       const attachment = await prisma.expenseAttchment.create({
-        data: {
-          title: input.attachment.title,
-          file: input.attachment.file,
-        },
+        data: input.attachment,
       });
 
       if (!attachment)
