@@ -46,7 +46,7 @@ const initialState = {
   employees: [],
   dummyData: [],
   dummyDataInUse: [],
-  selectedEmployee: {},
+  selectedEmployee: undefined,
   searchTerm: "",
   activeEmployeesOnly: false,
   isLoading: false,
