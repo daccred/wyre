@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
 import * as React from "react";
 
-import { FormInput, FormSelect } from "../../components/forms";
+import { FormInput, FormNativeSelect } from "../../components/forms";
 
 type Props = {
   isSubmitting?: boolean;
@@ -31,12 +31,13 @@ const View: React.FC<Props> = (Props) => {
 
             <Stack spacing={6}>
               <FormInput name="company" type="text" label="Company Name" placeholder="e.g. Zayroll LLC" />
-              <FormSelect
+              <FormNativeSelect
+                // placeholder="Select Country"
                 label="Country"
                 name="country"
                 options={[
-                  { value: "gh", label: "Ghana" },
-                  { value: "ng", label: "Nigeria" },
+                  { value: "ghana", label: "Ghana" },
+                  { value: "nigeria", label: "Nigeria" },
                 ]}
               />
               <FormInput name="name" type="text" label="Full Name" placeholder="e.g. john.doe@zayroll.com" />

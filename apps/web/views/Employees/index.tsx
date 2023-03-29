@@ -33,19 +33,131 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 import ViewLayout from "../../components/core/ViewLayout";
 import { trpc } from "../../utils/trpc";
 import AddEmployee from "./AddEmployee";
 import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
+import TablePulse from "./TablePulse";
+
+const initialState = {
+  employees: [],
+  dummyData: [],
+  dummyDataInUse: [],
+  selectedEmployee: {},
+  searchTerm: "",
+  activeEmployeesOnly: false,
+  isLoading: false,
+  error: null,
+};
+
+const actionTypes = {
+  FETCH_DATA: "FETCH_DATA",
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  FETCH_ERROR: "FETCH_ERROR",
+  SET_DUMMY_DATA: "SET_DUMMY_DATA",
+  SET_DUMMY_DATA_IN_USE: "SET_DUMMY_DATA_IN_USE",
+  SET_SELECTED_EMPLOYEE: "SET_SELECTED_EMPLOYEE",
+  SET_SEARCH_TERM: "SET_SEARCH_TERM",
+  SET_ACTIVE_EMPLOYEES_ONLY: "SET_ACTIVE_EMPLOYEES_ONLY",
+};
+
+const reducer = (state: any, action: any) => {
+  switch (action.type) {
+    case actionTypes.FETCH_DATA:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case actionTypes.FETCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        employees: action.payload,
+      };
+    case actionTypes.FETCH_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+    case actionTypes.SET_DUMMY_DATA:
+      return {
+        ...state,
+        dummyData: action.payload,
+      };
+    case actionTypes.SET_DUMMY_DATA_IN_USE:
+      return {
+        ...state,
+        dummyDataInUse: action.payload,
+      };
+    case actionTypes.SET_SELECTED_EMPLOYEE:
+      return {
+        ...state,
+        selectedEmployee: action.payload,
+      };
+    case actionTypes.SET_SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+    case actionTypes.SET_ACTIVE_EMPLOYEES_ONLY:
+      return {
+        ...state,
+        activeEmployeesOnly: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 const Employees = () => {
-  const { data: employees } = trpc.team.getEmployees.useQuery();
-  console.log(employees);
-
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { dummyData, dummyDataInUse, selectedEmployee, searchTerm, activeEmployeesOnly } = state;
+  const { data: employees, error, isLoading, refetch } = trpc.team.getEmployees.useQuery();
   const router = useRouter();
+  console.log(error);
+  useEffect(() => {
+    dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
+    dispatch({ type: actionTypes.FETCH_ERROR, payload: error });
+  }, [isLoading, error]);
+
+  useEffect(() => {
+    if (employees) {
+      const convertedEmployees = employees.map((employee: any) => ({
+        id: employee.id.toString(),
+        name: employee.firstName,
+        email: employee.email,
+        role: employee.jobRole,
+        department: employee.department,
+        status: employee.status !== null ? (employee.status === true ? "active" : "terminated") : "",
+        category: employee.teamCategory,
+        salary: employee.salary,
+        signBonus: employee.signBonus,
+      }));
+      dispatch({ type: actionTypes.FETCH_SUCCESS, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_DUMMY_DATA, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_DUMMY_DATA_IN_USE, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_SELECTED_EMPLOYEE, payload: convertedEmployees[0] });
+    }
+  }, [employees]);
+
+  useEffect(() => {
+    if (dummyData) {
+      const searchData = dummyData?.filter((data: any) =>
+        data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+      );
+      if (activeEmployeesOnly) {
+        const activeData = searchData.filter((data: any) => data?.status === "active");
+        dispatch({ type: actionTypes.SET_DUMMY_DATA_IN_USE, payload: activeData });
+      } else {
+        dispatch({ type: actionTypes.SET_DUMMY_DATA_IN_USE, payload: searchData });
+      }
+    }
+  }, [searchTerm, activeEmployeesOnly, dummyData]);
 
   const {
     isOpen: addEmployeeModalIsOpen,
@@ -58,77 +170,18 @@ const Employees = () => {
     onClose: closeAddEmployeeSuccessModal,
   } = useDisclosure();
 
-  const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
-  const [dummyDataInUse, setDummyDataInUse] = useState<{ [key: string]: string }[]>([]);
-  const [selectedEmployee, setSelectedEmployee] = useState<{
-    [key: string]: string;
-  }>();
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [activeEmployeesOnly, setActiveEmployeesOnly] = useState(false);
-
   useEffect(() => {
-    if (employees) {
-      const convertedEmployees = employees.map((employee: any) => ({
-        id: employee.id.toString(),
-        name: employee.name,
-        email: employee.email,
-        role: employee.jobRole,
-        department: employee.department,
-        status: employee.status !== null ? (employee.status === true ? "active" : "terminated") : "",
-        category: employee.category,
-        salary: employee.salary,
-        signBonus: employee.signBonus,
-      }));
-      setDummyData(convertedEmployees);
-      setDummyDataInUse(convertedEmployees);
-      setSelectedEmployee(convertedEmployees[0]); // Set the initial state for selectedEmployee to the first data in convertedEmployees
+    if (addEmployeeSuccessModalIsOpen) {
+      refetch();
     }
-  }, [employees]);
-
-  // search and active employees switch function
-  useEffect(() => {
-    if (searchTerm) {
-      const searchData = dummyData?.filter((data) =>
-        data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-      );
-      if (activeEmployeesOnly) {
-        const activeData = searchData.filter((data) => data?.status === "active");
-        setDummyDataInUse(activeData);
-        return;
-      } else {
-        setDummyDataInUse(searchData);
-        return;
-      }
-    }
-
-    if (!searchTerm) {
-      if (activeEmployeesOnly) {
-        const activeData = dummyData.filter((data) => data?.status === "active");
-        setDummyDataInUse(activeData);
-        return;
-      }
-    }
-
-    setDummyDataInUse(dummyData);
-  }, [activeEmployeesOnly, searchTerm, dummyData]);
+  }, [addEmployeeSuccessModalIsOpen, refetch]);
 
   // pagination functions start
   // constants
   const outerLimit = 2;
   const innerLimit = 2;
 
-  const {
-    pages,
-    pagesCount,
-    //  offset,
-    currentPage,
-    setCurrentPage,
-    //  setIsDisabled,
-    isDisabled,
-    pageSize,
-    //  setPageSize
-  } = usePagination({
+  const { pages, pagesCount, currentPage, setCurrentPage, isDisabled, pageSize } = usePagination({
     total: dummyDataInUse?.length,
     limits: {
       outer: outerLimit,
@@ -141,13 +194,10 @@ const Employees = () => {
     },
   });
 
-  // handlers
   const handlePageChange = (nextPage: number): void => {
     // -> request new data using the page number
     setCurrentPage(nextPage);
   };
-  // pagination functions end
-
   return (
     <>
       <ViewLayout title="Employees">
@@ -156,7 +206,6 @@ const Employees = () => {
             <Text fontWeight="bold" fontSize="18px" mb="4" px={4}>
               Employees
             </Text>
-
             <HStack justifyContent="space-between" px={4}>
               <Button
                 variant="darkBtn"
@@ -175,101 +224,128 @@ const Employees = () => {
               </Stack>
             </HStack>
 
-            {dummyData && dummyData?.length > 0 && (
-              <HStack justifyContent="space-between" pt="2" px={4}>
-                <HStack gap="1">
-                  <FiSearch fontSize="24px" />
-                  <Input
-                    variant="unstyled"
-                    border="0"
-                    borderBottom="1px solid"
-                    borderRadius={0}
-                    px="0"
-                    py="1"
-                    h="40px"
-                    w={{ base: "auto", lg: "250px" }}
-                    fontSize="sm"
-                    placeholder="Search Employee"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </HStack>
-                <HStack gap="2" alignItems="center">
-                  <Switch
-                    size="sm"
-                    colorScheme="black"
-                    onChange={(e) => setActiveEmployeesOnly(e?.target?.checked)}
-                  />
-                  <Text fontWeight="semibold" fontSize="sm">
-                    Active Employees
-                  </Text>
-                </HStack>
-              </HStack>
-            )}
+            {isLoading ? (
+              <TablePulse />
+            ) : (
+              <>
+                {dummyData?.length > 0 && (
+                  <>
+                    <HStack justifyContent="space-between" pt="2" px={4}>
+                      <HStack gap="1">
+                        <FiSearch fontSize="24px" />
+                        <Input
+                          variant="unstyled"
+                          border="0"
+                          borderBottom="1px solid"
+                          borderRadius={0}
+                          px="0"
+                          py="1"
+                          h="40px"
+                          w={{ base: "auto", lg: "250px" }}
+                          fontSize="sm"
+                          placeholder="Search Employee"
+                          value={searchTerm}
+                          onChange={(e) =>
+                            dispatch({ type: actionTypes.SET_SEARCH_TERM, payload: e.target.value })
+                          }
+                        />
+                      </HStack>
+                      <HStack gap="2" alignItems="center">
+                        <Switch
+                          size="sm"
+                          colorScheme="black"
+                          onChange={(e) =>
+                            dispatch({
+                              type: actionTypes.SET_ACTIVE_EMPLOYEES_ONLY,
+                              payload: e.target.checked,
+                            })
+                          }
+                        />
+                        <Text fontWeight="semibold" fontSize="sm">
+                          Active Employees
+                        </Text>
+                      </HStack>
+                    </HStack>
 
-            {dummyData && dummyData?.length > 0 && (
-              <TableContainer
-                pt="4"
-                css={{
-                  "&::-webkit-scrollbar": {
-                    width: "15px",
-                    background: "transparent",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    background: "transparent",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "#d6dee1",
-                    borderRadius: "20px",
-                    border: "6px solid transparent",
-                    backgroundClip: "content-box",
-                  },
-                }}>
-                <Table variant="unstyled">
-                  <Thead>
-                    <Tr>
-                      <Th>Full Name</Th>
-                      <Th>Category</Th>
-                      <Th>Job Role</Th>
-                      <Th>Department</Th>
-                      <Th>Status</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {dummyDataInUse &&
-                      dummyDataInUse?.length > 0 &&
-                      dummyDataInUse
-                        ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
-                        .map((data, index) => (
-                          <Tr
-                            textTransform="capitalize"
-                            cursor="pointer"
-                            key={index}
-                            onClick={() => setSelectedEmployee(data)}
-                            borderBottom="1px solid"
-                            borderColor="bordergrey">
-                            <Td>
-                              <HStack>
-                                <Avatar
-                                  size="sm"
-                                  src={data?.imgURL}
-                                  name={data?.name}
-                                  opacity={data?.status !== "active" ? "35%" : ""}
-                                />
-                                <Text color={data?.status !== "active" ? "#FF951C" : ""}>{data?.name}</Text>
-                              </HStack>
-                            </Td>
-                            <Td textTransform="lowercase" opacity={data?.status !== "active" ? "35%" : ""}>
-                              {data?.category}
-                            </Td>
-                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
-                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
-                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
+                    <TableContainer
+                      pt="4"
+                      css={{
+                        "&::-webkit-scrollbar": {
+                          width: "15px",
+                          background: "transparent",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                          background: "transparent",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                          backgroundColor: "#d6dee1",
+                          borderRadius: "20px",
+                          border: "6px solid transparent",
+                          backgroundClip: "content-box",
+                        },
+                      }}>
+                      <Table variant="unstyled">
+                        <Thead>
+                          <Tr>
+                            <Th>Full Name</Th>
+                            <Th>Category</Th>
+                            <Th>Job Role</Th>
+                            <Th>Department</Th>
+                            <Th>Status</Th>
                           </Tr>
-                        ))}
-                  </Tbody>
-                </Table>
-              </TableContainer>
+                        </Thead>
+                        <Tbody>
+                          {dummyDataInUse &&
+                            dummyDataInUse?.length > 0 &&
+                            dummyDataInUse
+                              ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
+                              .map((data: any, index: any) => (
+                                <Tr
+                                  textTransform="capitalize"
+                                  cursor="pointer"
+                                  key={index}
+                                  onClick={() =>
+                                    dispatch({ type: actionTypes.SET_SELECTED_EMPLOYEE, payload: data })
+                                  }
+                                  borderBottom="1px solid"
+                                  borderColor="bordergrey">
+                                  <Td>
+                                    <HStack>
+                                      <Avatar
+                                        size="sm"
+                                        src={data?.imgURL}
+                                        name={data?.name}
+                                        opacity={data?.status !== "active" ? "35%" : ""}
+                                      />
+                                      <Text color={data?.status !== "active" ? "#FF951C" : ""}>
+                                        {data?.name}
+                                      </Text>
+                                    </HStack>
+                                  </Td>
+                                  <Td
+                                    textTransform="lowercase"
+                                    opacity={data?.status !== "active" ? "35%" : ""}>
+                                    {data?.category}
+                                  </Td>
+                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
+                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
+                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
+                                </Tr>
+                              ))}
+                        </Tbody>
+                      </Table>
+                    </TableContainer>
+                    {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
+                      <Center w="100%" p="8" flexDirection="column">
+                        <EmptyEmployeeImage />
+                        <Text pr="12" pt="2">
+                          No Employee
+                        </Text>
+                      </Center>
+                    )}
+                  </>
+                )}
+              </>
             )}
 
             {dummyDataInUse && dummyDataInUse?.length > 0 && (
@@ -325,15 +401,6 @@ const Employees = () => {
                   </PaginationNext>
                 </PaginationContainer>
               </Pagination>
-            )}
-
-            {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-              <Center w="100%" p="8" flexDirection="column">
-                <EmptyEmployeeImage />
-                <Text pr="12" pt="2">
-                  No Employee
-                </Text>
-              </Center>
             )}
           </Stack>
           {selectedEmployee ? (

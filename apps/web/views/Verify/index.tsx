@@ -55,8 +55,10 @@ const View = () => {
   };
 
   return (
-    <>
-      <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+    <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+      <Stack flex={1}>
+        <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
+
         <Flex p={12} flex={1} align="start" justify={{ base: "", md: "", xl: "" }}>
           <Stack spacing={8} w="full" maxW="sm">
             <Stack>
@@ -93,9 +95,6 @@ const View = () => {
                   isDisabled={pinInputData.length < 6}
                   isLoading={isLoading}
                   onClick={handleSubmit}
-                  // _hover={{
-                  //   bg: '#210D35',
-                  // }}
                   _hover={{ bg: "" }}>
                   Continue
                 </Button>
@@ -122,7 +121,7 @@ const View = () => {
           <Image alt="Image" src="images/Payroll.png" />
         </HStack>
       </Flex>
-    </>
+    </Stack>
   );
 };
 

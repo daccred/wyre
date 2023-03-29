@@ -68,12 +68,12 @@ const Contractors = () => {
     if (contractors) {
       const convertedContractors = contractors.map((contractor: any) => ({
         id: contractor.id.toString(),
-        name: contractor.name,
+        name: contractor.firstName,
         email: contractor.email,
         role: contractor.jobRole,
         department: contractor.department,
         status: contractor.status !== null ? (contractor.status === true ? "active" : "terminated") : "",
-        category: contractor.category,
+        category: contractor.teamCategory,
         salary: contractor.salary,
         signBonus: contractor.signBonus,
       }));

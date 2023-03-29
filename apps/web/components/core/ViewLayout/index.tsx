@@ -251,6 +251,7 @@ interface HeaderNavProps extends FlexProps {
 const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
+  // console.log(sessionData);
 
   return (
     <Flex
@@ -311,10 +312,10 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             <Avatar size="sm" src="" name={sessionData?.user?.name as string} />
             <VStack display="flex" alignItems="flex-start" spacing="1px" pr="4">
               <Text fontSize="sm" fontWeight="bold">
-                {sessionData?.user?.name}
+                {sessionData?.user?.fname}
               </Text>
               <Text fontSize="xs" fontWeight="medium" color="boldgrey">
-                Chief People Officer
+                {sessionData?.user?.role}
               </Text>
             </VStack>
           </HStack>
