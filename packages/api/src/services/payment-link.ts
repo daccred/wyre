@@ -2,6 +2,7 @@ import * as argon2 from "argon2";
 import { nanoid } from "nanoid";
 
 import { prisma } from "@wyrecc/db";
+import { getBaseUrl, sendEmail, paymentLinkEmail } from "@wyrecc/dialog";
 
 import { TRPCError } from "@trpc/server";
 
@@ -10,6 +11,29 @@ import { generateFiveDigitCode, ServerError } from "../utils";
 import { EncryptionService } from "./encryption";
 
 export class PaymentService {
+  static async generateLink(employeeId: string) {
+    try {
+      const employee = await prisma.team.findFirst({
+        where: { id: employeeId },
+      });
+
+      if (!employee) throw new TRPCError({ code: "NOT_FOUND", message: "Employee not found" });
+      const link = `${getBaseUrl()}/employees?email=${employee.email}`;
+      const email = paymentLinkEmail({ link });
+
+      const response = await sendEmail({
+        from: "admin@tecmie.com",
+        subject: "Make your payment request",
+        to: employee.email,
+        textBody: "Email sent",
+        htmlBody: email,
+      });
+
+      return { link, response };
+    } catch (error) {
+      ServerError(error);
+    }
+  }
   static async getSinglePaymentLink(paymentLinkId: string) {
     try {
       const paymentLink = await prisma.paymentLink.findFirst({
@@ -55,8 +79,8 @@ export class PaymentService {
         case "PRIVATE":
           // generate and hash the five-digit-code
           code = generateFiveDigitCode();
-          hashedPassword = await argon2.hash(code as string);
-          encrypted = EncryptionService.encryptData(code as string);
+          hashedPassword = await argon2.hash(code);
+          encrypted = EncryptionService.encryptData(code);
           // create the payment link
           createPaymentLink = await prisma.paymentLink.create({
             data: {
@@ -75,7 +99,7 @@ export class PaymentService {
           }
           return {
             createPaymentLink,
-            message: code ? code : null,
+            message: code,
           };
         case "PUBLIC":
           createPaymentLink = await prisma.paymentLink.create({
@@ -123,7 +147,7 @@ export class PaymentService {
       if (updatePaymentLink) {
         return {
           updatePaymentLink,
-          message: code ? code : null,
+          message: code ?? null,
         };
       }
       throw new TRPCError({

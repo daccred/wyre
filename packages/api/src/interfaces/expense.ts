@@ -5,8 +5,12 @@ export const expenseSchema = z.object({
   description: z.string(),
   date: z.date(),
   type: z.enum(["Reimbursement", "Payment"]),
-  status: z.enum(["Pending", "Failed", "Success"]),
-  employees: z.array(z.string()),
+  status: z.enum(["Approved", "Pending", "Disapproved"]),
+  employeeId: z.string(),
+  attachment: z.object({
+    title: z.string(),
+    file: z.string(),
+  }),
 });
 
 export type IExpenseSchema = z.infer<typeof expenseSchema>;

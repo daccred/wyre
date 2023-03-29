@@ -197,7 +197,6 @@ export class AuthService {
         subject: "Verify your email",
         to: email,
         textBody: "Email sent",
-        userId: admin?.id,
         htmlBody: verifyEmail,
       });
       return response;
@@ -234,7 +233,6 @@ export class AuthService {
         subject: "Reset your password",
         to: email,
         textBody: "Email sent",
-        userId: user?.id,
         htmlBody: forgotEmail,
       });
 

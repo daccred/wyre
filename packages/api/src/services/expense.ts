@@ -8,10 +8,10 @@ import { ServerError } from "../utils/server-error";
 export class ExpenseService {
   static async createExpense(input: IExpenseSchema) {
     try {
-      const employees = await prisma.team.findMany({
+      const employee = await prisma.team.findFirst({
         where: {
           id: {
-            in: input.employees,
+            in: input.employeeId,
           },
         },
         select: {
@@ -19,12 +19,22 @@ export class ExpenseService {
         },
       });
 
-      if (!employees || employees.length === 0) {
+      if (!employee) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Employees not found",
+          message: "Employee not found",
         });
       }
+
+      const attachment = await prisma.expenseAttchment.create({
+        data: {
+          title: input.attachment.title,
+          file: input.attachment.file,
+        },
+      });
+
+      if (!attachment)
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create attachment" });
 
       const expense = await prisma.expense.create({
         data: {
@@ -33,7 +43,8 @@ export class ExpenseService {
           type: input.type,
           status: input.status,
           description: input.description,
-          employees: { connect: employees },
+          attachmentId: attachment.id,
+          employeeId: employee.id,
         },
       });
 
@@ -53,17 +64,18 @@ export class ExpenseService {
 
   static async updateExpense(expenseId: string, input: IExpenseSchema) {
     try {
-      const employees = await prisma.team.findMany({
+      const employee = await prisma.team.findFirst({
         where: {
           teamCategory: "EMPLOYEE",
-          id: {
-            in: input.employees,
-          },
+          id: input.employeeId,
         },
         select: {
           id: true,
         },
       });
+      if (!employee) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Employee not found" });
+      }
       const expense = await prisma.expense.update({
         where: { id: expenseId },
         data: {
@@ -72,7 +84,7 @@ export class ExpenseService {
           status: input.status,
           amount: input.amount,
           description: input.description,
-          employees: { connect: employees },
+          employeeId: employee.id,
         },
       });
 
@@ -111,7 +123,7 @@ export class ExpenseService {
     try {
       const expense = await prisma.expense.findUnique({
         where: { id: expenseId },
-        include: { employees: true },
+        include: { employee: true, attachment: true },
       });
       if (!expense) {
         throw new TRPCError({
@@ -127,7 +139,7 @@ export class ExpenseService {
   static async getExpenses() {
     try {
       const expenses = await prisma.expense.findMany({
-        include: { employees: true },
+        include: { employee: true, attachment: true },
       });
       if (!expenses) {
         throw new TRPCError({

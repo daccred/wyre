@@ -10,7 +10,6 @@ type Props = {
   to: string;
   subject: string;
   textBody: string;
-  userId?: string;
   htmlBody: string;
 };
 

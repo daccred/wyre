@@ -16,9 +16,18 @@ export const serverSchema = z.object({
     // VERCEL_URL doesnt include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string() : z.string().url()
   ),
-  // GOOGLE_CLIENT_ID: z.string(),
-  // AUTH_EMAIL_SERVER: z.string(),
-  // GOOGLE_CLIENT_SECRET: z.string(),
+
+  GOOGLE_CLIENT_ID: z.string(),
+  AUTH_EMAIL_SERVER: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string(),
+  POSTMARK_CLIENT_ID: z.string(),
+  REDIS_URL: z.string(),
+  REDIS_PASSWORD: z.string(),
+  REDIS_PORT: z.string(),
+  ENCRYPTION_KEY: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
+  CLOUDINARY_CLOUD_NAME: z.string(),
 });
 
 /**
