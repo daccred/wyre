@@ -149,7 +149,7 @@ const CreateEmployeePayroll = () => {
       cycle: "daily",
       auto: false,
       payday: undefined,
-      currency: "GHC",
+      currency: "GHS",
       suspend: false,
     },
   });
