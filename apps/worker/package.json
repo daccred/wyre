@@ -3,35 +3,17 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "build": "run-s build:clean build:code",
-    "build:clean": "rimraf dist",
+		"build:clean": "rimraf dist",
     "build:code": "tsc",
-    "start": "node dist/entry.js",
+    "build": "run-s build:clean build:code",
     "dev": "nodemon src/entry.ts",
     "dev:debug": "nodemon --inspect src/entry.ts",
     "format": "prettier --write '**/*.{js,ts}'",
-    "format:p": "prettier-package-json --write",
+    "lint:es": "next lint --fix",
+    "lint:ts": "tsc --pretty --noEmit",
     "prod": "run-s build && node dist/entry.js",
+    "start": "node dist/entry.js",
     "test": "jest --no-cache"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "testRegex": "\\.test\\.ts",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "arrowParens": "always"
   },
   "dependencies": {
     "bull": "^4.10.2",
@@ -55,5 +37,24 @@
     "supertest": "6.3.3",
     "ts-jest": "29.0.5",
     "typescript": "^5.0.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "arrowParens": "always"
   }
 }

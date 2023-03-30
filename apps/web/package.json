@@ -1,17 +1,22 @@
 {
+  "private": true,
   "name": "web",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "analyze:server": "BUNDLE_ANALYZE=server next build",
     "analyze:browser": "BUNDLE_ANALYZE=browser next build",
+    "analyze:server": "BUNDLE_ANALYZE=server next build",
+    "build": "next build",
     "dev": "next dev",
     "format": "prettier --write src",
-    "build": "next build",
-    "start": "next start",
     "lint:es": "next lint --fix",
-    "lint:ts": "tsc --pretty --noEmit"
+    "lint:ts": "tsc --pretty --noEmit",
+    "start": "next start"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ccgls"
+    }
   },
   "dependencies": {
     "@ajna/pagination": "^1.4.19",
@@ -47,10 +52,5 @@
     "@types/react-table": "^7.7.14",
     "@wyrecc/config": "^0.1.0",
     "@wyrecc/tsconfig": "^0.1.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-ccgls"
-    }
   }
 }
