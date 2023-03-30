@@ -12,7 +12,7 @@ export const paymentLinkSchema = z.object({
   type: z.enum(["PUBLIC", "PRIVATE"]),
   password: z.string(),
   encryptedPassword: z.string(),
-  currency: z.string(),
+  currency: z.enum(["NGN", "GHS", "USD", "EUR"]),
   status: z.enum(["ACTIVE", "INACTIVE"]),
   wyreRequests: z.array(z.string()),
 });

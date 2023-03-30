@@ -24,6 +24,9 @@ export const serverSchema = z.object({
   REDIS_PASSWORD: z.string(),
   REDIS_PORT: z.string(),
   ENCRYPTION_KEY: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
+  CLOUDINARY_CLOUD_NAME: z.string(),
 });
 
 /**
