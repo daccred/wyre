@@ -27,9 +27,9 @@
     }
   },
   "workspaces": [
-    "apps/*",
     "packages/*",
-    "providers/*"
+    "providers/*",
+    "apps/*"
   ],
   "dependencies": {
     "argon2": "^0.30.3",
