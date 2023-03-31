@@ -5,8 +5,6 @@ import { TRPCError } from "@trpc/server";
 import type { ITeamSchema } from "../interfaces";
 import { ServerError } from "../utils/server-error";
 
-type PayrollMethod = Pick<ITeamSchema, "payrollMethod">;
-
 export class TeamService {
   static async createPersonnel(input: ITeamSchema) {
     try {
@@ -70,7 +68,7 @@ export class TeamService {
     }
   }
 
-  static async updatePaymentMethod(personnelId: string, payroll: PayrollMethod) {
+  static async updatePaymentMethod(personnelId: string, payrollMethod: "CRYPTO" | "BANK" | "MOBILEMONEY") {
     try {
       const personnel = await prisma.team.delete({
         where: { id: personnelId },
@@ -84,7 +82,7 @@ export class TeamService {
       const updatedPersonnel = await prisma.team.update({
         where: { id: personnel.id },
         data: {
-          payrollMethod: payroll.payrollMethod,
+          payrollMethod,
         },
       });
       return `Payement method updated to ${updatedPersonnel.payrollMethod}`;
