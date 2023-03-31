@@ -77,7 +77,6 @@ model User {
   password           String
   type               Role                @default(USER)
   emailVerified      Boolean?            @default(false)
-  verifyId           String              @unique
   verification       VerificationToken?
   image              String?
   jobRole            String?
@@ -160,6 +159,20 @@ model Team {
   MobileMoney   MobileMoney?
 }
 
+enum Currency {
+  NGN
+  KES
+  RWF
+  UGX
+  TZS
+  ZMW
+  ZAR
+  GHS
+  USD
+  EUR
+  GBP
+}
+
 model Payroll {
   id        String   @id @default(cuid())
   title     String
@@ -168,7 +181,7 @@ model Payroll {
   auto      Boolean
   suspend   Boolean  @default(false)
   burden    Int
-  currency  String
+  currency  Currency @default(NGN)
   employees Team[]
 }
 
@@ -252,13 +265,6 @@ enum PaymentLinkType {
   PRIVATE
 }
 
-enum PaymentCurrency {
-  NGN
-  GHS
-  USD
-  EUR
-}
-
 model PaymentLink {
   id                String             @id @default(cuid())
   amount            Int
@@ -266,7 +272,7 @@ model PaymentLink {
   type              PaymentLinkType?   @default(PUBLIC)
   password          String?
   encryptedPassword String?
-  currency          PaymentCurrency?   @default(NGN)
+  currency          Currency?          @default(NGN)
   status            PaymentLinkStatus? @default(ACTIVE)
   linkId            String             @unique
   user              User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
