@@ -33,18 +33,100 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 import ViewLayout from "../../components/core/ViewLayout";
 import { trpc } from "../../utils/trpc";
+import TablePulse from "../TablePulse";
 import AddContractor from "./AddContractor";
 import { EmptyContractorImage, PlusIcon } from "./ProviderIcons";
 
-const Contractors = () => {
-  const router = useRouter();
-  const { data: contractors } = trpc.contractor.getContractors.useQuery();
+const initialState = {
+  contractors: [],
+  data: [],
+  dataInUse: [],
+  selectedContractor: undefined,
+  searchTerm: "",
+  activeContractorsOnly: false,
+  isLoading: true,
+  error: null,
+};
 
+const actionTypes = {
+  FETCH_DATA: "FETCH_DATA",
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  FETCH_ERROR: "FETCH_ERROR",
+  SET_DATA: "SET_DATA",
+  SET_DATA_IN_USE: "SET_DATA_IN_USE",
+  SET_SELECTED_CONTRACTOR: "SET_SELECTED_CONTRACTOR",
+  SET_SEARCH_TERM: "SET_SEARCH_TERM",
+  SET_ACTIVE_CONTRACTORS_ONLY: "SET_ACTIVE_CONTRACTORS_ONLY",
+};
+
+const reducer = (state: any, action: any) => {
+  switch (action.type) {
+    case actionTypes.FETCH_DATA:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case actionTypes.FETCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        contractors: action.payload,
+      };
+    case actionTypes.FETCH_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+    case actionTypes.SET_DATA:
+      return {
+        ...state,
+        data: action.payload,
+      };
+    case actionTypes.SET_DATA_IN_USE:
+      return {
+        ...state,
+        dataInUse: action.payload,
+      };
+    case actionTypes.SET_SELECTED_CONTRACTOR:
+      return {
+        ...state,
+        selectedContractor: action.payload,
+      };
+    case actionTypes.SET_SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+    case actionTypes.SET_ACTIVE_CONTRACTORS_ONLY:
+      return {
+        ...state,
+        activeContractorsOnly: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const Contractors = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { data, dataInUse, selectedContractor, searchTerm, activeContractorsOnly } = state;
+  const router = useRouter();
+  const { data: contractors, error, isLoading, refetch } = trpc.contractor.getContractors.useQuery();
+
+  useEffect(() => {
+    dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
+  }, [isLoading]);
+
+  useEffect(() => {
+    dispatch({ type: actionTypes.FETCH_ERROR, payload: error });
+  }, [error]);
   const {
     isOpen: addContractorModalIsOpen,
     onOpen: openAddContractorModal,
@@ -55,18 +137,10 @@ const Contractors = () => {
     onOpen: openAddContractorSuccessModal,
     onClose: closeAddContractorSuccessModal,
   } = useDisclosure();
-  const [dummyData, setDummyData] = useState<{ [key: string]: string }[]>([]);
-  const [dummyDataInUse, setDummyDataInUse] = useState<{ [key: string]: string }[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedContractor, setSelectedContractor] = useState<{
-    [key: string]: string;
-  }>();
-
-  const [activeContractorsOnly, setActiveContractorsOnly] = useState(true);
 
   useEffect(() => {
     if (contractors) {
-      const convertedContractors = contractors.map((contractor: any) => ({
+      const convertedEmployees = contractors.map((contractor: any) => ({
         id: contractor.id.toString(),
         name: contractor.firstName,
         email: contractor.email,
@@ -77,38 +151,32 @@ const Contractors = () => {
         salary: contractor.salary,
         signBonus: contractor.signBonus,
       }));
-      setDummyData(convertedContractors);
-      setDummyDataInUse(convertedContractors);
-      setSelectedContractor(convertedContractors[0]); // Set the initial state for selectedcontractor to the first data in convertedcontractors
+      dispatch({ type: actionTypes.FETCH_SUCCESS, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_DATA, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_SELECTED_CONTRACTOR, payload: convertedEmployees[0] });
     }
   }, [contractors]);
 
-  // search and active contractors switch function
   useEffect(() => {
-    if (searchTerm) {
-      const searchData = dummyData?.filter((data) =>
+    if (data) {
+      const searchData = data?.filter((data: any) =>
         data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
       if (activeContractorsOnly) {
-        const activeData = searchData.filter((data) => data?.status === "active");
-        setDummyDataInUse(activeData);
-        return;
+        const activeData = searchData.filter((data: any) => data?.status === "active");
+        dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: activeData });
       } else {
-        setDummyDataInUse(searchData);
-        return;
+        dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: searchData });
       }
     }
+  }, [searchTerm, activeContractorsOnly, data]);
 
-    if (!searchTerm) {
-      if (activeContractorsOnly) {
-        const activeData = dummyData.filter((data) => data?.status === "active");
-        setDummyDataInUse(activeData);
-        return;
-      }
+  useEffect(() => {
+    if (addContractorSuccessModalIsOpen) {
+      refetch();
     }
-
-    setDummyDataInUse(dummyData);
-  }, [activeContractorsOnly, searchTerm, dummyData]);
+  }, [addContractorSuccessModalIsOpen, refetch]);
 
   // pagination functions start
   // constants
@@ -126,7 +194,7 @@ const Contractors = () => {
     pageSize,
     //  setPageSize
   } = usePagination({
-    total: dummyDataInUse?.length,
+    total: dataInUse?.length,
     limits: {
       outer: outerLimit,
       inner: innerLimit,
@@ -143,7 +211,6 @@ const Contractors = () => {
     // -> request new data using the page number
     setCurrentPage(nextPage);
   };
-
   // pagination functions end
 
   return (
@@ -165,7 +232,7 @@ const Contractors = () => {
               </Button>
               <Stack spacing="0" alignItems="flex-end">
                 <Text fontWeight="bold" fontSize="20px">
-                  {dummyDataInUse?.length}
+                  {dataInUse?.length}
                 </Text>
                 <Text fontWeight="light" fontSize="xs">
                   Contractor(s)
@@ -173,104 +240,123 @@ const Contractors = () => {
               </Stack>
             </HStack>
 
-            {dummyData && dummyData?.length > 0 && (
-              <HStack justifyContent="space-between" pt="2">
-                <HStack gap="1">
-                  <FiSearch fontSize="24px" />
-                  <Input
-                    variant="unstyled"
-                    border="0"
-                    borderBottom="1px solid"
-                    borderRadius={0}
-                    px="0"
-                    py="1"
-                    h="40px"
-                    w={{ base: "auto", lg: "250px" }}
-                    fontSize="sm"
-                    placeholder="Search Contractor"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </HStack>
-                <HStack gap="2" alignItems="center">
-                  <Switch
-                    size="sm"
-                    colorScheme="black"
-                    onChange={(e) => setActiveContractorsOnly(e?.target?.checked)}
-                  />
-                  <Text fontWeight="semibold" fontSize="sm">
-                    Active Contractors
-                  </Text>
-                </HStack>
-              </HStack>
-            )}
+            {state.isLoading ? (
+              <TablePulse />
+            ) : (
+              <>
+                {data?.length > 0 && (
+                  <>
+                    <HStack justifyContent="space-between" pt="2">
+                      <HStack gap="1">
+                        <FiSearch fontSize="24px" />
+                        <Input
+                          variant="unctyled"
+                          border="0"
+                          borderBottom="1px solid"
+                          borderRadius={0}
+                          px="0"
+                          py="1"
+                          h="40px"
+                          w={{ base: "auto", lg: "250px" }}
+                          fontSize="sm"
+                          placeholder="Search Contractor"
+                          value={searchTerm}
+                          onChange={(e) =>
+                            dispatch({ type: actionTypes.SET_SEARCH_TERM, payload: e.target.value })
+                          }
+                        />
+                      </HStack>
+                      <HStack gap="2" alignItems="center">
+                        <Switch
+                          size="sm"
+                          colorScheme="black"
+                          onChange={(e) =>
+                            dispatch({
+                              type: actionTypes.SET_ACTIVE_CONTRACTORS_ONLY,
+                              payload: e.target.checked,
+                            })
+                          }
+                        />
+                        <Text fontWeight="semibold" fontSize="sm">
+                          Active Contractors
+                        </Text>
+                      </HStack>
+                    </HStack>
 
-            {dummyData && dummyData?.length > 0 && (
-              <TableContainer
-                pt="4"
-                css={{
-                  "&::-webkit-scrollbar": {
-                    width: "15px",
-                    background: "transparent",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    background: "transparent",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "#d6dee1",
-                    borderRadius: "20px",
-                    border: "6px solid transparent",
-                    backgroundClip: "content-box",
-                  },
-                }}>
-                <Table variant="unstyled">
-                  <Thead>
-                    <Tr>
-                      <Th>Full Name</Th>
-                      <Th>Category</Th>
-                      <Th>Job Role</Th>
-                      <Th>Department</Th>
-                      <Th>Status</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {dummyDataInUse &&
-                      dummyDataInUse?.length > 0 &&
-                      dummyDataInUse
-                        ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
-                        .map((data, index) => (
-                          <Tr
-                            textTransform="capitalize"
-                            cursor="pointer"
-                            key={index}
-                            onClick={() => setSelectedContractor(data)}
-                            borderBottom="1px solid"
-                            borderColor="bordergrey">
-                            <Td>
-                              <HStack>
-                                <Avatar
-                                  size="sm"
-                                  src={data?.imgURL}
-                                  name={data?.name}
-                                  opacity={data?.status !== "active" ? "35%" : ""}
-                                />
-                                <Text color={data?.status !== "active" ? "#FF951C" : ""}>{data?.name}</Text>
-                              </HStack>
-                            </Td>
-                            <Td textTransform="lowercase" opacity={data?.status !== "active" ? "35%" : ""}>
-                              {data?.category}
-                            </Td>
-                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
-                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
-                            <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
+                    <TableContainer
+                      pt="4"
+                      css={{
+                        "&::-webkit-scrollbar": {
+                          width: "15px",
+                          background: "transparent",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                          background: "transparent",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                          backgroundColor: "#d6dee1",
+                          borderRadius: "20px",
+                          border: "6px solid transparent",
+                          backgroundClip: "content-box",
+                        },
+                      }}>
+                      <Table variant="unstyled">
+                        <Thead>
+                          <Tr>
+                            <Th>Full Name</Th>
+                            <Th>Category</Th>
+                            <Th>Job Role</Th>
+                            <Th>Department</Th>
+                            <Th>Status</Th>
                           </Tr>
-                        ))}
-                  </Tbody>
-                </Table>
-              </TableContainer>
+                        </Thead>
+                        <Tbody>
+                          {dataInUse &&
+                            dataInUse?.length > 0 &&
+                            dataInUse
+                              ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
+                              .map((data: any, index: any) => (
+                                <Tr
+                                  textTransform="capitalize"
+                                  cursor="pointer"
+                                  key={index}
+                                  onClick={() =>
+                                    dispatch({ type: actionTypes.SET_SELECTED_CONTRACTOR, payload: data })
+                                  }
+                                  borderBottom="1px solid"
+                                  borderColor="bordergrey">
+                                  <Td>
+                                    <HStack>
+                                      <Avatar
+                                        size="sm"
+                                        src={data?.imgURL}
+                                        name={data?.name}
+                                        opacity={data?.status !== "active" ? "35%" : ""}
+                                      />
+                                      <Text color={data?.status !== "active" ? "#FF951C" : ""}>
+                                        {data?.name}
+                                      </Text>
+                                    </HStack>
+                                  </Td>
+                                  <Td
+                                    textTransform="lowercase"
+                                    opacity={data?.status !== "active" ? "35%" : ""}>
+                                    {data?.category}
+                                  </Td>
+                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
+                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
+                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
+                                </Tr>
+                              ))}
+                        </Tbody>
+                      </Table>
+                    </TableContainer>
+                  </>
+                )}
+              </>
             )}
 
-            {dummyDataInUse && dummyDataInUse?.length > 0 && (
+            {dataInUse && dataInUse?.length > 0 && (
               <Pagination
                 pagesCount={pagesCount}
                 currentPage={currentPage}
@@ -325,7 +411,7 @@ const Contractors = () => {
               </Pagination>
             )}
 
-            {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
+            {(!dataInUse || dataInUse?.length === 0) && (
               <Center w="100%" p="8" flexDirection="column">
                 <EmptyContractorImage />
                 <Text pr="12" pt="2">

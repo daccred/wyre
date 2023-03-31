@@ -38,9 +38,9 @@ import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 import ViewLayout from "../../components/core/ViewLayout";
 import { trpc } from "../../utils/trpc";
+import TablePulse from "../TablePulse";
 import AddEmployee from "./AddEmployee";
 import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
-import TablePulse from "./TablePulse";
 
 const initialState = {
   employees: [],
@@ -117,13 +117,29 @@ const reducer = (state: any, action: any) => {
 const Employees = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { dummyData, dummyDataInUse, selectedEmployee, searchTerm, activeEmployeesOnly } = state;
-  const { data: employees, error, isLoading, refetch } = trpc.team.getEmployees.useQuery();
+  const {
+    data: employees,
+    error,
+    isLoading,
+    refetch,
+    isFetching,
+    isSuccess,
+    isRefetchError,
+  } = trpc.team.getEmployees.useQuery();
   const router = useRouter();
   console.log(error);
+  console.log(isFetching);
+  console.log(isSuccess);
+  console.log(isRefetchError);
+
   useEffect(() => {
     dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
     dispatch({ type: actionTypes.FETCH_ERROR, payload: error });
   }, [isLoading, error]);
+
+  useEffect(() => {
+    dispatch({ type: actionTypes.FETCH_ERROR, payload: error });
+  }, [error]);
 
   useEffect(() => {
     if (employees) {
@@ -228,7 +244,7 @@ const Employees = () => {
               <TablePulse />
             ) : (
               <>
-                {dummyData?.length > 0 && (
+                {dummyData?.length > 0 ? (
                   <>
                     <HStack justifyContent="space-between" pt="2" px={4}>
                       <HStack gap="1">
@@ -335,15 +351,14 @@ const Employees = () => {
                         </Tbody>
                       </Table>
                     </TableContainer>
-                    {(!dummyDataInUse || dummyDataInUse?.length === 0) && (
-                      <Center w="100%" p="8" flexDirection="column">
-                        <EmptyEmployeeImage />
-                        <Text pr="12" pt="2">
-                          No Employee
-                        </Text>
-                      </Center>
-                    )}
                   </>
+                ) : (
+                  <Center w="100%" p="8" flexDirection="column">
+                    <EmptyEmployeeImage />
+                    <Text pr="12" pt="2">
+                      No Employee
+                    </Text>
+                  </Center>
                 )}
               </>
             )}
