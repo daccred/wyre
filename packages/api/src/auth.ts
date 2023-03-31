@@ -25,8 +25,8 @@ declare module "next-auth" {
    * or the second parameter of the `session` callback, when using a database.
    */
   interface User extends DefaultUser {
-    fname?: string;
-    lname?: string;
+    firstName?: string;
+    lastName?: string;
     userType?: string;
     phone?: string;
     password?: string;
@@ -105,8 +105,8 @@ export const nextAuthOptions: NextAuthOptions = {
           }
           return {
             id: user.id,
-            fname: user.firstName,
-            lname: user.lastName,
+            firstName: user.firstName,
+            lastName: user.lastName,
             image: user.image,
             userType: user.type,
             emailVerified: user.emailVerified,
