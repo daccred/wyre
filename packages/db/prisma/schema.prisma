@@ -77,7 +77,6 @@ model User {
   password           String
   type               Role                @default(USER)
   emailVerified      Boolean?            @default(false)
-  verifyId           String              @unique
   verification       VerificationToken?
   image              String?
   jobRole            String?
