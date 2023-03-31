@@ -6,7 +6,7 @@ import type { ITeamSchema } from "../interfaces";
 import { ServerError } from "../utils/server-error";
 
 export class TeamService {
-  static async createEmployee(input: ITeamSchema) {
+  static async createPersonnel(input: ITeamSchema) {
     try {
       const teamExists = await prisma.team.findUnique({
         where: {
@@ -44,7 +44,7 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async updateEmployee(teamId: string, input: ITeamSchema) {
+  static async updatePersonnel(teamId: string, input: ITeamSchema) {
     try {
       const team = await prisma.team.update({
         where: { id: teamId },
@@ -71,7 +71,8 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async deleteEmployee(teamId: string) {
+
+  static async deletePersonnel(teamId: string) {
     try {
       const team = await prisma.team.delete({
         where: { id: teamId },
@@ -89,7 +90,7 @@ export class TeamService {
     }
   }
 
-  static async getSingleEmployee(teamId: string) {
+  static async getSinglePersonnel(teamId: string) {
     try {
       const team = await prisma.team.findFirst({
         where: { teamCategory: "EMPLOYEE", id: teamId },
@@ -112,6 +113,7 @@ export class TeamService {
     try {
       const team = await prisma.team.findFirst({
         where: { teamCategory: "CONTRACTOR", id: teamId },
+        include: { expense: true, payroll: true },
       });
 
       if (!team) {
@@ -125,7 +127,7 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async getEmployees() {
+  static async getPersonnel() {
     try {
       const teams = await prisma.team.findMany({
         where: { teamCategory: "EMPLOYEE" },

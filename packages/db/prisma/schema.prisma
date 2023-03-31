@@ -6,10 +6,10 @@ generator client {
 }
 
 // learn more https://www.npmjs.com/package/prisma-zod-generator
-generator zod {
-  provider = "prisma-zod-generator"
-  output   = "./zod"
-}
+// generator zod {
+//   provider = "prisma-zod-generator"
+//   output   = "./zod"
+// }
 
 datasource db {
   provider = "postgresql"
@@ -69,33 +69,37 @@ enum PayrollMethod {
 }
 
 model User {
-  id            String            @id @default(cuid())
-  firstName     String
-  lastName      String
-  email         String            @unique
-  phone         String?
-  password      String
-  type          Role              @default(USER)
-  emailVerified Boolean?          @default(false)
-  verifyId      String            @unique
-  verification  VerificationToken @relation(fields: [verifyId], references: [id])
-  image         String?
-  jobRole       String?
-  category      String?
-  company       Company?          @relation(fields: [companyId], references: [id])
-  companyId     String?
-  accounts      Account[]
-  sessions      Session[]
-  invitations   Invitation[]
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  id                 String              @id @default(cuid())
+  firstName          String
+  lastName           String
+  email              String              @unique
+  phone              String?
+  password           String
+  type               Role                @default(USER)
+  emailVerified      Boolean?            @default(false)
+  verification       VerificationToken?
+  image              String?
+  jobRole            String?
+  category           String?
+  company            Company?            @relation(fields: [companyId], references: [id])
+  companyId          String?
+  accounts           Account[]
+  sessions           Session[]
+  invitations        Invitation[]
+  paymentLinks       PaymentLink[]
+  transactions       Transaction[]
+  wyreRequests       WyreRequest[]
+  failedWyreRequests FailedWyreRequest[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
 }
 
 model VerificationToken {
   id      String   @id @default(cuid())
-  token   String   @unique
+  token   String
   expires DateTime
-  user    User[]
+  userId  String   @unique
+  user    User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([id, token])
 }
@@ -121,7 +125,7 @@ model Invitation {
   category    String
   expires     DateTime?
   companyId   String?
-  userId      String?
+  userId      String    @unique
   user        User?     @relation(fields: [userId], references: [id])
   company     Company?  @relation(fields: [companyId], references: [id])
   createdAt   DateTime  @default(now())
@@ -134,27 +138,39 @@ enum WorkerType {
 }
 
 model Team {
-  id              String         @id @default(cuid())
-  firstName       String?
-  lastName        String?
-  phone           String?
-  country         String?
-  email           String         @unique
-  department      String
-  jobRole         String
-  salary          String
-  signBonus       String
-  status          Boolean?       @default(true)
-  teamCategory    WorkerType     @default(EMPLOYEE)
-  payrollId       String?
-  payroll         Payroll?       @relation(fields: [payrollId], references: [id])
-  expenseId       String?
-  expense         Expense[]
-  payrollMethod   PayrollMethod?
-  payrollMethodId String?
-  CryptoWallet    CryptoWallet[]
-  Bank            Bank[]
-  MobileMoney     MobileMoney[]
+  id            String        @id @default(cuid())
+  firstName     String?
+  lastName      String?
+  phone         String?
+  country       String?
+  email         String        @unique
+  department    String
+  jobRole       String
+  salary        String
+  signBonus     String
+  status        Boolean?      @default(true)
+  teamCategory  WorkerType    @default(EMPLOYEE)
+  payrollId     String?
+  payroll       Payroll?      @relation(fields: [payrollId], references: [id])
+  expense       Expense?
+  payrollMethod PayrollMethod @default(BANK)
+  cryptoWallet  CryptoWallet?
+  bank          Bank?
+  mobileMoney   MobileMoney?
+}
+
+enum Currency {
+  NGN
+  KES
+  RWF
+  UGX
+  TZS
+  ZMW
+  ZAR
+  GHS
+  USD
+  EUR
+  GBP
 }
 
 model Payroll {
@@ -165,7 +181,7 @@ model Payroll {
   auto      Boolean
   suspend   Boolean  @default(false)
   burden    Int
-  currency  String
+  currency  Currency @default(NGN)
   employees Team[]
 }
 
@@ -175,35 +191,49 @@ enum ExpensType {
 }
 
 enum ExpenseStatus {
-  Failed
+  Approved
   Pending
-  Success
+  Disapproved
+}
+
+enum ExpensePaymentMethod {
+  Bank_Transfer
+  Crypto
+}
+
+model ExpenseAttchment {
+  id        String   @id @default(cuid())
+  title     String
+  url       String
+  expenseId String   @unique
+  expense   Expense? @relation(fields: [expenseId], references: [id], onDelete: Cascade)
 }
 
 model Expense {
-  id          String        @id @default(cuid())
+  id          String            @id @default(cuid())
   description String
   date        DateTime
-  type        ExpensType    @default(Payment)
+  type        ExpensType        @default(Payment)
   status      ExpenseStatus
+  attachment  ExpenseAttchment?
   amount      String
-  employees   Team[]
+  employeeId  String            @unique
+  employee    Team              @relation(fields: [employeeId], references: [id])
 }
 
 model CryptoWallet {
-  id         String @id @default(cuid())
-  userId     String
-  currency   String
-  address    String
-  network    String
-  allocation String
-  user       Team   @relation(fields: [userId], references: [id])
+  id          String @id @default(cuid())
+  currency    String
+  address     String
+  network     String
+  allocation  String
+  personnelId String @unique
+  personnel   Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
 }
 
 model Bank {
   id            String @id @default(cuid())
-  userId        String
-  bankName      String
+  name          String
   accountNumber String
   bankCode      String
   country       String
@@ -211,14 +241,105 @@ model Bank {
   routingNumber String
   accountType   String
   allocation    Int
-  user          Team   @relation(fields: [userId], references: [id])
+  personnelId   String @unique
+  personnel     Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
 }
 
 model MobileMoney {
-  id         String @id @default(cuid())
-  userId     String
-  provider   String
-  phoneNumbe String
-  allocation Int
-  user       Team   @relation(fields: [userId], references: [id])
+  id          String @id @default(cuid())
+  provider    String
+  phoneNumber String
+  allocation  Int
+  personnelId String @unique
+  personnel   Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
+}
+
+enum PaymentLinkStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PaymentLinkType {
+  PUBLIC
+  PRIVATE
+}
+
+model PaymentLink {
+  id                String             @id @default(cuid())
+  amount            Int
+  description       String?
+  type              PaymentLinkType?   @default(PUBLIC)
+  password          String?
+  encryptedPassword String?
+  currency          Currency?          @default(NGN)
+  status            PaymentLinkStatus? @default(ACTIVE)
+  linkId            String             @unique
+  user              User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String?
+  // wyreRequest       WyreRequest[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model WyreRequest {
+  id                     String   @id @default(cuid())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  // link                   PaymentLink?  @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  linkId                 String?
+  amount                 Int?
+  requesterEmail         String?
+  requesterPhoneNumber   String?
+  requesterAccountNumber String?
+  bankName               String?
+  requesterName          String?
+  reference              String?
+  to                     String?
+  user                   User?    @relation(fields: [to], references: [id], onDelete: Cascade)
+  status                 String?  @default("PENDING")
+  description            String?
+  // transactions           Transaction[]
+}
+
+model Transaction {
+  id                  String                @id @default(cuid())
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  amount              Int?
+  currency            String?               @default("NGN")
+  status              String?               @default("PENDING")
+  reference           String?
+  receiverEmail       String?
+  description         String?
+  receiverPhoneNumber String?
+  receiverName        String?
+  user                User?                 @relation(fields: [userId], references: [id])
+  userId              String?
+  usdTransferCode     String?
+  // wyreRequest         WyreRequest?          @relation(fields: [wyreRequestId], references: [id], onDelete: Cascade)
+  wyreRequestId       String?
+  outBoundTransaction OutBoundTransaction[]
+}
+
+model OutBoundTransaction {
+  id                   String       @id @default(cuid())
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  status               String?      @default("PENDING")
+  inboundTransaction   Transaction? @relation(fields: [inboundTransactionId], references: [id])
+  inboundTransactionId String?
+  reference            String?
+}
+
+model FailedWyreRequest {
+  id                   String   @id @default(cuid())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  linkId               String?
+  requesterEmail       String?
+  requesterPhoneNumber String?
+  requesterName        String?
+  owner                String?
+  user                 User?    @relation(fields: [owner], references: [id])
+  attempts             Int?     @default(0)
 }

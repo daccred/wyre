@@ -47,7 +47,7 @@ const CreateEmployeePayroll = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("All departments");
 
-  const { data: employeeData, isLoading } = trpc.team.getEmployees.useQuery();
+  const { data: employeeData, isLoading } = trpc.team.getPersonnel.useQuery();
 
   const handleSelectionChange = (selection: any) => {
     setSelectedRowIds(selection);
@@ -149,7 +149,7 @@ const CreateEmployeePayroll = () => {
       cycle: "daily",
       auto: false,
       payday: undefined,
-      currency: "GHC",
+      currency: "GHS",
       suspend: false,
     },
   });

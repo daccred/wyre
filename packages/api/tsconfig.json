@@ -10,10 +10,7 @@
     "outDir": "dist",
     "strict": true,
     "target": "es2021",
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["src/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
