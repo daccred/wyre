@@ -1,12 +1,17 @@
 {
+  "private": true,
   "name": "employee",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ccgls"
+    }
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.7",
@@ -41,10 +46,5 @@
     "@types/react-dom": "^18.0.7",
     "@types/react-table": "^7.7.14",
     "prisma": "^4.5.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-ccgls"
-    }
   }
 }
