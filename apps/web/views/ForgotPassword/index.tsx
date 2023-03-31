@@ -3,13 +3,7 @@ import * as React from "react";
 
 import { FormInput } from "../../components";
 
-// import Link from "next/link";
-
-type ForgotPasswordFormInputs = {
-  email: string;
-};
-
-const View = () => (
+const View = ({ isSubmitting }: { isSubmitting: boolean }) => (
   <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
     <Stack flex={1}>
       <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
@@ -40,6 +34,9 @@ const View = () => (
 
           <Stack spacing={6}>
             <Button
+              type="submit"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
               color="white"
               bgColor="#010C14"
               p="3"
