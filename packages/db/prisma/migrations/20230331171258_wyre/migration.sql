@@ -75,7 +75,6 @@ CREATE TABLE "User" (
     "password" TEXT NOT NULL,
     "type" "Role" NOT NULL DEFAULT 'USER',
     "emailVerified" BOOLEAN DEFAULT false,
-    "verifyId" TEXT,
     "image" TEXT,
     "jobRole" TEXT,
     "category" TEXT,
@@ -91,7 +90,7 @@ CREATE TABLE "VerificationToken" (
     "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id")
 );
@@ -316,9 +315,6 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_verifyId_key" ON "User"("verifyId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_userId_key" ON "VerificationToken"("userId");

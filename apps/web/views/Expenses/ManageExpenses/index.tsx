@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import type { Column } from "react-table";
 import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
+import { manageExpensePath } from "views/Payroll/routes";
 
 import { CustomTable } from "../../../components/CustomTable";
 import ViewLayout from "../../../components/core/ViewLayout";
@@ -61,8 +62,8 @@ const View = () => {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink
-            href="/expenses/manage-expenses"
-            color={pathname === "/expenses/manage-expenses" ? "black" : "lightgrey"}
+            href={manageExpensePath}
+            color={pathname === manageExpensePath ? "black" : "lightgrey"}
             isCurrentPage={true}>
             Manage Expenses
           </BreadcrumbLink>
