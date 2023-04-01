@@ -4,19 +4,18 @@ import {
   HStack,
   Stack,
   Text,
-  useToast,
-  useTab,
-  useMultiStyleConfig,
+  useToast, // useTab,
+  // useMultiStyleConfig,
   Tabs,
+  Tab,
   TabList,
   TabPanel,
   TabPanels,
   Grid,
   GridItem,
-  Icon,
-  Flex,
+  Icon, // Flex,
 } from "@chakra-ui/react";
-import type { Ref } from "react";
+// import type { Ref } from "react";
 import React from "react";
 import { GoPrimitiveDot } from "react-icons/go";
 import z from "zod";
@@ -37,47 +36,48 @@ const addEmployeeValidationSchema = z.object({
   jobRole: z.string(),
   // grossSalary: z.string().min(1, { message: "Required" }),
   // signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.string(),
+  category: z.enum(["CONTRACTOR", "EMPLOYEE"]).default("EMPLOYEE"),
+  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
 
-interface CustomTabProps extends React.HTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-}
+// interface CustomTabProps extends React.HTMLAttributes<HTMLButtonElement> {
+//   children: React.ReactNode;
+// }
 
 export default function EmployeeForm({ employee }: EmployeeFormProps) {
   const toast = useToast();
   // console.log(employee);
 
-  const CustomTab = React.forwardRef(({ children, ...props }: CustomTabProps, ref: Ref<HTMLElement>) => {
-    const tabProps = useTab({ ...props, ref });
-    const isSelected = !!tabProps["aria-selected"];
+  // const CustomTab = React.forwardRef(({ children, ...props }: CustomTabProps, ref: Ref<HTMLElement>) => {
+  //   const tabProps = useTab({ ...props, ref });
+  //   const isSelected = !!tabProps["aria-selected"];
 
-    const styles = useMultiStyleConfig("Tabs", tabProps);
+  //   const styles = useMultiStyleConfig("Tabs", tabProps);
 
-    return (
-      <Button __css={styles.tab} {...tabProps}>
-        <Flex
-          alignItems="center"
-          fontWeight={isSelected ? "bold" : "normal"}
-          color={isSelected ? "#8D1CFF" : " #D2D2D2"}>
-          {children}
-          {isSelected ? (
-            <Icon as={GoPrimitiveDot} w={5} h={5} ml={2} />
-          ) : (
-            <Icon as={GoPrimitiveDot} w={5} h={5} />
-          )}
-        </Flex>
-      </Button>
-    );
-  });
+  //   return (
+  //     <Button __css={styles.tab} {...tabProps}>
+  //       <Flex
+  //         alignItems="center"
+  //         fontWeight={isSelected ? "bold" : "normal"}
+  //         color={isSelected ? "#8D1CFF" : " #D2D2D2"}>
+  //         {children}
+  //         {isSelected ? (
+  //           <Icon as={GoPrimitiveDot} w={5} h={5} ml={2} />
+  //         ) : (
+  //           <Icon as={GoPrimitiveDot} w={5} h={5} />
+  //         )}
+  //       </Flex>
+  //     </Button>
+  //   );
+  // });
 
-  CustomTab.displayName = "CustomTab";
+  // CustomTab.displayName = "CustomTab";
 
-  const { name, email, department, jobRole, category, salary, signBonus } = employee ?? {};
+  const { name, email, department, jobRole, category, salary, signBonus, payrollMethod } = employee ?? {};
 
-  const { mutate: updateEmployee, isLoading } = trpc.team.updateEmployee.useMutation({
+  const { mutate: updateEmployee, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       // Reset the form data to empty values
       styledToast({
@@ -110,7 +110,8 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           salary: employee.salary,
           signBonus: employee.signBonus,
           status: true,
-          category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
+          category: data.category,
+          payrollMethod: payrollMethod,
         },
       });
     } catch (error) {
@@ -118,7 +119,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
     }
   };
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updateEmployee.useMutation({
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       styledToast({
         status: "success",
@@ -151,6 +152,7 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
           signBonus: signBonus,
           status: false, // add status field with the value of false
           category: category,
+          payrollMethod: payrollMethod,
         },
       });
     } catch (error) {
@@ -166,6 +168,8 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
       department: department,
       jobRole: jobRole,
       category: category,
+      payrollMethod: payrollMethod,
+
       // grossSalary: "",
       // signingBonus: ""
     },
@@ -224,9 +228,14 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
             Payment Method
           </Text>
           <TabList>
-            <CustomTab>Bank Payment</CustomTab>
-            <CustomTab>Crypto Payment</CustomTab>
-            <CustomTab>Mobile Money</CustomTab>
+            {["Bank Payment", "Crypto Payment", "Mobile Money"].map((tab) => (
+              <Tab key={tab} color="#D2D2D2" _selected={{ color: "#8D1CFF", fontWeight: "bold" }}>
+                <HStack spacing={4}>
+                  <Text>{tab}</Text>
+                  <Icon as={GoPrimitiveDot} w={5} h={5} />
+                </HStack>
+              </Tab>
+            ))}
           </TabList>
           <TabPanels>
             <TabPanel>
