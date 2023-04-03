@@ -77,7 +77,6 @@ model User {
   password           String
   type               Role                @default(USER)
   emailVerified      Boolean?            @default(false)
-  verifyId           String              @unique
   verification       VerificationToken?
   image              String?
   jobRole            String?
@@ -155,9 +154,23 @@ model Team {
   payroll       Payroll?      @relation(fields: [payrollId], references: [id])
   expense       Expense?
   payrollMethod PayrollMethod @default(BANK)
-  CryptoWallet  CryptoWallet?
-  Bank          Bank?
-  MobileMoney   MobileMoney?
+  cryptoWallet  CryptoWallet?
+  bank          Bank?
+  mobileMoney   MobileMoney?
+}
+
+enum Currency {
+  NGN
+  KES
+  RWF
+  UGX
+  TZS
+  ZMW
+  ZAR
+  GHS
+  USD
+  EUR
+  GBP
 }
 
 model Payroll {
@@ -168,7 +181,7 @@ model Payroll {
   auto      Boolean
   suspend   Boolean  @default(false)
   burden    Int
-  currency  String
+  currency  Currency @default(NGN)
   employees Team[]
 }
 
@@ -197,32 +210,30 @@ model ExpenseAttchment {
 }
 
 model Expense {
-  id           String            @id @default(cuid())
-  description  String
-  date         DateTime
-  type         ExpensType        @default(Payment)
-  status       ExpenseStatus
-  attachmentId String            @unique
-  attachment   ExpenseAttchment?
-  amount       String
-  employeeId   String            @unique
-  employee     Team              @relation(fields: [employeeId], references: [id])
+  id          String            @id @default(cuid())
+  description String
+  date        DateTime
+  type        ExpensType        @default(Payment)
+  status      ExpenseStatus
+  attachment  ExpenseAttchment?
+  amount      String
+  employeeId  String            @unique
+  employee    Team              @relation(fields: [employeeId], references: [id])
 }
 
 model CryptoWallet {
-  id         String @id @default(cuid())
-  employeeId String @unique
-  currency   String
-  address    String
-  network    String
-  allocation String
-  user       Team?  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  id          String @id @default(cuid())
+  currency    String
+  address     String
+  network     String
+  allocation  String
+  personnelId String @unique
+  personnel   Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
 }
 
 model Bank {
   id            String @id @default(cuid())
-  employeeId    String @unique
-  bankName      String
+  name          String
   accountNumber String
   bankCode      String
   country       String
@@ -230,7 +241,8 @@ model Bank {
   routingNumber String
   accountType   String
   allocation    Int
-  user          Team?  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  personnelId   String @unique
+  personnel     Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
 }
 
 model MobileMoney {
@@ -238,8 +250,8 @@ model MobileMoney {
   provider    String
   phoneNumber String
   allocation  Int
-  employeeId  String @unique
-  user        Team?  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  personnelId String @unique
+  personnel   Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
 }
 
 enum PaymentLinkStatus {
@@ -252,13 +264,6 @@ enum PaymentLinkType {
   PRIVATE
 }
 
-enum PaymentCurrency {
-  NGN
-  GHS
-  USD
-  EUR
-}
-
 model PaymentLink {
   id                String             @id @default(cuid())
   amount            Int
@@ -266,7 +271,7 @@ model PaymentLink {
   type              PaymentLinkType?   @default(PUBLIC)
   password          String?
   encryptedPassword String?
-  currency          PaymentCurrency?   @default(NGN)
+  currency          Currency?          @default(NGN)
   status            PaymentLinkStatus? @default(ACTIVE)
   linkId            String             @unique
   user              User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -308,7 +313,7 @@ model Transaction {
   description         String?
   receiverPhoneNumber String?
   receiverName        String?
-  user                User?                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                User?                 @relation(fields: [userId], references: [id])
   userId              String?
   usdTransferCode     String?
   // wyreRequest         WyreRequest?          @relation(fields: [wyreRequestId], references: [id], onDelete: Cascade)
@@ -321,7 +326,7 @@ model OutBoundTransaction {
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
   status               String?      @default("PENDING")
-  inboundTransaction   Transaction? @relation(fields: [inboundTransactionId], references: [id], onDelete: Cascade)
+  inboundTransaction   Transaction? @relation(fields: [inboundTransactionId], references: [id])
   inboundTransactionId String?
   reference            String?
 }
@@ -335,6 +340,6 @@ model FailedWyreRequest {
   requesterPhoneNumber String?
   requesterName        String?
   owner                String?
-  user                 User?    @relation(fields: [owner], references: [id], onDelete: Cascade)
+  user                 User?    @relation(fields: [owner], references: [id])
   attempts             Int?     @default(0)
 }

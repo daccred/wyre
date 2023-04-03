@@ -62,33 +62,23 @@ export class AuthService {
 
       //Handle email verification
       const confirmCode = JSON.stringify(Math.floor(100000 + Math.random() * 900000)); // generates a random 6-digit code
-
-      const token = await prisma.verificationToken.create({
-        data: {
-          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-          token: confirmCode,
-        },
-      });
-
-      if (!token) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Token creation failed",
-        });
-      }
-
       // create admin
       const admin = await prisma.user.create({
         data: {
-          firstName: input.name,
-          lastName: input.name,
+          firstName: input.firstName,
+          lastName: input.lastName,
           email: input.email,
           phone: input.companyPhone,
           password: await hashString(input.password),
           companyId: company.id,
           type: "ADMIN",
           jobRole: input.jobRole,
-          verifyId: token.id,
+          verification: {
+            create: {
+              token: confirmCode,
+              expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            },
+          },
         },
       });
 

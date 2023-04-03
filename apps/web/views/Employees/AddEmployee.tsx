@@ -25,6 +25,8 @@ const addEmployeeValidationSchema = z.object({
   jobRole: z.string().min(1, { message: "Required" }),
   grossSalary: z.string().min(1, { message: "Required" }),
   signingBonus: z.string().min(1, { message: "Required" }),
+  category: z.enum(["CONTRACTOR", "EMPLOYEE"]).default("EMPLOYEE"),
+  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -42,7 +44,7 @@ export default function AddEmployee({
 }: addEmployeeTypes) {
   const toast = useToast();
 
-  const { mutate: addEmployee, isLoading } = trpc.team.createEmployee.useMutation({
+  const { mutate: addEmployee, isLoading } = trpc.team.createPersonnel.useMutation({
     onSuccess() {
       // Reset the form data to empty values
 
@@ -73,6 +75,7 @@ export default function AddEmployee({
       signBonus: data.signingBonus,
       status: true,
       category: "EMPLOYEE",
+      payrollMethod: data.payrollMethod,
     });
   };
 

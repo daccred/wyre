@@ -26,13 +26,6 @@ export class ExpenseService {
         });
       }
 
-      const attachment = await prisma.expenseAttchment.create({
-        data: input.attachment,
-      });
-
-      if (!attachment)
-        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create attachment" });
-
       const expense = await prisma.expense.create({
         data: {
           amount: input.amount,
@@ -40,7 +33,12 @@ export class ExpenseService {
           type: input.type,
           status: input.status,
           description: input.description,
-          attachmentId: attachment.id,
+          attachment: {
+            create: {
+              title: input.attachment.title,
+              url: input.attachment.url,
+            },
+          },
           employeeId: employee.id,
         },
       });
