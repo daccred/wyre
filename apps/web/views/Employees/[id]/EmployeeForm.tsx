@@ -28,7 +28,7 @@ export default function EmployeeForm() {
     refetchOnMount: true,
   });
 
-  console.log(employee);
+  // console.log(employee);
   const { firstName, lastName, email, department, jobRole, teamCategory } = employee ?? {};
 
   const { mutate: updateEmployee, isLoading } = trpc.team.updateEmployee.useMutation({
@@ -85,7 +85,7 @@ export default function EmployeeForm() {
   });
 
   return renderForm(
-    <Stack spacing="6" pb="4" mt="-0.5rem">
+    <Stack spacing="6" p="4" mt="-0.5rem">
       <Text fontWeight="bold" fontSize="18px">
         Personal Details
       </Text>
@@ -94,7 +94,13 @@ export default function EmployeeForm() {
         <Avatar size="xl" src="" name={firstName || ""} />
         <HStack>
           <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={firstName} />
-          <FormInput name="lastName" label="Last Name" placeholder="Last Name" defaultValue={lastName} />
+          <FormInput
+            name="lastName"
+            label="Last Name"
+            placeholder="Last Name"
+            defaultValue={lastName}
+            disabled
+          />
         </HStack>
         <HStack>
           <FormInput name="email" label="Email Address" placeholder="Email Address" defaultValue={email} />
@@ -103,11 +109,18 @@ export default function EmployeeForm() {
             label="Phone Number"
             placeholder="Phone Number"
             defaultValue={employee?.phone}
+            disabled
           />
         </HStack>
         <HStack>
-          <FormInput name="city" label="City" placeholder="City" />
-          <FormInput name="country" label="Country" placeholder="Country" defaultValue={employee?.country} />
+          <FormInput name="city" label="Address" placeholder="address" disabled />
+          <FormInput
+            name="country"
+            label="Country"
+            placeholder="Country"
+            defaultValue={employee?.country}
+            disabled
+          />
         </HStack>
       </Stack>
       <Stack spacing={3}>
@@ -125,7 +138,7 @@ export default function EmployeeForm() {
             ]}
             defaultValue={employee?.teamCategory}
           />
-          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" />
+          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
         </HStack>
         <HStack>
           <FormInput

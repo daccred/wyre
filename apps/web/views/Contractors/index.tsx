@@ -48,7 +48,7 @@ const initialState = {
   dataInUse: [],
   selectedContractor: undefined,
   searchTerm: "",
-  activeContractorsOnly: false,
+  activeContractorsOnly: true,
   isLoading: true,
   error: null,
 };
@@ -118,7 +118,13 @@ const Contractors = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { data, dataInUse, selectedContractor, searchTerm, activeContractorsOnly } = state;
   const router = useRouter();
-  const { data: contractors, error, isLoading, refetch } = trpc.contractor.getContractors.useQuery();
+  const {
+    data: contractors,
+    error,
+    isLoading,
+    isFetching,
+    refetch,
+  } = trpc.contractor.getContractors.useQuery();
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
@@ -140,7 +146,7 @@ const Contractors = () => {
 
   useEffect(() => {
     if (contractors) {
-      const convertedEmployees = contractors.map((contractor: any) => ({
+      const convertedContractors = contractors.map((contractor: any) => ({
         id: contractor.id.toString(),
         name: contractor.firstName,
         email: contractor.email,
@@ -150,14 +156,17 @@ const Contractors = () => {
         category: contractor.teamCategory,
         salary: contractor.salary,
         signBonus: contractor.signBonus,
+        location: contractor.country,
+        payrollMethod: contractor.payrollMethod,
+        phoneNumber: contractor.phone,
       }));
-      dispatch({ type: actionTypes.FETCH_SUCCESS, payload: convertedEmployees });
-      dispatch({ type: actionTypes.SET_DATA, payload: convertedEmployees });
-      dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: convertedEmployees });
-      dispatch({ type: actionTypes.SET_SELECTED_CONTRACTOR, payload: convertedEmployees[0] });
+      dispatch({ type: actionTypes.FETCH_SUCCESS, payload: convertedContractors });
+      dispatch({ type: actionTypes.SET_DATA, payload: convertedContractors });
+      dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: convertedContractors });
+      dispatch({ type: actionTypes.SET_SELECTED_CONTRACTOR, payload: convertedContractors[0] });
     }
   }, [contractors]);
-
+  console.log(selectedContractor);
   useEffect(() => {
     if (data) {
       const searchData = data?.filter((data: any) =>
@@ -240,11 +249,11 @@ const Contractors = () => {
               </Stack>
             </HStack>
 
-            {state.isLoading ? (
+            {isLoading && isFetching ? (
               <TablePulse />
             ) : (
               <>
-                {data?.length > 0 && (
+                {data ? (
                   <>
                     <HStack justifyContent="space-between" pt="2">
                       <HStack gap="1">
@@ -270,6 +279,7 @@ const Contractors = () => {
                         <Switch
                           size="sm"
                           colorScheme="black"
+                          defaultChecked={activeContractorsOnly}
                           onChange={(e) =>
                             dispatch({
                               type: actionTypes.SET_ACTIVE_CONTRACTORS_ONLY,
@@ -352,6 +362,13 @@ const Contractors = () => {
                       </Table>
                     </TableContainer>
                   </>
+                ) : (
+                  <Center w="100%" p="8" flexDirection="column">
+                    <EmptyContractorImage />
+                    <Text pr="12" pt="2">
+                      No Contractor
+                    </Text>
+                  </Center>
                 )}
               </>
             )}
@@ -411,7 +428,7 @@ const Contractors = () => {
               </Pagination>
             )}
 
-            {(!dataInUse || dataInUse?.length === 0) && (
+            {searchTerm && (!dataInUse || dataInUse?.length === 0) && (
               <Center w="100%" p="8" flexDirection="column">
                 <EmptyContractorImage />
                 <Text pr="12" pt="2">
@@ -447,7 +464,9 @@ const Contractors = () => {
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Phone Number</Text>
-                  <Text>{selectedContractor?.phoneNumber}</Text>
+                  <Text>
+                    {selectedContractor?.phoneNumber === null ? "Nill" : `${selectedContractor?.phoneNumber}`}
+                  </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text textTransform="lowercase" fontWeight="semibold">
@@ -473,11 +492,15 @@ const Contractors = () => {
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Location</Text>
-                  <Text overflowWrap="break-word">{selectedContractor?.location}</Text>
+                  <Text overflowWrap="break-word">
+                    {selectedContractor?.location === null ? "Nill" : `${selectedContractor?.location}`}
+                  </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Payment Method</Text>
-                  <Text overflowWrap="break-word">{selectedContractor?.paymentMethod}</Text>
+                  <Text overflowWrap="break-word">
+                    {selectedContractor?.paymentMethod ? `${selectedContractor?.paymentMethod}` : "Nill"}
+                  </Text>
                 </Stack>
               </Stack>
               <Button

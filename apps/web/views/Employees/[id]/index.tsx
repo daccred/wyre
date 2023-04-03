@@ -7,6 +7,7 @@ import ViewLayout from "../../../components/core/ViewLayout";
 import { trpc } from "../../../utils/trpc";
 import CompensationForm from "./CompensationForm";
 import EmployeeForm from "./EmployeeForm";
+import PaymentMethod from "./paymentMethod";
 
 // // Define initial state
 // const initialState = {
@@ -69,8 +70,9 @@ const ManageEmployee = () => {
           </BreadcrumbItem>
         </Breadcrumb>
         <HStack gap="4" alignItems="flex-start">
-          <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" p="4" bg="white" w="70%">
+          <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" bg="white" w="70%">
             <EmployeeForm />
+            <PaymentMethod />
           </Stack>
           <CompensationForm />
         </HStack>

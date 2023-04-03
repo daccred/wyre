@@ -29,7 +29,7 @@ const Index = () => {
               </Th>
             </Tr>
           </Thead>
-          {Array.from(Array(5).keys()).map((id) => {
+          {Array.from(Array(10).keys()).map((id) => {
             return (
               <Tbody key={id}>
                 <Tr>

@@ -31,11 +31,13 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
+import styledToast from "../../components/core/StyledToast";
 import ViewLayout from "../../components/core/ViewLayout";
 import { trpc } from "../../utils/trpc";
 import TablePulse from "../TablePulse";
@@ -44,11 +46,11 @@ import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
 
 const initialState = {
   employees: [],
-  dummyData: [],
-  dummyDataInUse: [],
+  data: [],
+  dataInUse: [],
   selectedEmployee: undefined,
   searchTerm: "",
-  activeEmployeesOnly: false,
+  activeEmployeesOnly: true,
   isLoading: false,
   error: null,
 };
@@ -57,8 +59,8 @@ const actionTypes = {
   FETCH_DATA: "FETCH_DATA",
   FETCH_SUCCESS: "FETCH_SUCCESS",
   FETCH_ERROR: "FETCH_ERROR",
-  SET_DUMMY_DATA: "SET_DUMMY_DATA",
-  SET_DUMMY_DATA_IN_USE: "SET_DUMMY_DATA_IN_USE",
+  SET_DATA: "SET_DATA",
+  SET_DATA_IN_USE: "SET_DATA_IN_USE",
   SET_SELECTED_EMPLOYEE: "SET_SELECTED_EMPLOYEE",
   SET_SEARCH_TERM: "SET_SEARCH_TERM",
   SET_ACTIVE_EMPLOYEES_ONLY: "SET_ACTIVE_EMPLOYEES_ONLY",
@@ -84,15 +86,15 @@ const reducer = (state: any, action: any) => {
         isLoading: false,
         error: action.error,
       };
-    case actionTypes.SET_DUMMY_DATA:
+    case actionTypes.SET_DATA:
       return {
         ...state,
-        dummyData: action.payload,
+        data: action.payload,
       };
-    case actionTypes.SET_DUMMY_DATA_IN_USE:
+    case actionTypes.SET_DATA_IN_USE:
       return {
         ...state,
-        dummyDataInUse: action.payload,
+        dataInUse: action.payload,
       };
     case actionTypes.SET_SELECTED_EMPLOYEE:
       return {
@@ -115,31 +117,41 @@ const reducer = (state: any, action: any) => {
 };
 
 const Employees = () => {
+  const toast = useToast();
+  const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { dummyData, dummyDataInUse, selectedEmployee, searchTerm, activeEmployeesOnly } = state;
+  const { data, dataInUse, selectedEmployee, searchTerm, activeEmployeesOnly } = state;
   const {
     data: employees,
     error,
     isLoading,
     refetch,
     isFetching,
-    isSuccess,
-    isRefetchError,
+    isInitialLoading,
+    // isFetched,
+    // isSuccess,
   } = trpc.team.getEmployees.useQuery();
-  const router = useRouter();
-  console.log(error);
-  console.log(isFetching);
-  console.log(isSuccess);
-  console.log(isRefetchError);
+  console.log(
+    "Fetch: " + isFetching + " " + "Loading: " + isLoading + " " + "Error:" + " " + isInitialLoading
+  );
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
-    dispatch({ type: actionTypes.FETCH_ERROR, payload: error });
-  }, [isLoading, error]);
+  }, [isLoading]);
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCH_ERROR, payload: error });
   }, [error]);
+
+  useEffect(() => {
+    if (state.error) {
+      styledToast({
+        status: "success",
+        description: `${state.error}`,
+        toast: toast,
+      });
+    }
+  }, [toast, state.error]);
 
   useEffect(() => {
     if (employees) {
@@ -153,27 +165,30 @@ const Employees = () => {
         category: employee.teamCategory,
         salary: employee.salary,
         signBonus: employee.signBonus,
+        location: employee.country,
+        payrollMethod: employee.payrollMethod,
+        phoneNumber: employee.phone,
       }));
       dispatch({ type: actionTypes.FETCH_SUCCESS, payload: convertedEmployees });
-      dispatch({ type: actionTypes.SET_DUMMY_DATA, payload: convertedEmployees });
-      dispatch({ type: actionTypes.SET_DUMMY_DATA_IN_USE, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_DATA, payload: convertedEmployees });
+      dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: convertedEmployees });
       dispatch({ type: actionTypes.SET_SELECTED_EMPLOYEE, payload: convertedEmployees[0] });
     }
   }, [employees]);
 
   useEffect(() => {
-    if (dummyData) {
-      const searchData = dummyData?.filter((data: any) =>
-        data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+    if (data) {
+      const searchData = data?.filter((employee: any) =>
+        employee?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
       if (activeEmployeesOnly) {
-        const activeData = searchData.filter((data: any) => data?.status === "active");
-        dispatch({ type: actionTypes.SET_DUMMY_DATA_IN_USE, payload: activeData });
+        const activeData = searchData.filter((employee: any) => employee?.status === "active");
+        dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: activeData });
       } else {
-        dispatch({ type: actionTypes.SET_DUMMY_DATA_IN_USE, payload: searchData });
+        dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: searchData });
       }
     }
-  }, [searchTerm, activeEmployeesOnly, dummyData]);
+  }, [searchTerm, activeEmployeesOnly, data]);
 
   const {
     isOpen: addEmployeeModalIsOpen,
@@ -198,7 +213,7 @@ const Employees = () => {
   const innerLimit = 2;
 
   const { pages, pagesCount, currentPage, setCurrentPage, isDisabled, pageSize } = usePagination({
-    total: dummyDataInUse?.length,
+    total: dataInUse?.length,
     limits: {
       outer: outerLimit,
       inner: innerLimit,
@@ -232,7 +247,7 @@ const Employees = () => {
               </Button>
               <Stack spacing="0" alignItems="flex-end">
                 <Text fontWeight="bold" fontSize="20px">
-                  {dummyDataInUse?.length}
+                  {dataInUse?.length}
                 </Text>
                 <Text fontWeight="light" fontSize="xs">
                   Employee(s)
@@ -240,11 +255,11 @@ const Employees = () => {
               </Stack>
             </HStack>
 
-            {isLoading ? (
+            {isLoading && isFetching ? (
               <TablePulse />
             ) : (
               <>
-                {dummyData?.length > 0 ? (
+                {data ? (
                   <>
                     <HStack justifyContent="space-between" pt="2" px={4}>
                       <HStack gap="1">
@@ -270,6 +285,7 @@ const Employees = () => {
                         <Switch
                           size="sm"
                           colorScheme="black"
+                          defaultChecked={activeEmployeesOnly}
                           onChange={(e) =>
                             dispatch({
                               type: actionTypes.SET_ACTIVE_EMPLOYEES_ONLY,
@@ -311,12 +327,12 @@ const Employees = () => {
                           </Tr>
                         </Thead>
                         <Tbody>
-                          {dummyDataInUse &&
-                            dummyDataInUse?.length > 0 &&
-                            dummyDataInUse
+                          {dataInUse?.length > 0 &&
+                            dataInUse
                               ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                               .map((data: any, index: any) => (
                                 <Tr
+                                  fontWeight={data.id === selectedEmployee.id ? "bold" : "normal"}
                                   textTransform="capitalize"
                                   cursor="pointer"
                                   key={index}
@@ -363,7 +379,7 @@ const Employees = () => {
               </>
             )}
 
-            {dummyDataInUse && dummyDataInUse?.length > 0 && (
+            {dataInUse && dataInUse?.length > 0 && (
               <Pagination
                 pagesCount={pagesCount}
                 currentPage={currentPage}
@@ -417,6 +433,15 @@ const Employees = () => {
                 </PaginationContainer>
               </Pagination>
             )}
+
+            {searchTerm && (!dataInUse || dataInUse?.length === 0) && (
+              <Center w="100%" p="8" flexDirection="column">
+                <EmptyEmployeeImage />
+                <Text pr="12" pt="2">
+                  No Employee
+                </Text>
+              </Center>
+            )}
           </Stack>
           {selectedEmployee ? (
             <Flex
@@ -445,7 +470,9 @@ const Employees = () => {
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Phone Number</Text>
-                  <Text>{selectedEmployee?.phoneNumber}</Text>
+                  <Text>
+                    {selectedEmployee?.phoneNumber === null ? "Nill" : `${selectedEmployee?.phoneNumber}`}
+                  </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Category</Text>
@@ -471,11 +498,15 @@ const Employees = () => {
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Location</Text>
-                  <Text overflowWrap="break-word">{selectedEmployee?.location}</Text>
+                  <Text overflowWrap="break-word">
+                    {selectedEmployee?.location === null ? "Nill" : `${selectedEmployee?.location}`}
+                  </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Payment Method</Text>
-                  <Text overflowWrap="break-word">{selectedEmployee?.paymentMethod}</Text>
+                  <Text overflowWrap="break-word">
+                    {selectedEmployee?.payrollMethod === null ? "Nill" : `${selectedEmployee?.paymentMethod}`}
+                  </Text>
                 </Stack>
               </Stack>
               <Button
