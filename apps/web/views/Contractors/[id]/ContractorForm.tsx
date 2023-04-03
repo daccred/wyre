@@ -1,6 +1,6 @@
 import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import z from "zod";
 
 import styledToast from "../../../components/core/StyledToast";
@@ -28,7 +28,7 @@ export default function ContractorForm() {
     refetchOnMount: true,
   });
 
-  const { firstName, lastName, email, department, jobRole, teamCategory } = contractor ?? {};
+  const { firstName, lastName } = contractor ?? {};
 
   const { mutate: updateContractor, isLoading } = trpc.team.updateEmployee.useMutation({
     onSuccess() {
@@ -76,7 +76,7 @@ export default function ContractorForm() {
     schema: addContractorValidationSchema,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (contractor) {
       setFormValue("name", contractor.firstName ?? "");
       setFormValue("email", contractor.email ?? "");

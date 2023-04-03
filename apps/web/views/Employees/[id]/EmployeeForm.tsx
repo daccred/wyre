@@ -1,6 +1,6 @@
 import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import z from "zod";
 
 import styledToast from "../../../components/core/StyledToast";
@@ -10,10 +10,10 @@ import { ProfileIcon } from "./ProviderIcons";
 import Terminate from "./terminateEmployee";
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, { message: "Name is Required" }),
   email: z.string().email(),
-  department: z.string(),
-  jobRole: z.string(),
+  department: z.string().min(1, { message: "Defartment is Required" }),
+  jobRole: z.string().min(1, { message: "Job Role is Required" }),
   category: z.string(),
 });
 
@@ -29,7 +29,7 @@ export default function EmployeeForm() {
   });
 
   // console.log(employee);
-  const { firstName, lastName, email, department, jobRole, teamCategory } = employee ?? {};
+  const { firstName, lastName } = employee ?? {};
 
   const { mutate: updateEmployee, isLoading } = trpc.team.updateEmployee.useMutation({
     onSuccess() {
@@ -72,17 +72,20 @@ export default function EmployeeForm() {
     }
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: {
-      // firstName: firstName,
-      email: email,
-      department: department,
-      jobRole: jobRole,
-      category: teamCategory,
-    },
     schema: addEmployeeValidationSchema,
   });
+
+  useEffect(() => {
+    if (employee) {
+      setFormValue("name", employee.firstName ?? "");
+      setFormValue("email", employee.email ?? "");
+      setFormValue("department", employee.department ?? "");
+      setFormValue("jobRole", employee.jobRole ?? "");
+      setFormValue("category", employee.teamCategory ?? "");
+    }
+  }, [employee, setFormValue]);
 
   return renderForm(
     <Stack spacing="6" p="4" mt="-0.5rem">
@@ -93,7 +96,7 @@ export default function EmployeeForm() {
       <Stack spacing={3}>
         <Avatar size="xl" src="" name={firstName || ""} />
         <HStack>
-          <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={firstName} />
+          <FormInput name="name" label="First Name" placeholder="First Name" />
           <FormInput
             name="lastName"
             label="Last Name"
@@ -103,7 +106,7 @@ export default function EmployeeForm() {
           />
         </HStack>
         <HStack>
-          <FormInput name="email" label="Email Address" placeholder="Email Address" defaultValue={email} />
+          <FormInput name="email" label="Email Address" placeholder="Email Address" />
           <FormInput
             name="phoneNumber"
             label="Phone Number"
@@ -136,18 +139,12 @@ export default function EmployeeForm() {
               { label: "Contractor", value: "CONTRACTOR" },
               { label: "Employee", value: "EMPLOYEE" },
             ]}
-            defaultValue={employee?.teamCategory}
           />
           <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
         </HStack>
         <HStack>
-          <FormInput
-            name="department"
-            label="Department"
-            placeholder="Enter Department"
-            defaultValue={department}
-          />
-          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" defaultValue={jobRole} />
+          <FormInput name="department" label="Department" placeholder="Enter Department" />
+          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" />
         </HStack>
       </Stack>
 
