@@ -32,6 +32,7 @@ import {
   useDisclosure,
   Image,
 } from "@chakra-ui/react";
+import useDebounce from "components/hooks/useDebounce";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -166,11 +167,14 @@ const Contractors = () => {
       dispatch({ type: actionTypes.SET_SELECTED_CONTRACTOR, payload: convertedContractors[0] });
     }
   }, [contractors]);
-  console.log(selectedContractor);
+
+  // The useDebounce hook is being used to debounce the searchTerm value. which means that there will be a delay of 500 milliseconds before the search term is updated.
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   useEffect(() => {
     if (data) {
       const searchData = data?.filter((data: any) =>
-        data?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+        data?.name?.toLowerCase().includes(debouncedSearchTerm?.toLowerCase())
       );
       if (activeContractorsOnly) {
         const activeData = searchData.filter((data: any) => data?.status === "active");
@@ -179,7 +183,7 @@ const Contractors = () => {
         dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: searchData });
       }
     }
-  }, [searchTerm, activeContractorsOnly, data]);
+  }, [debouncedSearchTerm, activeContractorsOnly, data]);
 
   useEffect(() => {
     if (addContractorSuccessModalIsOpen) {

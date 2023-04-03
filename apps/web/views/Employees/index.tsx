@@ -33,6 +33,7 @@ import {
   Image,
   useToast,
 } from "@chakra-ui/react";
+import useDebounce from "components/hooks/useDebounce";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
 import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -127,13 +128,9 @@ const Employees = () => {
     isLoading,
     refetch,
     isFetching,
-    isInitialLoading,
     // isFetched,
     // isSuccess,
   } = trpc.team.getEmployees.useQuery();
-  console.log(
-    "Fetch: " + isFetching + " " + "Loading: " + isLoading + " " + "Error:" + " " + isInitialLoading
-  );
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
@@ -175,11 +172,13 @@ const Employees = () => {
       dispatch({ type: actionTypes.SET_SELECTED_EMPLOYEE, payload: convertedEmployees[0] });
     }
   }, [employees]);
+  // The useDebounce hook is being used to debounce the searchTerm value. which means that there will be a delay of 500 milliseconds before the search term is updated.
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     if (data) {
       const searchData = data?.filter((employee: any) =>
-        employee?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+        employee?.name?.toLowerCase().includes(debouncedSearchTerm?.toLowerCase())
       );
       if (activeEmployeesOnly) {
         const activeData = searchData.filter((employee: any) => employee?.status === "active");
@@ -188,7 +187,7 @@ const Employees = () => {
         dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: searchData });
       }
     }
-  }, [searchTerm, activeEmployeesOnly, data]);
+  }, [debouncedSearchTerm, activeEmployeesOnly, data]);
 
   const {
     isOpen: addEmployeeModalIsOpen,
