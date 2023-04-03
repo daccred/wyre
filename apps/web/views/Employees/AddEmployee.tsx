@@ -42,10 +42,29 @@ export default function AddEmployee({
 }: addEmployeeTypes) {
   const toast = useToast();
 
+  const handleSubmit = async (data: FormInputOptions) => {
+    // console.log(JSON.stringify(data));
+    addEmployee({
+      name: data.name,
+      email: data.email,
+      department: data.department,
+      jobRole: data.jobRole,
+      salary: data.grossSalary,
+      signBonus: data.signingBonus,
+      status: true,
+      category: "EMPLOYEE",
+    });
+  };
+
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
+    onSubmit: handleSubmit,
+    schema: addEmployeeValidationSchema,
+  });
+
   const { mutate: addEmployee, isLoading } = trpc.team.createEmployee.useMutation({
     onSuccess() {
       // Reset the form data to empty values
-
+      resetForm();
       openAddEmployeeSuccessModal();
       closeAddEmployeeModal();
     },
@@ -59,26 +78,6 @@ export default function AddEmployee({
       });
       console.log("Error creating employee:", error);
     },
-  });
-
-  const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
-
-    addEmployee({
-      name: data.name,
-      email: data.email,
-      department: data.department,
-      jobRole: data.jobRole,
-      salary: data.grossSalary,
-      signBonus: data.signingBonus,
-      status: true,
-      category: "EMPLOYEE",
-    });
-  };
-
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: handleSubmit,
-    schema: addEmployeeValidationSchema,
   });
 
   return (

@@ -23,10 +23,9 @@ const View = () => {
   const [pinInputData, setPinInputData] = React.useState("");
   const toast = useToast();
   const router = useRouter();
-  const { email, id } = router.query;
+  const { id } = router.query;
 
-  console.log(id, email);
-
+  // console.log(id, email);
   const { mutate: verifyEmail, isLoading } = trpc.auth.verifyAdminEmail.useMutation({
     onSuccess() {
       toast({
@@ -46,7 +45,7 @@ const View = () => {
         isClosable: true,
         position: "top-right",
       });
-      // console.log(error);
+      console.log(error);
     },
   });
 

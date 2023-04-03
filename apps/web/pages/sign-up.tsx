@@ -34,13 +34,26 @@ export default function Page() {
   const router = useRouter();
   const toast = useToast();
 
-  // type User = {
-  //   id: string;
-  //   email: string;
-  // };
+  const Submit = (data: FormInputOptions) => {
+    signUp({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      companyName: data.company,
+      companyPhone: data.companyPhone ? String(data.companyPhone) : undefined, // convert number to string
+      country: data.country,
+      jobRole: data.role,
+    });
+  };
+
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
+    onSubmit: Submit,
+    schema: signUpValidationSchema,
+  });
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess: (data) => {
+      resetForm(); //reset form
       if (data) {
         const { admin } = data;
         const { email, id } = admin;
@@ -67,23 +80,6 @@ export default function Page() {
       });
       console.log(error);
     },
-  });
-
-  const Submit = (data: FormInputOptions) => {
-    signUp({
-      email: data.email,
-      password: data.password,
-      name: data.name,
-      companyName: data.company,
-      companyPhone: data.companyPhone ? String(data.companyPhone) : undefined, // convert number to string
-      country: data.country,
-      jobRole: data.role,
-    });
-  };
-
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: Submit,
-    schema: signUpValidationSchema,
   });
 
   return renderForm(

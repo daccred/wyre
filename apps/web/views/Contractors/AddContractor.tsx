@@ -42,10 +42,29 @@ export default function AddContractor({
 }: addContractorTypes) {
   const toast = useToast();
 
+  const handleSubmit = async (data: FormInputOptions) => {
+    // console.log(JSON.stringify(data));
+    addContractor({
+      name: data.name,
+      email: data.email,
+      department: data.department,
+      jobRole: data.jobRole,
+      grossSalary: data.grossSalary,
+      signingBonus: data.signingBonus,
+      status: true,
+      category: "CONTRACTOR",
+    });
+  };
+
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
+    onSubmit: handleSubmit,
+    schema: addContractorValidationSchema,
+  });
+
   const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
     onSuccess() {
       // Reset the form data to empty values
-
+      resetForm();
       openAddContractorSuccessModal();
       closeAddContractorModal();
     },
@@ -59,27 +78,6 @@ export default function AddContractor({
       });
       console.log("Error creating contractor:", error);
     },
-  });
-
-  const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
-
-    addContractor({
-      name: data.name,
-      email: data.email,
-      department: data.department,
-      jobRole: data.jobRole,
-      grossSalary: data.grossSalary,
-      signingBonus: data.signingBonus,
-      status: true,
-      category: "CONTRACTOR",
-    });
-  };
-
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: handleSubmit,
-    // defaultValues: { email: "" },
-    schema: addContractorValidationSchema,
   });
 
   return (
