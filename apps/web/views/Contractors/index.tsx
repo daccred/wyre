@@ -327,6 +327,7 @@ const Contractors = () => {
                               ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                               .map((data: any, index: any) => (
                                 <Tr
+                                  fontWeight={data.id === selectedContractor.id ? "bold" : "normal"}
                                   textTransform="capitalize"
                                   cursor="pointer"
                                   key={index}

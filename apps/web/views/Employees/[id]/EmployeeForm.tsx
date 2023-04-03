@@ -31,6 +31,7 @@ export default function EmployeeForm() {
   // console.log(employee);
   const { firstName, lastName } = employee ?? {};
 
+  // mutation hook from TRPC for updating an employee's data on the server.
   const { mutate: updateEmployee, isLoading } = trpc.team.updateEmployee.useMutation({
     onSuccess() {
       refetch();
@@ -51,7 +52,7 @@ export default function EmployeeForm() {
       console.log(error);
     },
   });
-
+  // asynchronous function that's called when the user submits the form. It calls the updateEmployee function with the ID of the employee being updated
   const handleSubmit = async (data: FormInputOptions) => {
     try {
       updateEmployee({
@@ -76,7 +77,7 @@ export default function EmployeeForm() {
     onSubmit: handleSubmit,
     schema: addEmployeeValidationSchema,
   });
-
+  // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
   useEffect(() => {
     if (employee) {
       setFormValue("name", employee.firstName ?? "");

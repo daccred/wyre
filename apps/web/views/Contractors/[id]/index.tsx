@@ -8,41 +8,12 @@ import { trpc } from "../../../utils/trpc";
 import CompensationForm from "./CompensationForm";
 import ContractorForm from "./ContractorForm";
 
-// // Define initial state
-// const initialState = {
-//   contractor: null,
-//   isLoading: true,
-// };
-
-// // Define reducer function
-// const reducer = (state: any, action: any) => {
-//   switch (action.type) {
-//     case "SET_CONTRACTOR":
-//       return {
-//         ...state,
-//         contractor: action.payload,
-//         isLoading: false,
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
 const ManageContractor = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  // const [state, dispatch] = useReducer(reducer, {
-  //   ...initialState,
-  //   contractor: contractorData,
-  // });
   const { data: contractor, isLoading } = trpc.team.getSingleContractor.useQuery(id as string);
 
-  // useEffect(() => {
-  //   if (contractor) {
-  //     dispatch({ type: "SET_CONTRACTOR", payload: contractor });
-  //   }
-  // }, [contractor]);
   return (
     <>
       <ViewLayout title="Contractor">

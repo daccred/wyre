@@ -29,7 +29,7 @@ export default function ContractorForm() {
   });
 
   const { firstName, lastName } = contractor ?? {};
-
+  // hook to update the contractor data on the server API
   const { mutate: updateContractor, isLoading } = trpc.team.updateEmployee.useMutation({
     onSuccess() {
       refetch();
@@ -39,7 +39,7 @@ export default function ContractorForm() {
         toast: toast,
       });
     },
-    onError(error: any) {
+    onError(error: unknown) {
       toast({
         status: "error",
         description: `${error}`,
@@ -50,9 +50,8 @@ export default function ContractorForm() {
       console.log(error);
     },
   });
-
+  // called when the form is submitted to update the contractor data on the server API
   const handleSubmit = async (data: FormInputOptions) => {
-    // console.log(JSON.stringify(data));
     try {
       updateContractor({
         id: contractor?.id ?? "", // pass the ID of the contractor that you want to update
@@ -75,7 +74,7 @@ export default function ContractorForm() {
     onSubmit: handleSubmit,
     schema: addContractorValidationSchema,
   });
-
+  // hook to set the default form values when the contractor data is available.
   useEffect(() => {
     if (contractor) {
       setFormValue("name", contractor.firstName ?? "");
