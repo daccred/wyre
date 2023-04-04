@@ -20,7 +20,6 @@ export default function Page() {
   const toast = useToast();
   const { mutate: ForgotPassword, isLoading } = trpc.auth.sendForgetPassword.useMutation({
     onSuccess: (data) => {
-      console.log("ddd", data);
       if (data) {
         toast({
           status: "success",
@@ -43,7 +42,6 @@ export default function Page() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 

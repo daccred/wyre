@@ -33,7 +33,6 @@ export default function Page() {
 
   const { mutate: ResetPassword, isLoading } = trpc.auth.resetPassword.useMutation({
     onSuccess: (data) => {
-      console.log("ddd", data);
       if (data) {
         toast({
           status: "success",
@@ -55,11 +54,8 @@ export default function Page() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
-
-  console.log("hh", pinInputData);
 
   const Submit = (data: FormInputOptions) => {
     ResetPassword({
@@ -69,7 +65,7 @@ export default function Page() {
     });
   };
 
-  const { renderForm, setFormValue, formErrors } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: Submit,
     defaultValues: { email: router.query.data as string, otp: pinInputData, newPassword: "" },
     schema: ValidationSchema,
@@ -80,7 +76,6 @@ export default function Page() {
     setFormValue("email", router.query.data as string);
   }, [pinInputData, router.query.data, setFormValue]);
 
-  console.log("eerr", formErrors);
   return renderForm(
     <>
       <Meta />

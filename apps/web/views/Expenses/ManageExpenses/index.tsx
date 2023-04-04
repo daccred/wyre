@@ -13,12 +13,12 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import type { Column } from "react-table";
+import { trpc } from "utils/trpc";
 import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
 import { manageExpensePath } from "views/Payroll/routes";
 
 import { CustomTable } from "../../../components/CustomTable";
 import ViewLayout from "../../../components/core/ViewLayout";
-import { expenses } from "../utils/dummyData";
 import { manageExpensesColumn } from "../utils/tableColumns";
 
 const View = () => {
@@ -38,8 +38,7 @@ const View = () => {
 
   const [tableData, setTableData] = useState<any[]>([]);
 
-  // TODO: Remove this after api integration
-  const isLoading = false;
+  const { data: expenses, isLoading } = trpc.expenses.getExpenses.useQuery();
 
   useEffect(() => {
     if (!expenses) {
@@ -47,7 +46,7 @@ const View = () => {
     }
 
     setTableData(expenses);
-  }, []);
+  }, [expenses]);
 
   return (
     <ViewLayout title="Expenses">
