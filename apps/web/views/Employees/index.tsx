@@ -118,21 +118,12 @@ const reducer = (state: any, action: any) => {
 };
 
 const Employees = () => {
-  const { data: employees } = trpc.team.getPersonnel.useQuery();
-  console.log(employees);
-
+  // const { data: employees } = trpc.team.getPersonnel.useQuery();
+  const toast = useToast();
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { data, dataInUse, selectedEmployee, searchTerm, activeEmployeesOnly } = state;
-  const {
-    data: employees,
-    error,
-    isLoading,
-    refetch,
-    isFetching,
-    // isFetched,
-    // isSuccess,
-  } = trpc.team.getEmployees.useQuery();
+  const { data: employees, error, isLoading, refetch, isFetching } = trpc.team.getPersonnel.useQuery();
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCH_DATA, payload: isLoading });
@@ -145,7 +136,7 @@ const Employees = () => {
   useEffect(() => {
     if (state.error) {
       styledToast({
-        status: "success",
+        status: "error",
         description: `${state.error}`,
         toast: toast,
       });
@@ -260,7 +251,7 @@ const Employees = () => {
               <TablePulse />
             ) : (
               <>
-                {data ? (
+                {data.length > 0 ? (
                   <>
                     <HStack justifyContent="space-between" pt="2" px={4}>
                       <HStack gap="1">

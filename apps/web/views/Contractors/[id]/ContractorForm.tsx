@@ -23,14 +23,11 @@ export default function ContractorForm() {
   const toast = useToast();
   const router = useRouter();
   const { id } = router.query;
-  // console.log()
-  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
-    refetchOnMount: true,
-  });
+  const { data: contractor, refetch } = trpc.team.getContractors.useQuery(id as string);
 
   const { firstName, lastName } = contractor ?? {};
   // hook to update the contractor data on the server API
-  const { mutate: updateContractor, isLoading } = trpc.team.updateEmployee.useMutation({
+  const { mutate: updateContractor, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -60,11 +57,8 @@ export default function ContractorForm() {
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
-          salary: contractor?.salary ?? "",
-          signBonus: contractor?.signBonus ?? "",
           status: true,
           category: data.category,
-          payrollMethod: data.payrollMethod,
         },
       });
     } catch (error) {

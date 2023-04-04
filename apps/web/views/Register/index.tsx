@@ -32,7 +32,6 @@ const View: React.FC<Props> = (Props) => {
             <Stack spacing={6}>
               <FormInput name="company" type="text" label="Company Name" placeholder="e.g. Zayroll LLC" />
               <FormNativeSelect
-                // placeholder="Select Country"
                 label="Country"
                 name="country"
                 options={[
@@ -40,7 +39,8 @@ const View: React.FC<Props> = (Props) => {
                   { value: "nigeria", label: "Nigeria" },
                 ]}
               />
-              <FormInput name="name" type="text" label="Full Name" placeholder="e.g. john.doe@zayroll.com" />
+              <FormInput name="firstName" type="text" label="First Name" placeholder="John" />
+              <FormInput name="lastName" type="text" label="Last Name" placeholder="Doe" />
               <FormInput
                 name="email"
                 type="email"

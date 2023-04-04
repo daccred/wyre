@@ -55,6 +55,7 @@ export default function AddEmployee({
       signBonus: data.signingBonus,
       status: true,
       category: "EMPLOYEE",
+      payrollMethod: data.payrollMethod,
     });
   };
 

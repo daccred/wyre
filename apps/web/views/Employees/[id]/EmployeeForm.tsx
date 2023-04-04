@@ -14,7 +14,7 @@ const addEmployeeValidationSchema = z.object({
   email: z.string().email(),
   department: z.string().min(1, { message: "Defartment is Required" }),
   jobRole: z.string().min(1, { message: "Job Role is Required" }),
-  category: z.string(),
+  category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -24,7 +24,7 @@ export default function EmployeeForm() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: employee, refetch } = trpc.team.getSingleEmployee.useQuery(id as string, {
+  const { data: employee, refetch } = trpc.team.getSinglePersonnel.useQuery(id as string, {
     refetchOnMount: true,
   });
 
@@ -32,7 +32,7 @@ export default function EmployeeForm() {
   const { firstName, lastName } = employee ?? {};
 
   // mutation hook from TRPC for updating an employee's data on the server.
-  const { mutate: updateEmployee, isLoading } = trpc.team.updateEmployee.useMutation({
+  const { mutate: updateEmployee, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -66,7 +66,6 @@ export default function EmployeeForm() {
           signBonus: employee?.signBonus ?? "",
           status: true,
           category: data.category,
-          payrollMethod: payrollMethod,
         },
       });
     } catch (error) {
@@ -74,48 +73,7 @@ export default function EmployeeForm() {
     }
   };
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updatePersonnel.useMutation({
-    onSuccess() {
-      styledToast({
-        status: "success",
-        description: "Employee has been terminated successfully",
-        toast: toast,
-      });
-    },
-    onError(error: unknown) {
-      toast({
-        status: "error",
-        description: `${error}`,
-        isClosable: true,
-        duration: 5000,
-        position: "top-right",
-      });
-      console.log(error);
-    },
-  });
-
-  const handleTerminate = async () => {
-    try {
-      terminateEmployee({
-        id: employee.id,
-        data: {
-          name: name,
-          email: email,
-          department: department,
-          jobRole: jobRole,
-          salary: salary,
-          signBonus: signBonus,
-          status: false, // add status field with the value of false
-          category: category,
-          payrollMethod: payrollMethod,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: addEmployeeValidationSchema,
   });

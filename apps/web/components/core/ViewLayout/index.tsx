@@ -312,7 +312,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             <Avatar size="sm" src="" name={sessionData?.user?.name as string} />
             <VStack display="flex" alignItems="flex-start" spacing="1px" pr="4">
               <Text fontSize="sm" fontWeight="bold">
-                {sessionData?.user?.fname}
+                {sessionData?.user?.name}
               </Text>
               <Text fontSize="xs" fontWeight="medium" color="boldgrey">
                 {sessionData?.user?.role}

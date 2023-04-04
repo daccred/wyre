@@ -39,7 +39,8 @@ export default function Page() {
     signUp({
       email: data.email,
       password: data.password,
-      name: data.name,
+      firstName: data.firstName,
+      lastName: data.lastName,
       companyName: data.company,
       companyPhone: data.companyPhone ? String(data.companyPhone) : undefined, // convert number to string
       country: data.country,
