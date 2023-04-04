@@ -89,7 +89,8 @@ export const manageExpensesColumn = (
   openManageExpenseModal: () => void,
   closeManageExpenseModal: () => void,
   selectedRowData: any,
-  setSelectedRowData: React.Dispatch<React.SetStateAction<any>>
+  setSelectedRowData: React.Dispatch<React.SetStateAction<any>>,
+  refetch: () => void
 ) => [
   {
     id: 1,
@@ -173,11 +174,11 @@ export const manageExpensesColumn = (
               _hover={{ hover: "none" }}>
               Manage
             </Button>
-            {console.log("row", row)}
             <ManageExpenseModal
               manageExpenseModalIsOpen={manageExpenseModalIsOpen}
               closeManageExpenseModal={closeManageExpenseModal}
               data={selectedRowData}
+              refetch={refetch}
             />
           </>
         ) : (
@@ -196,8 +197,14 @@ export const generateLinkColumn = [
     Header: "Full Name",
     accessor: (row: any) => (
       <Flex align="center">
-        <Avatar size="sm" src={row?.imgURL} name={row?.name} bg="brand.700" color="white" />
-        <Text ml={2}>{row?.name} </Text>
+        <Avatar
+          size="sm"
+          src={row?.imgURL}
+          name={row?.firstName || row?.lastName}
+          bg="brand.700"
+          color="white"
+        />
+        <Text ml={2}>{row?.firstName || row?.lastName} </Text>
       </Flex>
     ),
   },

@@ -116,7 +116,6 @@ const GeneratePaymentLinkModal = ({
     setFormValue("employeeId", selectedEmployees?.[0] as string);
   }, [selectedEmployees, setFormValue]);
 
-  console.log("sele", selectedEmployees?.[0]);
 
   return (
     <>

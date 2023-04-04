@@ -46,7 +46,6 @@ export default function CompensationForm() {
   const toast = useToast();
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
     styledToast({
       status: "success",
       description: "Compensation has been updated successfully",
@@ -55,7 +54,6 @@ export default function CompensationForm() {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    // defaultValues: { email: "" },
     schema: addEmployeeValidationSchema,
   });
 

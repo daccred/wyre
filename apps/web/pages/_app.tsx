@@ -27,7 +27,6 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
   const [allowDisplay, setAllowDisplay] = useState("loading");
 
   useEffect(() => {
-    console.log(`isMobile: ${isMobile}, isBrowser: ${isBrowser}, isTablet: ${isTablet}`);
     if (isBrowser || isTablet) {
       setAllowDisplay("web");
     }

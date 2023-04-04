@@ -41,7 +41,7 @@ const View = () => {
   const [selectedRowData, setSelectedRowData] = useState(null);
   
 
-  const { data: expenses, isLoading } = trpc.expenses.getExpenses.useQuery();
+  const { data: expenses, isLoading, refetch } = trpc.expenses.getExpenses.useQuery();
 
   useEffect(() => {
     if (!expenses) {
@@ -92,7 +92,8 @@ const View = () => {
                     openManageExpenseModal,
                     closeManageExpenseModal,
                     selectedRowData,
-                    setSelectedRowData
+                    setSelectedRowData,
+                    refetch
                   ) as unknown as Column<any>[]
                 }
                 data={tableData}

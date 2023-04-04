@@ -32,7 +32,6 @@ export default function APIForm() {
   const toast = useToast();
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
     styledToast({
       status: "success",
       description: !connected ? "API connected successfully" : "API disconnected successfully",

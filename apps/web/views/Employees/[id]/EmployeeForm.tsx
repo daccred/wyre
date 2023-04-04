@@ -94,7 +94,6 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 
@@ -135,7 +134,6 @@ export default function EmployeeForm({ employee }: EmployeeFormProps) {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 

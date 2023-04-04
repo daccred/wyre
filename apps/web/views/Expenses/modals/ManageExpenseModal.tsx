@@ -22,7 +22,6 @@ import { trpc } from "utils/trpc";
 import SuccessModal from "views/Payroll/modals/SuccessModal";
 import z from "zod";
 
-
 import { FormInput, useForm } from "../../../components/forms";
 
 const manageExpenseValidationSchema = z.object({
@@ -47,12 +46,14 @@ type ManageExpenseModalTypes = {
   manageExpenseModalIsOpen: boolean;
   closeManageExpenseModal: () => void;
   data: any;
+  refetch: () => void;
 };
 
 export default function ManageExpenseModal({
   manageExpenseModalIsOpen,
   closeManageExpenseModal,
   data,
+  refetch,
 }: ManageExpenseModalTypes) {
   const toast = useToast();
   const [status, setStatus] = useState(data?.status || "Pending");
@@ -76,6 +77,7 @@ export default function ManageExpenseModal({
   const { mutate: UpdateExpense, isLoading } = trpc.expenses.updateExpense.useMutation({
     onSuccess() {
       openSuccessModal();
+      refetch();
     },
     onError(error: any) {
       toast({
@@ -117,7 +119,7 @@ export default function ManageExpenseModal({
     }
   };
 
-  const { renderForm, setFormValue, formErrors } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: manageExpenseValidationSchema,
   });

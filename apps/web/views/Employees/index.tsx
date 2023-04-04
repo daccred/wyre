@@ -43,7 +43,6 @@ import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
 
 const Employees = () => {
   const { data: employees } = trpc.team.getPersonnel.useQuery();
-  console.log(employees);
 
   const router = useRouter();
 

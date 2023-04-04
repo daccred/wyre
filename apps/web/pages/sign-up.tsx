@@ -67,7 +67,6 @@ export default function Page() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 
@@ -75,7 +74,6 @@ export default function Page() {
     signUp({
       email: data.email,
       password: data.password,
-      // name: data.name,
       firstName: data.firstName,
       lastName: data.lastName,
       companyName: data.company,
@@ -88,7 +86,18 @@ export default function Page() {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: Submit,
     schema: signUpValidationSchema,
+    defaultValues: {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      company: "",
+      companyPhone: undefined,
+      country: "Ghana",
+      role: "",
+    },
   });
+
 
   return renderForm(
     <>

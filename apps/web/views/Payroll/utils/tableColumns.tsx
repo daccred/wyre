@@ -50,8 +50,8 @@ export const createPayrollColumns = [
     Header: "Full Name",
     accessor: (row: any) => (
       <Flex align="center">
-        <Avatar size="sm" src={row?.imgURL} name={row?.name} />
-        <Text ml={2}>{row?.name} </Text>
+        <Avatar size="sm" src={row?.imgURL} name={row?.firstName || row?.lastName} />
+        <Text ml={2}>{row?.firstName || row?.lastName} </Text>
       </Flex>
     ),
   },
@@ -128,8 +128,8 @@ export const monthlyPayrollColumns = [
     Header: "Full Name",
     accessor: (row: any) => (
       <Flex align="center">
-        <Avatar size="sm" src={row?.imgURL} name={row?.name} />
-        <Text ml={2}>{row?.name} </Text>
+        <Avatar size="sm" src={row?.imgURL} name={row?.firstName || row?.lastName} />
+        <Text ml={2}>{row?.firstName || row?.lastName} </Text>
       </Flex>
     ),
   },
