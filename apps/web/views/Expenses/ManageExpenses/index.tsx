@@ -38,6 +38,9 @@ const View = () => {
 
   const [tableData, setTableData] = useState<any[]>([]);
 
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  
+
   const { data: expenses, isLoading } = trpc.expenses.getExpenses.useQuery();
 
   useEffect(() => {
@@ -87,7 +90,9 @@ const View = () => {
                     closeViewImageModal,
                     manageExpenseModalIsOpen,
                     openManageExpenseModal,
-                    closeManageExpenseModal
+                    closeManageExpenseModal,
+                    selectedRowData,
+                    setSelectedRowData
                   ) as unknown as Column<any>[]
                 }
                 data={tableData}

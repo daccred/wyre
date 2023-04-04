@@ -22,6 +22,7 @@ import { trpc } from "utils/trpc";
 import SuccessModal from "views/Payroll/modals/SuccessModal";
 import z from "zod";
 
+
 import { FormInput, useForm } from "../../../components/forms";
 
 const manageExpenseValidationSchema = z.object({
@@ -53,11 +54,16 @@ export default function ManageExpenseModal({
   closeManageExpenseModal,
   data,
 }: ManageExpenseModalTypes) {
-  console.log("modalData", data);
   const toast = useToast();
   const [status, setStatus] = useState(data?.status || "Pending");
 
-  const expenseId = data?.id;
+  const [modalData, setModalData] = useState<any>(null);
+
+  useEffect(() => {
+    setModalData(data);
+  }, [data]);
+
+  const expenseId = modalData?.id;
   const successMessage =
     status === "Approved" ? "Expense Successfully Approved" : "Expense Request Disapproved";
 
@@ -116,17 +122,17 @@ export default function ManageExpenseModal({
     schema: manageExpenseValidationSchema,
   });
   useEffect(() => {
-    if (data) {
-      setFormValue("employeeId", data?.employeeId || data?.employee?.id);
-      setFormValue("amount", data?.amount);
-      setFormValue("description", data?.description);
-      setFormValue("type", data?.type);
+    if (modalData) {
+      setFormValue("employeeId", modalData?.employeeId || modalData?.employee?.id);
+      setFormValue("amount", modalData?.amount);
+      setFormValue("description", modalData?.description);
+      setFormValue("type", modalData?.type);
       setFormValue("status", status);
 
-      setFormValue("date", data?.date);
-      setFormValue("attachment", data?.attachment);
+      setFormValue("date", modalData?.date);
+      setFormValue("attachment", modalData?.attachment);
     }
-  }, [data, expenseId, setFormValue, status]);
+  }, [modalData, expenseId, setFormValue, status]);
 
   return (
     <>
@@ -156,7 +162,7 @@ export default function ManageExpenseModal({
                         placeholder="Name"
                         style={{ textTransform: "capitalize" }}
                         px="4"
-                        value={data?.employee?.firstName || data?.employee?.lastName}
+                        value={modalData?.employee?.firstName || modalData?.employee?.lastName}
                         readOnly
                       />
 
@@ -165,7 +171,8 @@ export default function ManageExpenseModal({
                         label="Amount"
                         placeholder="Enter Amount"
                         px="4"
-                        value={data?.amount}
+                        value={modalData?.amount}
+                        sssss
                         readOnly
                       />
                     </HStack>
@@ -174,14 +181,14 @@ export default function ManageExpenseModal({
                       label="Purpose"
                       placeholder="Enter Purpose"
                       px="4"
-                      value={data?.description}
+                      value={modalData?.description}
                       readOnly
                     />
                   </Stack>
                   <Stack>
                     <Text fontSize="sm">Attachment</Text>
                     <Center p="4" border="1px solid #d2d2d2" bg="#F7F7F7" borderRadius="5px">
-                      <Image src={data?.attachment?.url} alt="" />
+                      <Image src={modalData?.attachment?.url} alt="" />
                     </Center>
                   </Stack>
 

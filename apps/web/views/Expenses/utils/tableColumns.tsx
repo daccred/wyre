@@ -87,7 +87,9 @@ export const manageExpensesColumn = (
   closeViewImageModal: () => void,
   manageExpenseModalIsOpen: boolean,
   openManageExpenseModal: () => void,
-  closeManageExpenseModal: () => void
+  closeManageExpenseModal: () => void,
+  selectedRowData: any,
+  setSelectedRowData: React.Dispatch<React.SetStateAction<any>>
 ) => [
   {
     id: 1,
@@ -164,7 +166,10 @@ export const manageExpensesColumn = (
               width="fit-content"
               bg="brand.700"
               color="white"
-              onClick={openManageExpenseModal}
+              onClick={() => {
+                setSelectedRowData(row);
+                openManageExpenseModal();
+              }}
               _hover={{ hover: "none" }}>
               Manage
             </Button>
@@ -172,7 +177,7 @@ export const manageExpensesColumn = (
             <ManageExpenseModal
               manageExpenseModalIsOpen={manageExpenseModalIsOpen}
               closeManageExpenseModal={closeManageExpenseModal}
-              data={row}
+              data={selectedRowData}
             />
           </>
         ) : (
