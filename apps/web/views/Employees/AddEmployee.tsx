@@ -59,12 +59,10 @@ export default function AddEmployee({
         duration: 5000,
         position: "top-right",
       });
-      console.log("Error creating employee:", error);
     },
   });
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
 
     addEmployee({
       name: data.name,

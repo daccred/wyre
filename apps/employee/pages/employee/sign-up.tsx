@@ -57,7 +57,6 @@ export default function Page() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 

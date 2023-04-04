@@ -256,7 +256,7 @@ const MonthlyEmployeeSalary = () => {
                   Allow automatic payment of payroll on due date
                 </Checkbox>
               </Stack>
-              <Stack mt={6}>
+              <Box mt={6}>
                 <Heading as="h4" size="xs" fontSize="xl">
                   Add Employee(s)
                 </Heading>
@@ -291,13 +291,19 @@ const MonthlyEmployeeSalary = () => {
                         </Select>
                       </GridItem>
                     </Grid>
-                    <RowSelectTable
-                      columns={monthlyPayrollColumns as unknown[]}
-                      data={tableData}
-                      onRowSelectionChange={handleSelectionChange}
-                      onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
-                      setSelectedEmployees={setSelectedEmployees}
-                    />
+                    {tableData?.length > 0 ? (
+                      <RowSelectTable
+                        columns={monthlyPayrollColumns as unknown[]}
+                        data={tableData}
+                        onRowSelectionChange={handleSelectionChange}
+                        onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
+                        setSelectedEmployees={setSelectedEmployees}
+                      />
+                    ) : (
+                      <Center my={10}>
+                        <Text>No result found for your search</Text>
+                      </Center>
+                    )}
                   </>
                 ) : (
                   <Center w="100%" p="8" flexDirection="column">
@@ -307,7 +313,7 @@ const MonthlyEmployeeSalary = () => {
                     </Text>
                   </Center>
                 )}
-              </Stack>
+              </Box>
             </GridItem>
 
             <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4} height="fit-content">

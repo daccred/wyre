@@ -39,7 +39,8 @@ const View: React.FC<Props> = (Props) => {
                   { value: "ng", label: "Nigeria" },
                 ]}
               />
-              <FormInput name="name" type="text" label="Full Name" placeholder="e.g. john.doe@zayroll.com" />
+              <FormInput name="firstName" type="text" label="First Name" placeholder="John" />
+              <FormInput name="lastName" type="text" label="Last Name" placeholder="Doe" />
               <FormInput
                 name="email"
                 type="email"
@@ -62,9 +63,6 @@ const View: React.FC<Props> = (Props) => {
                 type="submit"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
-                // _hover={{
-                //   bg: '#210D35',
-                // }}
                 _hover={{ bg: "" }}>
                 Create Account
               </Button>

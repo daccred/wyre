@@ -93,12 +93,10 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
     try {
       updateContractor({
         id: contractor.id, // pass the ID of the contractor that you want to update
@@ -149,7 +147,6 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 

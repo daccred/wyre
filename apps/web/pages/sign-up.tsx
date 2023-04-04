@@ -13,8 +13,9 @@ const signUpValidationSchema = z
     company: z.string().min(1, "Company name is required"),
     companyPhone: z.number().min(1, "Phone number is required"),
     country: z.string(),
-    lastName: z.string().min(1, "Last name is required"),
+    // name: z.string().min(1, "Name is required"),
     firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
     email: z.string().email(),
     role: z.string().min(1, "Job role is required"),
     password: z
@@ -66,7 +67,6 @@ export default function Page() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
 
@@ -86,7 +86,18 @@ export default function Page() {
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: Submit,
     schema: signUpValidationSchema,
+    defaultValues: {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      company: "",
+      companyPhone: undefined,
+      country: "Ghana",
+      role: "",
+    },
   });
+
 
   return renderForm(
     <>

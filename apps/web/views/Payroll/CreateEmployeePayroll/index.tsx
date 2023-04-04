@@ -1,4 +1,5 @@
 import {
+  Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -154,6 +155,8 @@ const CreateEmployeePayroll = () => {
     },
   });
 
+  console.log("tableData", tableData);
+
   return (
     <>
       <ViewLayout title="Payroll">
@@ -204,7 +207,7 @@ const CreateEmployeePayroll = () => {
                   Allow automatic payment of payroll on due date
                 </Checkbox>
               </Stack>
-              <Stack mt={6}>
+              <Box mt={6}>
                 <Heading as="h4" size="xs" fontSize="xl">
                   Add Employee(s)
                 </Heading>
@@ -246,14 +249,20 @@ const CreateEmployeePayroll = () => {
                             </Select>
                           </GridItem>
                         </Grid>
-                        <RowSelectTable
-                          columns={createPayrollColumns as unknown[]}
-                          data={tableData}
-                          onRowSelectionChange={handleSelectionChange}
-                          onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
-                          selectedEmployees={selectedEmployees}
-                          setSelectedEmployees={setSelectedEmployees}
-                        />
+                        {tableData?.length > 0 ? (
+                          <RowSelectTable
+                            columns={createPayrollColumns as unknown[]}
+                            data={tableData}
+                            onRowSelectionChange={handleSelectionChange}
+                            onSelectedRowsAmountChange={handleSelectedRowsAmountChange}
+                            selectedEmployees={selectedEmployees}
+                            setSelectedEmployees={setSelectedEmployees}
+                          />
+                        ) : (
+                          <Center my={10}>
+                            <Text>No result found for your search</Text>
+                          </Center>
+                        )}
                       </>
                     ) : (
                       <Center w="100%" p="8" flexDirection="column">
@@ -265,7 +274,7 @@ const CreateEmployeePayroll = () => {
                     )}
                   </>
                 )}
-              </Stack>
+              </Box>
             </GridItem>
             <GridItem border="1px solid #D2D2D2" rounded="xl" bg="white" p={4} height="fit-content">
               <Heading as="h4" size="xs" fontSize="xl">
