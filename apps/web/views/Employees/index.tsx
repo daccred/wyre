@@ -118,7 +118,9 @@ const reducer = (state: any, action: any) => {
 };
 
 const Employees = () => {
-  const toast = useToast();
+  const { data: employees } = trpc.team.getPersonnel.useQuery();
+  console.log(employees);
+
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { data, dataInUse, selectedEmployee, searchTerm, activeEmployeesOnly } = state;

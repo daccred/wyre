@@ -6,7 +6,7 @@ export const payrollSchema = z.object({
   auto: z.boolean(),
   suspend: z.boolean(),
   payday: z.date(),
-  currency: z.enum(["USD", "GHC", "NGN", "CNY", "GBP", "EUR"]),
+  currency: z.enum(["USD", "GHS", "NGN", "GBP", "EUR", "KES", "RWF", "UGX", "TZS", "ZMW", "ZAR"]),
   burden: z.number(),
   employees: z.array(z.string()),
 });

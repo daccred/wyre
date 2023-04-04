@@ -13,7 +13,8 @@ const signUpValidationSchema = z
     company: z.string().min(1, "Company name is required"),
     companyPhone: z.number().min(1, "Phone number is required"),
     country: z.string(),
-    name: z.string().min(1, "Full name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    firstName: z.string().min(1, "First name is required"),
     email: z.string().email(),
     role: z.string().min(1, "Job role is required"),
     password: z

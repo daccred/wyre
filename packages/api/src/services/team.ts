@@ -6,7 +6,7 @@ import type { ITeamSchema } from "../interfaces";
 import { ServerError } from "../utils/server-error";
 
 export class TeamService {
-  static async createEmployee(input: ITeamSchema) {
+  static async createPersonnel(input: ITeamSchema) {
     try {
       const teamExists = await prisma.team.findUnique({
         where: {
@@ -44,7 +44,53 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async updateEmployee(teamId: string, input: ITeamSchema) {
+  static async updateCompensation(personnelId: string, salary: string) {
+    try {
+      const personnel = await prisma.team.delete({
+        where: { id: personnelId },
+      });
+      if (!personnel) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Failed to delete team",
+        });
+      }
+      const updatedPersonnel = await prisma.team.update({
+        where: { id: personnel.id },
+        data: {
+          salary,
+        },
+      });
+
+      return `Salary has been updated to ${updatedPersonnel.salary}`;
+    } catch (error) {
+      ServerError(error);
+    }
+  }
+
+  static async updatePaymentMethod(personnelId: string, payrollMethod: "CRYPTO" | "BANK" | "MOBILEMONEY") {
+    try {
+      const personnel = await prisma.team.delete({
+        where: { id: personnelId },
+      });
+      if (!personnel) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Failed to delete team",
+        });
+      }
+      const updatedPersonnel = await prisma.team.update({
+        where: { id: personnel.id },
+        data: {
+          payrollMethod,
+        },
+      });
+      return `Payement method updated to ${updatedPersonnel.payrollMethod}`;
+    } catch (error) {
+      ServerError(error);
+    }
+  }
+  static async updatePersonnel(teamId: string, input: ITeamSchema) {
     try {
       const team = await prisma.team.update({
         where: { id: teamId },
@@ -71,13 +117,14 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async deleteEmployee(teamId: string) {
+
+  static async deletePersonnel(personnelId: string) {
     try {
-      const team = await prisma.team.delete({
-        where: { id: teamId },
+      const personnel = await prisma.team.delete({
+        where: { id: personnelId },
       });
 
-      if (!team) {
+      if (!personnel) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Failed to delete team",
@@ -89,7 +136,7 @@ export class TeamService {
     }
   }
 
-  static async getSingleEmployee(teamId: string) {
+  static async getSinglePersonnel(teamId: string) {
     try {
       const team = await prisma.team.findFirst({
         where: { teamCategory: "EMPLOYEE", id: teamId },
@@ -112,6 +159,7 @@ export class TeamService {
     try {
       const team = await prisma.team.findFirst({
         where: { teamCategory: "CONTRACTOR", id: teamId },
+        include: { expense: true, payroll: true },
       });
 
       if (!team) {
@@ -125,7 +173,8 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async getEmployees() {
+
+  static async getPersonnel() {
     try {
       const teams = await prisma.team.findMany({
         where: { teamCategory: "EMPLOYEE" },

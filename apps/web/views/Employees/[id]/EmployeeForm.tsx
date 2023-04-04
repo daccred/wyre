@@ -65,7 +65,8 @@ export default function EmployeeForm() {
           salary: employee?.salary ?? "",
           signBonus: employee?.signBonus ?? "",
           status: true,
-          category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
+          category: data.category,
+          payrollMethod: payrollMethod,
         },
       });
     } catch (error) {
@@ -73,7 +74,48 @@ export default function EmployeeForm() {
     }
   };
 
-  const { renderForm, setFormValue } = useForm<FormInputOptions>({
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updatePersonnel.useMutation({
+    onSuccess() {
+      styledToast({
+        status: "success",
+        description: "Employee has been terminated successfully",
+        toast: toast,
+      });
+    },
+    onError(error: unknown) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+      console.log(error);
+    },
+  });
+
+  const handleTerminate = async () => {
+    try {
+      terminateEmployee({
+        id: employee.id,
+        data: {
+          name: name,
+          email: email,
+          department: department,
+          jobRole: jobRole,
+          salary: salary,
+          signBonus: signBonus,
+          status: false, // add status field with the value of false
+          category: category,
+          payrollMethod: payrollMethod,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: addEmployeeValidationSchema,
   });

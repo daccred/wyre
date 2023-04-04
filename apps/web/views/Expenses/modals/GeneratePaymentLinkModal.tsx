@@ -51,7 +51,7 @@ const GeneratePaymentLinkModal = ({
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: contractorData } = trpc.team.getContractors.useQuery();
-  const { data: employeeData } = trpc.team.getEmployees.useQuery();
+  const { data: employeeData } = trpc.team.getPersonnel.useQuery();
 
   const teamData = useMemo(() => {
     if (employeeData && contractorData) {

@@ -63,7 +63,8 @@ export default function ContractorForm() {
           salary: contractor?.salary ?? "",
           signBonus: contractor?.signBonus ?? "",
           status: true,
-          category: data.category as "CONTRACTOR" | "EMPLOYEE", // cast the category to the correct type
+          category: data.category,
+          payrollMethod: data.payrollMethod,
         },
       });
     } catch (error) {

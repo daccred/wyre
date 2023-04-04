@@ -194,7 +194,7 @@ const MonthlyEmployeeSalary = () => {
       // TODO: date doesn't show in input field
       setFormValue("payday", payroll?.payday);
 
-      setFormValue("currency", payroll?.currency as "USD" | "GHC" | "NGN" | "CNY" | "GBP" | "EUR");
+      setFormValue("currency", payroll?.currency);
 
       setFormValue("suspend", suspendPayroll);
     }

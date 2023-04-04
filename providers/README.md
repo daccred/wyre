@@ -18,3 +18,19 @@ interface Provider {
   getProviderName: () => string;
 }
 ```
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "sensitive_id": "sk-QO1Sj***************************************72wF",
+      "object": "api_key",
+      "created": 1679562547,
+      "last_use": 1680182890,
+      "publishable": false
+    }
+  ]
+}
+
+```

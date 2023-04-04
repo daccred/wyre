@@ -117,7 +117,7 @@ const cycleEnum = z
   .enum(["daily", "bi-weekly", "monthly"])
   .refine((value) => value != null, { message: "Cycle is required" });
 const currencyEnum = z
-  .enum(["USD", "GHC", "NGN", "CNY", "GBP", "EUR"])
+  .enum(["USD", "GHS", "NGN", "GBP", "EUR", "KES", "RWF", "UGX", "TZS", "ZMW", "ZAR"])
   .refine((value) => value !== undefined, { message: "Currency is required" });
 
 export const createPayrollValidationSchema = z.object({
