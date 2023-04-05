@@ -32,5 +32,4 @@ interface Provider {
     }
   ]
 }
-
 ```

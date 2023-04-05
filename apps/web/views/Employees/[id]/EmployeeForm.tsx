@@ -49,7 +49,6 @@ export default function EmployeeForm() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
   // asynchronous function that's called when the user submits the form. It calls the updateEmployee function with the ID of the employee being updated

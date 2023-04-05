@@ -1,9 +1,29 @@
-import { HStack, Text, Button, Flex, Heading, Stack, Image } from "@chakra-ui/react";
+import {
+  HStack,
+  Text,
+  Button,
+  Flex,
+  Heading,
+  Stack,
+  Image,
+  PinInput,
+  PinInputField,
+  FormControl,
+  FormLabel,
+} from "@chakra-ui/react";
 import * as React from "react";
 
 import { FormInput } from "../../components";
 
-const View = () => (
+const View = ({
+  isSubmitting,
+  pinInputData,
+  setPinInputData,
+}: {
+  isSubmitting: boolean;
+  pinInputData: string;
+  setPinInputData: React.Dispatch<React.SetStateAction<string>>;
+}) => (
   <>
     <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
       <Stack flex={1}>
@@ -23,13 +43,43 @@ const View = () => (
             </Stack>
 
             <Stack spacing={4}>
-              <FormInput name="otp" label="OTP Code" placeholder="Enter code" />
-              <FormInput name="password" label="New Password" placeholder="***************" />
-              <FormInput name="password" label="Confirm Password" placeholder="***************" />
+              <FormControl>
+                <FormLabel color="#666666">OTP Code</FormLabel>
+                <HStack>
+                  <PinInput
+                    size="lg"
+                    mask
+                    placeholder="-"
+                    value={pinInputData}
+                    onChange={(value) => setPinInputData(value)}>
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                  </PinInput>
+                </HStack>
+              </FormControl>
+              <FormInput
+                name="newPassword"
+                label="New Password"
+                type="password"
+                placeholder="***************"
+              />
+              <FormInput
+                name="confirmPassword"
+                type="password"
+                label="Confirm Password"
+                placeholder="***************"
+              />
             </Stack>
 
             <Stack spacing={6}>
               <Button
+                type="submit"
+                isDisabled={isSubmitting}
+                isLoading={isSubmitting}
                 color="white"
                 bgColor="#010C14"
                 p="3"

@@ -4,12 +4,12 @@ import ViewLayout from "components/core/ViewLayout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import type { Column } from "react-table";
+import { trpc } from "utils/trpc";
 import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
 import { Card } from "views/Payroll/utils/misc";
 
 import { LinkIcon, ManageExpensesIcon } from "./ProviderIcons";
 import GeneratePaymentLinkModal from "./modals/GeneratePaymentLinkModal";
-import { expenses } from "./utils/dummyData";
 import { expensesColumn } from "./utils/tableColumns";
 
 const View = () => {
@@ -20,9 +20,9 @@ const View = () => {
   } = useDisclosure();
 
   const router = useRouter();
-  const isLoading = false;
-  // TODO: Remove this after api integration
   const [tableData, setTableData] = useState<any[]>([]);
+
+  const { data: expenses, isLoading } = trpc.expenses.getExpenses.useQuery();
 
   useEffect(() => {
     if (!expenses) {
@@ -30,7 +30,7 @@ const View = () => {
     }
 
     setTableData(expenses);
-  }, []);
+  }, [expenses]);
 
   return (
     <ViewLayout title="Expenses">

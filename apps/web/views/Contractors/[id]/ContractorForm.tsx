@@ -44,7 +44,6 @@ export default function ContractorForm() {
         duration: 5000,
         position: "top-right",
       });
-      console.log(error);
     },
   });
   // called when the form is submitted to update the contractor data on the server API

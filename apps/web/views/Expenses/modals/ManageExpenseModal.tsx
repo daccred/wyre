@@ -12,36 +12,129 @@ import {
   Center,
   Image,
   Box,
+  useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { BsCheck2Circle } from "react-icons/bs";
 import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
+import { trpc } from "utils/trpc";
+import SuccessModal from "views/Payroll/modals/SuccessModal";
 import z from "zod";
 
 import { FormInput, useForm } from "../../../components/forms";
 
-const manageExpenseValidationSchema = z.object({});
+const manageExpenseValidationSchema = z.object({
+  id: z.string().optional(),
+  amount: z.string().min(1, "Amount is required"),
+  description: z.string().min(1, "Description is required"),
+  type: z.string().min(1, "Expense Type is required"),
+  status: z.string().min(1, "Status is required"),
+  employeeId: z.string().optional(),
+  date: z.date().refine((value) => value !== null && !isNaN(value.getTime()), {
+    message: "Date is required",
+  }),
+  attachment: z.object({
+    title: z.string().min(1, "Title is required"),
+    url: z.string().min(1, "Amount is required"),
+  }),
+});
 
 type FormInputOptions = z.infer<typeof manageExpenseValidationSchema>;
 
 type ManageExpenseModalTypes = {
   manageExpenseModalIsOpen: boolean;
   closeManageExpenseModal: () => void;
-  data: { [key: string]: string };
+  data: any;
+  refetch: () => void;
 };
 
 export default function ManageExpenseModal({
   manageExpenseModalIsOpen,
   closeManageExpenseModal,
   data,
+  refetch,
 }: ManageExpenseModalTypes) {
+  const toast = useToast();
+  const [status, setStatus] = useState(data?.status || "Pending");
+
+  const [modalData, setModalData] = useState<any>(null);
+
+  useEffect(() => {
+    setModalData(data);
+  }, [data]);
+
+  const expenseId = modalData?.id;
+  const successMessage =
+    status === "Approved" ? "Expense Successfully Approved" : "Expense Request Disapproved";
+
+  const {
+    isOpen: successModalIsOpen,
+    onOpen: openSuccessModal,
+    onClose: closeSuccessModal,
+  } = useDisclosure();
+
+  const { mutate: UpdateExpense, isLoading } = trpc.expenses.updateExpense.useMutation({
+    onSuccess() {
+      openSuccessModal();
+      refetch();
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+    },
+  });
+
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
+    try {
+      UpdateExpense({
+        expensId: expenseId,
+        data: {
+          amount: data?.amount,
+          description: data?.description,
+          type: data?.type as "Reimbursement",
+          status: status as "Approved" | "Pending" | "Disapproved",
+          employeeId: data?.employeeId as string,
+          date: data?.date,
+          attachment: {
+            title: data?.attachment?.title,
+            url: data?.attachment?.url,
+          },
+        },
+      });
+      closeManageExpenseModal();
+    } catch (error) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+    }
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: manageExpenseValidationSchema,
   });
+  useEffect(() => {
+    if (modalData) {
+      setFormValue("employeeId", modalData?.employeeId || modalData?.employee?.id);
+      setFormValue("amount", modalData?.amount);
+      setFormValue("description", modalData?.description);
+      setFormValue("type", modalData?.type);
+      setFormValue("status", status);
+
+      setFormValue("date", modalData?.date);
+      setFormValue("attachment", modalData?.attachment);
+    }
+  }, [modalData, expenseId, setFormValue, status]);
 
   return (
     <>
@@ -71,7 +164,7 @@ export default function ManageExpenseModal({
                         placeholder="Name"
                         style={{ textTransform: "capitalize" }}
                         px="4"
-                        value={data?.name}
+                        value={modalData?.employee?.firstName || modalData?.employee?.lastName}
                         readOnly
                       />
 
@@ -80,33 +173,36 @@ export default function ManageExpenseModal({
                         label="Amount"
                         placeholder="Enter Amount"
                         px="4"
-                        value={data?.amount}
+                        value={modalData?.amount}
+                        sssss
                         readOnly
                       />
                     </HStack>
                     <FormInput
-                      name="purpose"
+                      name="description"
                       label="Purpose"
                       placeholder="Enter Purpose"
                       px="4"
-                      value={data?.purpose}
+                      value={modalData?.description}
                       readOnly
                     />
                   </Stack>
                   <Stack>
                     <Text fontSize="sm">Attachment</Text>
                     <Center p="4" border="1px solid #d2d2d2" bg="#F7F7F7" borderRadius="5px">
-                      <Image src="/images/invoice-wyre.png" alt="" />
+                      <Image src={modalData?.attachment?.url} alt="" />
                     </Center>
                   </Stack>
 
                   <HStack>
                     <Button
-                      loadingText="Submitting"
                       variant="darkBtn"
                       rightIcon={<BsCheck2Circle color="white" fontSize="20px" />}
                       iconSpacing="3"
                       type="submit"
+                      isLoading={isLoading}
+                      loadingText="Submitting"
+                      onClick={() => setStatus("Approved")}
                       fontSize="sm"
                       px="6"
                       _hover={{ bg: "" }}>
@@ -114,13 +210,16 @@ export default function ManageExpenseModal({
                     </Button>
                     <Button
                       loadingText="Submitting"
+                      type="submit"
                       variant="outline"
                       rightIcon={<IoClose color="#210D35" fontSize="20px" />}
                       iconSpacing="3"
                       borderColor="#210D35"
                       w="fit-content"
                       height="44px"
-                      fontSize="sm">
+                      fontSize="sm"
+                      isLoading={isLoading}
+                      onClick={() => setStatus("Disapproved")}>
                       Disapprove
                     </Button>
                   </HStack>
@@ -130,6 +229,12 @@ export default function ManageExpenseModal({
           </ModalBody>
         </ModalContent>
       </Modal>
+      <SuccessModal
+        successModalIsOpen={successModalIsOpen}
+        closeSuccessModal={closeSuccessModal}
+        message={successMessage}
+        pathname="/expenses/manage-expenses"
+      />
     </>
   );
 }

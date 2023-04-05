@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Flex,
   Image,
@@ -28,15 +29,21 @@ export const expensesColumn = [
     Header: "Full Name",
     accessor: (row: any) => (
       <Flex align="center">
-        <Avatar size="sm" src={row?.imgURL} name={row?.name} bg="brand.700" color="white" />
-        <Text ml={2}>{row?.name} </Text>
+        <Avatar
+          size="sm"
+          src={row?.imgURL}
+          name={row?.employee?.firstName || row?.employee?.lastName}
+          bg="brand.700"
+          color="white"
+        />
+        <Text ml={2}>{row?.employee?.firstName || row?.employee?.lastName} </Text>
       </Flex>
     ),
   },
   {
     id: 2,
     Header: "Expense Type",
-    accessor: "expenseType",
+    accessor: "type",
   },
 
   {
@@ -47,13 +54,17 @@ export const expensesColumn = [
   {
     id: 4,
     Header: "Payment Method",
-    accessor: "paymentMethod",
+    accessor: (row: any) => (
+      <Box textTransform="capitalize">{row?.employee?.payrollMethod?.toLowerCase()}</Box>
+    ),
   },
 
   {
     id: 5,
     Header: "Time & Date",
-    accessor: (row: any) => <Text>{`${row?.time} , ${moment(row?.date).format("LL")}`} </Text>,
+    accessor: (row: any) => (
+      <Text>{`${moment(row?.date).format("LT")} , ${moment(row?.date).format("LL")}`} </Text>
+    ),
   },
   {
     id: 6,
@@ -76,29 +87,38 @@ export const manageExpensesColumn = (
   closeViewImageModal: () => void,
   manageExpenseModalIsOpen: boolean,
   openManageExpenseModal: () => void,
-  closeManageExpenseModal: () => void
+  closeManageExpenseModal: () => void,
+  selectedRowData: any,
+  setSelectedRowData: React.Dispatch<React.SetStateAction<any>>,
+  refetch: () => void
 ) => [
   {
     id: 1,
     Header: "Full Name",
     accessor: (row: any) => (
       <Flex align="center">
-        <Avatar size="sm" src={row?.imgURL} name={row?.name} bg="brand.700" color="white" />
-        <Text ml={2}>{row?.name} </Text>
+        <Avatar
+          size="sm"
+          src={row?.imgURL}
+          name={row?.employee?.firstName || row?.employee?.lastName}
+          bg="brand.700"
+          color="white"
+        />
+        <Text ml={2}>{row?.employee?.firstName || row?.employee?.lastName} </Text>
       </Flex>
     ),
   },
   {
     id: 2,
     Header: "Expense Type",
-    accessor: "expenseType",
+    accessor: "type",
   },
   {
     id: 3,
     Header: "Purpose",
     accessor: (row: any) => (
-      <Tooltip label={row?.purpose} hasArrow>
-        <Text>{textTruncate(20, row?.purpose)} </Text>
+      <Tooltip label={row?.description} hasArrow>
+        <Text>{textTruncate(20, row?.description)} </Text>
       </Tooltip>
     ),
   },
@@ -115,7 +135,7 @@ export const manageExpensesColumn = (
       <>
         <Button fontSize="sm" bg="#9f9f9f26" onClick={openViewImageModal}>
           <Text textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
-            {row?.attachment?.name}
+            {row?.attachment?.title}
           </Text>
         </Button>
         {/* View image modal */}
@@ -123,7 +143,7 @@ export const manageExpensesColumn = (
           <ModalOverlay />
           <ModalContent w="100%">
             <ModalHeader fontWeight="bold" fontSize="md" pb="0">
-              {row?.attachment?.name}
+              {row?.attachment?.title}
             </ModalHeader>
             <ModalCloseButton m="1">
               <IoCloseCircleOutline fontSize="28px" />
@@ -147,14 +167,18 @@ export const manageExpensesColumn = (
               width="fit-content"
               bg="brand.700"
               color="white"
-              onClick={openManageExpenseModal}
+              onClick={() => {
+                setSelectedRowData(row);
+                openManageExpenseModal();
+              }}
               _hover={{ hover: "none" }}>
               Manage
             </Button>
             <ManageExpenseModal
               manageExpenseModalIsOpen={manageExpenseModalIsOpen}
               closeManageExpenseModal={closeManageExpenseModal}
-              data={row}
+              data={selectedRowData}
+              refetch={refetch}
             />
           </>
         ) : (
@@ -173,8 +197,14 @@ export const generateLinkColumn = [
     Header: "Full Name",
     accessor: (row: any) => (
       <Flex align="center">
-        <Avatar size="sm" src={row?.imgURL} name={row?.name} bg="brand.700" color="white" />
-        <Text ml={2}>{row?.name} </Text>
+        <Avatar
+          size="sm"
+          src={row?.imgURL}
+          name={row?.firstName || row?.lastName}
+          bg="brand.700"
+          color="white"
+        />
+        <Text ml={2}>{row?.firstName || row?.lastName} </Text>
       </Flex>
     ),
   },

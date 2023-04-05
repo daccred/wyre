@@ -76,7 +76,6 @@ export default function AddContractor({
         duration: 5000,
         position: "top-right",
       });
-      console.log("Error creating contractor:", error);
     },
   });
 
