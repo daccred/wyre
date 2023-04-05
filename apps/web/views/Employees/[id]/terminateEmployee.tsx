@@ -10,12 +10,13 @@ const Terminate = () => {
   const router = useRouter();
   const { id } = router.query;
   const toast = useToast();
-  const { data: employee, refetch } = trpc.team.getSingleEmployee.useQuery(id as string, {
+  const { data: employee, refetch } = trpc.team.getSinglePersonnel.useQuery(id as string, {
     refetchOnMount: true,
   });
-  const { firstName, email, department, jobRole, teamCategory, signBonus, salary } = employee ?? {};
+  const { firstName, email, department, jobRole, teamCategory, signBonus, salary, payrollMethod } =
+    employee ?? {};
 
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updateEmployee.useMutation({
+  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -52,6 +53,7 @@ const Terminate = () => {
           signBonus: signBonus ?? "",
           status: !employee?.status, // toggle the status of the employee
           category: teamCategory,
+          payrollMethod: payrollMethod as "CRYPTO" | "BANK" | "MOBILEMONEY", // cast the category to the correct type, // assign an empty string as default value
         },
       });
     } catch (error) {

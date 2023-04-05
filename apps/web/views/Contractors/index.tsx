@@ -257,7 +257,7 @@ const Contractors = () => {
               <TablePulse />
             ) : (
               <>
-                {data ? (
+                {data.length > 0 ? (
                   <>
                     <HStack justifyContent="space-between" pt="2">
                       <HStack gap="1">

@@ -28,7 +28,7 @@ const ManageEmployee = () => {
   const router = useRouter();
   const toast = useToast();
   const { id } = router.query;
-  const { data: employee, isLoading } = trpc.team.getSingleEmployee.useQuery(id as string, {
+  const { data: employee, isLoading } = trpc.team.getSinglePersonnel.useQuery(id as string, {
     refetchOnMount: true,
   });
   // console.log(employee);

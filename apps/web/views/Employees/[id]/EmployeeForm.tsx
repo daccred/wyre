@@ -15,6 +15,7 @@ const addEmployeeValidationSchema = z.object({
   department: z.string().min(1, { message: "Defartment is Required" }),
   jobRole: z.string().min(1, { message: "Job Role is Required" }),
   category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
+  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -28,7 +29,7 @@ export default function EmployeeForm() {
     refetchOnMount: true,
   });
 
-  // console.log(employee);
+  console.log(employee);
   const { firstName, lastName } = employee ?? {};
 
   // mutation hook from TRPC for updating an employee's data on the server.
@@ -65,6 +66,7 @@ export default function EmployeeForm() {
           signBonus: employee?.signBonus ?? "",
           status: true,
           category: data.category,
+          payrollMethod: data.payrollMethod,
         },
       });
     } catch (error) {
@@ -84,6 +86,7 @@ export default function EmployeeForm() {
       setFormValue("department", employee.department ?? "");
       setFormValue("jobRole", employee.jobRole ?? "");
       setFormValue("category", employee.teamCategory ?? "");
+      setFormValue("payrollMethod", employee.payrollMethod ?? "");
     }
   }, [employee, setFormValue]);
 
@@ -140,7 +143,16 @@ export default function EmployeeForm() {
               { label: "Employee", value: "EMPLOYEE" },
             ]}
           />
-          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
+          <FormNativeSelect
+            name="payrollMethod"
+            label="Payroll Method"
+            placeholder="Payroll Method"
+            options={[
+              { label: "Crypto", value: "CRYPTO" },
+              { label: "Bank", value: "BANK" },
+              { label: "Mobile Money", value: "MOBILEMONEY" },
+            ]}
+          />
         </HStack>
         <HStack>
           <FormInput name="department" label="Department" placeholder="Enter Department" />

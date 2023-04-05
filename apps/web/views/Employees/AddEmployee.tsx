@@ -14,7 +14,7 @@ import { useToast } from "@chakra-ui/react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import z from "zod";
 
-import { FormInput, useForm } from "../../components/forms";
+import { FormInput, useForm, FormNativeSelect } from "../../components/forms";
 import { trpc } from "../../utils/trpc";
 import { PeopleIcon } from "./ProviderIcons";
 
@@ -118,6 +118,16 @@ export default function AddEmployee({
                   <FormInput name="grossSalary" label="Gross Salary" placeholder="$0" />
 
                   <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
+                  <FormNativeSelect
+                    name="payrollMethod"
+                    label="Payroll Method"
+                    placeholder="Select Category"
+                    options={[
+                      { label: "CRYPTO", value: "CRYPTO" },
+                      { label: "Bank", value: "BANK" },
+                      { label: "Mobile Money", value: "MOBILEMONEY" },
+                    ]}
+                  />
                 </HStack>
               </Stack>
               <Text fontSize="sm">
@@ -133,9 +143,7 @@ export default function AddEmployee({
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"
-                _hover={{ bg: "" }}
-                // spinner={<BeatLoader size={8} color='white' />}
-              >
+                _hover={{ bg: "" }}>
                 Add Employee
               </Button>
             </Stack>

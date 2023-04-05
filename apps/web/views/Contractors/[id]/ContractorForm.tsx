@@ -15,6 +15,8 @@ const addContractorValidationSchema = z.object({
   department: z.string().min(1, { message: "Required" }),
   jobRole: z.string().min(1, { message: "Required" }),
   category: z.string(),
+  category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
+  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
@@ -23,7 +25,9 @@ export default function ContractorForm() {
   const toast = useToast();
   const router = useRouter();
   const { id } = router.query;
-  const { data: contractor, refetch } = trpc.team.getContractors.useQuery(id as string);
+  const { data: contractor, refetch } = trpc.team.getPersonnel.useQuery(id as string, {
+    refetchOnMount: true,
+  });
 
   const { firstName, lastName } = contractor ?? {};
   // hook to update the contractor data on the server API
@@ -56,8 +60,11 @@ export default function ContractorForm() {
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
+          salary: contractor?.salary ?? "",
+          signBonus: contractor?.signBonus ?? "",
           status: true,
           category: data.category,
+          payrollMethod: data.payrollMethod,
         },
       });
     } catch (error) {

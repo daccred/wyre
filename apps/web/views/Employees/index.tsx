@@ -159,6 +159,7 @@ const Employees = () => {
         payrollMethod: employee.payrollMethod,
         phoneNumber: employee.phone,
       }));
+      // console.log(convertedEmployees);
       dispatch({ type: actionTypes.FETCH_SUCCESS, payload: convertedEmployees });
       dispatch({ type: actionTypes.SET_DATA, payload: convertedEmployees });
       dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: convertedEmployees });
@@ -497,7 +498,7 @@ const Employees = () => {
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Payment Method</Text>
                   <Text overflowWrap="break-word">
-                    {selectedEmployee?.payrollMethod === null ? "Nill" : `${selectedEmployee?.paymentMethod}`}
+                    {selectedEmployee?.payrollMethod === null ? "Nill" : `${selectedEmployee?.payrollMethod}`}
                   </Text>
                 </Stack>
               </Stack>

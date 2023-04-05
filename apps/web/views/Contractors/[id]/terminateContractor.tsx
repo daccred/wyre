@@ -13,9 +13,10 @@ const Terminate = () => {
   const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
     refetchOnMount: true,
   });
-  const { firstName, email, department, jobRole, teamCategory, signBonus, salary } = contractor ?? {};
+  const { firstName, email, department, jobRole, teamCategory, signBonus, salary, payrollMethod } =
+    contractor ?? {};
 
-  const { mutate: terminateContractor, isLoading: isTerminating } = trpc.team.updateEmployee.useMutation({
+  const { mutate: terminateContractor, isLoading: isTerminating } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -52,6 +53,7 @@ const Terminate = () => {
           signBonus: signBonus ?? "",
           status: !contractor?.status, // toggle the status of the employee
           category: teamCategory,
+          payrollMethod: payrollMethod as "CRYPTO" | "BANK" | "MOBILEMONEY", // cast the category to the correct type, // assign an empty string as default value
         },
       });
     } catch (error) {
