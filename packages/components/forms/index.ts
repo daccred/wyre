@@ -10,4 +10,3 @@ export { default as FormUpload } from "./components/FormUpload";
 export { default as FormInputArray } from "./components/FormInputArray";
 export { default as FormTextArea } from "./components/FormTextarea";
 export { default as FormCheckbox } from "./components/FormCheckbox";
-export { default as FormPinInput } from "./components/FormPinInput";

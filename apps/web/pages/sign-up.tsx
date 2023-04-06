@@ -13,7 +13,6 @@ const signUpValidationSchema = z
     company: z.string().min(1, "Company name is required"),
     companyPhone: z.number().min(1, "Phone number is required"),
     country: z.string(),
-    // name: z.string().min(1, "Name is required"),
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email(),
@@ -36,13 +35,27 @@ export default function Page() {
   const router = useRouter();
   const toast = useToast();
 
-  // type User = {
-  //   id: string;
-  //   email: string;
-  // };
+  const Submit = (data: FormInputOptions) => {
+    signUp({
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      companyName: data.company,
+      companyPhone: data.companyPhone ? String(data.companyPhone) : undefined, // convert number to string
+      country: data.country,
+      jobRole: data.role,
+    });
+  };
+
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
+    onSubmit: Submit,
+    schema: signUpValidationSchema,
+  });
 
   const { mutate: signUp, isLoading } = trpc.auth.adminSignUp.useMutation({
     onSuccess: (data) => {
+      resetForm(); //reset form
       if (data) {
         const { admin } = data;
         const { email, id } = admin;
@@ -69,35 +82,6 @@ export default function Page() {
       });
     },
   });
-
-  const Submit = (data: FormInputOptions) => {
-    signUp({
-      email: data.email,
-      password: data.password,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      companyName: data.company,
-      companyPhone: data.companyPhone.toString(), // convert number to string
-      country: data.country,
-      jobRole: data.role,
-    });
-  };
-
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: Submit,
-    schema: signUpValidationSchema,
-    defaultValues: {
-      email: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      company: "",
-      companyPhone: undefined,
-      country: "Ghana",
-      role: "",
-    },
-  });
-
 
   return renderForm(
     <>

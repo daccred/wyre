@@ -42,26 +42,8 @@ export default function AddContractor({
 }: addContractorTypes) {
   const toast = useToast();
 
-  const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
-    onSuccess() {
-      // Reset the form data to empty values
-
-      openAddContractorSuccessModal();
-      closeAddContractorModal();
-    },
-    onError(error: any) {
-      toast({
-        status: "error",
-        description: `${error}`,
-        isClosable: true,
-        duration: 5000,
-        position: "top-right",
-      });
-    },
-  });
-
   const handleSubmit = async (data: FormInputOptions) => {
-
+    // console.log(JSON.stringify(data));
     addContractor({
       name: data.name,
       email: data.email,
@@ -74,10 +56,27 @@ export default function AddContractor({
     });
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    // defaultValues: { email: "" },
     schema: addContractorValidationSchema,
+  });
+
+  const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
+    onSuccess() {
+      // Reset the form data to empty values
+      resetForm();
+      openAddContractorSuccessModal();
+      closeAddContractorModal();
+    },
+    onError(error: any) {
+      toast({
+        status: "error",
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: "top-right",
+      });
+    },
   });
 
   return (
