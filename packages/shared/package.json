@@ -5,23 +5,30 @@
   "author": "Andrew Miracle <me@andrewmiracle.com>",
   "homepage": "https://wyre.cc",
   "license": "MIT",
-  "main": "lib/shared.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "lib"
+    "dist/**",
+    "package.json"
   ],
+  "scripts": {
+    "build": "tsc",
+    "lint:ts": "tsc --pretty --noEmit",
+    "clean": "rimraf node_modules dist",
+    "lint:es": "TIMING=1 eslint \"*.ts\"",
+    "test": "node ./__tests__/@wyrecc/shared.test.js"
+  },
+  "devDependencies": {
+    "@types/json-schema": "^7.0.11",
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0"
+  },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tecmie/wyre.git"
-  },
-  "scripts": {
-    "test": "node ./__tests__/@wyrecc/shared.test.js"
   },
   "bugs": {
     "url": "https://github.com/tecmie/wyre/issues"
