@@ -1,4 +1,2 @@
-import schema from  './schema.json'
-
-export * from './client'
-export schema
+export * from "./maplerad.provider";
+export * from "./maplerad.schema";
