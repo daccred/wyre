@@ -14,7 +14,6 @@ const addContractorValidationSchema = z.object({
   email: z.string().email(),
   department: z.string().min(1, { message: "Required" }),
   jobRole: z.string().min(1, { message: "Required" }),
-  category: z.string(),
   category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
   payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
 });
@@ -25,7 +24,7 @@ export default function ContractorForm() {
   const toast = useToast();
   const router = useRouter();
   const { id } = router.query;
-  const { data: contractor, refetch } = trpc.team.getPersonnel.useQuery(id as string, {
+  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
     refetchOnMount: true,
   });
 
@@ -83,6 +82,7 @@ export default function ContractorForm() {
       setFormValue("department", contractor.department ?? "");
       setFormValue("jobRole", contractor.jobRole ?? "");
       setFormValue("category", contractor.teamCategory ?? "");
+      setFormValue("payrollMethod", contractor.payrollMethod ?? "");
     }
   }, [contractor, setFormValue]);
 
@@ -136,7 +136,7 @@ export default function ContractorForm() {
             placeholder="Select Category"
             options={[
               { label: "Contractor", value: "CONTRACTOR" },
-              { label: "Employee", value: "EMPLOYEE" },
+              { label: "contractor", value: "contractor" },
             ]}
           />
           <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
