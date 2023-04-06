@@ -39,7 +39,6 @@ const View = () => {
   const [tableData, setTableData] = useState<any[]>([]);
 
   const [selectedRowData, setSelectedRowData] = useState(null);
-  
 
   const { data: expenses, isLoading, refetch } = trpc.expenses.getExpenses.useQuery();
 

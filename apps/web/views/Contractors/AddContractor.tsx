@@ -61,7 +61,6 @@ export default function AddContractor({
   });
 
   const handleSubmit = async (data: FormInputOptions) => {
-
     addContractor({
       name: data.name,
       email: data.email,

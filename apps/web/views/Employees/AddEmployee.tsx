@@ -63,7 +63,6 @@ export default function AddEmployee({
   });
 
   const handleSubmit = async (data: FormInputOptions) => {
-
     addEmployee({
       name: data.name,
       email: data.email,

@@ -98,7 +98,6 @@ export default function Page() {
     },
   });
 
-
   return renderForm(
     <>
       <Meta />
