@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "@wyrecc/maplerad",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint:ts": "tsc --pretty --noEmit",
+    "clean": "rimraf node_modules dist",
+    "lint:es": "TIMING=1 eslint \"*.ts\""
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0"
+  }
+}
