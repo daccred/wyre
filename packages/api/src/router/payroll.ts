@@ -29,6 +29,13 @@ export const payrollRouter = createTRPCRouter({
       return removeContractor;
     }),
 
+  processPayroll: protectedProcedure
+    .input(z.object({ id: z.string().nonempty() }))
+    .mutation(async ({ input }) => {
+      const message = await PayrollService.processPayRoll(input.id);
+      return message;
+    }),
+
   //* *  Mutations *//
 
   // * *  Queries *//

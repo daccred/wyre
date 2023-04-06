@@ -1,3 +1,5 @@
+import { PayrollQueue } from "src/bullQueue/payrollqueue";
+
 import { prisma } from "@wyrecc/db";
 
 import { TRPCError } from "@trpc/server";
@@ -204,5 +206,34 @@ export class PayrollService {
     } catch (error) {
       ServerError(error);
     }
+  }
+
+  static async processPayRoll(id: string) {
+    // check for the payroll
+    const payroll = await prisma.payroll.findUnique({ where: { id } });
+    if (payroll === null) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: `Payroll with id ${id} not found`,
+      });
+    }
+    // added the payroll to the queue
+    const queue = await PayrollQueue.add(
+      {
+        payrollId: id,
+      },
+      { attempts: 5 }
+    );
+
+    // start processing the payroll
+    PayrollQueue.process(async (job) => {
+      const failed = await job.isFailed();
+      if (failed) {
+        Promise.reject(`payroll job with id: ${job.id} failed`);
+      }
+      return Promise.resolve(job.data);
+    });
+
+    return "Payroll processing";
   }
 }
