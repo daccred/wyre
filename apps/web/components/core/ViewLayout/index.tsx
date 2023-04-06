@@ -251,6 +251,7 @@ interface HeaderNavProps extends FlexProps {
 const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
+  // console.log(sessionData);
 
   return (
     <Flex
@@ -314,7 +315,7 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
                 {sessionData?.user?.name}
               </Text>
               <Text fontSize="xs" fontWeight="medium" color="boldgrey">
-                Chief People Officer
+                {sessionData?.user?.role}
               </Text>
             </VStack>
           </HStack>

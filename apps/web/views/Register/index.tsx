@@ -35,8 +35,8 @@ const View: React.FC<Props> = (Props) => {
                 label="Country"
                 name="country"
                 options={[
-                  { value: "gh", label: "Ghana" },
-                  { value: "ng", label: "Nigeria" },
+                  { value: "ghana", label: "Ghana" },
+                  { value: "nigeria", label: "Nigeria" },
                 ]}
               />
               <FormInput name="firstName" type="text" label="First Name" placeholder="John" />
