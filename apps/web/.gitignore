@@ -48,4 +48,4 @@ public/sw.js
 public/workbox-*.js
 public/fallback-*.html
 public/fallback-*.js
-maple*
+# maple*
