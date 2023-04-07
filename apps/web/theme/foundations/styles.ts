@@ -5,7 +5,7 @@ const styles = {
   global: (props: StyleFunctionProps) => ({
     body: {
       color: mode("#010C14", "whiteAlpha.900")(props),
-      bg: "bg-canvas",
+      bg: "",
     },
     "*::placeholder": {
       opacity: 1,
