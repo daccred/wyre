@@ -54,7 +54,7 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         {label && (
-          <FormLabel fontSize="sm" {...labelProps} color="#666666">
+          <FormLabel htmlFor={name} fontSize="sm" {...labelProps} color="#666666">
             {label}
           </FormLabel>
         )}
