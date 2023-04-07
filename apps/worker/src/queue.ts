@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import secrets from './core/secrets';
 // import { _createRepeatableTask } from './helpers/tasks';
 
@@ -43,13 +44,13 @@ const subscriber = new ioredis(secrets.REDIS_URI, {
 });
 
 /* --------------------------------------------------------------------------------
- * 
- * Re-use connection in ioredis 
+ *
+ * Re-use connection in ioredis
  * https://github.com/OptimalBits/bull/blob/master/PATTERNS.md#reusing-redis-connections
- * 
+ *
  ---------------------------------------------------------------------------------*/
 const queueOptions: Bull.QueueOptions = {
-  createClient: (__type__) => {
+  createClient: (__type__: any) => {
     switch (__type__) {
       case 'client':
         return client;
@@ -81,19 +82,19 @@ export default async function queue() {
   // messageQueue.process(VOICE, (job, done) => voiceConsumer(job, done));
 
   // / Report Queue Event Listeners
-  messageQueue.on('waiting', (jobID) => {
+  messageQueue.on('waiting', (jobID: any) => {
     console.info(`[ADDED] Job added with job ID ${jobID}`);
   });
-  messageQueue.on('active', (job) => {
+  messageQueue.on('active', (job: { id: any }) => {
     console.info(`[STARTED] Job ID ${job.id} has been started`);
   });
-  messageQueue.on('completed', (job) => {
+  messageQueue.on('completed', (job: { id: any }) => {
     console.info(`[COMPLETED] Job ID ${job.id} has been completed`);
   });
-  messageQueue.on('failed', (job) => {
+  messageQueue.on('failed', (job: { id: any }) => {
     console.error(`[FAILED] Job ID ${job.id} has been failed`);
   });
-  messageQueue.on('error', (job) => {
+  messageQueue.on('error', (job: any) => {
     console.error(`[ERROR] An error occurred by the queue, got ${job}`);
   });
   messageQueue.on('cleaned', function () {
