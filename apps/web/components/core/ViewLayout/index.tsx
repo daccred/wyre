@@ -96,10 +96,9 @@ const SidebarContent = ({ ...rest }) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="Vtart">
-        <Image src="/Zayroll Logo.png" alt="" w={90} />
-        {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
-          Wyre
-        </Text> */}
+        <Link href="/">
+          <Image src="/Zayroll Logo.png" alt="wyre" w={90} />
+        </Link>
       </Flex>
       <VStack mt="16">
         {DashboardLinkItems.map((link) => (

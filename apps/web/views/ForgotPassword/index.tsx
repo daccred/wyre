@@ -6,15 +6,11 @@ import { FormInput } from "../../components";
 const View = ({ isSubmitting }: { isSubmitting: boolean }) => (
   <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
     <Stack flex={1}>
-      <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+      <Link href="/">
+        <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+      </Link>
 
-      <Flex
-        p={12}
-        flex={1}
-        align="start"
-        justify=""
-        // bg={useColorModeValue('gray.50', 'gray.800')}
-      >
+      <Flex p={12} flex={1} align="start">
         <Stack spacing={4} w="full" maxW="md">
           <Stack>
             <Heading color="#010C14" fontWeight="bold" lineHeight={1.1} fontSize={{ base: "3xl", md: "4xl" }}>

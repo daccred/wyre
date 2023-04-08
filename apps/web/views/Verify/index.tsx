@@ -56,7 +56,9 @@ const View = () => {
   return (
     <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
       <Stack flex={1}>
-        <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
+        <Link href="/">
+          <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
+        </Link>
 
         <Flex p={12} flex={1} align="start" justify={{ base: "", md: "", xl: "" }}>
           <Stack spacing={8} w="full" maxW="sm">

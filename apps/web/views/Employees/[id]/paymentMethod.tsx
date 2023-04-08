@@ -180,7 +180,7 @@ const ManageEmployee = () => {
             iconSpacing="3"
             w="fit-content"
             type="submit"
-            isLoading={isLoading}
+            // isLoading={isLoading}
             _hover={{ bg: "" }}
             loadingText="Updating">
             Update Payment

@@ -13,7 +13,9 @@ const View: React.FC<Props> = (Props) => {
   return (
     <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
       <Stack flex={1}>
-        <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+        <Link href="/">
+          <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+        </Link>
 
         <Flex flex={1} align={{ base: "", md: "start" }} p={12}>
           <Stack spacing={8} w="full" maxW="md">

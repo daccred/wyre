@@ -49,7 +49,6 @@ const GeneratePaymentLinkModal = ({
     onClose: closeSuccessModal,
   } = useDisclosure();
 
-
   // TODO: Ask John if an employee can be sent a link more than once
   const [tableData, setTableData] = useState<Team[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
@@ -115,7 +114,6 @@ const GeneratePaymentLinkModal = ({
   useEffect(() => {
     setFormValue("employeeId", selectedEmployees?.[0] as string);
   }, [selectedEmployees, setFormValue]);
-
 
   return (
     <>

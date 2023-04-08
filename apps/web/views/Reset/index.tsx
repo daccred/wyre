@@ -10,6 +10,7 @@ import {
   PinInputField,
   FormControl,
   FormLabel,
+  Link,
 } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -27,7 +28,9 @@ const View = ({
   <>
     <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
       <Stack flex={1}>
-        <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+        <Link href="/">
+          <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+        </Link>
 
         <Flex p={12} flex={1} align="start" justify="">
           <Stack spacing={4} w="full" maxW="md">
