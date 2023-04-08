@@ -1,2 +1,2 @@
-export * from "./maplerad.provider";
-export * from "./maplerad.schema";
+export * from './maplerad.provider';
+export * from './maplerad.schema';

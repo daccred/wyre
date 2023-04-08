@@ -1,9 +1,9 @@
-import { Flex, Stack, Box, Icon, Text, Grid, Skeleton, HStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { Fragment } from "react";
-import { GoPrimitiveDot } from "react-icons/go";
+import { Flex, Stack, Box, Icon, Text, Grid, Skeleton, HStack } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { Fragment } from 'react';
+import { GoPrimitiveDot } from 'react-icons/go';
 
-import { IndicatorIcon } from "./providerIcon";
+import { IndicatorIcon } from './providerIcon';
 
 interface Transaction {
   id: number;
@@ -72,7 +72,7 @@ const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) =>
                 rounded="10px"
                 bg="#F7F7F7"
                 my={3}
-                _hover={{ bg: "gray.200" }}
+                _hover={{ bg: 'gray.200' }}
                 cursor="pointer"
                 onClick={() =>
                   router.push({
@@ -88,7 +88,7 @@ const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) =>
                   <Flex direction="column">
                     <Text
                       color="black"
-                      fontSize={{ base: "sm", sm: "md", md: "lg" }}
+                      fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}
                       lineHeight="20px"
                       mb="2"
                       noOfLines={1}
@@ -96,16 +96,16 @@ const TransactionsList = ({ transactions, isLoading }: TransactionsListProps) =>
                     />
                     <Flex
                       color="#666666"
-                      fontSize={{ base: "12px", sm: "12px" }}
+                      fontSize={{ base: '12px', sm: '12px' }}
                       alignItems="center"
                       lineHeight="13px">
-                      {transaction.dateTime} <Icon as={GoPrimitiveDot} w={4} h={4} mx={1} color="#666666" />{" "}
+                      {transaction.dateTime} <Icon as={GoPrimitiveDot} w={4} h={4} mx={1} color="#666666" />{' '}
                       {transaction.created_at}
                     </Flex>
                   </Flex>
                 </Stack>
 
-                <Flex fontSize={{ base: "12px", sm: "14px" }} lineHeight="20px" fontWeight="semibold">
+                <Flex fontSize={{ base: '12px', sm: '14px' }} lineHeight="20px" fontWeight="semibold">
                   <Text>{transaction.amount}</Text>
                 </Flex>
               </Grid>

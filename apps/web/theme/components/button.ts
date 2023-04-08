@@ -1,18 +1,18 @@
-import type { StyleFunctionProps } from "@chakra-ui/theme-tools";
-import { darken, mode, transparentize } from "@chakra-ui/theme-tools";
+import type { StyleFunctionProps } from '@chakra-ui/theme-tools';
+import { darken, mode, transparentize } from '@chakra-ui/theme-tools';
 
 const baseStyle = {
-  ":focus:not(:focus-visible)": {
-    boxShadow: "none",
+  ':focus:not(:focus-visible)': {
+    boxShadow: 'none',
   },
-  colorScheme: "orange",
-  fontWeight: "medium",
-  borderRadius: "lg",
+  colorScheme: 'orange',
+  fontWeight: 'medium',
+  borderRadius: 'lg',
 };
 
 const sizes = {
   lg: {
-    fontSize: "md",
+    fontSize: 'md',
   },
 };
 
@@ -20,63 +20,63 @@ const variants = {
   primary: (props: StyleFunctionProps) =>
     props.theme.components.Button.variants.solid({
       ...props,
-      variant: "solid",
-      colorScheme: "primary",
+      variant: 'solid',
+      colorScheme: 'primary',
     }),
-  "primary-on-accent": () => ({
-    bg: "primary.50",
-    color: "primary.600",
-    _hover: { bg: "primary.100" },
-    _active: { bg: "primary.100" },
+  'primary-on-accent': () => ({
+    bg: 'primary.50',
+    color: 'primary.600',
+    _hover: { bg: 'primary.100' },
+    _active: { bg: 'primary.100' },
   }),
   gradient: () => ({
-    color: "black",
-    bgGradient: "linear(to-r, #78FFD6, #A8FF78)",
+    color: 'black',
+    bgGradient: 'linear(to-r, #78FFD6, #A8FF78)',
     _hover: {
-      bgGradient: "linear(to-l, #78FFD6, #A8FF78)",
+      bgGradient: 'linear(to-l, #78FFD6, #A8FF78)',
     },
   }),
   brand: (props: StyleFunctionProps) =>
     props.theme.components.Button.variants.solid({
       ...props,
-      colorScheme: "brand",
+      colorScheme: 'brand',
     }),
   outline: (props: StyleFunctionProps) => ({
-    color: "emphasized",
-    bg: mode("white", "gray.800")(props),
+    color: 'emphasized',
+    bg: mode('white', 'gray.800')(props),
   }),
   ghost: (props: StyleFunctionProps) => ({
-    color: "emphasized",
+    color: 'emphasized',
     _hover: {
-      bg: mode(darken("gray.50", 1)(props.theme), darken("gray.700", 4)(props.theme))(props),
+      bg: mode(darken('gray.50', 1)(props.theme), darken('gray.700', 4)(props.theme))(props),
     },
     _active: {
-      bg: mode(darken("gray.50", 1)(props.theme), darken("gray.700", 4)(props.theme))(props),
+      bg: mode(darken('gray.50', 1)(props.theme), darken('gray.700', 4)(props.theme))(props),
     },
     _activeLink: {
-      bg: mode("gray.100", "gray.700")(props),
+      bg: mode('gray.100', 'gray.700')(props),
     },
   }),
-  "ghost-on-accent": (props: StyleFunctionProps) => ({
-    color: "brand.50",
+  'ghost-on-accent': (props: StyleFunctionProps) => ({
+    color: 'brand.50',
     _hover: {
-      bg: transparentize("brand.600", 0.67)(props.theme),
+      bg: transparentize('brand.600', 0.67)(props.theme),
     },
     _activeLink: {
-      color: "white",
-      bg: "bg-accent-subtle",
+      color: 'white',
+      bg: 'bg-accent-subtle',
     },
   }),
   link: (props: StyleFunctionProps) => {
-    if (props.colorScheme === "gray") {
+    if (props.colorScheme === 'gray') {
       return {
-        color: "muted",
+        color: 'muted',
         _hover: {
-          textDecoration: "none",
-          color: "default",
+          textDecoration: 'none',
+          color: 'default',
         },
         _active: {
-          color: "default",
+          color: 'default',
         },
       };
     }
@@ -84,45 +84,45 @@ const variants = {
       color: mode(`${props.colorScheme}.600`, `${props.colorScheme}.200`)(props),
       _hover: {
         color: mode(`${props.colorScheme}.700`, `${props.colorScheme}.300`)(props),
-        textDecoration: "none",
+        textDecoration: 'none',
       },
       _active: {
         color: mode(`${props.colorScheme}.700`, `${props.colorScheme}.300`)(props),
       },
     };
   },
-  "link-on-accent": () => ({
+  'link-on-accent': () => ({
     padding: 0,
-    height: "auto",
-    lineHeight: "normal",
-    verticalAlign: "baseline",
-    color: "brand.50",
+    height: 'auto',
+    lineHeight: 'normal',
+    verticalAlign: 'baseline',
+    color: 'brand.50',
     _hover: {
-      color: "white",
+      color: 'white',
     },
     _active: {
-      color: "white",
+      color: 'white',
     },
   }),
   darkBtn: () => ({
-    lineHeight: "normal",
-    color: "white",
-    background: "brand.700",
-    borderRadius: "5px",
-    fontSize: "12px",
-    fontWeight: "bold",
+    lineHeight: 'normal',
+    color: 'white',
+    background: 'brand.700',
+    borderRadius: '5px',
+    fontSize: '12px',
+    fontWeight: 'bold',
     _active: {
-      color: "white",
-      background: "#2d104a",
+      color: 'white',
+      background: '#2d104a',
     },
   }),
   greyBtn: () => ({
-    lineHeight: "normal",
-    color: "#210D35",
-    background: "#D9D9D9",
-    borderRadius: "5px",
-    fontSize: "12px",
-    fontWeight: "bold",
+    lineHeight: 'normal',
+    color: '#210D35',
+    background: '#D9D9D9',
+    borderRadius: '5px',
+    fontSize: '12px',
+    fontWeight: 'bold',
 
     // _hover: {
     //   color: "white",
@@ -139,8 +139,8 @@ const button = {
   baseStyle,
   variants,
   defaultProps: {
-    size: "lg",
-    borderRadius: "24px",
+    size: 'lg',
+    borderRadius: '24px',
   },
   sizes,
 };

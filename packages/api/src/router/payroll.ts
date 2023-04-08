@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { payrollSchema } from "../interfaces";
-import { PayrollService } from "../services";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { payrollSchema } from '../interfaces';
+import { PayrollService } from '../services';
+import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 export const payrollRouter = createTRPCRouter({
   //* *  Mutations *//

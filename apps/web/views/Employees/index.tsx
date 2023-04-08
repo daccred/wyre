@@ -7,7 +7,7 @@ import {
   PaginationPageGroup,
   PaginationContainer,
   PaginationSeparator,
-} from "@ajna/pagination";
+} from '@ajna/pagination';
 import {
   Button,
   HStack,
@@ -32,39 +32,39 @@ import {
   useDisclosure,
   Image,
   useToast,
-} from "@chakra-ui/react";
-import useDebounce from "components/hooks/useDebounce";
-import { useRouter } from "next/router";
-import { useEffect, useReducer } from "react";
-import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
+} from '@chakra-ui/react';
+import useDebounce from 'components/hooks/useDebounce';
+import { useRouter } from 'next/router';
+import { useEffect, useReducer } from 'react';
+import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 
-import styledToast from "../../components/core/StyledToast";
-import ViewLayout from "../../components/core/ViewLayout";
-import { trpc } from "../../utils/trpc";
-import TablePulse from "../TablePulse";
-import AddEmployee from "./AddEmployee";
-import { EmptyEmployeeImage, PlusIcon } from "./ProviderIcons";
+import styledToast from '../../components/core/StyledToast';
+import ViewLayout from '../../components/core/ViewLayout';
+import { trpc } from '../../utils/trpc';
+import TablePulse from '../TablePulse';
+import AddEmployee from './AddEmployee';
+import { EmptyEmployeeImage, PlusIcon } from './ProviderIcons';
 
 const initialState = {
   employees: [],
   data: [],
   dataInUse: [],
   selectedEmployee: undefined,
-  searchTerm: "",
+  searchTerm: '',
   activeEmployeesOnly: true,
   isLoading: false,
   error: null,
 };
 
 const actionTypes = {
-  FETCH_DATA: "FETCH_DATA",
-  FETCH_SUCCESS: "FETCH_SUCCESS",
-  FETCH_ERROR: "FETCH_ERROR",
-  SET_DATA: "SET_DATA",
-  SET_DATA_IN_USE: "SET_DATA_IN_USE",
-  SET_SELECTED_EMPLOYEE: "SET_SELECTED_EMPLOYEE",
-  SET_SEARCH_TERM: "SET_SEARCH_TERM",
-  SET_ACTIVE_EMPLOYEES_ONLY: "SET_ACTIVE_EMPLOYEES_ONLY",
+  FETCH_DATA: 'FETCH_DATA',
+  FETCH_SUCCESS: 'FETCH_SUCCESS',
+  FETCH_ERROR: 'FETCH_ERROR',
+  SET_DATA: 'SET_DATA',
+  SET_DATA_IN_USE: 'SET_DATA_IN_USE',
+  SET_SELECTED_EMPLOYEE: 'SET_SELECTED_EMPLOYEE',
+  SET_SEARCH_TERM: 'SET_SEARCH_TERM',
+  SET_ACTIVE_EMPLOYEES_ONLY: 'SET_ACTIVE_EMPLOYEES_ONLY',
 };
 
 const reducer = (state: any, action: any) => {
@@ -136,7 +136,7 @@ const Employees = () => {
   useEffect(() => {
     if (state.error) {
       styledToast({
-        status: "error",
+        status: 'error',
         description: `${state.error}`,
         toast: toast,
       });
@@ -151,7 +151,7 @@ const Employees = () => {
         email: employee.email,
         role: employee.jobRole,
         department: employee.department,
-        status: employee.status !== null ? (employee.status === true ? "active" : "terminated") : "",
+        status: employee.status !== null ? (employee.status === true ? 'active' : 'terminated') : '',
         category: employee.teamCategory,
         salary: employee.salary,
         signBonus: employee.signBonus,
@@ -175,7 +175,7 @@ const Employees = () => {
         employee?.name?.toLowerCase().includes(debouncedSearchTerm?.toLowerCase())
       );
       if (activeEmployeesOnly) {
-        const activeData = searchData.filter((employee: any) => employee?.status === "active");
+        const activeData = searchData.filter((employee: any) => employee?.status === 'active');
         dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: activeData });
       } else {
         dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: searchData });
@@ -265,7 +265,7 @@ const Employees = () => {
                           px="0"
                           py="1"
                           h="40px"
-                          w={{ base: "auto", lg: "250px" }}
+                          w={{ base: 'auto', lg: '250px' }}
                           fontSize="sm"
                           placeholder="Search Employee"
                           value={searchTerm}
@@ -295,18 +295,18 @@ const Employees = () => {
                     <TableContainer
                       pt="4"
                       css={{
-                        "&::-webkit-scrollbar": {
-                          width: "15px",
-                          background: "transparent",
+                        '&::-webkit-scrollbar': {
+                          width: '15px',
+                          background: 'transparent',
                         },
-                        "&::-webkit-scrollbar-track": {
-                          background: "transparent",
+                        '&::-webkit-scrollbar-track': {
+                          background: 'transparent',
                         },
-                        "&::-webkit-scrollbar-thumb": {
-                          backgroundColor: "#d6dee1",
-                          borderRadius: "20px",
-                          border: "6px solid transparent",
-                          backgroundClip: "content-box",
+                        '&::-webkit-scrollbar-thumb': {
+                          backgroundColor: '#d6dee1',
+                          borderRadius: '20px',
+                          border: '6px solid transparent',
+                          backgroundClip: 'content-box',
                         },
                       }}>
                       <Table variant="unstyled">
@@ -325,7 +325,7 @@ const Employees = () => {
                               ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                               .map((data: any, index: any) => (
                                 <Tr
-                                  fontWeight={data.id === selectedEmployee.id ? "bold" : "normal"}
+                                  fontWeight={data.id === selectedEmployee.id ? 'bold' : 'normal'}
                                   textTransform="capitalize"
                                   cursor="pointer"
                                   key={index}
@@ -340,21 +340,21 @@ const Employees = () => {
                                         size="sm"
                                         src={data?.imgURL}
                                         name={data?.name}
-                                        opacity={data?.status !== "active" ? "35%" : ""}
+                                        opacity={data?.status !== 'active' ? '35%' : ''}
                                       />
-                                      <Text color={data?.status !== "active" ? "#FF951C" : ""}>
+                                      <Text color={data?.status !== 'active' ? '#FF951C' : ''}>
                                         {data?.name}
                                       </Text>
                                     </HStack>
                                   </Td>
                                   <Td
                                     textTransform="lowercase"
-                                    opacity={data?.status !== "active" ? "35%" : ""}>
+                                    opacity={data?.status !== 'active' ? '35%' : ''}>
                                     {data?.category}
                                   </Td>
-                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
-                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
-                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
+                                  <Td opacity={data?.status !== 'active' ? '35%' : ''}>{data?.role}</Td>
+                                  <Td opacity={data?.status !== 'active' ? '35%' : ''}>{data?.department}</Td>
+                                  <Td opacity={data?.status !== 'active' ? '35%' : ''}>{data?.status}</Td>
                                 </Tr>
                               ))}
                         </Tbody>
@@ -404,10 +404,10 @@ const Employees = () => {
                         boxSize="10"
                         fontWeight="bold"
                         _hover={{
-                          bg: "#EAECF0",
+                          bg: '#EAECF0',
                         }}
                         _current={{
-                          bg: "#EAECF0",
+                          bg: '#EAECF0',
                         }}
                       />
                     ))}
@@ -464,7 +464,7 @@ const Employees = () => {
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Phone Number</Text>
                   <Text>
-                    {selectedEmployee?.phoneNumber === null ? "Nill" : `${selectedEmployee?.phoneNumber}`}
+                    {selectedEmployee?.phoneNumber === null ? 'Nill' : `${selectedEmployee?.phoneNumber}`}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
@@ -492,13 +492,13 @@ const Employees = () => {
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Location</Text>
                   <Text overflowWrap="break-word">
-                    {selectedEmployee?.location === null ? "Nill" : `${selectedEmployee?.location}`}
+                    {selectedEmployee?.location === null ? 'Nill' : `${selectedEmployee?.location}`}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Payment Method</Text>
                   <Text overflowWrap="break-word">
-                    {selectedEmployee?.payrollMethod === null ? "Nill" : `${selectedEmployee?.payrollMethod}`}
+                    {selectedEmployee?.payrollMethod === null ? 'Nill' : `${selectedEmployee?.payrollMethod}`}
                   </Text>
                 </Stack>
               </Stack>

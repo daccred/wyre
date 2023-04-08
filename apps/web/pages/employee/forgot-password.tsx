@@ -1,10 +1,10 @@
-import React from "react";
-import z from "zod";
+import React from 'react';
+import z from 'zod';
 
-import { useForm } from "@wyrecc/components/forms";
+import { useForm } from '@wyrecc/components/forms';
 
-import { Meta } from "../../layouts";
-import View from "../../views/employee/ForgotPassword";
+import { Meta } from '../../layouts';
+import View from '../../views/employee/ForgotPassword';
 
 const forgotValidationSchema = z.object({
   email: z.string(),
@@ -18,7 +18,7 @@ export default function Page() {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "" },
+    defaultValues: { email: '' },
     schema: forgotValidationSchema,
   });
 

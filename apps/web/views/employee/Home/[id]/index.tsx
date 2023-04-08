@@ -1,10 +1,10 @@
-import { Box, Breadcrumb, Text, Flex, BreadcrumbLink, Icon, SimpleGrid } from "@chakra-ui/react";
-import React from "react";
-import { GoPrimitiveDot } from "react-icons/go";
+import { Box, Breadcrumb, Text, Flex, BreadcrumbLink, Icon, SimpleGrid } from '@chakra-ui/react';
+import React from 'react';
+import { GoPrimitiveDot } from 'react-icons/go';
 
-import Header from "@wyrecc/components/core/Header";
+import Header from '@wyrecc/components/core/Header';
 
-import { ArrowRightIcon, IndicatorIcon } from "../providerIcon";
+import { ArrowRightIcon, IndicatorIcon } from '../providerIcon';
 
 type Props = { id?: null };
 
@@ -16,7 +16,7 @@ const Index = (_props: Props) => {
           <Flex alignItems="center">
             <Icon as={ArrowRightIcon} />
             <BreadcrumbLink mb={2} fontWeight="bold" color="#210D35" href="/employee/home">
-              {" "}
+              {' '}
               Back
             </BreadcrumbLink>
           </Flex>
@@ -28,7 +28,7 @@ const Index = (_props: Props) => {
           <Text color="#FDFFFC" fontWeight="semibold">
             Monthly Salary for September
           </Text>
-          <Flex color="#FFFFFF" fontSize={{ base: "12px", sm: "12px" }} alignItems="center" lineHeight="13px">
+          <Flex color="#FFFFFF" fontSize={{ base: '12px', sm: '12px' }} alignItems="center" lineHeight="13px">
             12:30 PM <Icon as={GoPrimitiveDot} color="#FFFFFF" w={4} h={4} mx={1} /> 30 September, 2022
           </Flex>
         </Box>

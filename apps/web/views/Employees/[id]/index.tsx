@@ -1,13 +1,13 @@
-import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { FiChevronRight } from "react-icons/fi";
+import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { FiChevronRight } from 'react-icons/fi';
 
-import ViewLayout from "../../../components/core/ViewLayout";
-import { trpc } from "../../../utils/trpc";
-import CompensationForm from "./CompensationForm";
-import EmployeeForm from "./EmployeeForm";
-import PaymentMethod from "./paymentMethod";
+import ViewLayout from '../../../components/core/ViewLayout';
+import { trpc } from '../../../utils/trpc';
+import CompensationForm from './CompensationForm';
+import EmployeeForm from './EmployeeForm';
+import PaymentMethod from './paymentMethod';
 
 const ManageEmployee = () => {
   const router = useRouter();

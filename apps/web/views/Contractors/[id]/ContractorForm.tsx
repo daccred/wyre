@@ -1,21 +1,21 @@
-import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import z from "zod";
+import { Avatar, Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import z from 'zod';
 
-import styledToast from "../../../components/core/StyledToast";
-import { FormInput, FormNativeSelect, useForm } from "../../../components/forms";
-import { trpc } from "../../../utils/trpc";
-import { ProfileIcon } from "./ProviderIcons";
-import Terminate from "./terminateContractor";
+import styledToast from '../../../components/core/StyledToast';
+import { FormInput, FormNativeSelect, useForm } from '../../../components/forms';
+import { trpc } from '../../../utils/trpc';
+import { ProfileIcon } from './ProviderIcons';
+import Terminate from './terminateContractor';
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
+  name: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: "Required" }),
-  jobRole: z.string().min(1, { message: "Required" }),
-  category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
-  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+  department: z.string().min(1, { message: 'Required' }),
+  jobRole: z.string().min(1, { message: 'Required' }),
+  category: z.enum(['CONTRACTOR', 'EMPLOYEE']),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
@@ -34,18 +34,18 @@ export default function ContractorForm() {
     onSuccess() {
       refetch();
       styledToast({
-        status: "success",
-        description: "Profile has been updated successfully",
+        status: 'success',
+        description: 'Profile has been updated successfully',
         toast: toast,
       });
     },
     onError(error: unknown) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -53,14 +53,14 @@ export default function ContractorForm() {
   const handleSubmit = async (data: FormInputOptions) => {
     try {
       updateContractor({
-        id: contractor?.id ?? "", // pass the ID of the contractor that you want to update
+        id: contractor?.id ?? '', // pass the ID of the contractor that you want to update
         data: {
           name: data.name,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
-          salary: contractor?.salary ?? "",
-          signBonus: contractor?.signBonus ?? "",
+          salary: contractor?.salary ?? '',
+          signBonus: contractor?.signBonus ?? '',
           status: true,
           category: data.category,
           payrollMethod: data.payrollMethod,
@@ -77,12 +77,12 @@ export default function ContractorForm() {
   // hook to set the default form values when the contractor data is available.
   useEffect(() => {
     if (contractor) {
-      setFormValue("name", contractor.firstName ?? "");
-      setFormValue("email", contractor.email ?? "");
-      setFormValue("department", contractor.department ?? "");
-      setFormValue("jobRole", contractor.jobRole ?? "");
-      setFormValue("category", contractor.teamCategory ?? "");
-      setFormValue("payrollMethod", contractor.payrollMethod ?? "");
+      setFormValue('name', contractor.firstName ?? '');
+      setFormValue('email', contractor.email ?? '');
+      setFormValue('department', contractor.department ?? '');
+      setFormValue('jobRole', contractor.jobRole ?? '');
+      setFormValue('category', contractor.teamCategory ?? '');
+      setFormValue('payrollMethod', contractor.payrollMethod ?? '');
     }
   }, [contractor, setFormValue]);
 
@@ -93,7 +93,7 @@ export default function ContractorForm() {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size="xl" src="" name={firstName ?? ""} />
+        <Avatar size="xl" src="" name={firstName ?? ''} />
         <HStack>
           <FormInput name="name" label="First Name" placeholder="First Name" />
           <FormInput
@@ -135,8 +135,8 @@ export default function ContractorForm() {
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Contractor", value: "CONTRACTOR" },
-              { label: "contractor", value: "contractor" },
+              { label: 'Contractor', value: 'CONTRACTOR' },
+              { label: 'contractor', value: 'contractor' },
             ]}
           />
           <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
@@ -155,7 +155,7 @@ export default function ContractorForm() {
           w="fit-content"
           type="submit"
           isLoading={isLoading}
-          _hover={{ bg: "" }}
+          _hover={{ bg: '' }}
           loadingText="Updating">
           Update Profile
         </Button>

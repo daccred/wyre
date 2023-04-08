@@ -1,12 +1,11 @@
-import { PayrollQueue } from "../bullQueue/payroll-queue";
-import type { PayrollQueueSchema } from "../interfaces/payroll-queue";
+import { prisma } from '@wyrecc/db';
 
-import { prisma } from "@wyrecc/db";
+import { TRPCError } from '@trpc/server';
 
-import { TRPCError } from "@trpc/server";
-
-import type { IPayrollSchema } from "../interfaces/payroll";
-import { ServerError } from "../utils/server-error";
+import { PayrollQueue } from '../bullQueue/payroll-queue';
+import type { IPayrollSchema } from '../interfaces/payroll';
+import type { PayrollQueueSchema } from '../interfaces/payroll-queue';
+import { ServerError } from '../utils/server-error';
 
 export class PayrollService {
   static async createPayroll(input: IPayrollSchema) {
@@ -19,13 +18,13 @@ export class PayrollService {
 
       if (payrollExists) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
+          code: 'BAD_REQUEST',
           message: `Payroll with name ${input.title} already exists`,
         });
       }
       const employees = await prisma.team.findMany({
         where: {
-          teamCategory: "EMPLOYEE",
+          teamCategory: 'EMPLOYEE',
           id: {
             in: input.employees,
           },
@@ -37,8 +36,8 @@ export class PayrollService {
 
       if (!employees || employees.length === 0) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Add employees to create a payroll",
+          code: 'BAD_REQUEST',
+          message: 'Add employees to create a payroll',
         });
       }
 
@@ -57,8 +56,8 @@ export class PayrollService {
 
       if (!payroll) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create payroll",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create payroll',
         });
       }
 
@@ -81,8 +80,8 @@ export class PayrollService {
 
       if (!payroll)
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Payroll not found",
+          code: 'NOT_FOUND',
+          message: 'Payroll not found',
         });
       return payroll;
     } catch (error) {
@@ -99,8 +98,8 @@ export class PayrollService {
       });
       if (!payrolls)
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Payrolls not found",
+          code: 'NOT_FOUND',
+          message: 'Payrolls not found',
         });
       return payrolls;
     } catch (error) {
@@ -119,8 +118,8 @@ export class PayrollService {
 
       if (!payroll) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Payroll not found",
+          code: 'NOT_FOUND',
+          message: 'Payroll not found',
         });
       }
 
@@ -152,8 +151,8 @@ export class PayrollService {
       });
       if (!updatePayroll) {
         throw new TRPCError({
-          code: "PRECONDITION_FAILED",
-          message: "Failed to update payroll",
+          code: 'PRECONDITION_FAILED',
+          message: 'Failed to update payroll',
         });
       }
       return payroll;
@@ -172,11 +171,11 @@ export class PayrollService {
 
       if (!payroll) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create payroll",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create payroll',
         });
       }
-      return "Payroll deleted successfully";
+      return 'Payroll deleted successfully';
     } catch (error) {
       ServerError(error);
     }
@@ -199,11 +198,11 @@ export class PayrollService {
 
       if (!payroll) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create payroll",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create payroll',
         });
       }
-      return "Employee removed successfully";
+      return 'Employee removed successfully';
     } catch (error) {
       ServerError(error);
     }
@@ -214,7 +213,7 @@ export class PayrollService {
     const payroll = await prisma.payroll.findUnique({ where: { id }, include: { employees: true } });
     if (payroll === null) {
       throw new TRPCError({
-        code: "NOT_FOUND",
+        code: 'NOT_FOUND',
         message: `Payroll with id ${id} not found`,
       });
     }
@@ -228,24 +227,24 @@ export class PayrollService {
         recipientPaymentDetail: null,
       };
       switch (item.payrollMethod) {
-        case "BANK": {
+        case 'BANK': {
           const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          queueObject["recipientPaymentDetail"] = bank;
+          queueObject['recipientPaymentDetail'] = bank;
           break;
         }
-        case "CRYPTO": {
+        case 'CRYPTO': {
           const wallet = await prisma.cryptoWallet.findUnique({ where: { personnelId: item.id } });
-          queueObject["recipientPaymentDetail"] = wallet;
+          queueObject['recipientPaymentDetail'] = wallet;
           break;
         }
-        case "MOBILEMONEY": {
+        case 'MOBILEMONEY': {
           const mobileMoney = await prisma.mobileMoney.findUnique({ where: { personnelId: item.id } });
-          queueObject["recipientPaymentDetail"] = mobileMoney;
+          queueObject['recipientPaymentDetail'] = mobileMoney;
           break;
         }
         default: {
           const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          queueObject["recipientPaymentDetail"] = bank;
+          queueObject['recipientPaymentDetail'] = bank;
         }
       }
       PayrollData.push(queueObject);
@@ -253,6 +252,6 @@ export class PayrollService {
     // added the payroll to the queue
     await PayrollQueue.add(PayrollData, { attempts: 5 });
 
-    return "Payroll added to the queue";
+    return 'Payroll added to the queue';
   }
 }

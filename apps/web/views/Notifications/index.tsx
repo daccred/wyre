@@ -1,7 +1,7 @@
-import { Avatar, Box, chakra, Flex, Stack, VStack, Divider, Checkbox, Link, Button } from "@chakra-ui/react";
-import { Fragment, useState } from "react";
+import { Avatar, Box, chakra, Flex, Stack, VStack, Divider, Checkbox, Link, Button } from '@chakra-ui/react';
+import { Fragment, useState } from 'react';
 
-import ViewLayout from "../../components/core/ViewLayout";
+import ViewLayout from '../../components/core/ViewLayout';
 
 interface Notification {
   img: string;
@@ -14,100 +14,100 @@ interface Notification {
 
 const notifications: Notification[] = [
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Started 2022 by updating portfolio website",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "https://mahmad.me/blog/started-2022-by-updating-portfolio-website-1jde-temp-slug-4553258",
-    created_at: "21 Jan 2022",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Started 2022 by updating portfolio website',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: 'https://mahmad.me/blog/started-2022-by-updating-portfolio-website-1jde-temp-slug-4553258',
+    created_at: '21 Jan 2022',
     isRead: true,
   },
   {
-    img: "https://bit.ly/dan-abramov",
-    title: "Create professional portfolio website with Nextjs and ChakraUI",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
-    created_at: "20 Jun 2021",
+    img: 'https://bit.ly/dan-abramov',
+    title: 'Create professional portfolio website with Nextjs and ChakraUI',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
+    created_at: '20 Jun 2021',
     isRead: false,
   },
   {
-    img: "https://bit.ly/kent-c-dodds",
+    img: 'https://bit.ly/kent-c-dodds',
     title: `Find out what's new in my portfolio website`,
-    desc: "Your next payroll is USD 7,000 and due on Oct 5, 2022",
-    link: "/",
-    created_at: "31 Sept 2022",
+    desc: 'Your next payroll is USD 7,000 and due on Oct 5, 2022',
+    link: '/',
+    created_at: '31 Sept 2022',
     isRead: false,
   },
   {
-    img: "",
-    title: "Reimbursement Request",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
+    img: '',
+    title: 'Reimbursement Request',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
     isRead: true,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Payroll",
-    desc: "Your next payroll is USD 7,000 and due on Oct 5, 2022",
-    link: "/",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Payroll',
+    desc: 'Your next payroll is USD 7,000 and due on Oct 5, 2022',
+    link: '/',
     isRead: true,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Reimbursement Request",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Reimbursement Request',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
     isRead: true,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "",
-    title: "Reimbursement Request",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
+    img: '',
+    title: 'Reimbursement Request',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
     isRead: false,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Payroll",
-    desc: "Your next payroll is USD 7,000 and due on Oct 5, 2022",
-    link: "/",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Payroll',
+    desc: 'Your next payroll is USD 7,000 and due on Oct 5, 2022',
+    link: '/',
     isRead: true,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Reimbursement Request",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Reimbursement Request',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
     isRead: false,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "",
-    title: "Reimbursement Request",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
+    img: '',
+    title: 'Reimbursement Request',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
     isRead: true,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Payroll",
-    desc: "Your next payroll is USD 7,000 and due on Oct 5, 2022",
-    link: "/",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Payroll',
+    desc: 'Your next payroll is USD 7,000 and due on Oct 5, 2022',
+    link: '/',
     isRead: false,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
   {
-    img: "https://bit.ly/ryan-florence",
-    title: "Reimbursement Request",
-    desc: "Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago",
-    link: "/",
+    img: 'https://bit.ly/ryan-florence',
+    title: 'Reimbursement Request',
+    desc: 'Omotola Atinuke requires a reimbursement of USD 5,000 for her conference trip to Chicago',
+    link: '/',
     isRead: true,
-    created_at: "Sept 30, 2022 12:30 PM",
+    created_at: 'Sept 30, 2022 12:30 PM',
   },
 ];
 
@@ -151,9 +151,9 @@ const NotificationsList = () => {
                 justify="space-between"
                 alignItems="center"
                 p={3}
-                bg={notification.isRead ? "transparent" : "gray.100"}
+                bg={notification.isRead ? 'transparent' : 'gray.100'}
                 _hover={{
-                  bg: notification.isRead ? "transparent" : "gray.200",
+                  bg: notification.isRead ? 'transparent' : 'gray.200',
                 }}>
                 <Flex justify="space-between" alignItems="center">
                   <Stack spacing={0} direction="row" alignItems="center" w="100%">

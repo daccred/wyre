@@ -1,12 +1,12 @@
-import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { FiChevronRight } from "react-icons/fi";
+import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { FiChevronRight } from 'react-icons/fi';
 
-import ViewLayout from "../../../components/core/ViewLayout";
-import { trpc } from "../../../utils/trpc";
-import CompensationForm from "./CompensationForm";
-import ContractorForm from "./ContractorForm";
+import ViewLayout from '../../../components/core/ViewLayout';
+import { trpc } from '../../../utils/trpc';
+import CompensationForm from './CompensationForm';
+import ContractorForm from './ContractorForm';
 
 const ManageContractor = () => {
   const router = useRouter();

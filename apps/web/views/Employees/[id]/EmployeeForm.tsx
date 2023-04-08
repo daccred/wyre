@@ -1,21 +1,21 @@
-import { Avatar, Button, HStack, Stack, Text, useToast } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import z from "zod";
+import { Avatar, Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import z from 'zod';
 
-import styledToast from "../../../components/core/StyledToast";
-import { FormInput, FormNativeSelect, useForm } from "../../../components/forms";
-import { trpc } from "../../../utils/trpc";
-import { ProfileIcon } from "./ProviderIcons";
-import Terminate from "./terminateEmployee";
+import styledToast from '../../../components/core/StyledToast';
+import { FormInput, FormNativeSelect, useForm } from '../../../components/forms';
+import { trpc } from '../../../utils/trpc';
+import { ProfileIcon } from './ProviderIcons';
+import Terminate from './terminateEmployee';
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "Name is Required" }),
+  name: z.string().min(1, { message: 'Name is Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: "Defartment is Required" }),
-  jobRole: z.string().min(1, { message: "Job Role is Required" }),
-  category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
-  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+  department: z.string().min(1, { message: 'Defartment is Required' }),
+  jobRole: z.string().min(1, { message: 'Job Role is Required' }),
+  category: z.enum(['CONTRACTOR', 'EMPLOYEE']),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -37,18 +37,18 @@ export default function EmployeeForm() {
     onSuccess() {
       refetch();
       styledToast({
-        status: "success",
-        description: "Profile has been updated successfully",
+        status: 'success',
+        description: 'Profile has been updated successfully',
         toast: toast,
       });
     },
     onError(error: unknown) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -56,14 +56,14 @@ export default function EmployeeForm() {
   const handleSubmit = async (data: FormInputOptions) => {
     try {
       updateEmployee({
-        id: employee?.id ?? "", // pass the ID of the employee that you want to update
+        id: employee?.id ?? '', // pass the ID of the employee that you want to update
         data: {
           name: data.name,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
-          salary: employee?.salary ?? "",
-          signBonus: employee?.signBonus ?? "",
+          salary: employee?.salary ?? '',
+          signBonus: employee?.signBonus ?? '',
           status: true,
           category: data.category,
           payrollMethod: data.payrollMethod,
@@ -81,12 +81,12 @@ export default function EmployeeForm() {
   // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
   useEffect(() => {
     if (employee) {
-      setFormValue("name", employee.firstName ?? "");
-      setFormValue("email", employee.email ?? "");
-      setFormValue("department", employee.department ?? "");
-      setFormValue("jobRole", employee.jobRole ?? "");
-      setFormValue("category", employee.teamCategory ?? "");
-      setFormValue("payrollMethod", employee.payrollMethod ?? "");
+      setFormValue('name', employee.firstName ?? '');
+      setFormValue('email', employee.email ?? '');
+      setFormValue('department', employee.department ?? '');
+      setFormValue('jobRole', employee.jobRole ?? '');
+      setFormValue('category', employee.teamCategory ?? '');
+      setFormValue('payrollMethod', employee.payrollMethod ?? '');
     }
   }, [employee, setFormValue]);
 
@@ -97,7 +97,7 @@ export default function EmployeeForm() {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size="xl" src="" name={firstName || ""} />
+        <Avatar size="xl" src="" name={firstName || ''} />
         <HStack>
           <FormInput name="name" label="First Name" placeholder="First Name" />
           <FormInput
@@ -139,8 +139,8 @@ export default function EmployeeForm() {
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Contractor", value: "CONTRACTOR" },
-              { label: "Employee", value: "EMPLOYEE" },
+              { label: 'Contractor', value: 'CONTRACTOR' },
+              { label: 'Employee', value: 'EMPLOYEE' },
             ]}
           />
           <FormNativeSelect
@@ -148,9 +148,9 @@ export default function EmployeeForm() {
             label="Payroll Method"
             placeholder="Payroll Method"
             options={[
-              { label: "Crypto", value: "CRYPTO" },
-              { label: "Bank", value: "BANK" },
-              { label: "Mobile Money", value: "MOBILEMONEY" },
+              { label: 'Crypto', value: 'CRYPTO' },
+              { label: 'Bank', value: 'BANK' },
+              { label: 'Mobile Money', value: 'MOBILEMONEY' },
             ]}
           />
         </HStack>
@@ -168,7 +168,7 @@ export default function EmployeeForm() {
           w="fit-content"
           type="submit"
           isLoading={isLoading}
-          _hover={{ bg: "" }}
+          _hover={{ bg: '' }}
           loadingText="Updating">
           Update Profile
         </Button>

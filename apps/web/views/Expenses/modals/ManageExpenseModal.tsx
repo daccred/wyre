@@ -14,29 +14,29 @@ import {
   Box,
   useToast,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { BsCheck2Circle } from "react-icons/bs";
-import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "utils/trpc";
-import SuccessModal from "views/Payroll/modals/SuccessModal";
-import z from "zod";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { BsCheck2Circle } from 'react-icons/bs';
+import { IoClose, IoCloseCircleOutline } from 'react-icons/io5';
+import { trpc } from 'utils/trpc';
+import SuccessModal from 'views/Payroll/modals/SuccessModal';
+import z from 'zod';
 
-import { FormInput, useForm } from "../../../components/forms";
+import { FormInput, useForm } from '../../../components/forms';
 
 const manageExpenseValidationSchema = z.object({
   id: z.string().optional(),
-  amount: z.string().min(1, "Amount is required"),
-  description: z.string().min(1, "Description is required"),
-  type: z.string().min(1, "Expense Type is required"),
-  status: z.string().min(1, "Status is required"),
+  amount: z.string().min(1, 'Amount is required'),
+  description: z.string().min(1, 'Description is required'),
+  type: z.string().min(1, 'Expense Type is required'),
+  status: z.string().min(1, 'Status is required'),
   employeeId: z.string().optional(),
   date: z.date().refine((value) => value !== null && !isNaN(value.getTime()), {
-    message: "Date is required",
+    message: 'Date is required',
   }),
   attachment: z.object({
-    title: z.string().min(1, "Title is required"),
-    url: z.string().min(1, "Amount is required"),
+    title: z.string().min(1, 'Title is required'),
+    url: z.string().min(1, 'Amount is required'),
   }),
 });
 
@@ -56,7 +56,7 @@ export default function ManageExpenseModal({
   refetch,
 }: ManageExpenseModalTypes) {
   const toast = useToast();
-  const [status, setStatus] = useState(data?.status || "Pending");
+  const [status, setStatus] = useState(data?.status || 'Pending');
 
   const [modalData, setModalData] = useState<any>(null);
 
@@ -66,7 +66,7 @@ export default function ManageExpenseModal({
 
   const expenseId = modalData?.id;
   const successMessage =
-    status === "Approved" ? "Expense Successfully Approved" : "Expense Request Disapproved";
+    status === 'Approved' ? 'Expense Successfully Approved' : 'Expense Request Disapproved';
 
   const {
     isOpen: successModalIsOpen,
@@ -81,11 +81,11 @@ export default function ManageExpenseModal({
     },
     onError(error: any) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -97,8 +97,8 @@ export default function ManageExpenseModal({
         data: {
           amount: data?.amount,
           description: data?.description,
-          type: data?.type as "Reimbursement",
-          status: status as "Approved" | "Pending" | "Disapproved",
+          type: data?.type as 'Reimbursement',
+          status: status as 'Approved' | 'Pending' | 'Disapproved',
           employeeId: data?.employeeId as string,
           date: data?.date,
           attachment: {
@@ -110,11 +110,11 @@ export default function ManageExpenseModal({
       closeManageExpenseModal();
     } catch (error) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     }
   };
@@ -125,14 +125,14 @@ export default function ManageExpenseModal({
   });
   useEffect(() => {
     if (modalData) {
-      setFormValue("employeeId", modalData?.employeeId || modalData?.employee?.id);
-      setFormValue("amount", modalData?.amount);
-      setFormValue("description", modalData?.description);
-      setFormValue("type", modalData?.type);
-      setFormValue("status", status);
+      setFormValue('employeeId', modalData?.employeeId || modalData?.employee?.id);
+      setFormValue('amount', modalData?.amount);
+      setFormValue('description', modalData?.description);
+      setFormValue('type', modalData?.type);
+      setFormValue('status', status);
 
-      setFormValue("date", modalData?.date);
-      setFormValue("attachment", modalData?.attachment);
+      setFormValue('date', modalData?.date);
+      setFormValue('attachment', modalData?.attachment);
     }
   }, [modalData, expenseId, setFormValue, status]);
 
@@ -162,7 +162,7 @@ export default function ManageExpenseModal({
                         name="employee/contractor"
                         label="Employee/Contractor"
                         placeholder="Name"
-                        style={{ textTransform: "capitalize" }}
+                        style={{ textTransform: 'capitalize' }}
                         px="4"
                         value={modalData?.employee?.firstName || modalData?.employee?.lastName}
                         readOnly
@@ -202,10 +202,10 @@ export default function ManageExpenseModal({
                       type="submit"
                       isLoading={isLoading}
                       loadingText="Submitting"
-                      onClick={() => setStatus("Approved")}
+                      onClick={() => setStatus('Approved')}
                       fontSize="sm"
                       px="6"
-                      _hover={{ bg: "" }}>
+                      _hover={{ bg: '' }}>
                       Approve
                     </Button>
                     <Button
@@ -219,7 +219,7 @@ export default function ManageExpenseModal({
                       height="44px"
                       fontSize="sm"
                       isLoading={isLoading}
-                      onClick={() => setStatus("Disapproved")}>
+                      onClick={() => setStatus('Disapproved')}>
                       Disapprove
                     </Button>
                   </HStack>

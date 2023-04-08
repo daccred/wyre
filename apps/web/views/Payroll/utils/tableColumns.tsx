@@ -1,45 +1,45 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react";
-import moment from "moment";
+import { Avatar, Flex, Text } from '@chakra-ui/react';
+import moment from 'moment';
 
 export const payrollColumns = [
   {
     id: 1,
-    Header: "Payroll Description",
-    accessor: "title",
+    Header: 'Payroll Description',
+    accessor: 'title',
   },
   {
     id: 2,
-    Header: "Amount",
-    accessor: "burden",
+    Header: 'Amount',
+    accessor: 'burden',
   },
 
   {
     id: 3,
-    Header: "Due Date",
-    accessor: (row: any) => <Text>{moment(row?.payday).format("LL")} </Text>,
+    Header: 'Due Date',
+    accessor: (row: any) => <Text>{moment(row?.payday).format('LL')} </Text>,
   },
   {
     id: 4,
-    Header: "Paid At",
+    Header: 'Paid At',
     accessor: (row: any) => <Text>Not Available </Text>,
   },
 
   {
     id: 5,
-    Header: "Status",
+    Header: 'Status',
     accessor: (row: any) => (
       <Text
         fontWeight={600}
         color={
-          row?.status === "Late"
-            ? "#E71D36"
-            : row?.status === "Early"
-            ? "#0AAF60"
-            : row?.status === "On Time"
-            ? "#FF951C"
-            : "black"
+          row?.status === 'Late'
+            ? '#E71D36'
+            : row?.status === 'Early'
+            ? '#0AAF60'
+            : row?.status === 'On Time'
+            ? '#FF951C'
+            : 'black'
         }>
-        {row?.status ? row?.status : "-"}
+        {row?.status ? row?.status : '-'}
       </Text>
     ),
   },
@@ -47,7 +47,7 @@ export const payrollColumns = [
 
 export const createPayrollColumns = [
   {
-    Header: "Full Name",
+    Header: 'Full Name',
     accessor: (row: any) => (
       <Flex align="center">
         <Avatar size="sm" src={row?.imgURL} name={row?.firstName || row?.lastName} />
@@ -56,76 +56,76 @@ export const createPayrollColumns = [
     ),
   },
   {
-    Header: "Department",
+    Header: 'Department',
     accessor: (row: any) => <Text textTransform="capitalize">{row?.department}</Text>,
   },
   {
-    Header: "Job Role",
+    Header: 'Job Role',
     accessor: (row: any) => <Text textTransform="capitalize">{row?.jobRole} </Text>,
   },
   {
-    Header: "Salary",
+    Header: 'Salary',
     accessor: (row: any) => <Text>{row?.salary} </Text>,
   },
   {
-    Header: "Status",
-    accessor: (row: any) => <Text>{row?.status === true ? "Active" : "Inactive"} </Text>,
+    Header: 'Status',
+    accessor: (row: any) => <Text>{row?.status === true ? 'Active' : 'Inactive'} </Text>,
   },
 ];
 
 export const managePayrollColumns = [
   {
-    Header: "Pay Description",
-    accessor: "title",
+    Header: 'Pay Description',
+    accessor: 'title',
   },
   {
-    Header: "Amount",
-    accessor: "burden",
+    Header: 'Amount',
+    accessor: 'burden',
   },
   {
-    Header: "Payment Cycle",
-    accessor: "cycle",
+    Header: 'Payment Cycle',
+    accessor: 'cycle',
   },
 
   // TODO: Paid on the same as pay day?
   {
-    Header: "Last Paid",
-    accessor: (row: any) => <Text>{moment(row?.payday).format("LL")} </Text>,
+    Header: 'Last Paid',
+    accessor: (row: any) => <Text>{moment(row?.payday).format('LL')} </Text>,
   },
 ];
 
 export const employeeSalaryColumns = [
   {
-    Header: "Full Name",
-    accessor: "name",
+    Header: 'Full Name',
+    accessor: 'name',
   },
   {
-    Header: "Department",
-    accessor: "department",
+    Header: 'Department',
+    accessor: 'department',
   },
   {
-    Header: "Gross Pay",
+    Header: 'Gross Pay',
     accessor: (row: any) => <Text>{row?.grossPay} </Text>,
   },
   {
-    Header: "Commision",
+    Header: 'Commision',
     accessor: (row: any) => <Text color="#0AAF60">{`+${row?.commission}`}</Text>,
   },
 
   {
-    Header: "Bonus",
+    Header: 'Bonus',
     accessor: (row: any) => <Text color="#0AAF60">{`+$ ${row?.bonus}`} </Text>,
   },
 
   {
-    Header: "Deduction",
+    Header: 'Deduction',
     accessor: (row: any) => <Text color="#E71D36">{`-$${row?.deduction}`}</Text>,
   },
 ];
 
 export const monthlyPayrollColumns = [
   {
-    Header: "Full Name",
+    Header: 'Full Name',
     accessor: (row: any) => (
       <Flex align="center">
         <Avatar size="sm" src={row?.imgURL} name={row?.firstName || row?.lastName} />
@@ -134,19 +134,19 @@ export const monthlyPayrollColumns = [
     ),
   },
   {
-    Header: "Department",
+    Header: 'Department',
     accessor: (row: any) => <Text textTransform="capitalize">{row?.department}</Text>,
   },
   {
-    Header: "GrossPay",
+    Header: 'GrossPay',
     accessor: (row: any) => <Text>{`$ ${row?.salary}`} </Text>,
   },
   {
-    Header: "Bonus",
+    Header: 'Bonus',
     accessor: (row: any) => <Text color="#0AAF60">{`+$${row?.signBonus}`} </Text>,
   },
   {
-    Header: "Status",
-    accessor: (row: any) => <Text>{row?.status === true ? "Active" : "Inactive"} </Text>,
+    Header: 'Status',
+    accessor: (row: any) => <Text>{row?.status === true ? 'Active' : 'Inactive'} </Text>,
   },
 ];

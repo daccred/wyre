@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const MonoIcon = (props: HTMLChakraProps<"svg">) => (
+export const MonoIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}

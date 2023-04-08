@@ -1,5 +1,5 @@
-import { Skeleton, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Avatar, HStack } from "@chakra-ui/react";
-import * as React from "react";
+import { Skeleton, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Avatar, HStack } from '@chakra-ui/react';
+import * as React from 'react';
 
 const Index = () => {
   return (

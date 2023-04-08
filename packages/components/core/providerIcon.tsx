@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
+export const LogoutIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={25}
     height={25}
@@ -20,7 +20,7 @@ export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const ContractorIcon = (props: HTMLChakraProps<"svg">) => (
+export const ContractorIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}
@@ -40,7 +40,7 @@ export const ContractorIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const EmptyEmployeeImage = (props: HTMLChakraProps<"svg">) => (
+export const EmptyEmployeeImage = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={197}
     height={175}
@@ -135,7 +135,7 @@ export const EmptyEmployeeImage = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
+export const CryptoWallet = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}
@@ -146,7 +146,7 @@ export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
     <mask
       id="mask0_1806_8384"
       style={{
-        maskType: "alpha",
+        maskType: 'alpha',
       }}
       maskUnits="userSpaceOnUse"
       x={1}
@@ -207,7 +207,7 @@ export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const Bank = (props: HTMLChakraProps<"svg">) => (
+export const Bank = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}
@@ -222,7 +222,7 @@ export const Bank = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const Mobile = (props: HTMLChakraProps<"svg">) => (
+export const Mobile = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}

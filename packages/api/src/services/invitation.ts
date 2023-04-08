@@ -1,12 +1,12 @@
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 
-import { prisma } from "@wyrecc/db/src";
+import { prisma } from '@wyrecc/db/src';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
-import type { InvitationSchemaType } from "../interfaces";
-import { ServerError } from "../utils/server-error";
-import { AuthService } from "./auth";
+import type { InvitationSchemaType } from '../interfaces';
+import { ServerError } from '../utils/server-error';
+import { AuthService } from './auth';
 
 export class InvitationService {
   static async createInvitation(input: InvitationSchemaType) {
@@ -14,18 +14,18 @@ export class InvitationService {
       const getAdmin = await prisma.user.findFirst({
         where: {
           email: input.email,
-          type: "ADMIN" || "SUPER_ADMIN",
+          type: 'ADMIN' || 'SUPER_ADMIN',
         },
       });
       if (!getAdmin) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Admin not found' });
       }
       //check if user has sufficient access
       const isSuperAdmin = await AuthService.checkIfSuperAdmin(getAdmin.id);
       if (!isSuperAdmin) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "You do not have sufficient access for this action",
+          code: 'BAD_REQUEST',
+          message: 'You do not have sufficient access for this action',
         });
       }
 
@@ -57,8 +57,8 @@ export class InvitationService {
 
       if (!invitations) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "No invitations found",
+          code: 'NOT_FOUND',
+          message: 'No invitations found',
         });
       }
       return invitations;
@@ -76,8 +76,8 @@ export class InvitationService {
       });
       if (!invitations) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "No invitations found",
+          code: 'NOT_FOUND',
+          message: 'No invitations found',
         });
       }
       return invitations;
@@ -95,8 +95,8 @@ export class InvitationService {
       });
       if (!invitation) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "No invitations found",
+          code: 'NOT_FOUND',
+          message: 'No invitations found',
         });
       }
       return invitation;
@@ -114,8 +114,8 @@ export class InvitationService {
       });
       if (!invitation) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to delete invitation",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete invitation',
         });
       }
       return invitation;

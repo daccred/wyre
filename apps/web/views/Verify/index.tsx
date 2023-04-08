@@ -12,15 +12,15 @@ import {
   useToast,
   PinInputField,
   PinInput,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import type { GetServerSideProps } from "next/types";
-import * as React from "react";
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import type { GetServerSideProps } from 'next/types';
+import * as React from 'react';
 
-import { trpc } from "../../utils/trpc";
+import { trpc } from '../../utils/trpc';
 
 const View = () => {
-  const [pinInputData, setPinInputData] = React.useState("");
+  const [pinInputData, setPinInputData] = React.useState('');
   const toast = useToast();
   const router = useRouter();
   const { id } = router.query;
@@ -29,21 +29,21 @@ const View = () => {
   const { mutate: verifyEmail, isLoading } = trpc.auth.verifyAdminEmail.useMutation({
     onSuccess() {
       toast({
-        title: "Verification code confirmed.",
-        status: "success",
+        title: 'Verification code confirmed.',
+        status: 'success',
         duration: 5000,
         isClosable: true,
-        position: "top-right",
+        position: 'top-right',
       });
-      router.push("/login");
+      router.push('/login');
     },
     onError(error: any) {
       toast({
         title: error.message,
-        status: "error",
+        status: 'error',
         duration: 5000,
         isClosable: true,
-        position: "top-right",
+        position: 'top-right',
       });
       console.log(error);
     },
@@ -54,14 +54,14 @@ const View = () => {
   };
 
   return (
-    <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+    <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
       <Stack flex={1} minW={'26rem'}>
         <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
 
-        <Flex p={12} flex={1} align="start" justify={{ base: "", md: "", xl: "" }}>
+        <Flex p={12} flex={1} align="start" justify={{ base: '', md: '', xl: '' }}>
           <Stack spacing={8} w="full" maxW="sm">
             <Stack>
-              <Text color="#010C14" fontWeight="bold" fontSize={{ base: "3xl", md: "4xl" }}>
+              <Text color="#010C14" fontWeight="bold" fontSize={{ base: '3xl', md: '4xl' }}>
                 Email Verification
               </Text>
               <Text color="#010C14">Kindly enter the verification code we sent to your email address</Text>
@@ -94,13 +94,13 @@ const View = () => {
                   isDisabled={pinInputData.length < 6}
                   isLoading={isLoading}
                   onClick={handleSubmit}
-                  _hover={{ bg: "" }}>
+                  _hover={{ bg: '' }}>
                   Continue
                 </Button>
               </Stack>
 
               <Text>
-                {"Didn’t receive a verification code? "}
+                {'Didn’t receive a verification code? '}
                 <Link href="/" color="#8D1CFF">
                   Resend
                 </Link>
@@ -113,7 +113,9 @@ const View = () => {
       <Flex bgColor="#210D35" color="white" flex={3} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
-            <Text fontWeight="600" fontSize={{ base: "5xl", md: "6xl" }}>WYRE</Text>
+            <Text fontWeight="600" fontSize={{ base: '5xl', md: '6xl' }}>
+              WYRE
+            </Text>
 
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>

@@ -1,5 +1,5 @@
-import type { Options as GotOptions } from "got";
-import type { JSONSchema7 } from "json-schema";
+import type { Options as GotOptions } from 'got';
+import type { JSONSchema7 } from 'json-schema';
 
 /**
  * @name mapleradConfigSchema
@@ -10,32 +10,32 @@ import type { JSONSchema7 } from "json-schema";
  */
 
 export const mapleradConfigSchema: JSONSchema7 = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  type: "object",
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  type: 'object',
   properties: {
     name: {
-      type: "string",
-      default: "maplerad",
+      type: 'string',
+      default: 'maplerad',
     },
     secret_key: {
-      type: "string",
-      default: "mpr_sandbox_sk_b87df6cc-124c-441c-b21f-04ae72940ef3",
+      type: 'string',
+      default: 'mpr_sandbox_sk_b87df6cc-124c-441c-b21f-04ae72940ef3',
     },
     base_url: {
-      type: "string",
-      default: "https://sandbox.api.maplerad.com/v1",
+      type: 'string',
+      default: 'https://sandbox.api.maplerad.com/v1',
     },
     sandbox_url: {
-      type: "string",
-      default: "https://sandbox.api.maplerad.com/v1",
+      type: 'string',
+      default: 'https://sandbox.api.maplerad.com/v1',
     },
     supported_currencies: {
-      type: "string",
-      enum: ["NGN", "GHC", "USD", "KES"],
-      default: "NGN",
+      type: 'string',
+      enum: ['NGN', 'GHC', 'USD', 'KES'],
+      default: 'NGN',
     },
   },
-  required: ["supported_currencies"],
+  required: ['supported_currencies'],
 };
 
 interface HttpProviderConfig {
@@ -48,6 +48,6 @@ interface HttpProviderConfig {
 export interface MapleradConfigOptions extends HttpProviderConfig {
   name?: string;
   secret_key?: string;
-  supported_currencies: "NGN" | "GHC" | "USD" | "KES";
+  supported_currencies: 'NGN' | 'GHC' | 'USD' | 'KES';
   [k: string]: unknown;
 }

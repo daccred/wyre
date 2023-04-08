@@ -1,6 +1,6 @@
-import { Meta } from "layouts";
-import React from "react";
-import View from "views/employee/Account/ContractTerms";
+import { Meta } from 'layouts';
+import React from 'react';
+import View from 'views/employee/Account/ContractTerms';
 
 export default function Page() {
   return (

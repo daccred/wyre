@@ -1,7 +1,7 @@
-import { Button, Flex, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
-import * as React from "react";
+import { Button, Flex, Link, Stack, HStack, Image, Text } from '@chakra-ui/react';
+import * as React from 'react';
 
-import { FormInput, FormNativeSelect } from "../../components/forms";
+import { FormInput, FormNativeSelect } from '../../components/forms';
 
 type Props = {
   isSubmitting?: boolean;
@@ -11,18 +11,18 @@ const View: React.FC<Props> = (Props) => {
   const { isSubmitting } = Props;
 
   return (
-    <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+    <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
       <Stack flex={1} minW={'26rem'}>
         <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
 
-        <Flex flex={1} align={{ base: "", md: "start" }} p={12}>
+        <Flex flex={1} align={{ base: '', md: 'start' }} p={12}>
           <Stack spacing={8} w="full" maxW="md">
             <Stack>
-              <Text color="#010C14" fontWeight="bold" fontSize={{ base: "3xl", md: "4xl" }}>
+              <Text color="#010C14" fontWeight="bold" fontSize={{ base: '3xl', md: '4xl' }}>
                 Create Account
               </Text>
               <Text color="muted">
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <Link color="#8D1CFF" href="/login">
                   Login
                 </Link>
@@ -35,8 +35,8 @@ const View: React.FC<Props> = (Props) => {
                 label="Country"
                 name="country"
                 options={[
-                  { value: "ghana", label: "Ghana" },
-                  { value: "nigeria", label: "Nigeria" },
+                  { value: 'ghana', label: 'Ghana' },
+                  { value: 'nigeria', label: 'Nigeria' },
                 ]}
               />
               <FormInput name="firstName" type="text" label="First Name" placeholder="John" />
@@ -63,7 +63,7 @@ const View: React.FC<Props> = (Props) => {
                 type="submit"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
-                _hover={{ bg: "" }}>
+                _hover={{ bg: '' }}>
                 Create Account
               </Button>
             </Stack>
@@ -74,7 +74,9 @@ const View: React.FC<Props> = (Props) => {
       <Flex bgColor="#210D35" color="white" flex={3} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
-            <Text fontWeight="600" fontSize={{ base: "5xl", md: "6xl" }}>WYRE</Text>
+            <Text fontWeight="600" fontSize={{ base: '5xl', md: '6xl' }}>
+              WYRE
+            </Text>
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
 

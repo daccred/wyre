@@ -1,9 +1,9 @@
-import Ajv from "ajv";
-import got from "got";
-import { type JSONSchema7 } from "json-schema";
+import Ajv from 'ajv';
+import got from 'got';
+import { type JSONSchema7 } from 'json-schema';
 
-import type { MapleradConfigOptions } from "./maplerad.schema";
-import { mapleradConfigSchema } from "./maplerad.schema";
+import type { MapleradConfigOptions } from './maplerad.schema';
+import { mapleradConfigSchema } from './maplerad.schema';
 
 // const live = "https://api.maplerad.com/v1";
 // const sandbox = "https://sandbox.api.maplerad.com/v1";
@@ -31,14 +31,14 @@ interface NairaTransferRequest {
   amount: number;
   reference: string;
   bank_code: string;
-  currency: "NGN";
+  currency: 'NGN';
 }
 
 export class MapleradProvider implements FintechProviderInterface {
   private config;
   private client;
   private logger = console;
-  private path = "/transfers";
+  private path = '/transfers';
 
   constructor(config: MapleradConfigOptions) {
     this.config = config;
@@ -46,7 +46,7 @@ export class MapleradProvider implements FintechProviderInterface {
     this.client = got.extend({
       prefixUrl: config.default,
       headers: {
-        accept: "application/json",
+        accept: 'application/json',
         Authorization: `Bearer ${defaults.secret_key}`,
       },
     });
@@ -82,11 +82,11 @@ export class MapleradProvider implements FintechProviderInterface {
       .post(this.path, {
         json: {
           amount: Number(payload.amount) * 100, // convert to kobo
-          currency: "NGN",
+          currency: 'NGN',
           bank_code: payload.bank_code,
           account_number: payload.account_number,
           reference: payload.reference,
-          reason: "Wyre requester funding",
+          reason: 'Wyre requester funding',
         },
       })
       .json();

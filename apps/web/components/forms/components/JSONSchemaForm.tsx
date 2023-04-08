@@ -1,10 +1,10 @@
-import { chakra, Button, Stack } from "@chakra-ui/react";
-import Ajv from "ajv";
-import type { JSONSchema7 } from "json-schema";
-import React from "react";
+import { chakra, Button, Stack } from '@chakra-ui/react';
+import Ajv from 'ajv';
+import type { JSONSchema7 } from 'json-schema';
+import React from 'react';
 
-import FormCheckbox from "./FormCheckbox";
-import { FormInput } from "./FormInput";
+import FormCheckbox from './FormCheckbox';
+import { FormInput } from './FormInput';
 
 interface JSONSchemaFormProps {
   schema: JSONSchema7;

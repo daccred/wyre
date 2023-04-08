@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { DevTool } from "@hookform/devtools";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { FormEvent } from "react";
+import { DevTool } from '@hookform/devtools';
+import { zodResolver } from '@hookform/resolvers/zod';
+import React, { FormEvent } from 'react';
 import {
   useForm as useFormReactHookForm,
   FormProvider as FormProviderReactHookForm,
@@ -14,9 +14,9 @@ import {
   UseFormProps,
   FieldValues,
   SubmitErrorHandler,
-} from "react-hook-form";
-import { CriteriaMode, Mode } from "react-hook-form/dist/types/form";
-import { z, ZodTypeAny, ZodSchema, ZodObject } from "zod";
+} from 'react-hook-form';
+import { CriteriaMode, Mode } from 'react-hook-form/dist/types/form';
+import { z, ZodTypeAny, ZodSchema, ZodObject } from 'zod';
 
 type FormProps = {
   onSubmit?: Function;
@@ -31,18 +31,18 @@ type TSetErrorFunc = (
 interface HookResponse<T extends FieldValues> extends UseFormReturn<T> {
   submitForm?: UseFormHandleSubmit<T>;
   formErrors: any;
-  resetForm: UseFormReturn<T>["reset"];
+  resetForm: UseFormReturn<T>['reset'];
   // resetForm: UseFormReset<{ [x: string]: {} | undefined }>;
   // setFormValue: (name: string, value: T, config?: Record<string, unknown>) => void;
-  setFormValue: UseFormReturn<T>["setValue"];
-  getFormValues: UseFormReturn<T>["getValues"];
+  setFormValue: UseFormReturn<T>['setValue'];
+  getFormValues: UseFormReturn<T>['getValues'];
   validateForm: () => Promise<boolean>;
   // unregister: (name: string) => void;
   // setFocus: (name: string) => void;
 
   renderForm: (children: any, formProps?: FormProps) => any;
-  watchForm: UseFormReturn<T>["watch"];
-  setFormError: UseFormReturn<T>["setError"];
+  watchForm: UseFormReturn<T>['watch'];
+  setFormError: UseFormReturn<T>['setError'];
 }
 
 interface HookParams<T extends FieldValues> extends UseFormProps {
@@ -53,7 +53,7 @@ interface HookParams<T extends FieldValues> extends UseFormProps {
 
   defaultValues?: Partial<T>;
   mode?: Mode;
-  reValidateMode?: Exclude<Mode, "onTouched" | "all">;
+  reValidateMode?: Exclude<Mode, 'onTouched' | 'all'>;
   criteriaMode?: CriteriaMode;
   schema?: ZodTypeAny | any;
 }
@@ -73,10 +73,10 @@ const setFormErrorFactory = (setError: {
   (arg0: string, arg1: { type: string; message: any }): void;
 }) => {
   return (fieldName: string, err: any) => {
-    if (typeof err === "string") {
-      setError(fieldName, { type: "manual", message: err });
+    if (typeof err === 'string') {
+      setError(fieldName, { type: 'manual', message: err });
     } else if (Array.isArray(err)) {
-      setError(fieldName, { type: "manual", message: err[0] });
+      setError(fieldName, { type: 'manual', message: err[0] });
     } else {
       setError(fieldName, err);
     }
@@ -105,9 +105,9 @@ const setFormErrorFactory = (setError: {
 };
 
 const defaultFormParams = {
-  mode: "onBlur" as Mode,
-  reValidateMode: "onBlur" as Exclude<Mode, "onTouched" | "all">,
-  criteriaMode: "all" as CriteriaMode,
+  mode: 'onBlur' as Mode,
+  reValidateMode: 'onBlur' as Exclude<Mode, 'onTouched' | 'all'>,
+  criteriaMode: 'all' as CriteriaMode,
 };
 
 export default function useForm<T extends FieldValues>(params: HookParams<T> = {}): HookResponse<T> {
@@ -115,7 +115,7 @@ export default function useForm<T extends FieldValues>(params: HookParams<T> = {
   const { onSubmit, onError, callingSubmitManually = false, schema, ...otherParams } = params;
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV != "production") {
+    if (process.env.NODE_ENV != 'production') {
       useDevTool(true);
     }
 
@@ -150,7 +150,7 @@ export default function useForm<T extends FieldValues>(params: HookParams<T> = {
   const handleSubmitBound = onSubmit
     ? handleSubmit(onSubmit, onError)
     : // Would be undefined traditionally, but let's make this more developer friendly
-      () => console.error("You tried calling `submitForm` but forgot to set `onSubmit` callback for it");
+      () => console.error('You tried calling `submitForm` but forgot to set `onSubmit` callback for it');
 
   // pair with calling submit manually to prevent default form behaviour
   const _preventSubmit = (e: FormEvent<HTMLFormElement> | undefined) => e?.preventDefault();

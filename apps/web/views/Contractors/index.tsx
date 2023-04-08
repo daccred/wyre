@@ -7,7 +7,7 @@ import {
   PaginationPageGroup,
   PaginationContainer,
   PaginationSeparator,
-} from "@ajna/pagination";
+} from '@ajna/pagination';
 import {
   Button,
   HStack,
@@ -31,38 +31,38 @@ import {
   ModalBody,
   useDisclosure,
   Image,
-} from "@chakra-ui/react";
-import useDebounce from "components/hooks/useDebounce";
-import { useRouter } from "next/router";
-import { useEffect, useReducer } from "react";
-import { FiSearch, FiArrowRight, FiArrowLeft } from "react-icons/fi";
+} from '@chakra-ui/react';
+import useDebounce from 'components/hooks/useDebounce';
+import { useRouter } from 'next/router';
+import { useEffect, useReducer } from 'react';
+import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 
-import ViewLayout from "../../components/core/ViewLayout";
-import { trpc } from "../../utils/trpc";
-import TablePulse from "../TablePulse";
-import AddContractor from "./AddContractor";
-import { EmptyContractorImage, PlusIcon } from "./ProviderIcons";
+import ViewLayout from '../../components/core/ViewLayout';
+import { trpc } from '../../utils/trpc';
+import TablePulse from '../TablePulse';
+import AddContractor from './AddContractor';
+import { EmptyContractorImage, PlusIcon } from './ProviderIcons';
 
 const initialState = {
   contractors: [],
   data: [],
   dataInUse: [],
   selectedContractor: undefined,
-  searchTerm: "",
+  searchTerm: '',
   activeContractorsOnly: true,
   isLoading: true,
   error: null,
 };
 
 const actionTypes = {
-  FETCH_DATA: "FETCH_DATA",
-  FETCH_SUCCESS: "FETCH_SUCCESS",
-  FETCH_ERROR: "FETCH_ERROR",
-  SET_DATA: "SET_DATA",
-  SET_DATA_IN_USE: "SET_DATA_IN_USE",
-  SET_SELECTED_CONTRACTOR: "SET_SELECTED_CONTRACTOR",
-  SET_SEARCH_TERM: "SET_SEARCH_TERM",
-  SET_ACTIVE_CONTRACTORS_ONLY: "SET_ACTIVE_CONTRACTORS_ONLY",
+  FETCH_DATA: 'FETCH_DATA',
+  FETCH_SUCCESS: 'FETCH_SUCCESS',
+  FETCH_ERROR: 'FETCH_ERROR',
+  SET_DATA: 'SET_DATA',
+  SET_DATA_IN_USE: 'SET_DATA_IN_USE',
+  SET_SELECTED_CONTRACTOR: 'SET_SELECTED_CONTRACTOR',
+  SET_SEARCH_TERM: 'SET_SEARCH_TERM',
+  SET_ACTIVE_CONTRACTORS_ONLY: 'SET_ACTIVE_CONTRACTORS_ONLY',
 };
 
 const reducer = (state: any, action: any) => {
@@ -153,7 +153,7 @@ const Contractors = () => {
         email: contractor.email,
         role: contractor.jobRole,
         department: contractor.department,
-        status: contractor.status !== null ? (contractor.status === true ? "active" : "terminated") : "",
+        status: contractor.status !== null ? (contractor.status === true ? 'active' : 'terminated') : '',
         category: contractor.teamCategory,
         salary: contractor.salary,
         signBonus: contractor.signBonus,
@@ -177,7 +177,7 @@ const Contractors = () => {
         data?.name?.toLowerCase().includes(debouncedSearchTerm?.toLowerCase())
       );
       if (activeContractorsOnly) {
-        const activeData = searchData.filter((data: any) => data?.status === "active");
+        const activeData = searchData.filter((data: any) => data?.status === 'active');
         dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: activeData });
       } else {
         dispatch({ type: actionTypes.SET_DATA_IN_USE, payload: searchData });
@@ -270,7 +270,7 @@ const Contractors = () => {
                           px="0"
                           py="1"
                           h="40px"
-                          w={{ base: "auto", lg: "250px" }}
+                          w={{ base: 'auto', lg: '250px' }}
                           fontSize="sm"
                           placeholder="Search Contractor"
                           value={searchTerm}
@@ -300,18 +300,18 @@ const Contractors = () => {
                     <TableContainer
                       pt="4"
                       css={{
-                        "&::-webkit-scrollbar": {
-                          width: "15px",
-                          background: "transparent",
+                        '&::-webkit-scrollbar': {
+                          width: '15px',
+                          background: 'transparent',
                         },
-                        "&::-webkit-scrollbar-track": {
-                          background: "transparent",
+                        '&::-webkit-scrollbar-track': {
+                          background: 'transparent',
                         },
-                        "&::-webkit-scrollbar-thumb": {
-                          backgroundColor: "#d6dee1",
-                          borderRadius: "20px",
-                          border: "6px solid transparent",
-                          backgroundClip: "content-box",
+                        '&::-webkit-scrollbar-thumb': {
+                          backgroundColor: '#d6dee1',
+                          borderRadius: '20px',
+                          border: '6px solid transparent',
+                          backgroundClip: 'content-box',
                         },
                       }}>
                       <Table variant="unstyled">
@@ -331,7 +331,7 @@ const Contractors = () => {
                               ?.slice(pageSize * currentPage - pageSize, pageSize * currentPage)
                               .map((data: any, index: any) => (
                                 <Tr
-                                  fontWeight={data.id === selectedContractor.id ? "bold" : "normal"}
+                                  fontWeight={data.id === selectedContractor.id ? 'bold' : 'normal'}
                                   textTransform="capitalize"
                                   cursor="pointer"
                                   key={index}
@@ -346,21 +346,21 @@ const Contractors = () => {
                                         size="sm"
                                         src={data?.imgURL}
                                         name={data?.name}
-                                        opacity={data?.status !== "active" ? "35%" : ""}
+                                        opacity={data?.status !== 'active' ? '35%' : ''}
                                       />
-                                      <Text color={data?.status !== "active" ? "#FF951C" : ""}>
+                                      <Text color={data?.status !== 'active' ? '#FF951C' : ''}>
                                         {data?.name}
                                       </Text>
                                     </HStack>
                                   </Td>
                                   <Td
                                     textTransform="lowercase"
-                                    opacity={data?.status !== "active" ? "35%" : ""}>
+                                    opacity={data?.status !== 'active' ? '35%' : ''}>
                                     {data?.category}
                                   </Td>
-                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.role}</Td>
-                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.department}</Td>
-                                  <Td opacity={data?.status !== "active" ? "35%" : ""}>{data?.status}</Td>
+                                  <Td opacity={data?.status !== 'active' ? '35%' : ''}>{data?.role}</Td>
+                                  <Td opacity={data?.status !== 'active' ? '35%' : ''}>{data?.department}</Td>
+                                  <Td opacity={data?.status !== 'active' ? '35%' : ''}>{data?.status}</Td>
                                 </Tr>
                               ))}
                         </Tbody>
@@ -410,10 +410,10 @@ const Contractors = () => {
                         boxSize="10"
                         fontWeight="bold"
                         _hover={{
-                          bg: "#EAECF0",
+                          bg: '#EAECF0',
                         }}
                         _current={{
-                          bg: "#EAECF0",
+                          bg: '#EAECF0',
                         }}
                       />
                     ))}
@@ -470,7 +470,7 @@ const Contractors = () => {
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Phone Number</Text>
                   <Text>
-                    {selectedContractor?.phoneNumber === null ? "Nill" : `${selectedContractor?.phoneNumber}`}
+                    {selectedContractor?.phoneNumber === null ? 'Nill' : `${selectedContractor?.phoneNumber}`}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
@@ -498,13 +498,13 @@ const Contractors = () => {
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Location</Text>
                   <Text overflowWrap="break-word">
-                    {selectedContractor?.location === null ? "Nill" : `${selectedContractor?.location}`}
+                    {selectedContractor?.location === null ? 'Nill' : `${selectedContractor?.location}`}
                   </Text>
                 </Stack>
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Payment Method</Text>
                   <Text overflowWrap="break-word">
-                    {selectedContractor?.paymentMethod ? `${selectedContractor?.paymentMethod}` : "Nill"}
+                    {selectedContractor?.paymentMethod ? `${selectedContractor?.paymentMethod}` : 'Nill'}
                   </Text>
                 </Stack>
               </Stack>

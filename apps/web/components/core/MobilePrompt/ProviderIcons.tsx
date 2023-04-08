@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const MobilePromptImage = (props: HTMLChakraProps<"svg">) => (
+export const MobilePromptImage = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={267}
     height={267}

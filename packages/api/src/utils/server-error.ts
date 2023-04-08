@@ -1,6 +1,6 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@prisma/client';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
 export function ServerError(error: unknown) {
   if (error instanceof TRPCError) {
@@ -9,28 +9,28 @@ export function ServerError(error: unknown) {
   if (error instanceof Prisma.PrismaClientValidationError) {
     console.warn(error);
     throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
+      code: 'INTERNAL_SERVER_ERROR',
       cause: error.name,
-      message: "Prisma Client validation failed",
+      message: 'Prisma Client validation failed',
     });
   }
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     throw new TRPCError({
-      code: "BAD_REQUEST",
+      code: 'BAD_REQUEST',
       cause: error.name,
-      message: "Unknown request error",
+      message: 'Unknown request error',
     });
   }
   if (error instanceof Prisma.PrismaClientInitializationError) {
     throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
+      code: 'INTERNAL_SERVER_ERROR',
       cause: error.name,
-      message: "Prisma Client initialisation failed. Check your database configuration",
+      message: 'Prisma Client initialisation failed. Check your database configuration',
     });
   }
   console.warn(error);
   throw new TRPCError({
-    code: "INTERNAL_SERVER_ERROR",
-    message: "Something went wrong. Try again or reach out to the maintainers",
+    code: 'INTERNAL_SERVER_ERROR',
+    message: 'Something went wrong. Try again or reach out to the maintainers',
   });
 }

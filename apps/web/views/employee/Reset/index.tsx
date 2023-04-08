@@ -1,10 +1,10 @@
-import { HStack, Text, Button, Flex, Heading, Stack, Image } from "@chakra-ui/react";
-import * as React from "react";
+import { HStack, Text, Button, Flex, Heading, Stack, Image } from '@chakra-ui/react';
+import * as React from 'react';
 
-import { FormInput } from "@wyrecc/components/forms";
+import { FormInput } from '@wyrecc/components/forms';
 
 const View = () => (
-  <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+  <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
     <Stack flex={1}>
       <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
 
@@ -15,7 +15,7 @@ const View = () => (
               color="primary.100"
               fontWeight="bold"
               lineHeight={1.1}
-              fontSize={{ base: "3xl", md: "4xl" }}>
+              fontSize={{ base: '3xl', md: '4xl' }}>
               Reset Password
             </Heading>
             <Text color="primary.100">Enter the OTP we sent to your email address</Text>
@@ -33,7 +33,7 @@ const View = () => (
               bgColor="primary.50"
               p="3"
               _hover={{
-                bg: "primary.100",
+                bg: 'primary.100',
               }}>
               Reset Password
             </Button>

@@ -1,5 +1,5 @@
 type styledToasttype = {
-  status: "info" | "warning" | "success" | "error" | "loading";
+  status: 'info' | 'warning' | 'success' | 'error' | 'loading';
   description: string;
   id?: string;
   toast: any;
@@ -12,9 +12,9 @@ export default function styledToast({ status, description, id, toast }: styledTo
     description: description,
     status: status,
     duration: 2000,
-    position: "top",
+    position: 'top',
     containerStyle: {
-      fontSize: "sm",
+      fontSize: 'sm',
     },
   });
 }

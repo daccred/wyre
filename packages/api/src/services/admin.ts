@@ -1,9 +1,9 @@
-import { prisma } from "@wyrecc/db/src";
+import { prisma } from '@wyrecc/db/src';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
-import type { IUserSchema } from "../interfaces";
-import { ServerError } from "../utils/server-error";
+import type { IUserSchema } from '../interfaces';
+import { ServerError } from '../utils/server-error';
 
 export class AdminService {
   // public adminId: string;
@@ -24,14 +24,14 @@ export class AdminService {
       const admin = await prisma.user.findFirst({
         where: {
           id: adminId,
-          type: "ADMIN",
+          type: 'ADMIN',
         },
       });
 
       if (!admin) {
         throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "You do not have permission to perform this action",
+          code: 'UNAUTHORIZED',
+          message: 'You do not have permission to perform this action',
         });
       }
     } catch (error) {
@@ -43,15 +43,15 @@ export class AdminService {
       const getuser = await prisma.user.findFirst({
         where: {
           id,
-          type: "ADMIN",
+          type: 'ADMIN',
         },
       });
       if (getuser) {
         return getuser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Admin not found",
+        code: 'NOT_FOUND',
+        message: 'Admin not found',
       });
     } catch (error) {
       ServerError(error);
@@ -69,8 +69,8 @@ export class AdminService {
         return getuser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "user not found",
+        code: 'NOT_FOUND',
+        message: 'user not found',
       });
     } catch (error) {
       ServerError(error);
@@ -89,8 +89,8 @@ export class AdminService {
         return updateuser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
+        code: 'NOT_FOUND',
+        message: 'User not found',
       });
     } catch (error) {
       ServerError(error);
@@ -108,8 +108,8 @@ export class AdminService {
         return deleteuser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
+        code: 'NOT_FOUND',
+        message: 'User not found',
       });
     } catch (error) {
       ServerError(error);

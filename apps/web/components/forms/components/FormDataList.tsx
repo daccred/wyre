@@ -7,11 +7,11 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-} from "@chakra-ui/react";
-import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { HiSearch } from "react-icons/hi";
-import Select, { CSSObjectWithLabel } from "react-select";
+} from '@chakra-ui/react';
+import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { HiSearch } from 'react-icons/hi';
+import Select, { CSSObjectWithLabel } from 'react-select';
 
 type Props = {
   /** Field name. */
@@ -70,8 +70,8 @@ const DataListSelect = ({ name, label, options, isMulti, placeholder, leftIcon =
                 rounded="30px"
                 color="grayLight"
                 pos="relative"
-                _hover={{ borderColor: "orangeDark" }}
-                _focus={{ borderColor: "orangeDark" }}>
+                _hover={{ borderColor: 'orangeDark' }}
+                _focus={{ borderColor: 'orangeDark' }}>
                 <InputGroup display="flex" alignItems="center">
                   {leftIcon && (
                     <InputLeftElement pointerEvents="none">
@@ -101,48 +101,48 @@ const DataListSelect = ({ name, label, options, isMulti, placeholder, leftIcon =
                       valueContainer(provided: CSSObjectWithLabel) {
                         return {
                           ...provided,
-                          width: "100%",
-                          fontSize: "14px",
+                          width: '100%',
+                          fontSize: '14px',
                         };
                       },
                       control(provided: CSSObjectWithLabel) {
                         return {
                           ...provided,
-                          border: "none",
-                          boxShadow: "none",
-                          backgroundColor: "none",
-                          "&:hover": {
-                            borderColor: "none",
+                          border: 'none',
+                          boxShadow: 'none',
+                          backgroundColor: 'none',
+                          '&:hover': {
+                            borderColor: 'none',
                           },
                         };
                       },
                       menu(provided: CSSObjectWithLabel) {
                         return {
                           ...provided,
-                          boxShadow: "none",
-                          borderRadius: "10px",
-                          marginLeft: isMulti ? "-40px" : "-15px",
-                          marginTop: "15px",
+                          boxShadow: 'none',
+                          borderRadius: '10px',
+                          marginLeft: isMulti ? '-40px' : '-15px',
+                          marginTop: '15px',
                         };
                       },
                       option(provided: CSSObjectWithLabel) {
                         return {
                           ...provided,
-                          backgroundColor: "none",
-                          color: "#141414",
-                          paddingInline: "30px",
-                          "&:hover": {
-                            backgroundColor: "#3E49B8",
-                            color: "#fff",
-                            borderRadius: "10px",
+                          backgroundColor: 'none',
+                          color: '#141414',
+                          paddingInline: '30px',
+                          '&:hover': {
+                            backgroundColor: '#3E49B8',
+                            color: '#fff',
+                            borderRadius: '10px',
                           },
                         };
                       },
                       multiValue(provided: CSSObjectWithLabel | any) {
                         return {
                           ...provided,
-                          backgroundColor: "none",
-                          flexWrap: "none",
+                          backgroundColor: 'none',
+                          flexWrap: 'none',
                         };
                       },
                     }}

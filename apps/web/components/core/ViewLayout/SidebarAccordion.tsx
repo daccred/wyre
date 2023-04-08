@@ -10,14 +10,14 @@ import {
   Link,
   Stack,
   Text,
-} from "@chakra-ui/react";
-import type { ComponentWithAs, IconProps, FlexProps } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import type { ReactNode } from "react";
+} from '@chakra-ui/react';
+import type { ComponentWithAs, IconProps, FlexProps } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import type { ReactNode } from 'react';
 
 type AccordionMenuProps = {
   name: string;
-  icon: ComponentWithAs<"svg", IconProps>;
+  icon: ComponentWithAs<'svg', IconProps>;
   href: string;
   panels?: AccordionMenuProps[];
 };
@@ -33,32 +33,33 @@ export default function SidebarAccordion({ menu }: Props) {
     <Accordion px={4} allowToggle w="full">
       <AccordionItem border="none" p={0}>
         <h2>
-          <AccordionButton 
-          as={HStack} 
-          justify={'space-between'} 
-          _hover={{
-            opacity: 0.8,
-            cursor: 'pointer',
-            color: 'accent',
-          }}
-          p={0} borderRadius="lg">
+          <AccordionButton
+            as={HStack}
+            justify={'space-between'}
+            _hover={{
+              opacity: 0.8,
+              cursor: 'pointer',
+              color: 'accent',
+            }}
+            p={0}
+            borderRadius="lg">
             <HStack spacing={4} px={4} py="2">
               {menu.icon && (
                 <Icon
                   fontSize="24"
-                  fill={isActive ? "brand.600" : "boldgrey"}
+                  fill={isActive ? 'brand.600' : 'boldgrey'}
                   _groupHover={{
-                    color: "white",
+                    color: 'white',
                   }}
                   as={menu.icon}
                 />
               )}
-              <Text color={isActive ? "brand.600" : "boldgrey"} pt={1} fontWeight="semibold">
+              <Text color={isActive ? 'brand.600' : 'boldgrey'} pt={1} fontWeight="semibold">
                 {menu.name}
               </Text>
             </HStack>
 
-            <AccordionIcon color={isActive ? "brand.600" : "boldgrey"} w={'40px'} fontSize="2xl"  />
+            <AccordionIcon color={isActive ? 'brand.600' : 'boldgrey'} w={'40px'} fontSize="2xl" />
           </AccordionButton>
         </h2>
 
@@ -73,7 +74,7 @@ export default function SidebarAccordion({ menu }: Props) {
 }
 
 interface NavItemProps extends FlexProps {
-  icon: ComponentWithAs<"svg", IconProps>;
+  icon: ComponentWithAs<'svg', IconProps>;
   children?: ReactNode;
   href: string;
   name?: string;
@@ -86,12 +87,12 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
   return (
     <Link
       href={href}
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}
       w="100%"
       borderRadius="lg"
       _hover={{
-        bg: "blackAlpha.100",
+        bg: 'blackAlpha.100',
         // color: 'white',
       }}>
       <Flex
@@ -111,14 +112,14 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
           <Icon
             mr="4"
             fontSize="24"
-            fill={isActive ? "brand.600" : "boldgrey"}
+            fill={isActive ? 'brand.600' : 'boldgrey'}
             _groupHover={{
-              color: "white",
+              color: 'white',
             }}
             as={icon}
           />
         )}
-        <Text color={isActive ? "brand.600" : "boldgrey"} pt={.5} fontWeight="semibold">
+        <Text color={isActive ? 'brand.600' : 'boldgrey'} pt={0.5} fontWeight="semibold">
           {name}
         </Text>
       </Flex>

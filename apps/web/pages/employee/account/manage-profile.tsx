@@ -1,6 +1,6 @@
-import { Meta } from "layouts";
-import React from "react";
-import View from "views/employee/Account/ManageProfile";
+import { Meta } from 'layouts';
+import React from 'react';
+import View from 'views/employee/Account/ManageProfile';
 
 export default function Page() {
   return (

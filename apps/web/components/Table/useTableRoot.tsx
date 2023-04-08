@@ -1,14 +1,14 @@
-import { Box, IconButton, Icon } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-import type { Hooks, CellProps, HeaderProps } from "react-table";
-import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from "react-table";
+import { Box, IconButton, Icon } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { AiOutlineEdit } from 'react-icons/ai';
+import type { Hooks, CellProps, HeaderProps } from 'react-table';
+import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from 'react-table';
 
-import useDebounce from "../hooks/useDebounce";
+import useDebounce from '../hooks/useDebounce';
 
 /* Dependency components */
 // import { TD, UseTableRootProps } from './interface';
-import TableCheckbox from "./TableCheckbox";
+import TableCheckbox from './TableCheckbox';
 
 interface TD {
   [key: string]: any;
@@ -70,7 +70,7 @@ export const useTableRoot = <T extends TD>({
   const useSelectionUi = (hooks: Hooks<TD>) => {
     hooks.allColumns.push((columns: any, instance: any) => [
       {
-        id: "_selector",
+        id: '_selector',
         disableResizing: true,
         disableGroupBy: true,
         minWidth: 45,
@@ -131,10 +131,10 @@ export const useTableRoot = <T extends TD>({
       hooks.allColumns.push((columns: any) => [
         ...columns,
         {
-          accessor: "edit",
-          id: "edit",
-          Header: "",
-          width: "20px",
+          accessor: 'edit',
+          id: 'edit',
+          Header: '',
+          width: '20px',
           Cell: ({ row }: any) => (
             <IconButton
               aria-label="edit button"

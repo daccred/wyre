@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { teamSchema } from "../interfaces";
-import { TeamService } from "../services";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { teamSchema } from '../interfaces';
+import { TeamService } from '../services';
+import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 export const teamRouter = createTRPCRouter({
   createPersonnel: protectedProcedure.input(teamSchema).mutation(async ({ input }) => {
@@ -53,7 +53,7 @@ export const teamRouter = createTRPCRouter({
     .input(
       z.object({
         personnelId: z.string(),
-        paymentMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+        paymentMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
       })
     )
     .mutation(async ({ input }) => {

@@ -1,9 +1,9 @@
-import { prisma } from "@wyrecc/db";
+import { prisma } from '@wyrecc/db';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
-import type { IExpenseSchema } from "../interfaces";
-import { ServerError } from "../utils/server-error";
+import type { IExpenseSchema } from '../interfaces';
+import { ServerError } from '../utils/server-error';
 
 export class ExpenseService {
   static async createExpense(input: IExpenseSchema) {
@@ -21,8 +21,8 @@ export class ExpenseService {
 
       if (!employee) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Employee not found",
+          code: 'NOT_FOUND',
+          message: 'Employee not found',
         });
       }
 
@@ -45,8 +45,8 @@ export class ExpenseService {
 
       if (!expense) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create expense",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create expense',
         });
       }
 
@@ -61,7 +61,7 @@ export class ExpenseService {
     try {
       const employee = await prisma.team.findFirst({
         where: {
-          teamCategory: "EMPLOYEE",
+          teamCategory: 'EMPLOYEE',
           id: input.employeeId,
         },
         select: {
@@ -69,7 +69,7 @@ export class ExpenseService {
         },
       });
       if (!employee) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Employee not found" });
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Employee not found' });
       }
       const expense = await prisma.expense.update({
         where: { id: expenseId },
@@ -85,8 +85,8 @@ export class ExpenseService {
 
       if (!expense) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Failed to update expense",
+          code: 'NOT_FOUND',
+          message: 'Failed to update expense',
         });
       }
 
@@ -104,8 +104,8 @@ export class ExpenseService {
 
       if (!expense) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Failed to delete expense",
+          code: 'NOT_FOUND',
+          message: 'Failed to delete expense',
         });
       }
       return expense;
@@ -122,8 +122,8 @@ export class ExpenseService {
       });
       if (!expense) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Expense not found",
+          code: 'NOT_FOUND',
+          message: 'Expense not found',
         });
       }
     } catch (error) {
@@ -138,8 +138,8 @@ export class ExpenseService {
       });
       if (!expenses) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Expenses not found",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Expenses not found',
         });
       }
       return expenses;

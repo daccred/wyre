@@ -1,11 +1,11 @@
-import type { FormControlProps } from "@chakra-ui/form-control";
-import { FormControl } from "@chakra-ui/form-control";
-import { PinInput } from "@chakra-ui/react";
-import { FormErrorMessage } from "@chakra-ui/react";
-import * as React from "react";
-import type { PropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import type { FormControlProps } from '@chakra-ui/form-control';
+import { FormControl } from '@chakra-ui/form-control';
+import { PinInput } from '@chakra-ui/react';
+import { FormErrorMessage } from '@chakra-ui/react';
+import * as React from 'react';
+import type { PropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
 
 export interface FormPinInputProps extends FormControlProps {
   name: string;
@@ -53,7 +53,7 @@ export const FormPinInput = forwardRef<HTMLInputElement, FormPinInputProps>(
         <Controller
           control={control}
           name={name}
-          rules={{ required: "This field is required" }}
+          rules={{ required: 'This field is required' }}
           render={({ field }) => (
             <PinInput
               otp={otp}
@@ -79,6 +79,6 @@ export const FormPinInput = forwardRef<HTMLInputElement, FormPinInputProps>(
   }
 );
 
-FormPinInput.displayName = "FormPinInput";
+FormPinInput.displayName = 'FormPinInput';
 
 export default FormPinInput;

@@ -1,10 +1,10 @@
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import type { Input } from "@chakra-ui/input";
-import { Flex, FormErrorMessage } from "@chakra-ui/react";
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext, Controller } from "react-hook-form";
-import Select from "react-select";
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import type { Input } from '@chakra-ui/input';
+import { Flex, FormErrorMessage } from '@chakra-ui/react';
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import Select from 'react-select';
 
 interface OptionProps {
   readonly value: string;
@@ -18,8 +18,8 @@ export interface LabeledSelectFieldProps extends ComponentPropsWithoutRef<typeof
   label?: string;
   /** Field placeholder. */
   placeholder?: string;
-  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  outerProps?: PropsWithoutRef<JSX.IntrinsicElements['div']>;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
   options: readonly OptionProps[];
   width?: string;
 }
@@ -57,29 +57,29 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
                 menuList(provided) {
                   return {
                     ...provided,
-                    backgroundColor: "",
-                    color: "black",
+                    backgroundColor: '',
+                    color: 'black',
                   };
                 },
                 valueContainer(provided) {
                   return {
                     ...provided,
-                    color: "orange",
-                    backgroundColor: "none",
-                    width: width || "200px",
-                    fontSize: "14px",
+                    color: 'orange',
+                    backgroundColor: 'none',
+                    width: width || '200px',
+                    fontSize: '14px',
                   };
                 },
                 control(provided) {
                   return {
                     ...provided,
-                    minHeight: "45px",
-                    padding: "10px",
-                    border: "1px solid #D2D2D2",
-                    borderRadius: "5px",
-                    backgroundColor: "#F7F7F7",
-                    "&:hover": {
-                      borderColor: "gray",
+                    minHeight: '45px',
+                    padding: '10px',
+                    border: '1px solid #D2D2D2',
+                    borderRadius: '5px',
+                    backgroundColor: '#F7F7F7',
+                    '&:hover': {
+                      borderColor: 'gray',
                     },
                   };
                 },
@@ -98,6 +98,6 @@ const FormSelect = forwardRef<HTMLInputElement, LabeledSelectFieldProps>(
   }
 );
 
-FormSelect.displayName = "FormSelect";
+FormSelect.displayName = 'FormSelect';
 
 export default FormSelect;

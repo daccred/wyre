@@ -1,20 +1,20 @@
-import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem, Button } from "@chakra-ui/react";
-import React from "react";
-import { FiChevronLeft } from "react-icons/fi";
-import z from "zod";
+import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem, Button } from '@chakra-ui/react';
+import React from 'react';
+import { FiChevronLeft } from 'react-icons/fi';
+import z from 'zod';
 
-import { FormInput, FormSelect, useForm } from "@wyrecc/components";
-import Header from "@wyrecc/components/core/Header";
+import { FormInput, FormSelect, useForm } from '@wyrecc/components';
+import Header from '@wyrecc/components/core/Header';
 
 const manageProfileValidationSchema = z.object({
-  country: z.string().min(1, "Country is required"),
-  accountName: z.string().min(1, "Account Name is required"),
-  bankName: z.string().min(1, "Bank Name is required"),
-  accountNumber: z.number().min(1, "Account Number is required"),
+  country: z.string().min(1, 'Country is required'),
+  accountName: z.string().min(1, 'Account Name is required'),
+  bankName: z.string().min(1, 'Bank Name is required'),
+  accountNumber: z.number().min(1, 'Account Number is required'),
   swiftCode: z.string(),
   routingNumber: z.number(),
-  accountType: z.string().min(1, "Account Type is required"),
-  salaryPercentage: z.number().min(1, "Wallet Address is required"),
+  accountType: z.string().min(1, 'Account Type is required'),
+  salaryPercentage: z.number().min(1, 'Wallet Address is required'),
 });
 
 type FormInputOptions = z.infer<typeof manageProfileValidationSchema>;
@@ -49,8 +49,8 @@ const View = () => {
                   label="Select Country"
                   name="country"
                   options={[
-                    { value: "GH", label: "Ghana" },
-                    { value: "NIG", label: "Nigeria" },
+                    { value: 'GH', label: 'Ghana' },
+                    { value: 'NIG', label: 'Nigeria' },
                   ]}
                 />
               </GridItem>
@@ -62,10 +62,10 @@ const View = () => {
                   label="Select Bank"
                   name="bankName"
                   options={[
-                    { value: "Access", label: "Access Bank" },
-                    { value: "Stanbic", label: "Stanbic Bank" },
-                    { value: "Ecobank", label: "EcoBank" },
-                    { value: "Fidelity", label: "Fidelity Bank" },
+                    { value: 'Access', label: 'Access Bank' },
+                    { value: 'Stanbic', label: 'Stanbic Bank' },
+                    { value: 'Ecobank', label: 'EcoBank' },
+                    { value: 'Fidelity', label: 'Fidelity Bank' },
                   ]}
                 />
               </GridItem>
@@ -93,10 +93,10 @@ const View = () => {
                   label="Account Type"
                   name="accountType"
                   options={[
-                    { value: "Savings", label: "Savings Account" },
-                    { value: "Current", label: "Current Account" },
-                    { value: "Ecobank", label: "EcoBank" },
-                    { value: "Fidelity", label: "Fidelity Bank" },
+                    { value: 'Savings', label: 'Savings Account' },
+                    { value: 'Current', label: 'Current Account' },
+                    { value: 'Ecobank', label: 'EcoBank' },
+                    { value: 'Fidelity', label: 'Fidelity Bank' },
                   ]}
                 />
               </GridItem>
@@ -109,7 +109,7 @@ const View = () => {
                 />
               </GridItem>
             </Grid>
-            <Button bg="primary.500" color="white" _hover={{ hover: "none" }}>
+            <Button bg="primary.500" color="white" _hover={{ hover: 'none' }}>
               Add Bank Account
             </Button>
           </Stack>

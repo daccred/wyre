@@ -1,6 +1,6 @@
-import { ServerClient } from "postmark";
+import { ServerClient } from 'postmark';
 
-import { POSTMARK_CLIENT_ID } from "../constants";
+import { POSTMARK_CLIENT_ID } from '../constants';
 
 // import queryString from "query-string";
 // import { getBaseUrl } from "../sms/utils";

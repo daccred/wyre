@@ -1,8 +1,8 @@
-import { Stack, SimpleGrid, Text } from "@chakra-ui/react";
-import React from "react";
+import { Stack, SimpleGrid, Text } from '@chakra-ui/react';
+import React from 'react';
 
-import { LayoutIcon, UserIcon, CreditCardIcon } from "./ProviderIcons";
-import Card from "./card";
+import { LayoutIcon, UserIcon, CreditCardIcon } from './ProviderIcons';
+import Card from './card';
 
 type StatData = {
   id: number;
@@ -15,24 +15,24 @@ type StatData = {
 const statData: StatData[] = [
   {
     id: 1,
-    label: "Setup payment services",
+    label: 'Setup payment services',
     icon: CreditCardIcon,
-    desc: "Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis",
-    link: "/",
+    desc: 'Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis',
+    link: '/',
   },
   {
     id: 2,
-    label: "Add employees or contractor",
+    label: 'Add employees or contractor',
     icon: UserIcon,
-    desc: "Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis",
-    link: "/employees",
+    desc: 'Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis',
+    link: '/employees',
   },
   {
     id: 3,
-    label: "Create first payroll",
+    label: 'Create first payroll',
     icon: LayoutIcon,
-    desc: "Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis",
-    link: "/",
+    desc: 'Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis',
+    link: '/',
   },
 ];
 

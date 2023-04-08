@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 export const loginSchema = z.object({
   email: z.string().email(),
@@ -36,6 +36,6 @@ export const resetPasswordSchema = z.object({
 
 export type ILogin = z.infer<typeof loginSchema>;
 export type ISignUp = z.infer<typeof signUpSchema>;
-export type IEmail = Pick<z.infer<typeof loginSchema>, "email">;
+export type IEmail = Pick<z.infer<typeof loginSchema>, 'email'>;
 export type IVerifyEmail = z.infer<typeof verifyEmailSchema>;
 export type IResetPassword = z.infer<typeof resetPasswordSchema>;

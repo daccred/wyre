@@ -1,5 +1,5 @@
-import type { createTRPCContext } from "../trpc";
-import { ServerError } from "./server-error";
+import type { createTRPCContext } from '../trpc';
+import { ServerError } from './server-error';
 
 export abstract class BaseService {
   protected context: typeof createTRPCContext;

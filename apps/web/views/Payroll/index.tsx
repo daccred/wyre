@@ -1,14 +1,14 @@
-import { Box, Button, Center, Grid, GridItem, Heading, Spinner, Stack, Text, VStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Box, Button, Center, Grid, GridItem, Heading, Spinner, Stack, Text, VStack } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-import { CustomTable } from "../../components/CustomTable";
-import ViewLayout from "../../components/core/ViewLayout";
-import { trpc } from "../../utils/trpc";
-import { EmptyEmployeeImage } from "../../views/Employees/ProviderIcons";
-import { ChevronRight, CreateIcon, InstantPayment } from "./ProviderIcons";
-import { Card, PayrollTypeCard } from "./utils/misc";
-import { payrollColumns } from "./utils/tableColumns";
+import { CustomTable } from '../../components/CustomTable';
+import ViewLayout from '../../components/core/ViewLayout';
+import { trpc } from '../../utils/trpc';
+import { EmptyEmployeeImage } from '../../views/Employees/ProviderIcons';
+import { ChevronRight, CreateIcon, InstantPayment } from './ProviderIcons';
+import { Card, PayrollTypeCard } from './utils/misc';
+import { payrollColumns } from './utils/tableColumns';
 
 type Payroll = Record<any, any>;
 
@@ -56,8 +56,8 @@ const View = () => {
               rightIcon={<ChevronRight boxSize={4} />}
               iconSpacing="3"
               w="fit-content"
-              _hover={{ hover: "none" }}
-              onClick={() => router.push("/payroll/manage-payroll")}>
+              _hover={{ hover: 'none' }}
+              onClick={() => router.push('/payroll/manage-payroll')}>
               Manage Payroll
             </Button>
           </VStack>
@@ -69,7 +69,7 @@ const View = () => {
               heading="Create Payroll"
               text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit."
               icon={<CreateIcon />}
-              onClick={() => router.push("/payroll/create-employee-payroll")}
+              onClick={() => router.push('/payroll/create-employee-payroll')}
             />
           </GridItem>
           <GridItem>

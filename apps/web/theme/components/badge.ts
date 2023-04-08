@@ -1,29 +1,29 @@
-import type { StyleFunctionProps } from "@chakra-ui/theme-tools";
-import { darken, mode, transparentize } from "@chakra-ui/theme-tools";
+import type { StyleFunctionProps } from '@chakra-ui/theme-tools';
+import { darken, mode, transparentize } from '@chakra-ui/theme-tools';
 
 const baseStyle = {
-  textTransform: "normal",
-  fontWeight: "medium",
-  borderRadius: "2xl",
+  textTransform: 'normal',
+  fontWeight: 'medium',
+  borderRadius: '2xl',
 };
 
 const sizes = {
   lg: {
-    fontSize: "sm",
-    px: "3",
-    py: "1",
+    fontSize: 'sm',
+    px: '3',
+    py: '1',
   },
   md: {
-    fontSize: "sm",
-    lineHeight: "1.25rem",
-    px: "2.5",
-    py: "0.5",
+    fontSize: 'sm',
+    lineHeight: '1.25rem',
+    px: '2.5',
+    py: '0.5',
   },
   sm: {
-    fontSize: "xs",
-    lineHeight: "1.5",
-    px: "2",
-    py: "0.5",
+    fontSize: 'xs',
+    lineHeight: '1.5',
+    px: '2',
+    py: '0.5',
   },
 };
 
@@ -43,8 +43,8 @@ const variants = {
 };
 
 const defaultProps = {
-  size: "md",
-  variant: "subtle",
+  size: 'md',
+  variant: 'subtle',
 };
 
 export default {

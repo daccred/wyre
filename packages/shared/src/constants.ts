@@ -10,19 +10,19 @@ export const INTERNAL_SERVER_ERROR = 500;
 export const MONGO_ERROR = 501;
 export const PRISMA_ERROR = 501;
 
-export const CREATE = "create";
-export const UPDATE = "update";
-export const DELETE = "delete";
+export const CREATE = 'create';
+export const UPDATE = 'update';
+export const DELETE = 'delete';
 
-export const GET = "get";
-export const POST = "post";
-export const PUT = "put";
-export const PATCH = "patch";
+export const GET = 'get';
+export const POST = 'post';
+export const PUT = 'put';
+export const PATCH = 'patch';
 
-export const APPROVED = "APPROVED";
-export const DECLINED = "DECLINED";
+export const APPROVED = 'APPROVED';
+export const DECLINED = 'DECLINED';
 
-export const PENDING = "PENDING";
-export const SUCCESS = "SUCCESS";
-export const FAILED = "FAILED";
-export const COMPLETED = "COMPLETED";
+export const PENDING = 'PENDING';
+export const SUCCESS = 'SUCCESS';
+export const FAILED = 'FAILED';
+export const COMPLETED = 'COMPLETED';
