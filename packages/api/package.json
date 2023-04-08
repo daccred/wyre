@@ -21,6 +21,10 @@
     "@wyrecc/config": "^0.1.0",
     "@wyrecc/db": "^0.1.0",
     "@wyrecc/dialog": "^0.1.0",
+    "bull": "^4.10.4",
     "redis": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/bull": "^4.10.0"
   }
 }

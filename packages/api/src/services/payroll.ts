@@ -1,3 +1,6 @@
+import { PayrollQueue } from "src/bullQueue/payrollqueue";
+import type { PayrollQueueSchema } from "src/interfaces/PayrollQueue";
+
 import { prisma } from "@wyrecc/db";
 
 import { TRPCError } from "@trpc/server";
@@ -204,5 +207,52 @@ export class PayrollService {
     } catch (error) {
       ServerError(error);
     }
+  }
+
+  static async processPayRoll(id: string) {
+    // check for the payroll
+    const payroll = await prisma.payroll.findUnique({ where: { id }, include: { employees: true } });
+    if (payroll === null) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: `Payroll with id ${id} not found`,
+      });
+    }
+    const PayrollData: Array<PayrollQueueSchema> = [];
+    // looping through the employees
+    payroll.employees.map(async (item) => {
+      const queueObject: PayrollQueueSchema = {
+        payroll: id,
+        recipientDetails: item,
+        paymentMethod: item.payrollMethod,
+        recipientPaymentDetail: null,
+      };
+      switch (item.payrollMethod) {
+        case "BANK": {
+          const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
+          queueObject["recipientPaymentDetail"] = bank;
+          break;
+        }
+        case "CRYPTO": {
+          const wallet = await prisma.cryptoWallet.findUnique({ where: { personnelId: item.id } });
+          queueObject["recipientPaymentDetail"] = wallet;
+          break;
+        }
+        case "MOBILEMONEY": {
+          const mobileMoney = await prisma.mobileMoney.findUnique({ where: { personnelId: item.id } });
+          queueObject["recipientPaymentDetail"] = mobileMoney;
+          break;
+        }
+        default: {
+          const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
+          queueObject["recipientPaymentDetail"] = bank;
+        }
+      }
+      PayrollData.push(queueObject);
+    });
+    // added the payroll to the queue
+    await PayrollQueue.add(PayrollData, { attempts: 5 });
+
+    return "Payroll added to the queue";
   }
 }
