@@ -1,13 +1,13 @@
 import { useToast } from "@chakra-ui/react";
-import type { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 import z from "zod";
 
+import { getServerAuthSession } from "@wyrecc/api";
+
 import { useForm } from "../components/forms";
 import { Meta } from "../layouts";
-import { withAuth } from "../lib/withAuth";
 import View from "../views/Login";
 
 const loginValidationSchema = z.object({
@@ -58,8 +58,20 @@ export default function Page() {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = withAuth(async (context) => {
+
+export const getServerSideProps = async (context: any) => {
+  const session = await getServerAuthSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {},
   };
-});
+};
