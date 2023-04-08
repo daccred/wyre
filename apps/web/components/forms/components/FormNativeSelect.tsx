@@ -48,7 +48,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
           render={({ field }) => (
             <Select
               size="lg"
-              fontSize="sm"
+              fontSize="md"
               bg="#F7F7F7"
               borderRadius="5px"
               borderColor="#9f9f9f"

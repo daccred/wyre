@@ -44,15 +44,6 @@ const variants = {
   outline: (props: StyleFunctionProps) => ({
     color: "emphasized",
     bg: mode("white", "gray.800")(props),
-    _hover: {
-      bg: mode(darken("gray.50", 1)(props.theme), transparentize("gray.700", 0.4)(props.theme))(props),
-    },
-    _checked: {
-      bg: mode("gray.100", "gray.700")(props),
-    },
-    _active: {
-      bg: mode("gray.100", "gray.700")(props),
-    },
   }),
   ghost: (props: StyleFunctionProps) => ({
     color: "emphasized",
@@ -114,33 +105,24 @@ const variants = {
     },
   }),
   darkBtn: () => ({
-    padding: "10px",
     lineHeight: "normal",
     color: "white",
     background: "brand.700",
     borderRadius: "5px",
     fontSize: "12px",
     fontWeight: "bold",
-    height: "44px",
-
-    // _hover: {
-    //   color: "white",
-    //   background:"#2a1143",
-    // },
     _active: {
       color: "white",
       background: "#2d104a",
     },
   }),
   greyBtn: () => ({
-    padding: "10px",
     lineHeight: "normal",
     color: "#210D35",
     background: "#D9D9D9",
     borderRadius: "5px",
     fontSize: "12px",
     fontWeight: "bold",
-    height: "44px",
 
     // _hover: {
     //   color: "white",

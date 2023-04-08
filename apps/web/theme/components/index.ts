@@ -15,4 +15,5 @@ export { default as RadioCard } from "./radio-card";
 export { default as Table } from "./table";
 export { default as Tabs } from "./tabs";
 export { default as Textarea } from "./textarea";
+export { default as Text } from "./text";
 export { default as Switch } from "./switch";

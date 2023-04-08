@@ -7,14 +7,6 @@ const variants = {
       borderRadius: "xl",
       border: "0.2px solid transparent",
       bg: mode("white", "#1F1F1F")(props),
-      // _focus: {
-      //   border: "0.2px solid #F2FD39",
-      //   boxShadow: mode(
-      //     `0px 0px 0px 1px ${transparentize(`brand.500`, 1.0)(props.theme)}`,
-      //     `0px 0px 0px 1px ${transparentize(`brand.200`, 1.0)(props.theme)}`
-      //   )(props),
-      //   outline:0,
-      // },
     },
     addon: {
       borderRadius: "lg",

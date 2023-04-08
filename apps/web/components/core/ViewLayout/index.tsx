@@ -169,8 +169,7 @@ const SidebarContent = ({ ...rest }) => {
         bottom="0"
         justifyContent="start">
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
-
-        <Button color="#E71D36" fontWeight="semibold" onClick={() => signOut()}>
+        <Button colorScheme={'red'} variant={'outline'} color={'red.600'} fontWeight="semibold" onClick={() => signOut()}>
           Logout
         </Button>
       </HStack>
@@ -216,8 +215,9 @@ const NavItem = ({
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "blackAlpha.100",
-          // color: 'white',
+          opacity: 0.8,
+          transition: 'ease-in',
+          color: 'accent',
         }}
         {...rest}>
         {icon && (
@@ -231,7 +231,7 @@ const NavItem = ({
             as={icon}
           />
         )}
-        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
+        <Text color={isActive ? "brand.600" : "boldgrey"} pt={'0.5'} fontWeight="semibold">
           {children}
         </Text>
         {linkName === "People" && (

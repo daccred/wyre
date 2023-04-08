@@ -33,7 +33,15 @@ export default function SidebarAccordion({ menu }: Props) {
     <Accordion px={4} allowToggle w="full">
       <AccordionItem border="none" p={0}>
         <h2>
-          <AccordionButton p={0} borderRadius="lg">
+          <AccordionButton 
+          as={HStack} 
+          justify={'space-between'} 
+          _hover={{
+            opacity: 0.8,
+            cursor: 'pointer',
+            color: 'accent',
+          }}
+          p={0} borderRadius="lg">
             <HStack spacing={4} px={4} py="2">
               {menu.icon && (
                 <Icon
@@ -45,12 +53,12 @@ export default function SidebarAccordion({ menu }: Props) {
                   as={menu.icon}
                 />
               )}
-              <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
+              <Text color={isActive ? "brand.600" : "boldgrey"} pt={1} fontWeight="semibold">
                 {menu.name}
               </Text>
             </HStack>
 
-            <AccordionIcon color={isActive ? "brand.600" : "boldgrey"} fontSize="2xl" mr={8} />
+            <AccordionIcon color={isActive ? "brand.600" : "boldgrey"} w={'40px'} fontSize="2xl"  />
           </AccordionButton>
         </h2>
 
@@ -110,7 +118,7 @@ function SidebarAccordionItem({ href, name, icon, ...rest }: NavItemProps) {
             as={icon}
           />
         )}
-        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
+        <Text color={isActive ? "brand.600" : "boldgrey"} pt={.5} fontWeight="semibold">
           {name}
         </Text>
       </Flex>

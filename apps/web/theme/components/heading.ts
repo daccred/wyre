@@ -1,5 +1,5 @@
 const baseStyle = {
-  fontWeight: "medium",
+  fontWeight: "500",
 };
 
 const sizes = {
@@ -37,7 +37,7 @@ export default {
   baseStyle,
   sizes,
   defaultProps: {
-    fontWeight: "medium",
+    fontWeight: "500",
     lineHeight: "100%",
     fontSize: "1rem",
   },
