@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
+import { Button, Flex, Link, Stack, HStack, Image, Text } from "@chakra-ui/react";
 import * as React from "react";
 
 import { FormInput, FormNativeSelect } from "../../components/forms";
@@ -12,7 +12,7 @@ const View: React.FC<Props> = (Props) => {
 
   return (
     <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
-      <Stack flex={1}>
+      <Stack flex={1} minW={'26rem'}>
         <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
 
         <Flex flex={1} align={{ base: "", md: "start" }} p={12}>
@@ -71,10 +71,10 @@ const View: React.FC<Props> = (Props) => {
         </Flex>
       </Stack>
 
-      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
+      <Flex bgColor="#210D35" color="white" flex={3} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
-            <Heading>Wyre</Heading>
+            <Text fontWeight="600" fontSize={{ base: "5xl", md: "6xl" }}>WYRE</Text>
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
 

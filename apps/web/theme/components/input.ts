@@ -6,7 +6,6 @@ const variants = {
     field: {
       borderRadius: "xl",
       border: "0.2px solid transparent",
-      height: "60px",
       bg: mode("white", "#1F1F1F")(props),
       // _focus: {
       //   border: "0.2px solid #F2FD39",

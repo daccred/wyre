@@ -1,5 +1,5 @@
-import { PayrollQueue } from "src/bullQueue/payrollqueue";
-import type { PayrollQueueSchema } from "src/interfaces/PayrollQueue";
+import { PayrollQueue } from "../bullQueue/payroll-queue";
+import type { PayrollQueueSchema } from "../interfaces/payroll-queue";
 
 import { prisma } from "@wyrecc/db";
 

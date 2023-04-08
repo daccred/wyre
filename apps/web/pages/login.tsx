@@ -10,7 +10,7 @@ import View from "../views/Login";
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(4).max(12),
+  password: z.string().min(6).max(32),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;

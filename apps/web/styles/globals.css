@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "BR Firma";
   src: url("./fonts/BRFirma-BlackItalic.woff2") format("woff2"),
     url("./fonts/BRFirma-BlackItalic.woff") format("woff");
@@ -135,7 +135,7 @@
   font-weight: 100;
   font-style: normal;
   font-display: swap;
-}
+} */
 
 a {
   color: inherit;

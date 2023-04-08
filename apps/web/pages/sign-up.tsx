@@ -39,13 +39,12 @@ export default function Page() {
     signUp({
       email: data.email,
       password: data.password,
-      // firstName: data.firstName,
-      // lastName: data.lastName,
+      firstName: data.firstName,
+      lastName: data.lastName,
       companyName: data.company,
       companyPhone: data.companyPhone ? String(data.companyPhone) : undefined,
       country: data.country,
       jobRole: data.role,
-      name: `${data.firstName} ${data.lastName}`
     });
   };
 

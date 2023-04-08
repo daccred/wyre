@@ -89,7 +89,6 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           <Input
             size="lg"
             fontSize="sm"
-            h="45px"
             p="7"
             border="1px solid #D2D2D2"
             rounded="5px"

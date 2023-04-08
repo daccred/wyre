@@ -55,7 +55,7 @@ const View = () => {
 
   return (
     <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
-      <Stack flex={1}>
+      <Stack flex={1} minW={'26rem'}>
         <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
 
         <Flex p={12} flex={1} align="start" justify={{ base: "", md: "", xl: "" }}>
@@ -72,7 +72,7 @@ const View = () => {
                   <HStack>
                     <PinInput
                       size="lg"
-                      mask
+                      otp
                       placeholder="-"
                       value={pinInputData}
                       onChange={(value) => setPinInputData(value)}>
@@ -110,10 +110,11 @@ const View = () => {
         </Flex>
       </Stack>
 
-      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
+      <Flex bgColor="#210D35" color="white" flex={3} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
-            <Heading>Wyre</Heading>
+            <Text fontWeight="600" fontSize={{ base: "5xl", md: "6xl" }}>WYRE</Text>
+
             <Text>The open-source payroll Infrastructure for African businesses.</Text>
           </Stack>
 

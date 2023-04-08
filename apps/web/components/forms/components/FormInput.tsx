@@ -77,16 +77,12 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
             </InputLeftElement>
           )}
           <Input
-            size="lg"
             fontSize="sm"
-            h="45px"
-            p="7"
             border="1px solid #D2D2D2"
             rounded="5px"
             bg="#F7F7F7"
             color="#210D35"
             fontWeight="medium"
-            // textDecorationStyle={""}
             _placeholder={{ fontSize: "sm", color: "#D2D2D2" }}
             _hover={{ borderColor: "primary" }}
             _focus={{ borderColor: "primary" }}

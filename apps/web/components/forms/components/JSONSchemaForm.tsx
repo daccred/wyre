@@ -12,6 +12,18 @@ interface JSONSchemaFormProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type JSONSchemaFormState = any;
 
+/**
+ * @name JSONSchemaForm
+ * @description A form component that renders a form based on a JSON schema
+ * @param {JSONSchema7} schema - The JSON schema to render the form from (https://json-schema.org/)
+ * @param {JSONSchemaFormState} state - The state of the form (default values, form data, etc.)
+ * @param {JSONSchemaFormProps} props - The props of the form
+ * @param {Function} renderInputField - A function that renders an input field (for string types)
+ * @param {Function} renderCheckboxField - A function that renders a checkbox field (for enum types)
+ * @param {Function} _getSchemaDefaultValues - A function that gets the default values from the schema using Ajv
+ * @example
+ * <JSONSchemaForm schema={schema} />
+ */
 export class JSONSchemaFormComponent extends React.Component<JSONSchemaFormProps, JSONSchemaFormState> {
   constructor(props: JSONSchemaFormProps | Readonly<JSONSchemaFormProps>) {
     super(props);
@@ -85,10 +97,3 @@ export class JSONSchemaFormComponent extends React.Component<JSONSchemaFormProps
     );
   }
 }
-
-// MyForm.propTypes = {
-//   schema: PropTypes.object.isRequired,
-//   defaultValues: PropTypes.object.isRequired,
-// };
-
-// export default MyForm;

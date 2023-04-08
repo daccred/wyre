@@ -19,7 +19,7 @@ export const mapleradConfigSchema: JSONSchema7 = {
     },
     secret_key: {
       type: "string",
-      default: "default_secret_key",
+      default: "mpr_sandbox_sk_b87df6cc-124c-441c-b21f-04ae72940ef3",
     },
     base_url: {
       type: "string",
