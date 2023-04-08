@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ThemeConfig } from '@chakra-ui/react';
+import type { ThemeConfig,  StyleFunctionProps } from '@chakra-ui/react';
 import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
 
 import * as components from './components';
@@ -49,9 +49,6 @@ export const theme: Record<string, any> = extendTheme({
       body: {
         fontFamily: 'body',
         lineHeight: 'base',
-      },
-      'h1,h2,h3,h4,h5,h6': {
-        fontFamily: 'Epilogue, sans-serif',
       },
     }),
   },

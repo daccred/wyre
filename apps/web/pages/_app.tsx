@@ -19,7 +19,7 @@ type MyAppProps = AppProps & {
 
 const epilogue = Epilogue({
   weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
+  // style: ['normal', 'italic'],
   subsets: ['latin'],
 });
 
