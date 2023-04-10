@@ -169,9 +169,9 @@ const SidebarContent = ({ ...rest }) => {
         justifyContent="start">
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
         <Button
-          colorScheme={'red'}
-          variant={'outline'}
-          color={'red.600'}
+          colorScheme="red"
+          variant="outline"
+          color="red.600"
           fontWeight="semibold"
           onClick={() => signOut()}>
           Logout
@@ -235,7 +235,7 @@ const NavItem = ({
             as={icon}
           />
         )}
-        <Text color={isActive ? 'brand.600' : 'boldgrey'} pt={'0.5'} fontWeight="semibold">
+        <Text color={isActive ? 'brand.600' : 'boldgrey'} pt="0.5" fontWeight="semibold">
           {children}
         </Text>
         {linkName === 'People' && (

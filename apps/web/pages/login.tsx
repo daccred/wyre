@@ -1,10 +1,10 @@
-import { useToast } from "@chakra-ui/react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import React from "react";
-import z from "zod";
+import { useToast } from '@chakra-ui/react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import z from 'zod';
 
-import { getServerAuthSession } from "@wyrecc/api";
+import { getServerAuthSession } from '@wyrecc/api';
 
 import { useForm } from '../components/forms';
 import { Meta } from '../layouts';
@@ -65,7 +65,7 @@ export const getServerSideProps = async (context: any) => {
   if (session) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: '/dashboard',
         permanent: false,
       },
     };
