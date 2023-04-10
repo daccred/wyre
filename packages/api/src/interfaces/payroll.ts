@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import type { ITeamSchema } from './team';
+
 export const payrollSchema = z.object({
   title: z.string(),
   cycle: z.enum(['daily', 'bi-weekly', 'monthly']),
@@ -12,3 +14,21 @@ export const payrollSchema = z.object({
 });
 
 export type IPayrollSchema = z.infer<typeof payrollSchema>;
+
+export interface PayrollScheduleData {
+  payroll: string;
+  recipientDetails: ITeamSchema | unknown;
+  paymentMethod: string;
+  recipientPaymentDetail: unknown;
+}
+
+export interface PayrollTaskOptions {
+  delay: number;
+  data: PayrollScheduleData[];
+}
+
+export interface PayrollRepeatableTaskOptions {
+  repeat: number;
+  data: PayrollScheduleData[];
+  name: string;
+}

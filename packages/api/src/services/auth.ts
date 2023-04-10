@@ -4,7 +4,7 @@ import { sendEmail, emailHTML, forgotPasswordEmail } from '@wyrecc/dialog';
 import { TRPCError } from '@trpc/server';
 
 import type { IResetPassword, ISignUp, IVerifyEmail } from '../interfaces';
-import redisClient from '../redis';
+import redis from '../redis';
 import { hashString, verifyHash } from '../utils';
 import { ServerError } from '../utils/server-error';
 
@@ -209,11 +209,11 @@ export class AuthService {
       const confirmCode = JSON.stringify(Math.floor(100000 + Math.random() * 900000)); // generates a random 6-digit code
 
       if (user) {
-        await redisClient.hello();
-        await redisClient.HSET(`otp_${user.id}`, 'id', user.id);
-        await redisClient.HSET(`otp_${user.id}`, 'email', user.email);
-        await redisClient.HSET(`otp_${user.id}`, 'otp', confirmCode);
-        await redisClient.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
+        await redis.hello();
+        await redis.hset(`otp_${user.id}`, 'id', user.id);
+        await redis.hset(`otp_${user.id}`, 'email', user.email);
+        await redis.hset(`otp_${user.id}`, 'otp', confirmCode);
+        await redis.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
       }
 
       const forgotEmail = forgotPasswordEmail({ confirmCode });
@@ -243,7 +243,7 @@ export class AuthService {
       if (!user) {
         throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
       }
-      const userHash = user && (await redisClient.hGetAll(`otp_${user.id}`));
+      const userHash = user && (await redis.hgetall(`otp_${user.id}`));
 
       if (userHash?.otp !== otp) {
         throw new TRPCError({

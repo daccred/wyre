@@ -2,9 +2,8 @@ import { prisma } from '@wyrecc/db';
 
 import { TRPCError } from '@trpc/server';
 
-import { PayrollQueue } from '../bullQueue/payroll-queue';
-import type { IPayrollSchema } from '../interfaces/payroll';
-import type { PayrollQueueSchema } from '../interfaces/payroll-queue';
+import type { IPayrollSchema, PayrollScheduleData } from '../interfaces/payroll';
+import { createPayrollPublisher } from '../publishers/payroll.publisher';
 import { ServerError } from '../utils/server-error';
 
 export class PayrollService {
@@ -217,10 +216,10 @@ export class PayrollService {
         message: `Payroll with id ${id} not found`,
       });
     }
-    const PayrollData: Array<PayrollQueueSchema> = [];
+    const processPayrollData: Array<PayrollScheduleData> = [];
     // looping through the employees
     payroll.employees.map(async (item) => {
-      const queueObject: PayrollQueueSchema = {
+      const queueObject: PayrollScheduleData = {
         payroll: id,
         recipientDetails: item,
         paymentMethod: item.payrollMethod,
@@ -247,10 +246,19 @@ export class PayrollService {
           queueObject['recipientPaymentDetail'] = bank;
         }
       }
-      PayrollData.push(queueObject);
+      processPayrollData.push(queueObject);
     });
+
+    /* Get the delay params for scheduling */
+    const now = new Date(); // current date and time
+    const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
+
     // added the payroll to the queue
-    await PayrollQueue.add(PayrollData, { attempts: 5 });
+    await createPayrollPublisher({
+      data: processPayrollData,
+      delay: diffInMilliseconds,
+    });
+    // await PayrollQueue.add(PayrollData, { attempts: 5 });
 
     return 'Payroll added to the queue';
   }
