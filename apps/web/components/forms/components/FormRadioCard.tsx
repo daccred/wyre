@@ -1,5 +1,5 @@
-import type { Input } from "@chakra-ui/input";
-import type { StackProps, BoxProps, UseRadioProps } from "@chakra-ui/react";
+import type { Input } from '@chakra-ui/input';
+import type { StackProps, BoxProps, UseRadioProps } from '@chakra-ui/react';
 import {
   FormControl,
   FormErrorMessage,
@@ -15,14 +15,14 @@ import {
   useRadioGroup,
   useStyleConfig,
   HStack,
-} from "@chakra-ui/react";
-import * as React from "react";
-import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { FaCheckCircle } from "react-icons/fa";
+} from '@chakra-ui/react';
+import * as React from 'react';
+import type { ComponentPropsWithoutRef, PropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { FaCheckCircle } from 'react-icons/fa';
 
-interface RadioCardGroupProps<T> extends Omit<StackProps, "onChange"> {
+interface RadioCardGroupProps<T> extends Omit<StackProps, 'onChange'> {
   name?: string;
   value?: T;
   defaultValue?: string;
@@ -41,8 +41,8 @@ export interface FormRadioCardProps extends ComponentPropsWithoutRef<typeof Inpu
   name: string;
   /** Field label. */
   label?: string;
-  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  outerProps?: PropsWithoutRef<JSX.IntrinsicElements['div']>;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
   options: FormRadioCardOptionProps[];
 }
 
@@ -84,9 +84,9 @@ interface RadioCardProps extends BoxProps {
 export const RadioCard = (props: RadioCardProps) => {
   const { radioProps, children, ...rest } = props;
   const { getInputProps, getCheckboxProps, getLabelProps, state } = useRadio(radioProps);
-  const id = useId(undefined, "radio-button");
+  const id = useId(undefined, 'radio-button');
 
-  const styles = useStyleConfig("RadioCard", props);
+  const styles = useStyleConfig('RadioCard', props);
   const inputProps = getInputProps();
   const checkboxProps = getCheckboxProps();
   const labelProps = getLabelProps();
@@ -96,8 +96,8 @@ export const RadioCard = (props: RadioCardProps) => {
       cursor="pointer"
       {...labelProps}
       sx={{
-        ".focus-visible + [data-focus]": {
-          boxShadow: "outline",
+        '.focus-visible + [data-focus]': {
+          boxShadow: 'outline',
           zIndex: 1,
         },
       }}>
@@ -129,7 +129,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
     const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
-    const flex = "flex-start";
+    const flex = 'flex-start';
 
     return (
       <FormControl
@@ -176,7 +176,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
   }
 );
 
-FormRadioCard.displayName = "FormRadioCard";
-RadioCardGroup.displayName = "RadioCardGroup";
+FormRadioCard.displayName = 'FormRadioCard';
+RadioCardGroup.displayName = 'RadioCardGroup';
 
 export default FormRadioCard;

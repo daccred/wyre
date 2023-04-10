@@ -1,8 +1,8 @@
-import { Flex, Heading, Button } from "@chakra-ui/react";
-import type { ErrorInfo, ReactNode } from "react";
-import { Component } from "react";
+import { Flex, Heading, Button } from '@chakra-ui/react';
+import type { ErrorInfo, ReactNode } from 'react';
+import { Component } from 'react';
 
-import { WrapperInner } from "../layouts";
+import { WrapperInner } from '../layouts';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // eslint-disable-next-line no-console
-    console.error("Uncaught error:", error, errorInfo);
+    console.error('Uncaught error:', error, errorInfo);
   }
 
   public render() {

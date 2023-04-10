@@ -1,9 +1,9 @@
-import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Text } from '@chakra-ui/react';
+import React from 'react';
 
-import Header from "@wyrecc/components/core/Header";
+import Header from '@wyrecc/components/core/Header';
 
-import Transactions from "./transaction";
+import Transactions from './transaction';
 
 interface CardData {
   balance: string;
@@ -12,8 +12,8 @@ interface CardData {
 
 const cardData: CardData[] = [
   {
-    balance: "USD 10,400.00",
-    label: "Gross Salary",
+    balance: 'USD 10,400.00',
+    label: 'Gross Salary',
   },
 ];
 

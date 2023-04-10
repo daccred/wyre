@@ -1,9 +1,9 @@
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import type { Input } from "@chakra-ui/input";
-import { Flex, FormErrorMessage, Textarea } from "@chakra-ui/react";
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext } from "react-hook-form";
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import type { Input } from '@chakra-ui/input';
+import { Flex, FormErrorMessage, Textarea } from '@chakra-ui/react';
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
@@ -11,8 +11,8 @@ export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof I
   /** Field label. */
   label?: string;
   /** Field type. Doesn't include radio buttons and checkboxes */
-  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  outerProps?: PropsWithoutRef<JSX.IntrinsicElements['div']>;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
 }
 
 export const FormTextarea = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
@@ -37,9 +37,9 @@ export const FormTextarea = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
         <Textarea
           w="full"
           rounded="lg"
-          _placeholder={{ fontSize: "md" }}
-          _hover={{ borderColor: "primary" }}
-          _focus={{ borderColor: "primary" }}
+          _placeholder={{ fontSize: 'md' }}
+          _hover={{ borderColor: 'primary' }}
+          _focus={{ borderColor: 'primary' }}
           disabled={isSubmitting}
           {...register(name)}
           {...props}
@@ -54,6 +54,6 @@ export const FormTextarea = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
   }
 );
 
-FormTextarea.displayName = "FormTextarea";
+FormTextarea.displayName = 'FormTextarea';
 
 export default FormTextarea;

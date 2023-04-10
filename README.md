@@ -1,12 +1,17 @@
-# Wyre
+<h1 align="center">WYRE (Opensource Spend Infrastructure)</h1>
 
-**Wyre** is an open-source expense payroll infrastructure. We help businesses to:
+<div align="center">
+**Wyre** is an open-source expende and payroll infrastructure. It's a platform that allows businesses to manage their payroll and employee benefits in a single place. It's built with the goal of making spend on vendors, contractors and employees as easy as possible. 
+</div>
 
-🚀 Digitalize your payroll process without worrying about geographic limitations.
+## ✨ Features
 
-🔖 Own your payroll infrastructure and get full control of your employee's compensation data.
-
-💅 Pay employees in any currency of choice including cryptocurrency.
+- 🚀 Digitalize your payroll process without worrying about geographic limitations.
+- 🔖 Own your payroll infrastructure and manage employee compensation, benefits, and taxes.
+- 💅 Pay employees in any currency of choice including cryptocurrency.
+- 📦 Pay vendors and contractors in any currency of choice including cryptocurrency.
+- 📦 Enable employees to request reimbursements and get paid in any currency of choice including cryptocurrency.
+- 📦 Enable contractors to request payments and automatically generate invoices for those transactions
 
 <img width="1440" alt="Dashboard" src="https://user-images.githubusercontent.com/80969653/224554162-916aca6c-a55d-4fa4-a481-2ab109ac60ac.png">
 

@@ -10,18 +10,18 @@ import {
   Grid,
   GridItem,
   Button,
-} from "@chakra-ui/react";
-import React from "react";
-import { FiChevronLeft } from "react-icons/fi";
-import z from "zod";
+} from '@chakra-ui/react';
+import React from 'react';
+import { FiChevronLeft } from 'react-icons/fi';
+import z from 'zod';
 
-import { FormInput, FormSelect, useForm } from "@wyrecc/components";
-import Header from "@wyrecc/components/core/Header";
+import { FormInput, FormSelect, useForm } from '@wyrecc/components';
+import Header from '@wyrecc/components/core/Header';
 
 const manageProfileValidationSchema = z.object({
-  cryptocurrency: z.string().min(1, "Crypto Currency is required"),
-  walletAddress: z.string().min(1, "Wallet Address is required"),
-  salaryPercentage: z.number().min(1, "Wallet Address is required"),
+  cryptocurrency: z.string().min(1, 'Crypto Currency is required'),
+  walletAddress: z.string().min(1, 'Wallet Address is required'),
+  salaryPercentage: z.number().min(1, 'Wallet Address is required'),
 });
 
 type FormInputOptions = z.infer<typeof manageProfileValidationSchema>;
@@ -55,11 +55,11 @@ const View = () => {
                   label="Select Cryptocurrency"
                   name="cryptocurrency"
                   options={[
-                    { value: "BTC", label: "Bitcoin(BTC)" },
-                    { value: "ETH", label: "Ethereum(ETH)" },
-                    { value: "USDT", label: "Tether (USDT)" },
-                    { value: "BNB", label: "Binance Coin (BNB)" },
-                    { value: "USDC", label: "U.S. Dollar Coin (USDC)" },
+                    { value: 'BTC', label: 'Bitcoin(BTC)' },
+                    { value: 'ETH', label: 'Ethereum(ETH)' },
+                    { value: 'USDT', label: 'Tether (USDT)' },
+                    { value: 'BNB', label: 'Binance Coin (BNB)' },
+                    { value: 'USDC', label: 'U.S. Dollar Coin (USDC)' },
                   ]}
                 />
               </GridItem>
@@ -80,7 +80,7 @@ const View = () => {
                 />
               </GridItem>
             </Grid>
-            <Button bg="primary.500" color="white" _hover={{ hover: "none" }}>
+            <Button bg="primary.500" color="white" _hover={{ hover: 'none' }}>
               Add Wallet
             </Button>
           </Stack>

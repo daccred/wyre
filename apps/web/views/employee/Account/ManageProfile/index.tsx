@@ -10,22 +10,22 @@ import {
   Grid,
   GridItem,
   Button,
-} from "@chakra-ui/react";
-import React from "react";
-import { FiChevronLeft } from "react-icons/fi";
-import z from "zod";
+} from '@chakra-ui/react';
+import React from 'react';
+import { FiChevronLeft } from 'react-icons/fi';
+import z from 'zod';
 
-import { FormInput, useForm } from "@wyrecc/components";
-import Header from "@wyrecc/components/core/Header";
+import { FormInput, useForm } from '@wyrecc/components';
+import Header from '@wyrecc/components/core/Header';
 
 const manageProfileValidationSchema = z.object({
-  lastName: z.string().min(1, "Last name is required"),
-  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z.string().min(1, 'First name is required'),
   email: z.string().email(),
   phoneNumber: z
     .string()
     .regex(/^(\+)?[1-9]\d{1,14}$/)
-    .transform((value) => (value.startsWith("+") ? value : `+${value}`)),
+    .transform((value) => (value.startsWith('+') ? value : `+${value}`)),
   country: z.string(),
   city: z.string(),
 });
@@ -76,7 +76,7 @@ const View = () => {
                 <FormInput name="city" label="City" placeholder="City" />
               </GridItem>
             </Grid>
-            <Button bg="primary.500" color="white" _hover={{ hover: "none" }}>
+            <Button bg="primary.500" color="white" _hover={{ hover: 'none' }}>
               Save Profile
             </Button>
           </Stack>

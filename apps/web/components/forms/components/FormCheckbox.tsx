@@ -1,16 +1,16 @@
 /* eslint-disable import/default */
-import { FormControl } from "@chakra-ui/form-control";
-import type { Input } from "@chakra-ui/input";
-import { Checkbox, FormErrorMessage, Text } from "@chakra-ui/react";
-import type { ComponentPropsWithoutRef } from "react";
-import React, { forwardRef } from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import type { Input } from '@chakra-ui/input';
+import { Checkbox, FormErrorMessage } from '@chakra-ui/react';
+import type { ComponentPropsWithoutRef } from 'react';
+import React, { forwardRef } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
 
 export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
   name: string;
   label?: string;
-  props?: ComponentPropsWithoutRef<"input">;
+  props?: ComponentPropsWithoutRef<'input'>;
 }
 
 const FormCheckbox = forwardRef<HTMLInputElement, LabeledTextFieldProps>(({ label, name, ...props }, ref) => {
@@ -30,7 +30,9 @@ const FormCheckbox = forwardRef<HTMLInputElement, LabeledTextFieldProps>(({ labe
         control={control}
         render={({ field }) => (
           <Checkbox {...field} onChange={(e) => field.onChange(e.target.checked)}>
-            <Text fontSize="sm">{label ?? "I agree to the Terms of use and Privacy Policy"}</Text>
+            <FormLabel htmlFor={name} fontSize="sm">
+              {label ?? 'I agree to the Terms of use and Privacy Policy'}
+            </FormLabel>
           </Checkbox>
         )}
       />
@@ -43,6 +45,6 @@ const FormCheckbox = forwardRef<HTMLInputElement, LabeledTextFieldProps>(({ labe
   );
 });
 
-FormCheckbox.displayName = "FormCheckbox";
+FormCheckbox.displayName = 'FormCheckbox';
 
 export default FormCheckbox;

@@ -1,7 +1,7 @@
-import { createIcon } from "@chakra-ui/react";
+import { createIcon } from '@chakra-ui/react';
 
 export const CreditCardIcon = createIcon({
-  displayName: "CreditCardIcon",
+  displayName: 'CreditCardIcon',
   path: (
     <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -16,7 +16,7 @@ export const CreditCardIcon = createIcon({
 });
 
 export const UserIcon = createIcon({
-  displayName: "UserIcon",
+  displayName: 'UserIcon',
   path: (
     <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -31,7 +31,7 @@ export const UserIcon = createIcon({
 });
 
 export const LayoutIcon = createIcon({
-  displayName: "LayoutIcon",
+  displayName: 'LayoutIcon',
   path: (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -46,7 +46,7 @@ export const LayoutIcon = createIcon({
 });
 
 export const ArrowRightIcon = createIcon({
-  displayName: "ArrowRightIcon",
+  displayName: 'ArrowRightIcon',
   path: (
     <svg width="" height="" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -61,7 +61,7 @@ export const ArrowRightIcon = createIcon({
 });
 
 export const TeamIcon = createIcon({
-  displayName: "TeamIcon",
+  displayName: 'TeamIcon',
   path: (
     <svg width="31" height="27" viewBox="0 0 31 27" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -73,7 +73,7 @@ export const TeamIcon = createIcon({
 });
 
 export const CalenderIcon = createIcon({
-  displayName: "CalenderIcon",
+  displayName: 'CalenderIcon',
   path: (
     <svg width="" height="" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path

@@ -9,24 +9,24 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import z from "zod";
+} from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import z from 'zod';
 
-import { FormInput, useForm, FormNativeSelect } from "../../components/forms";
-import { trpc } from "../../utils/trpc";
-import { PeopleIcon } from "./ProviderIcons";
+import { FormInput, useForm, FormNativeSelect } from '../../components/forms';
+import { trpc } from '../../utils/trpc';
+import { PeopleIcon } from './ProviderIcons';
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
+  name: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: "Required" }),
-  jobRole: z.string().min(1, { message: "Required" }),
-  grossSalary: z.string().min(1, { message: "Required" }),
-  signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.enum(["CONTRACTOR", "EMPLOYEE"]).default("EMPLOYEE"),
-  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+  department: z.string().min(1, { message: 'Required' }),
+  jobRole: z.string().min(1, { message: 'Required' }),
+  grossSalary: z.string().min(1, { message: 'Required' }),
+  signingBonus: z.string().min(1, { message: 'Required' }),
+  category: z.enum(['CONTRACTOR', 'EMPLOYEE']).default('EMPLOYEE'),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -54,7 +54,7 @@ export default function AddEmployee({
       salary: data.grossSalary,
       signBonus: data.signingBonus,
       status: true,
-      category: "EMPLOYEE",
+      category: 'EMPLOYEE',
       payrollMethod: data.payrollMethod,
     });
   };
@@ -73,11 +73,11 @@ export default function AddEmployee({
     },
     onError(error: any) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -123,9 +123,9 @@ export default function AddEmployee({
                     label="Payroll Method"
                     placeholder="Select Category"
                     options={[
-                      { label: "CRYPTO", value: "CRYPTO" },
-                      { label: "Bank", value: "BANK" },
-                      { label: "Mobile Money", value: "MOBILEMONEY" },
+                      { label: 'CRYPTO', value: 'CRYPTO' },
+                      { label: 'Bank', value: 'BANK' },
+                      { label: 'Mobile Money', value: 'MOBILEMONEY' },
                     ]}
                   />
                 </HStack>
@@ -143,7 +143,7 @@ export default function AddEmployee({
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"
-                _hover={{ bg: "" }}>
+                _hover={{ bg: '' }}>
                 Add Employee
               </Button>
             </Stack>

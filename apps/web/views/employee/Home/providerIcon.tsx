@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const EmptyPayrollImage = (props: HTMLChakraProps<"svg">) => (
+export const EmptyPayrollImage = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={197}
     height={175}
@@ -19,7 +19,7 @@ export const EmptyPayrollImage = (props: HTMLChakraProps<"svg">) => (
       opacity="0.4"
       d="M34.5254 57.5315L35.1206 60.8238C35.1644 63.2161 37.1194 65.1405 39.5225 65.1405H72.2321C74.6628 65.1405 76.6349 63.1719 76.6349 60.7416C76.6349 59.2739 77.8262 58.0824 79.2979 58.0824H89.1092C91.9239 58.0824 94.204 60.3615 94.204 63.1707V107.619C94.2013 110.428 91.9231 112.706 89.1092 112.71C89.1088 112.71 89.1085 112.71 89.1081 112.71M34.5254 57.5315L89.1081 112.71M34.5254 57.5315L28.7297 50.1507L28.7255 50.1454L28.7255 50.1454C28.4984 49.8515 28.1463 49.6805 27.774 49.6838L27.7662 49.6839V49.6839H16.6474C15.9705 49.6849 15.4236 50.2327 15.4228 50.9067L15.4228 50.9221L15.4222 50.9375L15.1927 57.196L15.1619 58.034H14.3234H10.1197C6.88607 58.034 4.26632 60.6522 4.26632 63.88V107.62C4.26632 110.43 6.54718 112.71 9.36279 112.71L89.1081 112.71M34.5254 57.5315L89.1081 112.71"
       stroke="#020C13"
-      stroke-width="1.73967"
+      strokeWidth="1.73967"
     />
     <path
       d="M47.0698 97.936C42.4285 97.936 38.666 94.1777 38.666 89.5415C38.666 84.9053 42.4285 81.147 47.0698 81.147C51.711 81.147 55.4735 84.9053 55.4735 89.5415C55.4735 94.1777 51.711 97.936 47.0698 97.936Z"
@@ -125,9 +125,9 @@ export const ArrowRightIcon = () => (
     <path
       d="M9.33398 11.6665L4.66732 6.99984L9.33398 2.33317"
       stroke="#020C13"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </chakra.svg>
 );

@@ -9,22 +9,22 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import z from "zod";
+} from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import z from 'zod';
 
-import { FormInput, useForm } from "../../components/forms";
-import { trpc } from "../../utils/trpc";
-import { PeopleIcon } from "./ProviderIcons";
+import { FormInput, useForm } from '../../components/forms';
+import { trpc } from '../../utils/trpc';
+import { PeopleIcon } from './ProviderIcons';
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
+  name: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: "Deparment is Required" }),
-  jobRole: z.string().min(1, { message: "JobRole is Required" }),
-  grossSalary: z.string().min(1, { message: "Gross salary is Required" }),
-  signingBonus: z.string().min(1, { message: "Bonus is Required" }),
+  department: z.string().min(1, { message: 'Deparment is Required' }),
+  jobRole: z.string().min(1, { message: 'JobRole is Required' }),
+  grossSalary: z.string().min(1, { message: 'Gross salary is Required' }),
+  signingBonus: z.string().min(1, { message: 'Bonus is Required' }),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
@@ -52,7 +52,7 @@ export default function AddContractor({
       grossSalary: data.grossSalary,
       signingBonus: data.signingBonus,
       status: true,
-      category: "CONTRACTOR",
+      category: 'CONTRACTOR',
     });
   };
 
@@ -70,11 +70,11 @@ export default function AddContractor({
     },
     onError(error: any) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -130,7 +130,7 @@ export default function AddContractor({
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"
-                _hover={{ bg: "" }}>
+                _hover={{ bg: '' }}>
                 Add Contractor
               </Button>
             </Stack>

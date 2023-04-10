@@ -1,9 +1,9 @@
-import { prisma } from "@wyrecc/db";
+import { prisma } from '@wyrecc/db';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
-import type { ITeamSchema } from "../interfaces";
-import { ServerError } from "../utils/server-error";
+import type { ITeamSchema } from '../interfaces';
+import { ServerError } from '../utils/server-error';
 
 export class TeamService {
   static async createPersonnel(input: ITeamSchema) {
@@ -16,8 +16,8 @@ export class TeamService {
 
       if (teamExists) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "team already exists",
+          code: 'BAD_REQUEST',
+          message: 'team already exists',
         });
       }
       const team = await prisma.team.create({
@@ -35,8 +35,8 @@ export class TeamService {
 
       if (!team)
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create team",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create team',
         });
 
       return team;
@@ -51,8 +51,8 @@ export class TeamService {
       });
       if (!personnel) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Failed to delete team",
+          code: 'NOT_FOUND',
+          message: 'Failed to delete team',
         });
       }
       const updatedPersonnel = await prisma.team.update({
@@ -68,15 +68,15 @@ export class TeamService {
     }
   }
 
-  static async updatePaymentMethod(personnelId: string, payrollMethod: "CRYPTO" | "BANK" | "MOBILEMONEY") {
+  static async updatePaymentMethod(personnelId: string, payrollMethod: 'CRYPTO' | 'BANK' | 'MOBILEMONEY') {
     try {
       const personnel = await prisma.team.delete({
         where: { id: personnelId },
       });
       if (!personnel) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Failed to delete team",
+          code: 'NOT_FOUND',
+          message: 'Failed to delete team',
         });
       }
       const updatedPersonnel = await prisma.team.update({
@@ -108,8 +108,8 @@ export class TeamService {
 
       if (!team)
         throw new TRPCError({
-          code: "PRECONDITION_FAILED",
-          message: "Failed to update team",
+          code: 'PRECONDITION_FAILED',
+          message: 'Failed to update team',
         });
 
       return team;
@@ -126,11 +126,11 @@ export class TeamService {
 
       if (!personnel) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Failed to delete team",
+          code: 'NOT_FOUND',
+          message: 'Failed to delete team',
         });
       }
-      return "team deleted successfully";
+      return 'team deleted successfully';
     } catch (error) {
       ServerError(error);
     }
@@ -139,14 +139,14 @@ export class TeamService {
   static async getSinglePersonnel(teamId: string) {
     try {
       const team = await prisma.team.findFirst({
-        where: { teamCategory: "EMPLOYEE", id: teamId },
+        where: { teamCategory: 'EMPLOYEE', id: teamId },
         include: { expense: true, payroll: true },
       });
 
       if (!team) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
+          code: 'NOT_FOUND',
+          message: 'Team not found',
         });
       }
       return team;
@@ -158,14 +158,14 @@ export class TeamService {
   static async getSingleContractor(teamId: string) {
     try {
       const team = await prisma.team.findFirst({
-        where: { teamCategory: "CONTRACTOR", id: teamId },
+        where: { teamCategory: 'CONTRACTOR', id: teamId },
         include: { expense: true, payroll: true },
       });
 
       if (!team) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
+          code: 'NOT_FOUND',
+          message: 'Team not found',
         });
       }
       return team;
@@ -177,13 +177,13 @@ export class TeamService {
   static async getPersonnel() {
     try {
       const teams = await prisma.team.findMany({
-        where: { teamCategory: "EMPLOYEE" },
+        where: { teamCategory: 'EMPLOYEE' },
       });
 
       if (!teams) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Teams not found",
+          code: 'NOT_FOUND',
+          message: 'Teams not found',
         });
       }
 
@@ -195,13 +195,13 @@ export class TeamService {
   static async getContractors() {
     try {
       const teams = await prisma.team.findMany({
-        where: { teamCategory: "CONTRACTOR" },
+        where: { teamCategory: 'CONTRACTOR' },
       });
 
       if (!teams) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Teams not found",
+          code: 'NOT_FOUND',
+          message: 'Teams not found',
         });
       }
 

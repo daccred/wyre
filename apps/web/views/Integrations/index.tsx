@@ -1,9 +1,9 @@
-import { Box, HStack, Image, Input, Stack, Switch, Text } from "@chakra-ui/react";
-import { useState } from "react";
-import { FiSearch } from "react-icons/fi";
+import { Box, HStack, Image, Input, Stack, Switch, Text } from '@chakra-ui/react';
+import { useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
 
-import ViewLayout from "../../components/core/ViewLayout";
-import APIForm from "./APIForm";
+import ViewLayout from '../../components/core/ViewLayout';
+import APIForm from './APIForm';
 import {
   AnchorIcon,
   CoinProfileIcon,
@@ -13,79 +13,79 @@ import {
   MonoIcon,
   PaystackIcon,
   StitchIcon,
-} from "./ProviderIcons";
+} from './ProviderIcons';
 
 const Integrations = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const openServices = [
     {
-      name: "Mono",
-      subtitle: "Reliable open banking platform for businesses in Africa",
+      name: 'Mono',
+      subtitle: 'Reliable open banking platform for businesses in Africa',
       logo: <MonoIcon />,
     },
     {
-      name: "Stitch",
-      subtitle: "Secure online payment and financial data API",
+      name: 'Stitch',
+      subtitle: 'Secure online payment and financial data API',
       logo: <StitchIcon />,
     },
     {
-      name: "Anchor",
-      subtitle: "Build your financial  service product",
+      name: 'Anchor',
+      subtitle: 'Build your financial  service product',
       logo: <AnchorIcon />,
     },
     {
-      name: "OnePipe",
-      subtitle: "Launch or embed financial service in days not weeks",
+      name: 'OnePipe',
+      subtitle: 'Launch or embed financial service in days not weeks',
       logo: <Image src="images/onepipe.png" alt="" boxSize="30px" />,
     },
   ];
 
   const fiatServices = [
     {
-      name: "Paystack",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'Paystack',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <PaystackIcon />,
     },
     {
-      name: "ExpressPayGH",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'ExpressPayGH',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <Image src="images/expresspaygh.png" alt="" boxSize="30px" />,
     },
     {
-      name: "Flutterwave",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'Flutterwave',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <FlutterwaveIcon />,
     },
   ];
 
   const cryptoServices = [
     {
-      name: "Fluidcoins",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'Fluidcoins',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <FluidCoinsIcon />,
     },
     {
-      name: "Lazerpay",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'Lazerpay',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <LazerPayIcon />,
     },
     {
-      name: "Coinprofile",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'Coinprofile',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <CoinProfileIcon />,
     },
   ];
 
   const mobileMoneyServices = [
     {
-      name: "MTN Momo",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'MTN Momo',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <Image src="images/mtn momo.png" alt="" boxSize="30px" />,
     },
     {
-      name: "MPesa",
-      subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.",
+      name: 'MPesa',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices.',
       logo: <Image src="images/mpesa.png" alt="" boxSize="30px" />,
     },
   ];
@@ -110,7 +110,7 @@ const Integrations = () => {
               px="0"
               py="1"
               h="40px"
-              w={{ base: "auto", lg: "250px" }}
+              w={{ base: 'auto', lg: '250px' }}
               fontSize="sm"
               placeholder="Search Payment Service"
               value={searchTerm}

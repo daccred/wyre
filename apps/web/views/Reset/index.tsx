@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 
-import { FormInput } from "../../components";
+import { FormInput } from '../../components';
 
 const View = ({
   isSubmitting,
@@ -26,7 +26,7 @@ const View = ({
   setPinInputData: React.Dispatch<React.SetStateAction<string>>;
 }) => (
   <>
-    <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+    <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
       <Stack flex={1}>
         <Link href="/">
           <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
@@ -39,7 +39,7 @@ const View = ({
                 color="#010C14"
                 fontWeight="bold"
                 lineHeight={1.1}
-                fontSize={{ base: "3xl", md: "4xl" }}>
+                fontSize={{ base: '3xl', md: '4xl' }}>
                 Reset Password
               </Heading>
               <Text color="#010C14">Enter the OTP we sent to your email address</Text>
@@ -87,7 +87,7 @@ const View = ({
                 bgColor="#010C14"
                 p="3"
                 _hover={{
-                  bg: "#210D35",
+                  bg: '#210D35',
                 }}>
                 Reset Password
               </Button>

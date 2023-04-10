@@ -10,15 +10,15 @@ import {
   useToast,
   HStack,
   Button,
-} from "@chakra-ui/react";
-import { FormSelect, FormInput, useForm } from "components";
-import CustomTab from "components/customTab";
-import { useRouter } from "next/router";
-import React from "react";
-import { trpc } from "utils/trpc";
-import z from "zod";
+} from '@chakra-ui/react';
+import { FormSelect, FormInput, useForm } from 'components';
+import CustomTab from 'components/customTab';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { trpc } from 'utils/trpc';
+import z from 'zod';
 
-import styledToast from "../../../components/core/StyledToast";
+import styledToast from '../../../components/core/StyledToast';
 
 const addEmployeeValidationSchema = z.object({});
 
@@ -36,8 +36,8 @@ const ManageEmployee = () => {
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
     styledToast({
-      status: "success",
-      description: "Compensation has been updated successfully",
+      status: 'success',
+      description: 'Compensation has been updated successfully',
       toast: toast,
     });
   };
@@ -69,8 +69,8 @@ const ManageEmployee = () => {
                       label="Select Country"
                       name="bankCountry"
                       options={[
-                        { value: "GH", label: "Ghana" },
-                        { value: "NIG", label: "Nigeria" },
+                        { value: 'GH', label: 'Ghana' },
+                        { value: 'NIG', label: 'Nigeria' },
                       ]}
                     />
                   </GridItem>
@@ -79,10 +79,10 @@ const ManageEmployee = () => {
                       label="Select Bank"
                       name="bankName"
                       options={[
-                        { value: "Access", label: "Access Bank" },
-                        { value: "Stanbic", label: "Stanbic Bank" },
-                        { value: "Ecobank", label: "EcoBank" },
-                        { value: "Fidelity", label: "Fidelity Bank" },
+                        { value: 'Access', label: 'Access Bank' },
+                        { value: 'Stanbic', label: 'Stanbic Bank' },
+                        { value: 'Ecobank', label: 'EcoBank' },
+                        { value: 'Fidelity', label: 'Fidelity Bank' },
                       ]}
                     />
                   </GridItem>
@@ -113,10 +113,10 @@ const ManageEmployee = () => {
                       label="Select Cryptocurrency"
                       name="cryptocurrency"
                       options={[
-                        { value: "BTC", label: "Bitcoin(BTC)" },
-                        { value: "ETH", label: "Ethereum(ETH)" },
-                        { value: "BNB", label: "Binance Coin (BNB)" },
-                        { value: "USDC", label: "U.S. Dollar Coin (USDC)" },
+                        { value: 'BTC', label: 'Bitcoin(BTC)' },
+                        { value: 'ETH', label: 'Ethereum(ETH)' },
+                        { value: 'BNB', label: 'Binance Coin (BNB)' },
+                        { value: 'USDC', label: 'U.S. Dollar Coin (USDC)' },
                       ]}
                     />
                   </GridItem>
@@ -147,9 +147,9 @@ const ManageEmployee = () => {
                       label="Select Mobile Money Provider"
                       name="mobileMoneyProvider"
                       options={[
-                        { value: "MTN", label: "MTN" },
-                        { value: "VODAFONE", label: "VODAFONE" },
-                        { value: "AIRTELTIGO", label: "AIRTELTIGO" },
+                        { value: 'MTN', label: 'MTN' },
+                        { value: 'VODAFONE', label: 'VODAFONE' },
+                        { value: 'AIRTELTIGO', label: 'AIRTELTIGO' },
                       ]}
                     />
                   </GridItem>

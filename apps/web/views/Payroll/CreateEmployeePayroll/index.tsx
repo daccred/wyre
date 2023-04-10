@@ -19,23 +19,23 @@ import {
   useDisclosure,
   useToast,
   VStack,
-} from "@chakra-ui/react";
-import type { Team } from "@prisma/client";
-import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useMemo, useState } from "react";
-import { FiChevronRight, FiSearch } from "react-icons/fi";
-import type z from "zod";
+} from '@chakra-ui/react';
+import type { Team } from '@prisma/client';
+import { useRouter } from 'next/dist/client/router';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FiChevronRight, FiSearch } from 'react-icons/fi';
+import type z from 'zod';
 
-import { FormInput, FormNativeSelect, useForm } from "../../../components";
-import RowSelectTable from "../../../components/CustomTable/RowSelectTable";
-import ViewLayout from "../../../components/core/ViewLayout";
-import FormDateInput from "../../../components/forms/components/FormDateInput";
-import { trpc } from "../../../utils/trpc";
-import { EmptyEmployeeImage } from "../../../views/Employees/ProviderIcons";
-import SuccessModal from "../modals/SuccessModal";
-import { createEmployeePayrollPath } from "../routes";
-import { createPayrollValidationSchema } from "../utils/misc";
-import { createPayrollColumns } from "../utils/tableColumns";
+import { FormInput, FormNativeSelect, useForm } from '../../../components';
+import RowSelectTable from '../../../components/CustomTable/RowSelectTable';
+import ViewLayout from '../../../components/core/ViewLayout';
+import FormDateInput from '../../../components/forms/components/FormDateInput';
+import { trpc } from '../../../utils/trpc';
+import { EmptyEmployeeImage } from '../../../views/Employees/ProviderIcons';
+import SuccessModal from '../modals/SuccessModal';
+import { createEmployeePayrollPath } from '../routes';
+import { createPayrollValidationSchema } from '../utils/misc';
+import { createPayrollColumns } from '../utils/tableColumns';
 
 type FormInputOptions = z.infer<typeof createPayrollValidationSchema>;
 
@@ -45,8 +45,8 @@ const CreateEmployeePayroll = () => {
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("All departments");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('All departments');
 
   const { data: employeeData, isLoading } = trpc.team.getPersonnel.useQuery();
 
@@ -81,7 +81,7 @@ const CreateEmployeePayroll = () => {
     }
 
     let filteredData = employeeData;
-    if (selectedDepartment !== "All departments") {
+    if (selectedDepartment !== 'All departments') {
       filteredData = employeeData?.filter(
         (data) => data?.department?.toLowerCase() === selectedDepartment?.toLowerCase()
       );
@@ -101,7 +101,7 @@ const CreateEmployeePayroll = () => {
     handleSelectedRowsAmountChange(total);
   }, [selectedRows]);
 
-  const departmentOptions = useMemo(() => ["All departments", "Tech", "Finance", "Operations"], []);
+  const departmentOptions = useMemo(() => ['All departments', 'Tech', 'Finance', 'Operations'], []);
 
   const totalEmployeesSelected = selectedEmployees.length;
 
@@ -120,11 +120,11 @@ const CreateEmployeePayroll = () => {
     },
     onError(error: any) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -146,16 +146,16 @@ const CreateEmployeePayroll = () => {
     onSubmit: handleSubmit,
     schema: createPayrollValidationSchema,
     defaultValues: {
-      title: "",
-      cycle: "daily",
+      title: '',
+      cycle: 'daily',
       auto: false,
       payday: undefined,
-      currency: "GHS",
+      currency: 'GHS',
       suspend: false,
     },
   });
 
-  console.log("tableData", tableData);
+  console.log('tableData', tableData);
 
   return (
     <>
@@ -172,7 +172,7 @@ const CreateEmployeePayroll = () => {
           <BreadcrumbItem>
             <BreadcrumbLink
               href={createEmployeePayrollPath}
-              color={pathname === createEmployeePayrollPath ? "black" : "lightgrey"}
+              color={pathname === createEmployeePayrollPath ? 'black' : 'lightgrey'}
               isCurrentPage={true}>
               Create Employee Payroll
             </BreadcrumbLink>
@@ -194,9 +194,9 @@ const CreateEmployeePayroll = () => {
                       label="Payment Cycle"
                       placeholder="Payment Cycle"
                       options={[
-                        { label: "Daily", value: "daily" },
-                        { label: "Bi-Weekly", value: "bi-weekly" },
-                        { label: "Monthly", value: "monthly" },
+                        { label: 'Daily', value: 'daily' },
+                        { label: 'Bi-Weekly', value: 'bi-weekly' },
+                        { label: 'Monthly', value: 'monthly' },
                       ]}
                     />
 
@@ -301,7 +301,7 @@ const CreateEmployeePayroll = () => {
                   loadingText="Submitting"
                   iconSpacing="3"
                   w="100%"
-                  _hover={{ hover: "none" }}
+                  _hover={{ hover: 'none' }}
                   isDisabled={totalEmployeesSelected > 0 ? false : true}>
                   Create Payroll
                 </Button>

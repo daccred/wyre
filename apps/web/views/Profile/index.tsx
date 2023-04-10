@@ -8,14 +8,14 @@ import {
   StackDivider,
   Text,
   useToast,
-} from "@chakra-ui/react";
-import { FiUploadCloud } from "react-icons/fi";
-import z from "zod";
+} from '@chakra-ui/react';
+import { FiUploadCloud } from 'react-icons/fi';
+import z from 'zod';
 
-import styledToast from "../../components/core/StyledToast";
-import ViewLayout from "../../components/core/ViewLayout";
-import { FormInput, useForm } from "../../components/forms";
-import { ProfileIcon } from "./ProviderIcons";
+import styledToast from '../../components/core/StyledToast';
+import ViewLayout from '../../components/core/ViewLayout';
+import { FormInput, useForm } from '../../components/forms';
+import { ProfileIcon } from './ProviderIcons';
 
 const addEmployeeValidationSchema = z.object({});
 
@@ -27,8 +27,8 @@ const Profile = () => {
   const handleSubmit = async (data: FormInputOptions) => {
     console.log(JSON.stringify(data));
     styledToast({
-      status: "success",
-      description: "Profile has been updated successfully",
+      status: 'success',
+      description: 'Profile has been updated successfully',
       toast: toast,
     });
   };
@@ -80,9 +80,9 @@ const Profile = () => {
               />
 
               <Box>
-                <Text style={{ color: "#8D1CFF" }} display="inline-block" fontWeight="bold">
-                  Click to upload{" "}
-                </Text>{" "}
+                <Text style={{ color: '#8D1CFF' }} display="inline-block" fontWeight="bold">
+                  Click to upload{' '}
+                </Text>{' '}
                 or drag and drop
                 <Text>SVG, PNG, JPG or GIF (max. 800x400px)</Text>
               </Box>

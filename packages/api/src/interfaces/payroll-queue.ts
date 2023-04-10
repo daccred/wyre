@@ -1,4 +1,4 @@
-import type { ITeamSchema } from "./team";
+import type { ITeamSchema } from './team';
 
 export interface PayrollQueueSchema {
   payroll: string;

@@ -1,13 +1,13 @@
-import { useToast } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { trpc } from "utils/trpc";
-import z from "zod";
+import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { trpc } from 'utils/trpc';
+import z from 'zod';
 
-import { useForm } from "@wyrecc/components/forms";
+import { useForm } from '@wyrecc/components/forms';
 
-import { Meta } from "../layouts";
-import View from "../views/ForgotPassword";
+import { Meta } from '../layouts';
+import View from '../views/ForgotPassword';
 
 const forgotPasswordValidationSchema = z.object({
   email: z.string().email(),
@@ -22,11 +22,11 @@ export default function Page() {
     onSuccess: (data) => {
       if (data) {
         toast({
-          status: "success",
+          status: 'success',
           description: `Successful! Please check your email, ${data?.To} to reset your password.`,
           isClosable: true,
           duration: 5000,
-          position: "top-right",
+          position: 'top-right',
         });
         router.push({
           pathname: `/reset`,
@@ -36,11 +36,11 @@ export default function Page() {
     },
     onError(error: unknown) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });

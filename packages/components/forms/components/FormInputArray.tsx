@@ -1,17 +1,17 @@
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
+import type { ComponentWithAs, IconProps } from '@chakra-ui/react';
 import {
   FormErrorMessage,
   Icon,
   Button,
   InputLeftElement,
   Stack, // InputProps,
-} from "@chakra-ui/react";
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import React, { forwardRef } from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
-import { CgClose } from "react-icons/cg";
+} from '@chakra-ui/react';
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from 'react';
+import React, { forwardRef } from 'react';
+import { useFormContext, useFieldArray } from 'react-hook-form';
+import { CgClose } from 'react-icons/cg';
 
 export interface InputFieldArrayProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
@@ -26,11 +26,11 @@ export interface InputFieldArrayProps extends ComponentPropsWithoutRef<typeof In
   /** Field label. */
   label?: string;
   /** Field type. Doesn't include radio buttons and checkboxes */
-  type?: "text" | "password" | "email" | "number" | "tel" | "file";
-  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'file';
+  outerProps?: PropsWithoutRef<JSX.IntrinsicElements['div']>;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
   leftElement?: boolean;
-  icon?: ComponentWithAs<"svg", IconProps>;
+  icon?: ComponentWithAs<'svg', IconProps>;
   props?: ComponentPropsWithoutRef<typeof Input>;
 }
 
@@ -51,7 +51,7 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
       name: name,
     });
 
-    const _handleArrayAppend = () => limit && fields.length < limit && append(" ");
+    const _handleArrayAppend = () => limit && fields.length < limit && append(' ');
     const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
@@ -74,9 +74,9 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
                 <Input
                   size="lg"
                   fontSize="md"
-                  _placeholder={{ fontSize: "sm" }}
-                  _hover={{ borderColor: "primary" }}
-                  _focus={{ borderColor: "primary" }}
+                  _placeholder={{ fontSize: 'sm' }}
+                  _hover={{ borderColor: 'primary' }}
+                  _focus={{ borderColor: 'primary' }}
                   isDisabled={isSubmitting}
                   {...register(`${name}.${index}`)}
                   {...props}
@@ -106,7 +106,7 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
             justifyContent="flex-end"
             w="max-content"
             onClick={_handleArrayAppend}>
-            {addMoreText ?? "+"}
+            {addMoreText ?? '+'}
           </Button>
         </Stack>
         <FormErrorMessage fontSize="sm" role="alert" color="red.500">
@@ -117,6 +117,6 @@ export const FormInputArray = forwardRef<HTMLInputElement, InputFieldArrayProps>
   }
 );
 
-FormInputArray.displayName = "FormInputArray";
+FormInputArray.displayName = 'FormInputArray';
 
 export default FormInputArray;

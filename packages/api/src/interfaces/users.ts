@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 // create an interface for the user
 
@@ -7,7 +7,7 @@ export const UserSchema = z.object({
   // id: z.string(),
   name: z.string(),
   email: z.string(),
-  type: z.enum(["ADMIN", "USER"]),
+  type: z.enum(['ADMIN', 'USER']),
   phone: z.string(),
   password: z.string(),
   emailVerified: z.boolean(),

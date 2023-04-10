@@ -1,7 +1,7 @@
-import { Center, Stack, Text, Button, Flex, Heading, Link, HStack, Image } from "@chakra-ui/react";
-import * as React from "react";
+import { Center, Stack, Text, Button, Flex, Heading, Link, HStack, Image } from '@chakra-ui/react';
+import * as React from 'react';
 
-import { FormInput } from "@wyrecc/components/forms";
+import { FormInput } from '@wyrecc/components/forms';
 
 type Props = {
   isSubmitting: boolean;
@@ -11,20 +11,20 @@ const View: React.FC<Props> = (Props) => {
   const { isSubmitting } = Props;
 
   return (
-    <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+    <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
       <Stack flex={1}>
         <Link href="/">
           <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
         </Link>
 
-        <Flex flex={1} align={{ base: "", md: "start" }} p={12}>
+        <Flex flex={1} align={{ base: '', md: 'start' }} p={12}>
           <Stack spacing={8} w="full" maxW="md">
             <Stack>
-              <Text color="primary.100" fontWeight="bold" fontSize={{ base: "3xl", md: "4xl" }}>
+              <Text color="primary.100" fontWeight="bold" fontSize={{ base: '3xl', md: '4xl' }}>
                 Login
               </Text>
               <Text color="primary.100">
-                Don’t have an account?{" "}
+                Don’t have an account?{' '}
                 <Link color="#8D1CFF" fontWeight={600} href="/employee/sign-up">
                   Create Account
                 </Link>
@@ -53,7 +53,7 @@ const View: React.FC<Props> = (Props) => {
                   // _hover={{
                   //   bg: '#210D35',
                   // }}
-                  _hover={{ bg: "" }}>
+                  _hover={{ bg: '' }}>
                   Login
                 </Button>
                 <Center>

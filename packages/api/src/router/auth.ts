@@ -1,15 +1,15 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { resetPasswordSchema, signUpSchema, verifyEmailSchema } from "../interfaces";
-import { AuthService } from "../services";
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { resetPasswordSchema, signUpSchema, verifyEmailSchema } from '../interfaces';
+import { AuthService } from '../services';
+import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc';
 
 export const authRouter = createTRPCRouter({
   getSession: publicProcedure.query(({ ctx }) => {
     return ctx.session;
   }),
   getSecretMessage: protectedProcedure.query(() => {
-    return "You are logged in and can see this secret message!";
+    return 'You are logged in and can see this secret message!';
   }),
   adminSignUp: publicProcedure.input(signUpSchema).mutation(async ({ input }) => {
     const admin = await AuthService.adminSignUp(input);

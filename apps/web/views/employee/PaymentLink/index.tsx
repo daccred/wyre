@@ -10,19 +10,19 @@ import {
   Text,
   useDisclosure,
   VStack,
-} from "@chakra-ui/react";
-import React from "react";
-import z from "zod";
+} from '@chakra-ui/react';
+import React from 'react';
+import z from 'zod';
 
-import { FormInput, FormSelect, useForm } from "@wyrecc/components";
+import { FormInput, FormSelect, useForm } from '@wyrecc/components';
 
-import PaymentMethodType from "../Account/Modals/PaymentMethodType";
+import PaymentMethodType from '../Account/Modals/PaymentMethodType';
 
 const paymentLinkValidationSchema = z.object({
   email: z.string().email(),
-  amount: z.number().min(1, "Amount is required"),
-  purpose: z.string().min(1, "Purpose is required"),
-  paymentMethod: z.string().min(1, "Payment Method is required"),
+  amount: z.number().min(1, 'Amount is required'),
+  purpose: z.string().min(1, 'Purpose is required'),
+  paymentMethod: z.string().min(1, 'Payment Method is required'),
 });
 
 type FormInputOptions = z.infer<typeof paymentLinkValidationSchema>;
@@ -79,13 +79,13 @@ const View = () => {
                     label="Payment Method"
                     name="paymentMethod"
                     options={[
-                      { value: "Crypto", label: "Crypto" },
-                      { value: "Bank Transfer", label: "Bank Transfer" },
-                      { value: "Mobile Money", label: "Mobile Money" },
+                      { value: 'Crypto', label: 'Crypto' },
+                      { value: 'Bank Transfer', label: 'Bank Transfer' },
+                      { value: 'Mobile Money', label: 'Mobile Money' },
                     ]}
                   />
                   <Box mt={2}>
-                    Click to add a new{" "}
+                    Click to add a new{' '}
                     <Box
                       as="span"
                       color="primary.500"
@@ -97,7 +97,7 @@ const View = () => {
                   </Box>
                 </Box>
               </Stack>
-              <Button bg="primary.500" w="full" mt={6} color="white" _hover={{ hover: "none" }}>
+              <Button bg="primary.500" w="full" mt={6} color="white" _hover={{ hover: 'none' }}>
                 Submit
               </Button>
             </Box>

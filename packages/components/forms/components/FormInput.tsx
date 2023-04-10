@@ -1,7 +1,7 @@
-import type { FormControlProps } from "@chakra-ui/form-control";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
-import { Center } from "@chakra-ui/react";
+import type { FormControlProps } from '@chakra-ui/form-control';
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import type { ComponentWithAs, IconProps } from '@chakra-ui/react';
+import { Center } from '@chakra-ui/react';
 import {
   FormErrorMessage,
   Icon,
@@ -9,11 +9,11 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from "@chakra-ui/react";
-import React from "react";
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext } from "react-hook-form";
+} from '@chakra-ui/react';
+import React from 'react';
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
@@ -21,12 +21,12 @@ export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof I
   /** Field label. */
   label?: string;
   /** Field type. Doesn't include radio buttons and checkboxes */
-  type?: "text" | "password" | "email" | "number" | "tel" | "date" | "file";
+  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'date' | 'file';
   outerProps?: PropsWithoutRef<FormControlProps>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
   leftElement?: boolean;
   rightElement?: boolean;
-  icon?: ComponentWithAs<"svg", IconProps>;
+  icon?: ComponentWithAs<'svg', IconProps>;
   leftElementBank?: boolean;
   leftElementBankElement?: JSX.Element;
   props?: ComponentPropsWithoutRef<typeof Input>;
@@ -64,24 +64,24 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
     return (
       <FormControl ref={ref} {...outerProps} isInvalid={isErrorInField}>
         {label && (
-          <FormLabel fontSize="sm" {...labelProps} color="#666666">
+          <FormLabel fontSize="sm" {...labelProps}>
             {label}
           </FormLabel>
         )}
         <InputGroup
           style={{
-            borderColor: "#9f9f9f",
+            borderColor: '#9f9f9f',
           }}>
           {leftElement && (
             <InputLeftElement>
-              <Center style={{ borderRadius: "50%" }} bg="#161616" h="12" w="12">
+              <Center style={{ borderRadius: '50%' }} bg="#161616" h="12" w="12">
                 <Icon as={icon} color="primary.500" />
               </Center>
             </InputLeftElement>
           )}
           {leftElementBank && (
             <InputLeftElement>
-              <Center style={{ borderRadius: "50%" }} bg="#161616" h="12" w="12">
+              <Center style={{ borderRadius: '50%' }} bg="#161616" h="12" w="12">
                 {leftElementBankElement}
               </Center>
             </InputLeftElement>
@@ -89,19 +89,18 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
           <Input
             size="lg"
             fontSize="sm"
-            h="45px"
             p="7"
             border="1px solid #D2D2D2"
             rounded="5px"
             bg="#F7F7F7"
             color="#210D35"
             fontWeight="medium"
-            _placeholder={{ fontSize: "sm", color: "#D2D2D2" }}
-            _hover={{ borderColor: "primary" }}
-            _focus={{ borderColor: "primary" }}
+            _placeholder={{ fontSize: 'sm', color: '#D2D2D2' }}
+            _hover={{ borderColor: 'primary' }}
+            _focus={{ borderColor: 'primary' }}
             isDisabled={isSubmitting}
             {...register(name, {
-              valueAsNumber: type === "number",
+              valueAsNumber: type === 'number',
             })}
             type={type}
             {...props}
@@ -123,6 +122,6 @@ export const FormInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
   }
 );
 
-FormInput.displayName = "FormInput";
+FormInput.displayName = 'FormInput';
 
 export default FormInput;

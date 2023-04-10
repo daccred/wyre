@@ -1,6 +1,6 @@
-import { createClient } from "redis";
+import { createClient } from 'redis';
 
-import { env } from "@wyrecc/env";
+import { env } from '@wyrecc/env';
 
 const redisClient = createClient({
   socket: {
@@ -10,10 +10,10 @@ const redisClient = createClient({
 
   password: env.REDIS_PASSWORD,
 });
-redisClient.on("error", (err) => console.warn(err));
+redisClient.on('error', (err) => console.warn(err));
 redisClient
   .connect()
-  .then(() => console.log("Connected to Redis"))
-  .catch(() => console.warn("Failed to connect to Redis"));
+  .then(() => console.log('Connected to Redis'))
+  .catch(() => console.warn('Failed to connect to Redis'));
 
 export default redisClient;

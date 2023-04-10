@@ -1,7 +1,7 @@
-import { Text, Flex, Link, Icon, Stack } from "@chakra-ui/react";
-import React from "react";
+import { Text, Flex, Link, Icon, Stack } from '@chakra-ui/react';
+import React from 'react';
 
-import { ArrowRightIcon } from "./ProviderIcons";
+import { ArrowRightIcon } from './ProviderIcons';
 
 interface StatData {
   id: number;
@@ -35,7 +35,7 @@ const Card = ({ data }: { data: StatData }) => {
           {data.desc}
         </Text>
 
-        <Link href={data.link} style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+        <Link href={data.link} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
           <Flex
             align="center"
             justify="center"
@@ -45,8 +45,8 @@ const Card = ({ data }: { data: StatData }) => {
             w="fit-content"
             cursor="pointer"
             _hover={{
-              bg: "purple.50",
-              color: "white",
+              bg: 'purple.50',
+              color: 'white',
             }}>
             <Text color="purple.600" fontWeight="semibold">
               Proceed

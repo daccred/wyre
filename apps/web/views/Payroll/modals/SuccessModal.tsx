@@ -7,10 +7,10 @@ import {
   ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 
 const SuccessModal = ({
   closeSuccessModal,

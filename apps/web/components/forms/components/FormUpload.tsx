@@ -1,18 +1,18 @@
 /* eslint-disable */
-import { Box, Flex, HStack, Icon, Image, Spinner, Text, FormControl, FormLabel } from "@chakra-ui/react";
-import React, { ComponentPropsWithoutRef, forwardRef, useCallback, useEffect, useState } from "react";
-import { Accept, useDropzone } from "react-dropzone";
-import { useFormContext } from "react-hook-form";
-import { BsTrash } from "react-icons/bs";
-import { CgFileDocument } from "react-icons/cg";
-import { HiOutlineCloudUpload } from "react-icons/hi";
+import { Box, Flex, HStack, Icon, Image, Spinner, Text, FormControl, FormLabel } from '@chakra-ui/react';
+import React, { ComponentPropsWithoutRef, forwardRef, useCallback, useEffect, useState } from 'react';
+import { Accept, useDropzone } from 'react-dropzone';
+import { useFormContext } from 'react-hook-form';
+import { BsTrash } from 'react-icons/bs';
+import { CgFileDocument } from 'react-icons/cg';
+import { HiOutlineCloudUpload } from 'react-icons/hi';
 
 type Props = {
   name: string;
   label?: string;
   accept?: Accept;
   required?: boolean;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
 };
 
 const FormUpload = forwardRef<HTMLInputElement, Props>(
@@ -53,13 +53,13 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
 
     useEffect(
       () => () => {
-        files?.forEach((file: { preview: any }) => URL.revokeObjectURL(file.preview || ""));
+        files?.forEach((file: { preview: any }) => URL.revokeObjectURL(file.preview || ''));
       },
       [files]
     );
 
     const thumbs = files?.map((file: { name: string; preview: string | undefined }) => (
-      <Box w={"full"} key={file.name} pos="relative">
+      <Box w={'full'} key={file.name} pos="relative">
         {isSubmitting && (
           <Flex align="center" justify="center" pos="absolute" inset={0} h="full" w="full">
             <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -82,7 +82,7 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
               h={8}
               rounded="full"
               color="white"
-              onClick={() => removeHandler(file.name || "")}>
+              onClick={() => removeHandler(file.name || '')}>
               <Icon as={BsTrash} />
             </Flex>
           </>
@@ -104,7 +104,7 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
         </FormLabel>
         <HStack spacing="1.5rem">
           <FormLabel
-            minW={"full"}
+            minW={'full'}
             display="flex"
             w="full"
             alignItems="center"
@@ -116,7 +116,7 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
             rounded="xl"
             color="grayLight"
             {...getRootProps({
-              className: "dropzone",
+              className: 'dropzone',
               onClick: () => setTouched(true),
             })}>
             {files?.length >= 1 ? (
@@ -136,6 +136,6 @@ const FormUpload = forwardRef<HTMLInputElement, Props>(
   }
 );
 
-FormUpload.displayName = "FormUpload";
+FormUpload.displayName = 'FormUpload';
 
 export default FormUpload;

@@ -1,14 +1,14 @@
 // import type { NextAuthOptions } from "next-auth";
-import type { DefaultSession, DefaultUser } from "next-auth";
-import type { NextAuthOptions } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import type { DefaultSession, DefaultUser } from 'next-auth';
+import type { NextAuthOptions } from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
 
-import { prisma } from "@wyrecc/db";
+import { prisma } from '@wyrecc/db';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
-import { loginSchema } from "./interfaces";
-import { ServerError, verifyHash } from "./utils";
+import { loginSchema } from './interfaces';
+import { ServerError, verifyHash } from './utils';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -16,7 +16,7 @@ import { ServerError, verifyHash } from "./utils";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session extends DefaultSession {
     user?: User;
   }
@@ -66,14 +66,14 @@ export const nextAuthOptions: NextAuthOptions = {
 
     // ...add more providers here
     Credentials({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         email: {
-          label: "Email",
-          type: "email",
-          placeholder: "admin@gmail.com",
+          label: 'Email',
+          type: 'email',
+          placeholder: 'admin@gmail.com',
         },
-        password: { label: "Password", type: "password" },
+        password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials) => {
         try {
@@ -85,13 +85,13 @@ export const nextAuthOptions: NextAuthOptions = {
 
           if (!user) {
             throw new TRPCError({
-              code: "NOT_FOUND",
-              message: "User not found.",
+              code: 'NOT_FOUND',
+              message: 'User not found.',
             });
           } else if (!user.emailVerified) {
             throw new TRPCError({
-              code: "BAD_REQUEST",
-              message: "Your email is not verified",
+              code: 'BAD_REQUEST',
+              message: 'Your email is not verified',
             });
           }
 
@@ -99,8 +99,8 @@ export const nextAuthOptions: NextAuthOptions = {
 
           if (!isValidPassword) {
             throw new TRPCError({
-              code: "BAD_REQUEST",
-              message: "Your username or password is incorrect",
+              code: 'BAD_REQUEST',
+              message: 'Your username or password is incorrect',
             });
           }
           return {
@@ -140,10 +140,10 @@ export const nextAuthOptions: NextAuthOptions = {
     maxAge: 1 * 24 * 60 * 60, // 1 days
   },
   pages: {
-    signIn: "/login",
-    newUser: "/sign-up",
-    error: "/login",
+    signIn: '/login',
+    newUser: '/sign-up',
+    error: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV == "development",
+  debug: process.env.NODE_ENV == 'development',
 };

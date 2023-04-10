@@ -1,7 +1,7 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
 
-export const CreateIcon = (props: HTMLChakraProps<"svg">) => (
+export const CreateIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={35}
     height={35}
@@ -16,7 +16,7 @@ export const CreateIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const InstantPayment = (props: HTMLChakraProps<"svg">) => (
+export const InstantPayment = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={35}
     height={35}
@@ -31,7 +31,7 @@ export const InstantPayment = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const ChevronRight = (props: HTMLChakraProps<"svg">) => (
+export const ChevronRight = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={16}
     height={16}
@@ -42,14 +42,14 @@ export const ChevronRight = (props: HTMLChakraProps<"svg">) => (
     <path
       d="M6 13.3335L11.3333 8.00016L6 2.66683"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </chakra.svg>
 );
 
-export const CheckedIcon = (props: HTMLChakraProps<"svg">) => (
+export const CheckedIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={5}
     height={5}

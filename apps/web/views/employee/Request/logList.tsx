@@ -1,8 +1,8 @@
-import { Flex, Stack, Box, Icon, Text, Grid, Skeleton, HStack } from "@chakra-ui/react";
-import { Fragment } from "react";
-import { GoPrimitiveDot } from "react-icons/go";
+import { Flex, Stack, Box, Icon, Text, Grid, Skeleton, HStack } from '@chakra-ui/react';
+import { Fragment } from 'react';
+import { GoPrimitiveDot } from 'react-icons/go';
 
-import { IndicatorIcon } from "./providerIcon";
+import { IndicatorIcon } from './providerIcon';
 
 interface Request {
   id: number;
@@ -70,7 +70,7 @@ const LogList = ({ requests, isLoading }: RequestListProps) => {
                 rounded="10px"
                 bg="#F7F7F7"
                 my={3}
-                _hover={{ bg: "gray.200" }}
+                _hover={{ bg: 'gray.200' }}
                 cursor="pointer">
                 <Stack spacing={0} direction="row" alignItems="center">
                   <Flex px={3}>
@@ -80,7 +80,7 @@ const LogList = ({ requests, isLoading }: RequestListProps) => {
                   <Flex direction="column">
                     <Text
                       color="black"
-                      fontSize={{ base: "sm", sm: "md", md: "lg" }}
+                      fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}
                       lineHeight="20px"
                       mb="2"
                       noOfLines={1}
@@ -88,10 +88,10 @@ const LogList = ({ requests, isLoading }: RequestListProps) => {
                     />
                     <Flex
                       color="#666666"
-                      fontSize={{ base: "12px", sm: "12px" }}
+                      fontSize={{ base: '12px', sm: '12px' }}
                       alignItems="center"
                       lineHeight="13px">
-                      {request.dateTime} <Icon as={GoPrimitiveDot} w={4} h={4} mx={1} color="#666666" />{" "}
+                      {request.dateTime} <Icon as={GoPrimitiveDot} w={4} h={4} mx={1} color="#666666" />{' '}
                       {request.created_at}
                     </Flex>
                   </Flex>
@@ -100,14 +100,14 @@ const LogList = ({ requests, isLoading }: RequestListProps) => {
                 <Stack spacing={0} direction="column" alignItems="center">
                   <Flex
                     direction="column"
-                    fontSize={{ base: "12px", sm: "14px" }}
+                    fontSize={{ base: '12px', sm: '14px' }}
                     lineHeight="20px"
                     fontWeight="semibold">
                     <Text>{request.amount}</Text>
                   </Flex>
                   <Text
                     textTransform="capitalize"
-                    color={request.status === "pending" ? "#FF951C" : "green.500"}>
+                    color={request.status === 'pending' ? '#FF951C' : 'green.500'}>
                     {request.status}
                   </Text>
                 </Stack>

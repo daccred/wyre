@@ -1,26 +1,26 @@
-import { Flex, Heading, Icon, Text, VStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { FiChevronRight } from "react-icons/fi";
+import { Flex, Heading, Icon, Text, VStack } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { FiChevronRight } from 'react-icons/fi';
 
-import Header from "@wyrecc/components/core/Header";
-import { ContractorIcon } from "@wyrecc/components/core/providerIcon";
+import Header from '@wyrecc/components/core/Header';
+import { ContractorIcon } from '@wyrecc/components/core/providerIcon';
 
 const accountItems = [
   {
-    name: "Manage Profile",
-    subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "account/manage-profile",
+    name: 'Manage Profile',
+    subText: 'Cursus diam amet non arcu in ultricies a fringilla',
+    path: 'account/manage-profile',
   },
   {
-    name: "Contract Terms",
-    subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "account/contract-terms",
+    name: 'Contract Terms',
+    subText: 'Cursus diam amet non arcu in ultricies a fringilla',
+    path: 'account/contract-terms',
   },
   {
-    name: "Payment Method",
-    subText: "Cursus diam amet non arcu in ultricies a fringilla",
-    path: "account/payment-method",
+    name: 'Payment Method',
+    subText: 'Cursus diam amet non arcu in ultricies a fringilla',
+    path: 'account/payment-method',
   },
 ];
 

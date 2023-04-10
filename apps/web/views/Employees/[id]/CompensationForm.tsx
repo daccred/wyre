@@ -1,15 +1,15 @@
-import { Button, Stack, Text, Flex, useToast } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import z from "zod";
+import { Button, Stack, Text, Flex, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import z from 'zod';
 
-import styledToast from "../../../components/core/StyledToast";
-import { FormInput, useForm } from "../../../components/forms";
-import { trpc } from "../../../utils/trpc";
+import styledToast from '../../../components/core/StyledToast';
+import { FormInput, useForm } from '../../../components/forms';
+import { trpc } from '../../../utils/trpc';
 
 const updateCompensationValidationSchema = z.object({
-  grossSalary: z.number().min(1, { message: "GrossSalary is Required" }),
-  signinBonus: z.number().min(1, { message: "SigningBonus Role is Required" }),
+  grossSalary: z.number().min(1, { message: 'GrossSalary is Required' }),
+  signinBonus: z.number().min(1, { message: 'SigningBonus Role is Required' }),
 });
 
 type FormInputOptions = z.infer<typeof updateCompensationValidationSchema>;
@@ -30,10 +30,10 @@ const EditedFormInput = ({
       name={name}
       rightElementText={rightElementText}
       rightElementTextStyle={{
-        fontSize: "12px",
-        height: "32px",
-        width: "fit-content",
-        color: "#666666",
+        fontSize: '12px',
+        height: '32px',
+        width: 'fit-content',
+        color: '#666666',
       }}
       disabled={disabled}
       variant="unstyled"
@@ -42,7 +42,7 @@ const EditedFormInput = ({
       borderRadius={0}
       px="0"
       py="1"
-      style={{ height: "32px", color: color }}
+      style={{ height: '32px', color: color }}
       bg="transparent"
       fontSize="sm"
       placeholder="$5,500"
@@ -67,18 +67,18 @@ export default function CompensationForm() {
     onSuccess() {
       refetch();
       styledToast({
-        status: "success",
-        description: "Compensation has been updated successfully",
+        status: 'success',
+        description: 'Compensation has been updated successfully',
         toast: toast,
       });
     },
     onError(error: unknown) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -86,8 +86,8 @@ export default function CompensationForm() {
   const handleSubmit = async (data: FormInputOptions) => {
     try {
       updateEmployee({
-        personnelId: employee?.id ?? "", // pass the ID of the employee that you want to update
-        salary: data?.grossSalary ? String(data.grossSalary) : "", // convert number to string,
+        personnelId: employee?.id ?? '', // pass the ID of the employee that you want to update
+        salary: data?.grossSalary ? String(data.grossSalary) : '', // convert number to string,
       });
     } catch (error) {
       console.error(error);
@@ -101,8 +101,8 @@ export default function CompensationForm() {
   // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
   useEffect(() => {
     if (employee) {
-      setFormValue("signinBonus", parseFloat(employee.signBonus ?? ""));
-      setFormValue("grossSalary", parseFloat(employee.salary ?? ""));
+      setFormValue('signinBonus', parseFloat(employee.signBonus ?? ''));
+      setFormValue('grossSalary', parseFloat(employee.salary ?? ''));
     }
   }, [employee, setFormValue]);
 

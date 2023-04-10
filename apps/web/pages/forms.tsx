@@ -1,11 +1,11 @@
-import { Stack, HStack, Button } from "@chakra-ui/react";
-import React from "react";
-import z from "zod";
+import { Stack, HStack, Button } from '@chakra-ui/react';
+import React from 'react';
+import z from 'zod';
 
-import { FormCheckbox, FormInput, FormInputArray, FormTextArea, useForm } from "../components/forms";
-import FormDateInput from "../components/forms/components/FormDateInput";
-import { Meta } from "../layouts";
-import * as Layout from "../layouts";
+import { FormCheckbox, FormInput, FormInputArray, FormTextArea, useForm } from '../components/forms';
+import FormDateInput from '../components/forms/components/FormDateInput';
+import { Meta } from '../layouts';
+import * as Layout from '../layouts';
 
 const formValidationSchema = z.object({
   question: z.string(),
@@ -22,7 +22,7 @@ export default function Page() {
   };
   const { renderForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { question: "" },
+    defaultValues: { question: '' },
     schema: formValidationSchema,
   });
 

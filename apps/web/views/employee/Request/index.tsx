@@ -1,11 +1,11 @@
-import { Text, Icon, Button, Flex } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
+import { Text, Icon, Button, Flex } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
 
-import Header from "@wyrecc/components/core/Header";
+import Header from '@wyrecc/components/core/Header';
 
-import { MoneyBagIcon, PlusIcon } from "./providerIcon";
-import RequestLog from "./requestLog";
+import { MoneyBagIcon, PlusIcon } from './providerIcon';
+import RequestLog from './requestLog';
 
 const Index = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const Index = () => {
           bg="primary.main"
           color="white"
           w="fit-content"
-          _hover={{ bg: "" }}
+          _hover={{ bg: '' }}
           onClick={() =>
             router.push({
               pathname: `/employee/request/request-reimbursement`,

@@ -1,5 +1,6 @@
-/* eslint-disable import/no-anonymous-default-export */
-export default {
-  heading: "BR Firma, -apple-system, system-ui, sans-serif",
-  body: "BR Firma, InterVariable, -apple-system, system-ui, sans-serif",
+const themeFonts = {
+  body: 'Epilogue, InterVariable, -apple-system, system-ui, sans-serif',
+  heading: "Epilogue, -apple-system, system-ui, sans-serif",
 };
+
+export default themeFonts;

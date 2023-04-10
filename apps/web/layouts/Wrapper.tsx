@@ -1,22 +1,22 @@
-import type { ContainerProps, FlexProps } from "@chakra-ui/react";
-import { Flex, Container, Box, useColorModeValue } from "@chakra-ui/react";
-import * as React from "react";
+import type { ContainerProps, FlexProps } from '@chakra-ui/react';
+import { Flex, Container, Box, useColorModeValue } from '@chakra-ui/react';
+import * as React from 'react';
 
-import type { WrapperInnerProps, WrapperEnum } from "./tokens";
-import { MAX_WIDTH, withTokenForInnerWrapperVariant } from "./tokens";
+import type { WrapperInnerProps, WrapperEnum } from './tokens';
+import { MAX_WIDTH, withTokenForInnerWrapperVariant } from './tokens';
 
 /**
  * @name Layout
  * @description Layout to be used as NextPageLayout to be used to wrap parent elements
  */
 export const NextPageLayout: React.FC<FlexProps> = (props): JSX.Element => {
-  const bg = useColorModeValue("whiteAlpha.800", "gray.900");
-  const color = useColorModeValue("text", "white");
+  const bg = useColorModeValue('whiteAlpha.800', 'gray.900');
+  const color = useColorModeValue('text', 'white');
 
   return (
     <Container
       as="main"
-      mx={{ base: "0", md: "auto" }}
+      mx={{ base: '0', md: 'auto' }}
       px={0}
       minH="100vh"
       // w={'full'}
@@ -39,7 +39,7 @@ export const NextPageLayout: React.FC<FlexProps> = (props): JSX.Element => {
 type WrapperProps = FlexProps & ContainerProps & { context?: WrapperEnum };
 
 export const Fluid: React.FC<WrapperProps> = (props): JSX.Element => {
-  const color = useColorModeValue("text", "white");
+  const color = useColorModeValue('text', 'white');
 
   return (
     <Flex
@@ -58,14 +58,14 @@ export const Fluid: React.FC<WrapperProps> = (props): JSX.Element => {
 };
 
 export const Contain: React.FC<WrapperProps> = (props): JSX.Element => {
-  const color = useColorModeValue("text", "white");
+  const color = useColorModeValue('text', 'white');
 
   return (
     <Flex
       w="full"
       height="full"
       direction="column"
-      mx={{ base: "0", md: "auto" }}
+      mx={{ base: '0', md: 'auto' }}
       px={{ base: 4, md: 8, lg: 12, xl: 12 }}
       willChange="background, color"
       transition="background 450ms ease 0s"
@@ -89,7 +89,7 @@ export const Mobile: React.FC<WrapperProps> = (props): JSX.Element => {
 };
 
 export const Inner: React.FC<WrapperProps> = (props): JSX.Element => {
-  const color = useColorModeValue("text", "white");
+  const color = useColorModeValue('text', 'white');
 
   return (
     <Flex
@@ -98,7 +98,7 @@ export const Inner: React.FC<WrapperProps> = (props): JSX.Element => {
       maxW="6xl"
       direction="column"
       pb={{ base: 24, md: 32 }}
-      mx={{ base: "0", md: "auto" }}
+      mx={{ base: '0', md: 'auto' }}
       px={{ base: 4, md: 8, lg: 24, xl: 24 }}
       willChange="background, color"
       transition="background 450ms ease 0s"
@@ -115,7 +115,7 @@ export const Inner: React.FC<WrapperProps> = (props): JSX.Element => {
 export const WrapperInner = (props: WrapperInnerProps) => {
   const token = withTokenForInnerWrapperVariant(props.variant);
   return (
-    <Container py={{ base: "8", md: "12" }} maxWidth={token.maxWidth}>
+    <Container py={{ base: '8', md: '12' }} maxWidth={token.maxWidth}>
       <Box
         bg="bg-surface"
         border="1px"

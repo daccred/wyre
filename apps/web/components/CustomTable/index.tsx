@@ -1,8 +1,8 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Button, Stack, Flex, Text, Icon } from "@chakra-ui/react";
-import React from "react";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import type { Column } from "react-table";
-import { useTable, usePagination } from "react-table";
+import { Table, Thead, Tbody, Tr, Th, Td, Button, Stack, Flex, Text, Icon } from '@chakra-ui/react';
+import React from 'react';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import type { Column } from 'react-table';
+import { useTable, usePagination } from 'react-table';
 
 interface TableProps<T extends object> {
   data: T[];
@@ -40,7 +40,7 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <Th fontSize="md" py={4} bg="transparent" borderTop="none" px={0}>
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </Th>
               ))}
             </Tr>
@@ -50,11 +50,11 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
           {page.map((row) => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()}>
+              <Tr {...row.getRowProps()} key={row.id}>
                 {row.cells.map((cell) => {
                   return (
-                    <Td {...cell.getCellProps()} py={4} px={0}>
-                      {cell.render("Cell")}
+                    <Td {...cell.getCellProps()} key={cell.column.id} py={4} px={0}>
+                      {cell.render('Cell')}
                     </Td>
                   );
                 })}

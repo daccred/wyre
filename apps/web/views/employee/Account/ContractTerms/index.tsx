@@ -1,17 +1,17 @@
-import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
-import { FiChevronLeft } from "react-icons/fi";
-import z from "zod";
+import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem } from '@chakra-ui/react';
+import React from 'react';
+import { FiChevronLeft } from 'react-icons/fi';
+import z from 'zod';
 
-import { FormInput, useForm } from "@wyrecc/components";
-import Header from "@wyrecc/components/core/Header";
+import { FormInput, useForm } from '@wyrecc/components';
+import Header from '@wyrecc/components/core/Header';
 
 const contractTermsValidationSchema = z.object({
-  category: z.string().min(1, "Category is required"),
-  status: z.string().min(1, "Status is required"),
-  department: z.string().min(1, "Department is required"),
-  jobRole: z.string().min(1, "Job Role is required"),
-  grossSalary: z.string().min(1, "Gross Salary is required"),
+  category: z.string().min(1, 'Category is required'),
+  status: z.string().min(1, 'Status is required'),
+  department: z.string().min(1, 'Department is required'),
+  jobRole: z.string().min(1, 'Job Role is required'),
+  grossSalary: z.string().min(1, 'Gross Salary is required'),
 });
 
 type FormInputOptions = z.infer<typeof contractTermsValidationSchema>;
@@ -19,11 +19,11 @@ type FormInputOptions = z.infer<typeof contractTermsValidationSchema>;
 const View = () => {
   const { renderForm } = useForm<FormInputOptions>({
     defaultValues: {
-      category: "Employee",
-      status: "Active",
-      department: "Marketing",
-      jobRole: "Social Media Associate",
-      grossSalary: "$2,400 monthly",
+      category: 'Employee',
+      status: 'Active',
+      department: 'Marketing',
+      jobRole: 'Social Media Associate',
+      grossSalary: '$2,400 monthly',
     },
     schema: contractTermsValidationSchema,
   });
@@ -50,7 +50,7 @@ const View = () => {
               </GridItem>
               <GridItem colSpan={2}>
                 <FormInput name="department" type="text" label="Department" />
-              </GridItem>{" "}
+              </GridItem>{' '}
               <GridItem colSpan={2}>
                 <FormInput name="jobRole" type="text" label="Job Role" />
               </GridItem>

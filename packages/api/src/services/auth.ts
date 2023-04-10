@@ -1,12 +1,12 @@
-import { prisma } from "@wyrecc/db";
-import { sendEmail, emailHTML, forgotPasswordEmail } from "@wyrecc/dialog";
+import { prisma } from '@wyrecc/db';
+import { sendEmail, emailHTML, forgotPasswordEmail } from '@wyrecc/dialog';
 
-import { TRPCError } from "@trpc/server";
+import { TRPCError } from '@trpc/server';
 
-import type { IResetPassword, ISignUp, IVerifyEmail } from "../interfaces";
-import redisClient from "../redis";
-import { hashString, verifyHash } from "../utils";
-import { ServerError } from "../utils/server-error";
+import type { IResetPassword, ISignUp, IVerifyEmail } from '../interfaces';
+import redisClient from '../redis';
+import { hashString, verifyHash } from '../utils';
+import { ServerError } from '../utils/server-error';
 
 export class AuthService {
   static async adminSignUp(input: ISignUp) {
@@ -20,8 +20,8 @@ export class AuthService {
 
       if (adminExists) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Admin already exists",
+          code: 'BAD_REQUEST',
+          message: 'Admin already exists',
         });
       }
       // check if company exists
@@ -29,8 +29,8 @@ export class AuthService {
 
       if (companyExists) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Company already exists",
+          code: 'BAD_REQUEST',
+          message: 'Company already exists',
         });
       }
 
@@ -38,8 +38,8 @@ export class AuthService {
       const isOrganization = AuthService.checkIfEmailIsOrganization(input.email);
       if (!isOrganization) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Email is not an organization",
+          code: 'BAD_REQUEST',
+          message: 'Email is not an organization',
         });
       }
 
@@ -55,8 +55,8 @@ export class AuthService {
 
       if (!company) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Company creation failed",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Company creation failed',
         });
       }
 
@@ -71,7 +71,7 @@ export class AuthService {
           phone: input.companyPhone,
           password: await hashString(input.password),
           companyId: company.id,
-          type: "ADMIN",
+          type: 'ADMIN',
           jobRole: input.jobRole,
           verification: {
             create: {
@@ -84,8 +84,8 @@ export class AuthService {
 
       if (!admin) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to create admin",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create admin',
         });
       }
 
@@ -94,8 +94,8 @@ export class AuthService {
 
       if (!response) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to send verification code",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to send verification code',
         });
       }
 
@@ -122,15 +122,15 @@ export class AuthService {
 
       if (!admin) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Account not found",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Account not found',
         });
       } else if (admin.emailVerified) {
-        return "Account already verified";
+        return 'Account already verified';
       } else if (!admin.verification) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Account verification failed",
+          code: 'BAD_REQUEST',
+          message: 'Account verification failed',
         });
       }
 
@@ -138,8 +138,8 @@ export class AuthService {
       const expireTime = admin.verification.expires;
       if (now > expireTime)
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Verification code is expired",
+          code: 'BAD_REQUEST',
+          message: 'Verification code is expired',
         });
 
       if (token === admin.verification.token) {
@@ -163,8 +163,8 @@ export class AuthService {
         return adminVerfied;
       } else {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Confirmation code is invalid",
+          code: 'BAD_REQUEST',
+          message: 'Confirmation code is invalid',
         });
       }
     } catch (error) {
@@ -178,15 +178,15 @@ export class AuthService {
         where: { email: email },
       });
 
-      if (!admin) new TRPCError({ code: "NOT_FOUND", message: "Admin not found" });
+      if (!admin) new TRPCError({ code: 'NOT_FOUND', message: 'Admin not found' });
 
       const verifyEmail = emailHTML({ confirmCode: verifyCode });
 
       const response = await sendEmail({
-        from: "admin@tecmie.com",
-        subject: "Verify your email",
+        from: 'admin@tecmie.com',
+        subject: 'Verify your email',
         to: email,
-        textBody: "Email sent",
+        textBody: 'Email sent',
         htmlBody: verifyEmail,
       });
       return response;
@@ -202,7 +202,7 @@ export class AuthService {
       });
 
       if (!user) {
-        new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+        new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
       }
 
       //Handle password otp
@@ -210,19 +210,19 @@ export class AuthService {
 
       if (user) {
         await redisClient.hello();
-        await redisClient.HSET(`otp_${user.id}`, "id", user.id);
-        await redisClient.HSET(`otp_${user.id}`, "email", user.email);
-        await redisClient.HSET(`otp_${user.id}`, "otp", confirmCode);
+        await redisClient.HSET(`otp_${user.id}`, 'id', user.id);
+        await redisClient.HSET(`otp_${user.id}`, 'email', user.email);
+        await redisClient.HSET(`otp_${user.id}`, 'otp', confirmCode);
         await redisClient.expire(`otp_${user.id}`, 3600); // OTP to expire after 1 hour
       }
 
       const forgotEmail = forgotPasswordEmail({ confirmCode });
 
       const response = await sendEmail({
-        from: "admin@tecmie.com",
-        subject: "Reset your password",
+        from: 'admin@tecmie.com',
+        subject: 'Reset your password',
         to: email,
-        textBody: "Email sent",
+        textBody: 'Email sent',
         htmlBody: forgotEmail,
       });
 
@@ -241,14 +241,14 @@ export class AuthService {
       });
 
       if (!user) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
       }
       const userHash = user && (await redisClient.hGetAll(`otp_${user.id}`));
 
       if (userHash?.otp !== otp) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "OTP is invalid. Request another one",
+          code: 'BAD_REQUEST',
+          message: 'OTP is invalid. Request another one',
         });
       }
 
@@ -256,8 +256,8 @@ export class AuthService {
 
       if (isSame) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "You cannot use the old password as the new password",
+          code: 'BAD_REQUEST',
+          message: 'You cannot use the old password as the new password',
         });
       }
 
@@ -272,8 +272,8 @@ export class AuthService {
 
       if (!resetPass) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to reset password",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to reset password',
         });
       }
 
@@ -295,28 +295,28 @@ export class AuthService {
   static checkIfEmailIsOrganization(email: string) {
     // get all the free email domains/clients
     const emailClients = [
-      "gmail.com",
-      "yahoo.com",
-      "hotmail.com",
-      "outlook.com",
-      "aol.com",
-      "icloud.com",
-      "mail.com",
-      "msn.com",
-      "live.com",
-      "zoho.com",
-      "yandex.com",
-      "protonmail.com",
-      "gmx.com",
-      "mail.ru",
-      "inbox.com",
-      "ymail.com",
-      "hushmail.com",
-      "rocketmail.com",
-      "lavabit.com",
+      'gmail.com',
+      'yahoo.com',
+      'hotmail.com',
+      'outlook.com',
+      'aol.com',
+      'icloud.com',
+      'mail.com',
+      'msn.com',
+      'live.com',
+      'zoho.com',
+      'yandex.com',
+      'protonmail.com',
+      'gmx.com',
+      'mail.ru',
+      'inbox.com',
+      'ymail.com',
+      'hushmail.com',
+      'rocketmail.com',
+      'lavabit.com',
     ];
     // get the domain from the email
-    const domain = email.split("@")[1];
+    const domain = email.split('@')[1];
     // check if the domain is in the free email clients
     const isFreeEmail = emailClients.includes(domain as string);
     if (isFreeEmail) {
@@ -330,12 +330,12 @@ export class AuthService {
       const result = await prisma.user.findFirst({
         where: {
           id: userId,
-          type: "ADMIN",
+          type: 'ADMIN',
         },
       });
       if (!result) {
         throw new TRPCError({
-          code: "UNAUTHORIZED",
+          code: 'UNAUTHORIZED',
           message: "You don't have super admin rights",
         });
       }
@@ -350,12 +350,12 @@ export class AuthService {
       const result = await prisma.user.findFirst({
         where: {
           id: userId,
-          type: "ADMIN",
+          type: 'ADMIN',
         },
       });
       if (!result) {
         throw new TRPCError({
-          code: "UNAUTHORIZED",
+          code: 'UNAUTHORIZED',
           message: "You don't have  admin rights",
         });
       }
@@ -366,12 +366,12 @@ export class AuthService {
     const result = await prisma.user.findFirst({
       where: {
         id: userId,
-        type: "ADMIN",
+        type: 'ADMIN',
       },
     });
     if (!result) {
       throw new TRPCError({
-        code: "UNAUTHORIZED",
+        code: 'UNAUTHORIZED',
         message: "You don't have  admin rights",
       });
     }

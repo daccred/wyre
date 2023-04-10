@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install modules
-        run: yarn install --frozen-lockfile
+        run: NOYARNPOSTINSTALL=1 yarn install --frozen-lockfile
 
       - name: Run Typescript Lint
         run: yarn lint:ts

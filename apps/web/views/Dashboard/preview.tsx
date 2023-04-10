@@ -21,10 +21,10 @@ import {
   Th,
   Thead,
   Tr,
-} from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+} from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
 
-import { ArrowRightIcon, CalenderIcon, TeamIcon } from "./ProviderIcons";
+import { ArrowRightIcon, CalenderIcon, TeamIcon } from './ProviderIcons';
 
 type Props = {};
 
@@ -44,53 +44,53 @@ const Preview = (props: Props) => {
 
   const data = [
     {
-      currency: "Dollar (USD)",
-      amount: "55232",
+      currency: 'Dollar (USD)',
+      amount: '55232',
       team: [
-        { name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
-        { name: "Segun Adebayo", src: "https://bit.ly/sage-adebayo" },
-        { name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
-        { name: "Prosper Otemuyiwa", src: "https://bit.ly/prosper-baba" },
-        { name: "Christian Nwamba", src: "https://bit.ly/code-beast" },
+        { name: 'Ryan Florence', src: 'https://bit.ly/ryan-florence' },
+        { name: 'Segun Adebayo', src: 'https://bit.ly/sage-adebayo' },
+        { name: 'Kent Dodds', src: 'https://bit.ly/kent-c-dodds' },
+        { name: 'Prosper Otemuyiwa', src: 'https://bit.ly/prosper-baba' },
+        { name: 'Christian Nwamba', src: 'https://bit.ly/code-beast' },
       ],
-      start_date: "1/31/2023",
-      due_date: "4/12/2022",
+      start_date: '1/31/2023',
+      due_date: '4/12/2022',
     },
     {
-      currency: "Naira (NGN)",
-      amount: "8547030",
+      currency: 'Naira (NGN)',
+      amount: '8547030',
       team: [
-        { name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
-        { name: "Segun Adebayo", src: "https://bit.ly/sage-adebayo" },
-        { name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
+        { name: 'Ryan Florence', src: 'https://bit.ly/ryan-florence' },
+        { name: 'Segun Adebayo', src: 'https://bit.ly/sage-adebayo' },
+        { name: 'Kent Dodds', src: 'https://bit.ly/kent-c-dodds' },
       ],
-      start_date: "12/22/2022",
-      due_date: "10/30/2022",
+      start_date: '12/22/2022',
+      due_date: '10/30/2022',
     },
     {
-      currency: "Bitcoin (BTC)",
-      amount: "0.0335",
+      currency: 'Bitcoin (BTC)',
+      amount: '0.0335',
       team: [
-        { name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
-        { name: "Prosper Otemuyiwa", src: "https://bit.ly/prosper-baba" },
-        { name: "Christian Nwamba", src: "https://bit.ly/code-beast" },
-        { name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
+        { name: 'Kent Dodds', src: 'https://bit.ly/kent-c-dodds' },
+        { name: 'Prosper Otemuyiwa', src: 'https://bit.ly/prosper-baba' },
+        { name: 'Christian Nwamba', src: 'https://bit.ly/code-beast' },
+        { name: 'Ryan Florence', src: 'https://bit.ly/ryan-florence' },
       ],
-      start_date: "12/15/2022",
-      due_date: "2/19/2023",
+      start_date: '12/15/2022',
+      due_date: '2/19/2023',
     },
     {
-      currency: "Cedis (GHC)",
-      amount: "76349",
+      currency: 'Cedis (GHC)',
+      amount: '76349',
       team: [
-        { name: "Ryan Florence", src: "https://bit.ly/ryan-florence" },
-        { name: "Segun Adebayo", src: "https://bit.ly/sage-adebayo" },
-        { name: "Christian Nwamba", src: "https://bit.ly/code-beast" },
-        { name: "Kent Dodds", src: "https://bit.ly/kent-c-dodds" },
-        { name: "Prosper Otemuyiwa", src: "https://bit.ly/prosper-baba" },
+        { name: 'Ryan Florence', src: 'https://bit.ly/ryan-florence' },
+        { name: 'Segun Adebayo', src: 'https://bit.ly/sage-adebayo' },
+        { name: 'Christian Nwamba', src: 'https://bit.ly/code-beast' },
+        { name: 'Kent Dodds', src: 'https://bit.ly/kent-c-dodds' },
+        { name: 'Prosper Otemuyiwa', src: 'https://bit.ly/prosper-baba' },
       ],
-      start_date: "8/14/2022",
-      due_date: "12/18/2022",
+      start_date: '8/14/2022',
+      due_date: '12/18/2022',
     },
   ];
 
@@ -99,72 +99,72 @@ const Preview = (props: Props) => {
 
     setPayrollData([
       {
-        desc: "Monthly Salary for December",
-        paid_at: "1/31/2023",
-        status: "on time",
+        desc: 'Monthly Salary for December',
+        paid_at: '1/31/2023',
+        status: 'on time',
       },
       {
-        desc: "Contractor Payout for Q4 Mile...",
-        paid_at: "12/22/2022",
-        status: "-",
+        desc: 'Contractor Payout for Q4 Mile...',
+        paid_at: '12/22/2022',
+        status: '-',
       },
       {
-        desc: "Monthly Salary for November",
-        paid_at: "12/15/2022",
-        status: "on time",
+        desc: 'Monthly Salary for November',
+        paid_at: '12/15/2022',
+        status: 'on time',
       },
       {
-        desc: "Monthly Salary for October",
-        paid_at: "8/14/2022",
-        status: "Early",
+        desc: 'Monthly Salary for October',
+        paid_at: '8/14/2022',
+        status: 'Early',
       },
     ]);
     setAnnualData([
       {
-        label: "Salary",
-        percentage: "63",
-        color: "green",
-        amount: "135,693.52",
+        label: 'Salary',
+        percentage: '63',
+        color: 'green',
+        amount: '135,693.52',
       },
       {
-        label: "Tax",
-        percentage: "24",
-        color: "red",
-        amount: "51,692.77",
+        label: 'Tax',
+        percentage: '24',
+        color: 'red',
+        amount: '51,692.77',
       },
       {
-        label: "Insurance",
-        percentage: "3",
-        color: "yellow",
-        amount: "6,526.21",
+        label: 'Insurance',
+        percentage: '3',
+        color: 'yellow',
+        amount: '6,526.21',
       },
       {
-        label: "Pension",
-        percentage: "10",
-        color: "purple",
-        amount: "21,538.66",
+        label: 'Pension',
+        percentage: '10',
+        color: 'purple',
+        amount: '21,538.66',
       },
     ]);
   }, []);
 
   const formateDate = (value: string | undefined) => {
     if (value === undefined) {
-      return "";
+      return '';
       // or any other default value for undefined input
     }
     const date = new Date(value);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
   return (
     <>
-      <Grid templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }} maxW={{ sm: "100%", md: "100%" }} gap="20px">
+      <Grid templateColumns={{ sm: '1fr', lg: '1.3fr 1.7fr' }} maxW={{ sm: '100%', md: '100%' }} gap="20px">
         {/* Payroll History */}
-        <Box bg="white" rounded="2xl" overflowX={{ sm: "scroll", xl: "hidden" }}>
+        <Box bg="white" rounded="2xl" overflowX={{ sm: 'scroll', xl: 'hidden' }}>
           <Flex direction="row" justify="space-between" align="center" p={4}>
             <Text fontSize="lg" fontWeight="bold">
               Payroll History
@@ -179,17 +179,17 @@ const Preview = (props: Props) => {
           {payrollData && payrollData?.length > 0 ? (
             <TableContainer
               css={{
-                "&::-webkit-scrollbar": {
-                  height: "10px",
-                  background: "transparent",
+                '&::-webkit-scrollbar': {
+                  height: '10px',
+                  background: 'transparent',
                 },
-                "&::-webkit-scrollbar-track": {
-                  background: "transparent",
+                '&::-webkit-scrollbar-track': {
+                  background: 'transparent',
                 },
-                "&::-webkit-scrollbar-thumb": {
-                  backgroundColor: "#d6dee1",
-                  borderRadius: "10px",
-                  border: "1px solid transparent",
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: '#d6dee1',
+                  borderRadius: '10px',
+                  border: '1px solid transparent',
                 },
               }}>
               <Table size="md" variant="unstyled">
@@ -208,7 +208,7 @@ const Preview = (props: Props) => {
                       <Td
                         fontSize="xs"
                         fontWeight="semibold"
-                        color={data?.status === "on time" ? "#FF951C" : ""}>
+                        color={data?.status === 'on time' ? '#FF951C' : ''}>
                         {data?.status}
                       </Td>
                     </Tr>
@@ -224,13 +224,13 @@ const Preview = (props: Props) => {
         </Box>
 
         {/* Currency Breakdown */}
-        <Box bg="white" rounded="2xl" overflowX={{ sm: "scroll", xl: "hidden" }}>
+        <Box bg="white" rounded="2xl" overflowX={{ sm: 'scroll', xl: 'hidden' }}>
           <Flex direction="column" w="100%" p={4}>
             <Flex direction="row" justify="space-between" align="center">
               <Text fontSize="lg" fontWeight="bold">
                 Currency Breakdown
               </Text>
-              <Link href="/payroll" style={{ textDecoration: "none" }}>
+              <Link href="/payroll" style={{ textDecoration: 'none' }}>
                 <Flex align="center" justify="center">
                   <Text fontSize="sm" color="purple.600" fontWeight="normal">
                     See More
@@ -243,17 +243,17 @@ const Preview = (props: Props) => {
           {dummyData && dummyData?.length > 0 ? (
             <TableContainer
               css={{
-                "&::-webkit-scrollbar": {
-                  height: "10px",
-                  background: "transparent",
+                '&::-webkit-scrollbar': {
+                  height: '10px',
+                  background: 'transparent',
                 },
-                "&::-webkit-scrollbar-track": {
-                  background: "transparent",
+                '&::-webkit-scrollbar-track': {
+                  background: 'transparent',
                 },
-                "&::-webkit-scrollbar-thumb": {
-                  backgroundColor: "#d6dee1",
-                  borderRadius: "20px",
-                  border: "6px solid transparent",
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: '#d6dee1',
+                  borderRadius: '20px',
+                  border: '6px solid transparent',
                 },
               }}>
               <Table size="md" variant="unstyled">
@@ -284,7 +284,7 @@ const Preview = (props: Props) => {
                                 src={member?.src}
                                 showBorder={false}
                                 border="none"
-                                _hover={{ zIndex: "3", cursor: "pointer" }}
+                                _hover={{ zIndex: '3', cursor: 'pointer' }}
                               />
                             );
                           })}
@@ -305,8 +305,8 @@ const Preview = (props: Props) => {
         </Box>
       </Grid>
 
-      <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr" }} columnGap="20px">
-        <Box gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w="full">
+      <Grid templateColumns={{ sm: '1fr', md: '1fr 1fr' }} columnGap="20px">
+        <Box gridArea={{ md: '2 / 1 / 3 / 2', '2xl': 'auto' }} bg="white" rounded="2xl" p="3" w="full">
           <Flex direction="row" justify="space-between" align="center">
             <Flex direction="column">
               <Text fontSize="lg" fontWeight="bold" mb={3}>
@@ -317,7 +317,7 @@ const Preview = (props: Props) => {
             <Icon as={TeamIcon} w={10} h={6} />
           </Flex>
         </Box>
-        <Box gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }} bg="white" rounded="2xl" p="3" w="full">
+        <Box gridArea={{ md: '2 / 2 / 3 / 3', '2xl': 'auto' }} bg="white" rounded="2xl" p="3" w="full">
           <Flex direction="row" justify="space-between" align="center">
             <Flex direction="column">
               <Text fontSize="lg" fontWeight="bold" mb={3}>
@@ -332,9 +332,9 @@ const Preview = (props: Props) => {
 
       {/*  */}
 
-      <Grid templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }} gap="20px">
+      <Grid templateColumns={{ sm: '1fr', md: '1fr 1fr', lg: '2fr 1fr' }} gap="20px">
         {/* Payroll Summary */}
-        <Box overflowX={{ sm: "scroll", xl: "hidden" }} bg="white" rounded="2xl" p={4}>
+        <Box overflowX={{ sm: 'scroll', xl: 'hidden' }} bg="white" rounded="2xl" p={4}>
           <Box p="">
             <Flex direction="row" justify="space-between" align="center">
               <Text fontSize="lg" fontWeight="bold" pb="8px">
@@ -422,7 +422,7 @@ const Preview = (props: Props) => {
                       thickness={10}
                       color={data.color}>
                       <CircularProgressLabel color={data.color} fontWeight="bold">
-                        <Text>{data.percentage + "%"}</Text>
+                        <Text>{data.percentage + '%'}</Text>
                       </CircularProgressLabel>
                     </CircularProgress>
                   </Flex>

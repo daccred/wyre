@@ -1,7 +1,7 @@
-import { Button, Flex, Heading, Link, HStack, Stack, Text, Image } from "@chakra-ui/react";
-import * as React from "react";
+import { Button, Flex, Heading, Link, HStack, Stack, Text, Image } from '@chakra-ui/react';
+import * as React from 'react';
 
-import { FormInput } from "@wyrecc/components/forms";
+import { FormInput } from '@wyrecc/components/forms';
 
 // import Link from "next/link";
 
@@ -10,7 +10,7 @@ type formProps = {
 };
 
 const View = () => (
-  <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+  <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
     <Stack flex={1}>
       <Link href="/">
         <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
@@ -29,11 +29,11 @@ const View = () => (
               color="primary.100"
               fontWeight="bold"
               lineHeight={1.1}
-              fontSize={{ base: "3xl", md: "4xl" }}>
+              fontSize={{ base: '3xl', md: '4xl' }}>
               Reset Password
             </Heading>
             <Text color="primary.100">
-              Remember Password?{" "}
+              Remember Password?{' '}
               <Link fontWeight={600} color="#8D1CFF" href="/employee/login">
                 Login
               </Link>
@@ -50,7 +50,7 @@ const View = () => (
               bgColor="primary.50"
               p="3"
               _hover={{
-                bg: "primary.100",
+                bg: 'primary.100',
               }}>
               Reset Password
             </Button>

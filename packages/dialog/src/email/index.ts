@@ -1,2 +1,2 @@
-export * from "./postmark";
-export * from "./templates";
+export * from './postmark';
+export * from './templates';

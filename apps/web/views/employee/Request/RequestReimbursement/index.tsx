@@ -12,18 +12,18 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure,
-} from "@chakra-ui/react";
-import React from "react";
-import z from "zod";
+} from '@chakra-ui/react';
+import React from 'react';
+import z from 'zod';
 
-import Header from "@wyrecc/components/core/Header";
-import { FormInput, useForm, FormUpload } from "@wyrecc/components/forms";
+import Header from '@wyrecc/components/core/Header';
+import { FormInput, useForm, FormUpload } from '@wyrecc/components/forms';
 
-import { ArrowRightIcon } from "../providerIcon";
+import { ArrowRightIcon } from '../providerIcon';
 
 const reimbursementValidationSchema = z.object({
-  purpose: z.string().min(1, "Purpose is required"),
-  amount: z.string().min(1, "Amount is required"),
+  purpose: z.string().min(1, 'Purpose is required'),
+  amount: z.string().min(1, 'Amount is required'),
   upload: z.array(z.string()),
 });
 
@@ -55,7 +55,7 @@ const Index = () => {
             <Flex alignItems="center">
               <Icon as={ArrowRightIcon} />
               <BreadcrumbLink mb={2} fontWeight="bold" color="#210D35" href="/employee/home">
-                {" "}
+                {' '}
                 Back
               </BreadcrumbLink>
             </Flex>
@@ -81,7 +81,7 @@ const Index = () => {
                 type="submit"
                 // isDisabled={isFormValid}
                 // isLoading={isSubmitting}
-                _hover={{ bg: "" }}
+                _hover={{ bg: '' }}
                 py={8}>
                 Make Request
               </Button>

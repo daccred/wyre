@@ -1,9 +1,9 @@
-import { Stack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Stack } from '@chakra-ui/react';
+import React, { useState } from 'react';
 
-import ViewLayout from "../../components/core/ViewLayout";
-import Onboarding from "./onbording";
-import Preview from "./preview";
+import ViewLayout from '../../components/core/ViewLayout';
+import Onboarding from './onbording';
+import Preview from './preview';
 
 const Index: React.FC = () => {
   const [isNew, setIsNew] = useState(false);

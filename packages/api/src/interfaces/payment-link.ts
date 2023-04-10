@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const privateLinkAccessSchema = z.object({
   id: z.string(),
@@ -9,11 +9,11 @@ export const paymentLinkSchema = z.object({
   linkId: z.string(),
   amount: z.number(),
   description: z.string(),
-  type: z.enum(["PUBLIC", "PRIVATE"]),
+  type: z.enum(['PUBLIC', 'PRIVATE']),
   password: z.string(),
   encryptedPassword: z.string(),
-  currency: z.enum(["USD", "GHS", "NGN", "GBP", "EUR", "KES", "RWF", "UGX", "TZS", "ZMW", "ZAR"]),
-  status: z.enum(["ACTIVE", "INACTIVE"]),
+  currency: z.enum(['USD', 'GHS', 'NGN', 'GBP', 'EUR', 'KES', 'RWF', 'UGX', 'TZS', 'ZMW', 'ZAR']),
+  status: z.enum(['ACTIVE', 'INACTIVE']),
   wyreRequests: z.array(z.string()),
 });
 

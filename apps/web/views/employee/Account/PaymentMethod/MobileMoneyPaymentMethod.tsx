@@ -10,18 +10,18 @@ import {
   Grid,
   GridItem,
   Button,
-} from "@chakra-ui/react";
-import React from "react";
-import { FiChevronLeft } from "react-icons/fi";
-import z from "zod";
+} from '@chakra-ui/react';
+import React from 'react';
+import { FiChevronLeft } from 'react-icons/fi';
+import z from 'zod';
 
-import { FormInput, FormSelect, useForm } from "@wyrecc/components";
-import Header from "@wyrecc/components/core/Header";
+import { FormInput, FormSelect, useForm } from '@wyrecc/components';
+import Header from '@wyrecc/components/core/Header';
 
 const manageProfileValidationSchema = z.object({
-  mobileMoneyProvider: z.string().min(1, "Mobile Money Provider is required"),
-  phoneNumber: z.number().min(1, "Phone Number is required"),
-  salaryPercentage: z.number().min(1, "Wallet Address is required"),
+  mobileMoneyProvider: z.string().min(1, 'Mobile Money Provider is required'),
+  phoneNumber: z.number().min(1, 'Phone Number is required'),
+  salaryPercentage: z.number().min(1, 'Wallet Address is required'),
 });
 
 type FormInputOptions = z.infer<typeof manageProfileValidationSchema>;
@@ -55,9 +55,9 @@ const View = () => {
                   label="Select Mobile Money Provider"
                   name="mobileMoneyProvider"
                   options={[
-                    { value: "MTN", label: "MTN" },
-                    { value: "VODAFONE", label: "VODAFONE" },
-                    { value: "AIRTELTIGO", label: "AIRTELTIGO" },
+                    { value: 'MTN', label: 'MTN' },
+                    { value: 'VODAFONE', label: 'VODAFONE' },
+                    { value: 'AIRTELTIGO', label: 'AIRTELTIGO' },
                   ]}
                 />
               </GridItem>
@@ -78,7 +78,7 @@ const View = () => {
                 />
               </GridItem>
             </Grid>
-            <Button bg="primary.500" color="white" _hover={{ hover: "none" }}>
+            <Button bg="primary.500" color="white" _hover={{ hover: 'none' }}>
               Add Mobile Wallet
             </Button>
           </Stack>

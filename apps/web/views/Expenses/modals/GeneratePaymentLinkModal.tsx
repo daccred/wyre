@@ -15,20 +15,20 @@ import {
   FormLabel,
   useDisclosure,
   useToast,
-} from "@chakra-ui/react";
-import type { Team } from "@prisma/client";
-import RowSelectTable from "components/CustomTable/RowSelectTable";
-import React, { useEffect, useMemo, useState } from "react";
-import { BiLinkAlt } from "react-icons/bi";
-import { FiSearch } from "react-icons/fi";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "utils/trpc";
-import SuccessModal from "views/Payroll/modals/SuccessModal";
-import z from "zod";
+} from '@chakra-ui/react';
+import type { Team } from '@prisma/client';
+import RowSelectTable from 'components/CustomTable/RowSelectTable';
+import React, { useEffect, useMemo, useState } from 'react';
+import { BiLinkAlt } from 'react-icons/bi';
+import { FiSearch } from 'react-icons/fi';
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import { trpc } from 'utils/trpc';
+import SuccessModal from 'views/Payroll/modals/SuccessModal';
+import z from 'zod';
 
-import { useForm } from "@wyrecc/components";
+import { useForm } from '@wyrecc/components';
 
-import { generateLinkColumn } from "../utils/tableColumns";
+import { generateLinkColumn } from '../utils/tableColumns';
 
 const generatePaymentLinkValidationSchema = z.object({
   employeeId: z.string(),
@@ -52,7 +52,7 @@ const GeneratePaymentLinkModal = ({
   // TODO: Ask John if an employee can be sent a link more than once
   const [tableData, setTableData] = useState<Team[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { data: contractorData } = trpc.team.getContractors.useQuery();
   const { data: employeeData } = trpc.team.getPersonnel.useQuery();
@@ -86,16 +86,16 @@ const GeneratePaymentLinkModal = ({
       if (data) {
         openSuccessModal();
         closeGeneratePaymnetLinkModal();
-        setSearchTerm("");
+        setSearchTerm('');
       }
     },
     onError(error: unknown) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
     },
   });
@@ -108,11 +108,11 @@ const GeneratePaymentLinkModal = ({
 
   const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: Submit,
-    defaultValues: { employeeId: "" },
+    defaultValues: { employeeId: '' },
   });
 
   useEffect(() => {
-    setFormValue("employeeId", selectedEmployees?.[0] as string);
+    setFormValue('employeeId', selectedEmployees?.[0] as string);
   }, [selectedEmployees, setFormValue]);
 
   return (
@@ -147,8 +147,8 @@ const GeneratePaymentLinkModal = ({
                         color="#210D35"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        _hover={{ borderColor: "primary" }}
-                        _focus={{ borderColor: "primary" }}
+                        _hover={{ borderColor: 'primary' }}
+                        _focus={{ borderColor: 'primary' }}
                       />
                     </InputGroup>
 
@@ -176,7 +176,7 @@ const GeneratePaymentLinkModal = ({
                       bg="brand.700"
                       color="white"
                       rightIcon={<Icon as={BiLinkAlt} />}
-                      _hover={{ hover: "none" }}
+                      _hover={{ hover: 'none' }}
                       type="submit"
                       isLoading={isLoading}
                       // onClick={() => openSuccessModal()}

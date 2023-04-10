@@ -6,13 +6,13 @@ import {
   ModalHeader,
   ModalOverlay,
   VStack,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 
-import { ContractorsIcon, EmployeesIcon } from "../../../components/core/ViewLayout/ProviderIcons";
-import { Card } from "../utils/misc";
+import { ContractorsIcon, EmployeesIcon } from '../../../components/core/ViewLayout/ProviderIcons';
+import { Card } from '../utils/misc';
 
 interface IPayrollType {
   closePayrollTypeModal: () => void;
@@ -49,7 +49,7 @@ const PayrollType = ({ closePayrollTypeModal, payrollTypeModalIsOpen }: IPayroll
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              onClick={() => router.push("/payroll/create-employee-payroll")}
+              onClick={() => router.push('/payroll/create-employee-payroll')}
             />
             <Card
               heading="For Contractors"
@@ -62,7 +62,7 @@ const PayrollType = ({ closePayrollTypeModal, payrollTypeModalIsOpen }: IPayroll
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              onClick={() => router.push("/payroll/create-contractor-payroll")}
+              onClick={() => router.push('/payroll/create-contractor-payroll')}
             />
           </VStack>
         </ModalBody>

@@ -1,13 +1,13 @@
-import { useToast } from "@chakra-ui/react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import React from "react";
-import z from "zod";
+import { useToast } from '@chakra-ui/react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import z from 'zod';
 
-import { useForm } from "@wyrecc/components/forms";
+import { useForm } from '@wyrecc/components/forms';
 
-import { Meta } from "../../layouts";
-import View from "../../views/employee/Login";
+import { Meta } from '../../layouts';
+import View from '../../views/employee/Login';
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
@@ -22,23 +22,23 @@ const Page = () => {
 
   const handleSubmit = React.useCallback(
     async (data: FormInputOptions) => {
-      const response = await signIn("credentials", {
+      const response = await signIn('credentials', {
         email: data.email,
         password: data.password,
-        callbackUrl: "/demo",
+        callbackUrl: '/demo',
         redirect: false,
       });
 
       if (response?.status != 200) {
         toast({
           description: response?.error,
-          status: "error",
+          status: 'error',
           duration: 5000,
-          position: "top-right",
+          position: 'top-right',
           isClosable: true,
         });
       } else {
-        router.push("");
+        router.push('');
       }
     },
     [toast, router]
@@ -46,7 +46,7 @@ const Page = () => {
 
   const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: '', password: '' },
     schema: loginValidationSchema,
   });
 

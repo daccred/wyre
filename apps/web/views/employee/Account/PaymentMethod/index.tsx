@@ -9,34 +9,34 @@ import {
   Center,
   useDisclosure,
   Avatar,
-} from "@chakra-ui/react";
-import React from "react";
-import { FaBitcoin } from "react-icons/fa";
-import { FiChevronLeft } from "react-icons/fi";
-import { HiOutlinePlusSm } from "react-icons/hi";
+} from '@chakra-ui/react';
+import React from 'react';
+import { FaBitcoin } from 'react-icons/fa';
+import { FiChevronLeft } from 'react-icons/fi';
+import { HiOutlinePlusSm } from 'react-icons/hi';
 
-import Header from "@wyrecc/components/core/Header";
-import { EmptyEmployeeImage } from "@wyrecc/components/core/providerIcon";
+import Header from '@wyrecc/components/core/Header';
+import { EmptyEmployeeImage } from '@wyrecc/components/core/providerIcon';
 
-import PaymentMethodType from "../Modals/PaymentMethodType";
+import PaymentMethodType from '../Modals/PaymentMethodType';
 
 const View = () => {
   const selectedmethods = [
     {
-      type: "CryptoCurrency",
-      name: "Bitcoin (BTC)",
-      address: "ee816a1734d95bfe027a04fe4602a...",
-      moneyInUSD: "1,800.00",
+      type: 'CryptoCurrency',
+      name: 'Bitcoin (BTC)',
+      address: 'ee816a1734d95bfe027a04fe4602a...',
+      moneyInUSD: '1,800.00',
       salaryPercent: 75,
       icon: FaBitcoin,
-      iconColor: "#f7931a",
+      iconColor: '#f7931a',
     },
     {
-      type: "bank",
-      name: "Access Bank",
-      accountNumber: "123456789321",
-      accountType: "Savings Account",
-      moneyInUSD: "600.00",
+      type: 'bank',
+      name: 'Access Bank',
+      accountNumber: '123456789321',
+      accountType: 'Savings Account',
+      moneyInUSD: '600.00',
       salaryPercent: 25,
     },
   ];
@@ -60,7 +60,7 @@ const View = () => {
         <Button
           bg="primary.500"
           color="white"
-          _hover={{ hover: "none" }}
+          _hover={{ hover: 'none' }}
           width="fit-content"
           rightIcon={<Icon as={HiOutlinePlusSm} color="white" />}
           onClick={() => openPaymentMethodModal()}>
@@ -106,7 +106,7 @@ const View = () => {
                 <VStack>
                   <Text fontWeight={700} color="brand.700" fontSize="xl">{`USD ${method?.moneyInUSD}`}</Text>
                   <Text color="#2EC4B6" fontSize="sm">
-                    {`${method?.salaryPercent}% of payment`}{" "}
+                    {`${method?.salaryPercent}% of payment`}{' '}
                   </Text>
                 </VStack>
               </Flex>

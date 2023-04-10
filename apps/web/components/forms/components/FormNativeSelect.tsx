@@ -1,7 +1,7 @@
-import { FormControl, FormErrorMessage, Select, FormLabel } from "@chakra-ui/react";
-import type { ComponentPropsWithoutRef, PropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { FormControl, FormErrorMessage, Select, FormLabel } from '@chakra-ui/react';
+import type { ComponentPropsWithoutRef, PropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
 interface OptionProps {
   readonly value: string;
@@ -13,8 +13,8 @@ export interface FormNativeSelectProps extends ComponentPropsWithoutRef<typeof S
   name: string;
   /** Field label. */
   label?: string;
-  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  outerProps?: PropsWithoutRef<JSX.IntrinsicElements['div']>;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
   options: OptionProps[];
 }
 
@@ -28,7 +28,7 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
     const error = Array.isArray(errors) ? errors[name]?.message : errors[name]?.message?.toString();
     const isErrorInField = errors[name] ? true : false;
 
-    const flex = "flex-start";
+    const flex = 'flex-start';
 
     return (
       <FormControl
@@ -48,15 +48,13 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
           render={({ field }) => (
             <Select
               size="lg"
-              fontSize="sm"
+              fontSize="md"
               bg="#F7F7F7"
-              // rounded={"3xl"}
-              minH="57px"
               borderRadius="5px"
               borderColor="#9f9f9f"
-              _placeholder={{ fontSize: "sm" }}
-              _hover={{ borderColor: "primary" }}
-              _focus={{ borderColor: "primary" }}
+              _placeholder={{ fontSize: 'sm' }}
+              _hover={{ borderColor: 'primary' }}
+              _focus={{ borderColor: 'primary' }}
               {...field}>
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -74,6 +72,6 @@ const FormNativeSelect = forwardRef<HTMLInputElement, FormNativeSelectProps>(
   }
 );
 
-FormNativeSelect.displayName = "FormNativeSelect";
+FormNativeSelect.displayName = 'FormNativeSelect';
 
 export default FormNativeSelect;

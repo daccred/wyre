@@ -8,18 +8,18 @@ import {
   Stack,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { FiChevronRight } from "react-icons/fi";
-import type { Column } from "react-table";
-import { trpc } from "utils/trpc";
-import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
-import { manageExpensePath } from "views/Payroll/routes";
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { FiChevronRight } from 'react-icons/fi';
+import type { Column } from 'react-table';
+import { trpc } from 'utils/trpc';
+import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
+import { manageExpensePath } from 'views/Payroll/routes';
 
-import { CustomTable } from "../../../components/CustomTable";
-import ViewLayout from "../../../components/core/ViewLayout";
-import { manageExpensesColumn } from "../utils/tableColumns";
+import { CustomTable } from '../../../components/CustomTable';
+import ViewLayout from '../../../components/core/ViewLayout';
+import { manageExpensesColumn } from '../utils/tableColumns';
 
 const View = () => {
   const {
@@ -64,7 +64,7 @@ const View = () => {
         <BreadcrumbItem>
           <BreadcrumbLink
             href={manageExpensePath}
-            color={pathname === manageExpensePath ? "black" : "lightgrey"}
+            color={pathname === manageExpensePath ? 'black' : 'lightgrey'}
             isCurrentPage={true}>
             Manage Expenses
           </BreadcrumbLink>

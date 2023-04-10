@@ -6,14 +6,14 @@ import {
   ModalHeader,
   ModalOverlay,
   VStack,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 
-import { Bank, CryptoWallet, Mobile } from "@wyrecc/components/core/providerIcon";
+import { Bank, CryptoWallet, Mobile } from '@wyrecc/components/core/providerIcon';
 
-import { Card } from "./misc";
+import { Card } from './misc';
 
 interface IPayrollType {
   closePaymentMethodModal: () => void;
@@ -50,7 +50,7 @@ const PaymentMethodType = ({ closePaymentMethodModal, paymentMethodModalIsOpen }
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              onClick={() => router.push("/employee/account/payment-method/crypto-payment-method")}
+              onClick={() => router.push('/employee/account/payment-method/crypto-payment-method')}
             />
             <Card
               heading="Bank Account"
@@ -63,7 +63,7 @@ const PaymentMethodType = ({ closePaymentMethodModal, paymentMethodModalIsOpen }
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              onClick={() => router.push("/employee/account/payment-method/bank-payment-method")}
+              onClick={() => router.push('/employee/account/payment-method/bank-payment-method')}
             />
             <Card
               heading="Mobile Money"
@@ -76,7 +76,7 @@ const PaymentMethodType = ({ closePaymentMethodModal, paymentMethodModalIsOpen }
               border="none"
               hoverBg="brand.700"
               hoverColor="white"
-              onClick={() => router.push("/employee/account/payment-method/mobile-money-payment-method")}
+              onClick={() => router.push('/employee/account/payment-method/mobile-money-payment-method')}
             />
           </VStack>
         </ModalBody>

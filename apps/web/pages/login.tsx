@@ -6,13 +6,13 @@ import z from "zod";
 
 import { getServerAuthSession } from "@wyrecc/api";
 
-import { useForm } from "../components/forms";
-import { Meta } from "../layouts";
-import View from "../views/Login";
+import { useForm } from '../components/forms';
+import { Meta } from '../layouts';
+import View from '../views/Login';
 
 const loginValidationSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(4).max(12),
+  password: z.string().min(6).max(32),
 });
 
 type FormInputOptions = z.infer<typeof loginValidationSchema>;
@@ -23,23 +23,23 @@ export default function Page() {
 
   const handleSubmit = React.useCallback(
     async (data: FormInputOptions) => {
-      const response = await signIn("credentials", {
+      const response = await signIn('credentials', {
         email: data.email,
         password: data.password,
-        callbackUrl: "/demo",
+        callbackUrl: '/demo',
         redirect: false,
       });
 
       if (response?.status != 200) {
         toast({
           description: response?.error,
-          status: "error",
+          status: 'error',
           duration: 5000,
-          position: "top-right",
+          position: 'top-right',
           isClosable: true,
         });
       } else {
-        router.push("/dashboard");
+        router.push('/dashboard');
       }
     },
     [toast, router]
@@ -47,7 +47,7 @@ export default function Page() {
 
   const { renderForm, formState } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: '', password: '' },
     schema: loginValidationSchema,
   });
 
