@@ -11,7 +11,7 @@ const View: React.FC<Props> = (Props) => {
   const { isSubmitting } = Props;
 
   return (
-    <Stack minH="100vh" direction={{ base: "column", md: "row" }}>
+    <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
       <Stack flex={1}>
         <Link href="/">
           <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
@@ -50,9 +50,6 @@ const View: React.FC<Props> = (Props) => {
                   type="submit"
                   isDisabled={isSubmitting}
                   isLoading={isSubmitting}
-                  // _hover={{
-                  //   bg: '#210D35',
-                  // }}
                   _hover={{ bg: '' }}>
                   Login
                 </Button>
@@ -68,7 +65,7 @@ const View: React.FC<Props> = (Props) => {
         </Flex>
       </Stack>
 
-      <Flex position={'relative'} bgColor="#210D35" color="white" flex={3} align="center" justify="center">
+      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
             <Text fontWeight="600" fontSize={{ base: '5xl', md: '6xl' }}>

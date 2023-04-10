@@ -11,8 +11,8 @@ import {
   FormControl,
   FormLabel,
   Link,
-} from "@chakra-ui/react";
-import * as React from "react";
+} from '@chakra-ui/react';
+import * as React from 'react';
 
 import { FormInput } from '../../components';
 
@@ -111,7 +111,7 @@ const View = ({
     <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
       <HStack flex={1} align="start" justify="end">
         <Stack p={8} maxW="md">
-          <Heading>Zayroll</Heading>
+          <Heading>WYRE</Heading>
           <Text>The open-source payroll Infrastructure for African businesses.</Text>
         </Stack>
 
