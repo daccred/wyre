@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ThemeConfig,  StyleFunctionProps } from '@chakra-ui/react';
+import type { ThemeConfig, StyleFunctionProps } from '@chakra-ui/react';
 import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
 
 import * as components from './components';
@@ -45,7 +45,7 @@ export const theme: Record<string, any> = extendTheme({
     '4.5': '1.125rem',
   },
   styles: {
-    global: (props: StyleFunctionProps) => ({
+    global: (_props: StyleFunctionProps) => ({
       body: {
         fontFamily: 'body',
         lineHeight: 'base',

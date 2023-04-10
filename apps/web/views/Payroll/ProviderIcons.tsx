@@ -42,9 +42,9 @@ export const ChevronRight = (props: HTMLChakraProps<'svg'>) => (
     <path
       d="M6 13.3335L11.3333 8.00016L6 2.66683"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </chakra.svg>
 );
