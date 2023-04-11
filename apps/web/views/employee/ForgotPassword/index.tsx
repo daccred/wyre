@@ -12,7 +12,9 @@ type formProps = {
 const View = () => (
   <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
     <Stack flex={1}>
-      <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+      <Link href="/">
+        <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
+      </Link>
 
       <Flex
         p={12}

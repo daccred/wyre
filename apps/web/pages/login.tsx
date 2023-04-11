@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import z from 'zod';
 
+import { getServerAuthSession } from '@wyrecc/api';
+
 import { useForm } from '../components/forms';
 import { Meta } from '../layouts';
 import View from '../views/Login';
@@ -39,7 +41,6 @@ export default function Page() {
       } else {
         router.push('/dashboard');
       }
-      // alert(JSON.stringify(data));
     },
     [toast, router]
   );
@@ -57,3 +58,20 @@ export default function Page() {
     </>
   );
 }
+
+export const getServerSideProps = async (context: any) => {
+  const session = await getServerAuthSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

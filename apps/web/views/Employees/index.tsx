@@ -342,7 +342,9 @@ const Employees = () => {
                                         name={data?.name}
                                         opacity={data?.status !== 'active' ? '35%' : ''}
                                       />
-                                      <Text color={data?.status !== 'active' ? '#FF951C' : ''}>
+                                      <Text
+                                        fontWeight={data.id === selectedEmployee.id ? 'bold' : 'normal'}
+                                        color={data?.status !== 'active' ? '#FF951C' : ''}>
                                         {data?.name}
                                       </Text>
                                     </HStack>

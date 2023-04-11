@@ -44,8 +44,14 @@ export default function AddEmployee({
 }: addEmployeeTypes) {
   const toast = useToast();
 
+  const abortController = new AbortController();
+
   const handleSubmit = async (data: FormInputOptions) => {
     // console.log(JSON.stringify(data));
+    setTimeout(() => {
+      abortController.abort();
+    }, 5000); // set timeout for 2 seconds
+
     addEmployee({
       name: data.name,
       email: data.email,
@@ -65,6 +71,7 @@ export default function AddEmployee({
   });
 
   const { mutate: addEmployee, isLoading } = trpc.team.createPersonnel.useMutation({
+    meta: { signal: abortController.signal },
     onSuccess() {
       // Reset the form data to empty values
       resetForm();

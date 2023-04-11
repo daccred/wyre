@@ -1,9 +1,20 @@
-import { Button, useToast } from '@chakra-ui/react';
+import {
+  Button,
+  useToast,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { trpc } from 'utils/trpc';
 
 import styledToast from '../../../components/core/StyledToast';
+import { trpc } from '../../../utils/trpc';
 import { ProfileIcon } from './ProviderIcons';
 
 const Terminate = () => {

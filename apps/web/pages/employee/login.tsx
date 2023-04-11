@@ -40,7 +40,6 @@ const Page = () => {
       } else {
         router.push('');
       }
-      // alert(JSON.stringify(data));
     },
     [toast, router]
   );

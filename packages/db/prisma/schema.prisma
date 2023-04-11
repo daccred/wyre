@@ -68,27 +68,27 @@ enum PayrollMethod {
 }
 
 model User {
-  id                 String              @id @default(cuid())
-  firstName          String
-  lastName           String
-  email              String              @unique
-  phone              String?
-  password           String
-  type               Role                @default(USER)
-  emailVerified      Boolean?            @default(false)
-  verification       VerificationToken?
-  image              String?
-  jobRole            String?
-  category           String?
-  company            Company?            @relation(fields: [companyId], references: [id])
-  companyId          String?
-  accounts           Account[]
-  sessions           Session[]
-  invitations        Invitation[]
-  paymentLinks       PaymentLink[]
-  wyreRequests       WyreRequest[]
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
+  id            String             @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String             @unique
+  phone         String?
+  password      String
+  type          Role               @default(USER)
+  emailVerified Boolean?           @default(false)
+  verification  VerificationToken?
+  image         String?
+  jobRole       String?
+  category      String?
+  company       Company?           @relation(fields: [companyId], references: [id])
+  companyId     String?
+  accounts      Account[]
+  sessions      Session[]
+  invitations   Invitation[]
+  paymentLinks  PaymentLink[]
+  wyreRequests  WyreRequest[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
 }
 
 model VerificationToken {
@@ -135,8 +135,8 @@ enum TeamCategory {
 }
 
 model Team {
-  id            String          @id @default(cuid())
-  email         String          @unique
+  id            String        @id @default(cuid())
+  email         String        @unique
   firstName     String?
   lastName      String?
   phone         String?
@@ -145,10 +145,10 @@ model Team {
   jobRole       String
   salary        String
   signBonus     String
-  status        Boolean?        @default(true)
-  teamCategory  TeamCategory    @default(EMPLOYEE)
-  payroll       Payroll?        @relation(fields: [payrollId], references: [id])
-  payrollMethod PayrollMethod   @default(BANK)
+  status        Boolean?      @default(true)
+  teamCategory  TeamCategory  @default(EMPLOYEE)
+  payroll       Payroll?      @relation(fields: [payrollId], references: [id])
+  payrollMethod PayrollMethod @default(BANK)
   payrollId     String?
   bank          Bank?
   expense       Expense?
@@ -171,9 +171,9 @@ enum Currency {
 }
 
 model Payroll {
-  id        String        @id @default(cuid())
-  suspend   Boolean       @default(false)
-  currency  Currency      @default(NGN)
+  id        String   @id @default(cuid())
+  suspend   Boolean  @default(false)
+  currency  Currency @default(NGN)
   title     String
   cycle     String
   payday    DateTime
@@ -207,15 +207,15 @@ model ExpenseAttachment {
 }
 
 model Expense {
-  id          String            @id @default(cuid())
+  id          String             @id @default(cuid())
   description String
   date        DateTime
-  type        ExpenseCategory        @default(Payment)
+  type        ExpenseCategory    @default(Payment)
   status      ExpenseStatus
   attachment  ExpenseAttachment?
   amount      String
-  employeeId  String            @unique
-  employee    Team              @relation(fields: [employeeId], references: [id])
+  employeeId  String             @unique
+  employee    Team               @relation(fields: [employeeId], references: [id])
 }
 
 model CryptoWallet {
@@ -303,14 +303,14 @@ enum TransactionCategory {
 }
 
 model Transaction {
-  id                  String                @id @default(cuid())
-  attempts            Int?                  @default(0)
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  currency            String?               @default("NGN")
-  status              String?               @default("PENDING")
-  category            TransactionCategory   @default(PAYROLL)
-  amount              Int?
-  provider            String?
-  categoryRefId       String?
+  id            String              @id @default(cuid())
+  attempts      Int?                @default(0)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  currency      String?             @default("NGN")
+  status        String?             @default("PENDING")
+  category      TransactionCategory @default(PAYROLL)
+  amount        Int?
+  provider      String?
+  categoryRefId String?
 }
