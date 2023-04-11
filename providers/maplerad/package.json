@@ -12,7 +12,7 @@
     "build": "tsc",
     "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
-    "lint:es": "TIMING=1 eslint \"*.ts\""
+    "lint:es": "TIMING=1 eslint src"
   },
   "dependencies": {
     "ajv": "^8.12.0",

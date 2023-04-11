@@ -181,7 +181,7 @@ const ManageEmployee = () => {
             w="fit-content"
             type="submit"
             // isLoading={isLoading}
-            _hover={{ bg: "" }}
+            _hover={{ bg: '' }}
             loadingText="Updating">
             Update Payment
           </Button>

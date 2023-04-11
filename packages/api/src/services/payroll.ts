@@ -222,72 +222,70 @@ export class PayrollService {
         });
       }
 
-      const processPayrollData: PayrollScheduleData[] = [];
+      // const processPayrollData: PayrollScheduleData[] = [];
 
       /**
        * In the optimized code, we use Promise.all to run the database queries for each employee in parallel.
        * We also simplify the switch statement by defining a default case that does not modify queueObject.recipientPaymentDetail.
        * Finally, we push the queueObject into the processPayrollData array after all the database queries have been completed.
-       *   */
-      await Promise.all(
+       **/
+
+      const processPayrollData: PayrollScheduleData[] = await Promise.all(
         payroll.employees.map(async (item) => {
-          const recipientDetails = item;
-          const recipientPaymentDetail = await prisma.bank.findUnique({
-            where: { personnelId: item.id },
-          });
-
-          console.log(recipientDetails, recipientPaymentDetail, 'inside HERE>>>>');
-          if (!recipientPaymentDetail) {
-            throw new TRPCError({
-              code: 'NOT_FOUND',
-              message: `Payment details for employee with id ${item.id} not found`,
-            });
-          }
-          const queueObject: PayrollScheduleData = {
-            payroll: id,
-            recipientDetails,
-            paymentMethod: item.payrollMethod,
-            recipientPaymentDetail,
-          };
-
+          let recipientPaymentDetail = null;
           switch (item.payrollMethod) {
+            case 'BANK':
+              recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
+              break;
             case 'CRYPTO':
-              queueObject.recipientPaymentDetail = await prisma.cryptoWallet.findUnique({
+              recipientPaymentDetail = await prisma.cryptoWallet.findUnique({
                 where: { personnelId: item.id },
               });
               break;
             case 'MOBILEMONEY':
-              queueObject.recipientPaymentDetail = await prisma.mobileMoney.findUnique({
+              recipientPaymentDetail = await prisma.mobileMoney.findUnique({
                 where: { personnelId: item.id },
               });
               break;
             default:
-              break;
+              recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
           }
 
-          processPayrollData.push(queueObject);
+          // if (!recipientPaymentDetail) {
+          //   throw new TRPCError({
+          //     code: 'NOT_FOUND',
+          //     message: `Payment details for employee with id ${item.id} not found`,
+          //   });
+          // }
+
+          return {
+            payroll: id,
+            recipientDetails: item,
+            paymentMethod: item.payrollMethod,
+            recipientPaymentDetail,
+          };
         })
       );
 
       /* Get the delay params for scheduling */
       const now = new Date(); // current date and time
       const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
+      /**
+       * replace method with a regular expression that matches one or more whitespace characters
+       * (\s+) and replaces them with an underscore character (_).
+       **/
+      const operationName = payroll.title.replace(/\s+/g, '_').toLowerCase();
 
       // added the payroll to the queue
       await createPayrollPublisher({
-        /**
-         * replace method with a regular expression that matches one or more whitespace characters
-         * (\s+) and replaces them with an underscore character (_).
-         **/
-        name: payroll.title.replace(/\s+/g, '_').toLowerCase(),
+        name: operationName,
         data: processPayrollData,
         delay: diffInMilliseconds,
       });
       // await PayrollQueue.add(PayrollData, { attempts: 5 });
 
       return {
-        status: 'processing',
-        message: 'Payroll processing started',
+        message: `${operationName} payroll scheduled for ${payroll.payday}`,
         scheduled: diffInMilliseconds,
         payload: processPayrollData,
       };
