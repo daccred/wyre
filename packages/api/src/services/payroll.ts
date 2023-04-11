@@ -208,72 +208,91 @@ export class PayrollService {
   }
 
   static async processPayRoll(id: string) {
-    // check for the payroll
-    const payroll = await prisma.payroll.findUnique({
-      where: { id },
-      include: { employees: true },
-    });
-
-    if (!payroll) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `Payroll with id ${id} not found`,
+    try {
+      // check for the payroll
+      const payroll = await prisma.payroll.findUnique({
+        where: { id },
+        include: { employees: true },
       });
-    }
 
-    // const processPayrollData: PayrollScheduleData[] = [];
+      if (!payroll) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `Payroll with id ${id} not found`,
+        });
+      }
 
-    /**
-     * In the optimized code, we use Promise.all to run the database queries for each employee in parallel.
-     * We also simplify the switch statement by defining a default case that does not modify queueObject.recipientPaymentDetail.
-     * Finally, we push the queueObject into the processPayrollData array after all the database queries have been completed.
-     *   */
-     const processPayrollData = await Promise.all(
-      payroll.employees.map(async (item) => {
-        let recipientPaymentDetail = null;
-        switch (item.payrollMethod) {
-          case 'BANK':
-            recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-            break;
-          case 'CRYPTO':
-            recipientPaymentDetail = await prisma.cryptoWallet.findUnique({ where: { personnelId: item.id } });
-            break;
-          case 'MOBILEMONEY':
-            recipientPaymentDetail = await prisma.mobileMoney.findUnique({ where: { personnelId: item.id } });
-            break;
-          default:
-            recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-        }
-        return {
-          payroll: id,
-          recipientDetails: item,
-          paymentMethod: item.payrollMethod,
-          recipientPaymentDetail,
-        };
-      })
-    );
+      const processPayrollData: PayrollScheduleData[] = [];
 
-    /* Get the delay params for scheduling */
-    const now = new Date(); // current date and time
-    const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
-
-    // added the payroll to the queue
-    await createPayrollPublisher({
       /**
-       * replace method with a regular expression that matches one or more whitespace characters
-       * (\s+) and replaces them with an underscore character (_).
-       **/
-      name: payroll.title.replace(/\s+/g, '_').toLowerCase(),
-      data: processPayrollData,
-      delay: diffInMilliseconds,
-    });
-    // await PayrollQueue.add(PayrollData, { attempts: 5 });
+       * In the optimized code, we use Promise.all to run the database queries for each employee in parallel.
+       * We also simplify the switch statement by defining a default case that does not modify queueObject.recipientPaymentDetail.
+       * Finally, we push the queueObject into the processPayrollData array after all the database queries have been completed.
+       *   */
+      await Promise.all(
+        payroll.employees.map(async (item) => {
+          const recipientDetails = item;
+          const recipientPaymentDetail = await prisma.bank.findUnique({
+            where: { personnelId: item.id },
+          });
 
-    return {
-      status: 'processing',
-      message: 'Payroll processing started',
-      scheduled: diffInMilliseconds,
-      payload: processPayrollData,
-    };
+          console.log(recipientDetails, recipientPaymentDetail, 'inside HERE>>>>');
+          if (!recipientPaymentDetail) {
+            throw new TRPCError({
+              code: 'NOT_FOUND',
+              message: `Payment details for employee with id ${item.id} not found`,
+            });
+          }
+          const queueObject: PayrollScheduleData = {
+            payroll: id,
+            recipientDetails,
+            paymentMethod: item.payrollMethod,
+            recipientPaymentDetail,
+          };
+
+          switch (item.payrollMethod) {
+            case 'CRYPTO':
+              queueObject.recipientPaymentDetail = await prisma.cryptoWallet.findUnique({
+                where: { personnelId: item.id },
+              });
+              break;
+            case 'MOBILEMONEY':
+              queueObject.recipientPaymentDetail = await prisma.mobileMoney.findUnique({
+                where: { personnelId: item.id },
+              });
+              break;
+            default:
+              break;
+          }
+
+          processPayrollData.push(queueObject);
+        })
+      );
+
+      /* Get the delay params for scheduling */
+      const now = new Date(); // current date and time
+      const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
+
+      // added the payroll to the queue
+      await createPayrollPublisher({
+        /**
+         * replace method with a regular expression that matches one or more whitespace characters
+         * (\s+) and replaces them with an underscore character (_).
+         **/
+        name: payroll.title.replace(/\s+/g, '_').toLowerCase(),
+        data: processPayrollData,
+        delay: diffInMilliseconds,
+      });
+      // await PayrollQueue.add(PayrollData, { attempts: 5 });
+
+      return {
+        status: 'processing',
+        message: 'Payroll processing started',
+        scheduled: diffInMilliseconds,
+        payload: processPayrollData,
+      };
+    } catch (error) {
+      ServerError(error);
+    }
   }
 }
