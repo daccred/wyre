@@ -27,11 +27,11 @@ import {
   EmployeesIcon,
   IntegrationsIcon,
   LogoutIcon,
-  PayrollIcon,
-  PeopleIcon,
+  PayrollIcon, // PeopleIcon,
   ExpensesIcon,
 } from './ProviderIcons';
-import SidebarAccordion from './SidebarAccordion';
+
+// import SidebarAccordion from './SidebarAccordion';
 
 interface LinkItemProps {
   name: string;
@@ -39,31 +39,38 @@ interface LinkItemProps {
   href: string;
 }
 
-interface LinkAccordionProps {
-  name: string;
-  icon: ComponentWithAs<'svg', IconProps>;
-  href: string;
-  panels?: LinkAccordionProps[];
-}
+// interface LinkAccordionProps {
+//   name: string;
+//   icon: ComponentWithAs<'svg', IconProps>;
+//   href: string;
+//   panels?: LinkAccordionProps[];
+// }
 const DashboardLinkItems: Array<LinkItemProps> = [
   { name: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
 ];
 const PayrollLinkItems: Array<LinkItemProps> = [{ name: 'Payroll', href: '/payroll', icon: PayrollIcon }];
 
-const PeopleAccordion: LinkAccordionProps = {
-  name: 'People',
-  href: '#',
-  icon: PeopleIcon,
-  panels: [
-    { name: 'Employees', href: '/employees', icon: EmployeesIcon },
-    { name: 'Contractors', href: '/contractors', icon: ContractorsIcon },
-  ],
-};
+// const PeopleAccordion: LinkAccordionProps = {
+//   name: 'People',
+//   href: '#',
+//   icon: PeopleIcon,
+//   panels: [
+//     { name: 'Employees', href: '/employees', icon: EmployeesIcon },
+//     { name: 'Contractors', href: '/contractors', icon: ContractorsIcon },
+//   ],
+// };
+
 // const PeopleLinkItems: Array<LinkItemProps> = [
 //   { name: "People", href: "", icon: PeopleIcon },
 //   { name: "Employees", href: "/employees", icon: EmployeesIcon },
 //   { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
 // ];
+
+const PeopleAccordion: Array<LinkItemProps> = [
+  { name: 'Employees', href: '/employees', icon: EmployeesIcon },
+  { name: 'Contractors', href: '/contractors', icon: ContractorsIcon },
+];
+
 const ExpensesLinkItems: Array<LinkItemProps> = [{ name: 'Expenses', href: '/expenses', icon: ExpensesIcon }];
 const DevLinkItems: Array<LinkItemProps> = [
   { name: 'Integrations', href: '/integrations', icon: IntegrationsIcon },
@@ -117,7 +124,7 @@ const SidebarContent = ({ ...rest }) => {
         ))}
 
         {/* Using an accordion for drop down nav */}
-        <SidebarAccordion menu={PeopleAccordion} />
+        {/* <SidebarAccordion menu={PeopleAccordion} /> */}
         {/* Using an accordion for drop down nav */}
 
         {/* {PeopleLinkItems.map(
@@ -141,6 +148,11 @@ const SidebarContent = ({ ...rest }) => {
               </NavItem>
             )
         )} */}
+        {PeopleAccordion.map((link) => (
+          <NavItem key={link.name} icon={link.icon} href={link.href}>
+            {link.name}
+          </NavItem>
+        ))}
         {ExpensesLinkItems.map((link) => (
           <NavItem key={link.name} icon={link.icon} href={link.href}>
             {link.name}
