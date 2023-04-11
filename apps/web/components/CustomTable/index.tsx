@@ -50,10 +50,10 @@ export function CustomTable<T extends object>({ data, columns }: TableProps<T>) 
           {page.map((row) => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()}>
+              <Tr {...row.getRowProps()} key={row.id}>
                 {row.cells.map((cell) => {
                   return (
-                    <Td {...cell.getCellProps()} py={4} px={0}>
+                    <Td {...cell.getCellProps()} key={cell.column.id} py={4} px={0}>
                       {cell.render('Cell')}
                     </Td>
                   );

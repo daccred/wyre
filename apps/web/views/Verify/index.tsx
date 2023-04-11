@@ -8,7 +8,6 @@ import {
   Text,
   Link,
   Center,
-  Heading,
   useToast,
   PinInputField,
   PinInput,
@@ -55,8 +54,10 @@ const View = () => {
 
   return (
     <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
-      <Stack flex={1} minW={'26rem'}>
-        <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
+      <Stack flex={1}>
+        <Link href="/">
+          <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
+        </Link>
 
         <Flex p={12} flex={1} align="start" justify={{ base: '', md: '', xl: '' }}>
           <Stack spacing={8} w="full" maxW="sm">
@@ -110,7 +111,7 @@ const View = () => {
         </Flex>
       </Stack>
 
-      <Flex bgColor="#210D35" color="white" flex={3} align="center" justify="center">
+      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
             <Text fontWeight="600" fontSize={{ base: '5xl', md: '6xl' }}>

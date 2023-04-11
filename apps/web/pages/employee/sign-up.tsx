@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import z from 'zod';
 
 import { useForm } from '@wyrecc/components/forms';
@@ -31,7 +31,6 @@ type FormInputOptions = z.infer<typeof signUpValidationSchema>;
 export default function Page() {
   const router = useRouter();
   const toast = useToast();
-  const [isFormReset, setIsFormReset] = useState(false);
   const { mutate: signUp, isLoading } = trpc.user.addUser.useMutation({
     onSuccess: (data: any, variables: any, context: any) => {
       const { updatedAdmin } = data;
@@ -43,7 +42,7 @@ export default function Page() {
         duration: 5000,
         position: 'top-right',
       });
-      setIsFormReset(true); // set the form reset status to true
+      resetForm(); // set the form reset status to true
       router.push({
         pathname: `/verify`,
         query: { id, email },
@@ -64,7 +63,7 @@ export default function Page() {
     // signUp({});
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
     onSubmit: Submit,
     schema: signUpValidationSchema,
   });

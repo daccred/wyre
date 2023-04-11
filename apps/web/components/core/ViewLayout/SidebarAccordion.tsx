@@ -35,7 +35,7 @@ export default function SidebarAccordion({ menu }: Props) {
         <h2>
           <AccordionButton
             as={HStack}
-            justify={'space-between'}
+            justify="space-between"
             _hover={{
               opacity: 0.8,
               cursor: 'pointer',
@@ -59,7 +59,7 @@ export default function SidebarAccordion({ menu }: Props) {
               </Text>
             </HStack>
 
-            <AccordionIcon color={isActive ? 'brand.600' : 'boldgrey'} w={'40px'} fontSize="2xl" />
+            <AccordionIcon color={isActive ? 'brand.600' : 'boldgrey'} w="40px" fontSize="2xl" />
           </AccordionButton>
         </h2>
 

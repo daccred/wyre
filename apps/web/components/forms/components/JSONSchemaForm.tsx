@@ -40,7 +40,7 @@ export class JSONSchemaFormComponent extends React.Component<JSONSchemaFormProps
     return validate({});
   };
 
-  renderInputField = (fieldName, fieldType, isRequired) => {
+  renderInputField = (fieldName: any, fieldType: any, isRequired: any) => {
     return (
       <chakra.div>
         <FormInput
@@ -53,11 +53,11 @@ export class JSONSchemaFormComponent extends React.Component<JSONSchemaFormProps
     );
   };
 
-  renderCheckboxField = (fieldName, enumValues) => {
+  renderCheckboxField = (fieldName: any, enumValues: any) => {
     return (
       <div>
         <label>{fieldName}: </label>
-        {enumValues.map((value, index) => {
+        {enumValues.map((value: any, index: any) => {
           return (
             <chakra.div key={index}>
               <FormCheckbox
@@ -81,8 +81,8 @@ export class JSONSchemaFormComponent extends React.Component<JSONSchemaFormProps
     return (
       <Stack>
         {Object.keys(schema.properties || {}).map((key, index) => {
-          const property = schema.properties[key] as JSONSchema7;
-          const isRequired = schema.required && schema.required.indexOf(key) !== -1;
+          const property = schema.properties?.[key] as JSONSchema7;
+          const isRequired = schema?.required && schema.required.indexOf(key) !== -1;
 
           if (property.enum) {
             return this.renderCheckboxField(key, property.enum);
