@@ -209,45 +209,49 @@ export class PayrollService {
 
   static async processPayRoll(id: string) {
     // check for the payroll
-    const payroll = await prisma.payroll.findUnique({ where: { id }, include: { employees: true } });
-    if (payroll === null) {
+    const payroll = await prisma.payroll.findUnique({
+      where: { id },
+      include: { employees: true },
+    });
+
+    if (!payroll) {
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: `Payroll with id ${id} not found`,
       });
     }
-    const processPayrollData: Array<PayrollScheduleData> = [];
-    // looping through the employees
-    await payroll.employees.map(async (item) => {
-      const queueObject: PayrollScheduleData = {
-        payroll: id,
-        recipientDetails: item,
-        paymentMethod: item.payrollMethod,
-        recipientPaymentDetail: null,
-      };
-      switch (item.payrollMethod) {
-        case 'BANK': {
-          const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = bank;
-          break;
+
+    // const processPayrollData: PayrollScheduleData[] = [];
+
+    /**
+     * In the optimized code, we use Promise.all to run the database queries for each employee in parallel.
+     * We also simplify the switch statement by defining a default case that does not modify queueObject.recipientPaymentDetail.
+     * Finally, we push the queueObject into the processPayrollData array after all the database queries have been completed.
+     *   */
+     const processPayrollData = await Promise.all(
+      payroll.employees.map(async (item) => {
+        let recipientPaymentDetail = null;
+        switch (item.payrollMethod) {
+          case 'BANK':
+            recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
+            break;
+          case 'CRYPTO':
+            recipientPaymentDetail = await prisma.cryptoWallet.findUnique({ where: { personnelId: item.id } });
+            break;
+          case 'MOBILEMONEY':
+            recipientPaymentDetail = await prisma.mobileMoney.findUnique({ where: { personnelId: item.id } });
+            break;
+          default:
+            recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
         }
-        case 'CRYPTO': {
-          const wallet = await prisma.cryptoWallet.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = wallet;
-          break;
-        }
-        case 'MOBILEMONEY': {
-          const mobileMoney = await prisma.mobileMoney.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = mobileMoney;
-          break;
-        }
-        default: {
-          const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = bank;
-        }
-      }
-      processPayrollData.push(queueObject);
-    });
+        return {
+          payroll: id,
+          recipientDetails: item,
+          paymentMethod: item.payrollMethod,
+          recipientPaymentDetail,
+        };
+      })
+    );
 
     /* Get the delay params for scheduling */
     const now = new Date(); // current date and time
