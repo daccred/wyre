@@ -7,7 +7,7 @@ export const payrollSchema = z.object({
   cycle: z.enum(['daily', 'bi-weekly', 'monthly']),
   auto: z.boolean(),
   suspend: z.boolean(),
-  payday: z.date(),
+  payday: z.string(),
   currency: z.enum(['USD', 'GHS', 'NGN', 'GBP', 'EUR', 'KES', 'RWF', 'UGX', 'TZS', 'ZMW', 'ZAR']),
   burden: z.number(),
   employees: z.array(z.string()),
@@ -18,12 +18,13 @@ export type IPayrollSchema = z.infer<typeof payrollSchema>;
 export interface PayrollScheduleData {
   payroll: string;
   recipientDetails: ITeamSchema | unknown;
-  paymentMethod: string;
+  paymentMethod: ITeamSchema['payrollMethod'];
   recipientPaymentDetail: unknown;
 }
 
 export interface PayrollTaskOptions {
   delay: number;
+  name: string;
   data: PayrollScheduleData[];
 }
 

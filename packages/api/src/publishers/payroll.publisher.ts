@@ -10,6 +10,7 @@ export const createPayrollPublisher = async (options: PayrollTaskOptions) => {
   const queue = payrollQueue;
   return await createRealtimeTask<PayrollTaskOptions['data']>(queue, {
     isCron: false,
+    name: options.name,
     delay: options.delay,
     data: options.data,
   });

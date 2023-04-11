@@ -218,7 +218,7 @@ export class PayrollService {
     }
     const processPayrollData: Array<PayrollScheduleData> = [];
     // looping through the employees
-    payroll.employees.map(async (item) => {
+    await payroll.employees.map(async (item) => {
       const queueObject: PayrollScheduleData = {
         payroll: id,
         recipientDetails: item,
@@ -255,11 +255,21 @@ export class PayrollService {
 
     // added the payroll to the queue
     await createPayrollPublisher({
+      /**
+       * replace method with a regular expression that matches one or more whitespace characters
+       * (\s+) and replaces them with an underscore character (_).
+       **/
+      name: payroll.title.replace(/\s+/g, '_').toLowerCase(),
       data: processPayrollData,
       delay: diffInMilliseconds,
     });
     // await PayrollQueue.add(PayrollData, { attempts: 5 });
 
-    return 'Payroll added to the queue';
+    return {
+      status: 'processing',
+      message: 'Payroll processing started',
+      scheduled: diffInMilliseconds,
+      payload: processPayrollData,
+    };
   }
 }

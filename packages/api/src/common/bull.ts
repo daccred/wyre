@@ -46,7 +46,7 @@ export const payrollQueue = new Queue(DEFAULT_QUEUE_NAME, queueOptions);
 
 export type TaskQueueOptions<T> = {
   isCron: boolean;
-  name?: string;
+  name: string;
   /** Use to schedule when a task should be executed */
   delay?: Bull.JobOptions['delay'];
   /** uses with cron jobs to define repeatable tasks  */
@@ -64,7 +64,7 @@ export const createRealtimeTask = <T>(
   queue: Queue.Queue,
   { isCron, name, ...options }: TaskQueueOptions<T>
 ) => {
-  if (isCron && name) {
+  if (isCron) {
     queue.add(name, options.data, {
       removeOnComplete: true,
       attempts: 5,
@@ -74,7 +74,7 @@ export const createRealtimeTask = <T>(
 
     /* This is our default operation for scheduled tasks */
   } else {
-    queue.add(options.data, {
+    queue.add(name, options.data, {
       attempts: 3,
       delay: options.delay,
       removeOnComplete: true,
