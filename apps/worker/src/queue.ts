@@ -3,7 +3,7 @@ import { queueOptions } from './core/bull';
 import { __queueStatusHook } from './helpers/queue.hooks';
 import Queue from 'bull';
 
-export const DEFAULT_QUEUE_NAME = 'payroll:queue';
+export const DEFAULT_PAYROLL_QUEUE_NAME = 'payroll:queue';
 
 /**
  * =======================================================
@@ -11,7 +11,7 @@ export const DEFAULT_QUEUE_NAME = 'payroll:queue';
  * AS A CONST TO BE USED IN OUR APP PUBLISHERS
  * =======================================================
  */
-export const payrollQueue = new Queue(DEFAULT_QUEUE_NAME, queueOptions);
+export const payrollQueue = new Queue(DEFAULT_PAYROLL_QUEUE_NAME, queueOptions);
 
 /**
  * =======================================================
@@ -31,7 +31,7 @@ export default async function queue() {
   // _createRepeatableTask(messageQueue)(VOICE, await voiceProducer());
 
   /// Call Consumers here
-  payrollQueue.process(DEFAULT_QUEUE_NAME, (job, done) =>
+  payrollQueue.process(DEFAULT_PAYROLL_QUEUE_NAME, (job, done) =>
     mapleradConsumer(job, done)
   );
   // messageQueue.process(SMS, MAX_CONCURRENCY, (job, done) =>
@@ -39,6 +39,6 @@ export default async function queue() {
   // );
   // messageQueue.process(VOICE, (job, done) => voiceConsumer(job, done));
 
-  // / Report Queue Event Listeners
+  /// Report Queue Event Listeners
   __queueStatusHook(payrollQueue);
 }

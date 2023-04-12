@@ -39,7 +39,7 @@ export const mapleradConfigSchema: JSONSchema7 = {
       default: 'NGN',
     },
   },
-  required: ['supported_currencies'],
+  required: ['name', 'secret_key', 'supported_currencies'],
 };
 
 interface HttpProviderConfig {

@@ -1,13 +1,10 @@
 import Ajv from 'ajv';
-import { Got } from 'got';
-// import got from 'got';
+/// @see https://www.npmjs.com/package/got/v/11.8.1
+import got from 'got';
 import { type JSONSchema7 } from 'json-schema';
 
 import { type MapleradConfigOptions } from './maplerad.schema';
 import { mapleradConfigSchema } from './maplerad.schema';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const got = require('got');
 
 // const live = "https://api.maplerad.com/v1";
 // const sandbox = "https://sandbox.api.maplerad.com/v1";
@@ -33,6 +30,7 @@ interface FintechProviderInterface {
 interface NairaTransferRequest {
   account_number: string;
   amount: number;
+  reason?: string;
   reference: string;
   bank_code: string;
   currency: 'NGN';
@@ -40,45 +38,48 @@ interface NairaTransferRequest {
 
 export class MapleradProvider implements FintechProviderInterface {
   private config;
-  private client!: Got;
+  private client;
   private logger = console;
-  private path = '/transfers';
+  private path = 'transfers';
 
   constructor(config: MapleradConfigOptions) {
-    this.config = config;
+    this.config = {};
     const defaults = this.validateConfigSchema(config);
-    (async () => {
-      const got = await import('got');
-      // const response = await got.default(url);
-      this.client = got.default.extend({
-        prefixUrl: config.default,
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${defaults.secret_key}`,
-        },
-      });
-    })();
+
+    this.client = got.extend({
+      prefixUrl: defaults.base_url,
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${defaults.secret_key}`,
+      },
+    });
+
+    console.log({
+      defaults,
+      herer: '49025uitninoskdsc........===============.....................',
+    });
   }
 
-  validateConfigSchema = (schema: JSONSchema7) => {
+  validateConfigSchema = (_schema: JSONSchema7) => {
     const ajv = new Ajv({ useDefaults: true });
     const validate = ajv.compile(mapleradConfigSchema);
 
-    const extractConfig = validate(schema);
-    this.logger.log(`MapleradProvider.validateConfigSchema`, extractConfig);
-
-    if (!extractConfig) {
+    /**
+     * @note Ajv mutates the __schema object__ and adds the default values
+     * the moment we call validate(schema);
+     * */
+    const isValidSchema = validate(_schema);
+    this.logger.log(`MapleradProvider.validateConfigSchema`, isValidSchema);
+    if (!isValidSchema) {
       this.logger.error(validate.errors);
       throw new Error(`{
         message: "Invalid Maplerad config schema",
-        errors: ${validate.errors}
+        errors: ${JSON.stringify(validate.errors)}
       }`);
     }
 
-    // because we have defaults, we infer the type
-    const config = extractConfig as unknown as MapleradConfigOptions;
-    this.config = config;
-    return config;
+    this.config = _schema as MapleradConfigOptions;
+    return _schema as MapleradConfigOptions;
   };
 
   getConfig() {
@@ -96,9 +97,10 @@ export class MapleradProvider implements FintechProviderInterface {
           reference: payload.reference,
           reason: 'Wyre requester funding',
         },
+        responseType: 'json',
       })
       .json();
-    this.logger.log(`MapleradProvider.executeNairaTransfer`, response);
+    this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(response, null, 2));
     return response;
   }
 

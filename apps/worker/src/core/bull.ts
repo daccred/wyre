@@ -20,8 +20,10 @@ export const queueOptions: Queue.QueueOptions = {
     switch (__type__) {
       case 'client':
         return client;
-      default:
+      case 'subscriber':
         return subscriber;
+      default:
+        return client;
     }
   },
   defaultJobOptions: {

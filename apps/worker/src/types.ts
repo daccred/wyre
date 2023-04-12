@@ -1,5 +1,6 @@
 export interface RecipientData {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   department: string;
   jobRole: string;

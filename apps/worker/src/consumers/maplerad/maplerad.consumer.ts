@@ -16,14 +16,16 @@ export const mapleradConsumer = async (
   rootQueueJob: Queue.Job<PayrollScheduleData>,
   done: DoneCallback
 ) => {
-  logger.debug(`[MAPLERAD JOB STARTED ---->] ${rootQueueJob}`);
+  logger.debug(`[MAPLERAD JOB STARTED ---->] ${JSON.stringify(rootQueueJob)}`);
 
   /* Setup the Maplerad provider */
+  // const { MapleradProvider } = await import('@wyrecc/maplerad');
+
   const maplerad = new MapleradProvider(config);
 
   /* This is a debug call, let us see what is in config */
   const mapleConfig = maplerad.getConfig();
-  logger.debug(`[MAPLERAD CONFIG ---->] ${mapleConfig}`);
+  logger.debug(`[MAPLERAD CONFIG ---->] ${JSON.stringify(mapleConfig)}`);
 
   const { data: rootQueueJobData } = rootQueueJob;
   logger.debug(`[MAPLERAD JOB DATA ---->] ${rootQueueJobData}`);
@@ -41,31 +43,42 @@ export const mapleradConsumer = async (
   Array.isArray(rootQueueJobData.payload) &&
     (await Promise.all([
       rootQueueJobData.payload.forEach((recipient: RecipientData, index) => {
-        // const queueName = `${recipient.email}${consumerQueueName}`;
+        const queueName = `${recipient.email}${consumerQueueName}`;
 
-        logger.verbose(
-          `[MAPLERAD SENDING PAYMENT FOR RECIPIENT ---->] ${recipient}::${index}`
+        logger.debug(
+          `[MAPLERAD SENDING PAYMENT FOR RECIPIENT ---->] ${recipient.firstName}::${index}`
         );
         createNowTask<RecipientJobData>(queue, {
-          name: consumerQueueName,
+          name: queueName,
           data: { ...recipient, index },
         });
 
         /// This is the worker that will process the payment request internally to Maplerad
-        queue.process(consumerQueueName, async (job, done) => {
+        queue.process(queueName, async (job, done) => {
           const data = job.data as RecipientJobData;
 
-          logger.verbose(
+          logger.debug(
             `[MAPLERAD PAYMENT PROCESSING FOR RECIPIENT ---->] ${data.index}`
           );
+
+          // {
+          //   "account_number": "0148105611",
+          //   "bank_code": "159",
+          //   "amount": 10000,
+          //   "currency": "NGN",
+          //   "reason": "Savings",
+          //   "allocation": 100,
+          //   "reference": "clgdj25an0006eyq85x1q9y5e"
+          // }
           const response = maplerad.executeNairaTransfer({
             account_number: data.bank?.accountNumber as string,
             amount: Number(data.salary),
+            reason: queueName,
             reference: rootQueueJobData.ref,
-            bank_code: data.bank?.bankCode as string,
+            bank_code: data.bank?.bankCode || '159', // GTB
             currency: 'NGN',
           });
-          logger.verbose(`[MAPLERAD PAYMENT RESPONSE ---->] ${response}`);
+          logger.debug(`[MAPLERAD PAYMENT RESPONSE ---->] ${response}`);
           done();
         });
       }),
