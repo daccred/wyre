@@ -1,5 +1,4 @@
 import type { GetServerSideProps, GetServerSidePropsResult } from 'next';
-
 import { getServerAuthSession } from '@wyrecc/api';
 
 export const withAuth = (getServerSidePropsFunc: GetServerSideProps) => {

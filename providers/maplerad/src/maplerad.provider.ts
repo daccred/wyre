@@ -1,7 +1,6 @@
 import Ajv from 'ajv';
 import got from 'got';
 import { type JSONSchema7 } from 'json-schema';
-
 import type { MapleradConfigOptions } from './maplerad.schema';
 import { mapleradConfigSchema } from './maplerad.schema';
 

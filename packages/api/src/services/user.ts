@@ -1,7 +1,5 @@
 import { prisma } from '@wyrecc/db';
-
 import { TRPCError } from '@trpc/server';
-
 import type { IUserSchema } from '../interfaces';
 import { hashString } from '../utils';
 import { ServerError } from '../utils/server-error';

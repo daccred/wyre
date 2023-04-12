@@ -1,7 +1,6 @@
 import Queue from 'bull';
 import type Bull from 'bull';
 import IORedis from 'ioredis';
-
 import { env } from '@wyrecc/env';
 
 const client = new IORedis(env.REDIS_URL, {

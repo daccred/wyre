@@ -19,7 +19,6 @@
 import { type Session } from 'next-auth';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
-
 // import { prisma } from "@wyrecc/db";
 
 /**
@@ -31,7 +30,6 @@ import { ZodError } from 'zod';
  */
 import { TRPCError, initTRPC } from '@trpc/server';
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
-
 import { getServerAuthSession } from './common/get-server-side-auth-session';
 
 type CreateContextOptions = {

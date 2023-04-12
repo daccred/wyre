@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 import type { ITeamSchema } from './team';
 
 export const payrollSchema = z.object({

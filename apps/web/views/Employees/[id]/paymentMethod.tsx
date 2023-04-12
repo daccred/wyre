@@ -17,7 +17,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { trpc } from 'utils/trpc';
 import z from 'zod';
-
 import styledToast from '../../../components/core/StyledToast';
 
 const addEmployeeValidationSchema = z.object({});

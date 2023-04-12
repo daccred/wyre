@@ -5,7 +5,6 @@ import Head from 'next/head';
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { FaSun, FaMoon } from 'react-icons/fa';
-
 import { FormInput, FormUpload, FormNativeSelect, FormSelect } from '../components/forms';
 import * as Layout from '../layouts';
 

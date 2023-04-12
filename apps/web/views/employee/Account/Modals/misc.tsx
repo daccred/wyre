@@ -1,6 +1,5 @@
 import { Box, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { useRef } from 'react';
-
 import useHover from '@wyrecc/components/hooks/use-hover';
 
 export const Card = ({

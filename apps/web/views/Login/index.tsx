@@ -1,6 +1,5 @@
 import { Center, Stack, Text, Button, Flex, Link, HStack, Image } from '@chakra-ui/react';
 import * as React from 'react';
-
 import { FormInput } from '../../components';
 
 type Props = {

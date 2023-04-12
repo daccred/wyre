@@ -1,6 +1,5 @@
 import type { NextApiHandler } from 'next';
 import { nextHandler } from 'trpc-playground/handlers/next';
-
 import { appRouter } from '@wyrecc/api';
 
 const setupHandler = nextHandler({

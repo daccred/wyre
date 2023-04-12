@@ -16,7 +16,6 @@ import type { Column } from 'react-table';
 import { trpc } from 'utils/trpc';
 import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
 import { manageExpensePath } from 'views/Payroll/routes';
-
 import { CustomTable } from '../../../components/CustomTable';
 import ViewLayout from '../../../components/core/ViewLayout';
 import { manageExpensesColumn } from '../utils/tableColumns';

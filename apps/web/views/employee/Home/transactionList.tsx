@@ -2,7 +2,6 @@ import { Flex, Stack, Box, Icon, Text, Grid, Skeleton, HStack } from '@chakra-ui
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { GoPrimitiveDot } from 'react-icons/go';
-
 import { IndicatorIcon } from './providerIcon';
 
 interface Transaction {

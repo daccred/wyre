@@ -1,7 +1,6 @@
 import { Box, Button, Center, Grid, GridItem, Heading, Spinner, Stack, Text, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-
 import { CustomTable } from '../../components/CustomTable';
 import ViewLayout from '../../components/core/ViewLayout';
 import { trpc } from '../../utils/trpc';

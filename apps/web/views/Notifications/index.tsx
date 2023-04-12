@@ -1,6 +1,5 @@
 import { Avatar, Box, chakra, Flex, Stack, VStack, Divider, Checkbox, Link, Button } from '@chakra-ui/react';
 import { Fragment, useState } from 'react';
-
 import ViewLayout from '../../components/core/ViewLayout';
 
 interface Notification {

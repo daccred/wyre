@@ -1,5 +1,4 @@
 import IORedis from 'ioredis';
-
 import { env } from '@wyrecc/env';
 
 // const redisClient = IORedis({

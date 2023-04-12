@@ -1,7 +1,6 @@
 import { createStandaloneToast } from '@chakra-ui/toast';
 import * as cloudinary from 'cloudinary';
 import React from 'react';
-
 import { env } from '@wyrecc/env';
 
 interface FileUploadProps {

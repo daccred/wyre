@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import type { Hooks, CellProps, HeaderProps } from 'react-table';
 import { useTable, usePagination, useRowSelect, useGlobalFilter, useSortBy } from 'react-table';
-
 import useDebounce from '../hooks/useDebounce';
 
 /* Dependency components */

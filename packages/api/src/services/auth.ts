@@ -1,8 +1,6 @@
 import { prisma } from '@wyrecc/db';
 import { sendEmail, emailHTML, forgotPasswordEmail } from '@wyrecc/dialog';
-
 import { TRPCError } from '@trpc/server';
-
 import type { IResetPassword, ISignUp, IVerifyEmail } from '../interfaces';
 import redis from '../redis';
 import { hashString, verifyHash } from '../utils';

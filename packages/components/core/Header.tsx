@@ -3,7 +3,6 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-
 import { LogoutIcon } from './providerIcon';
 
 interface LinkItemProps {

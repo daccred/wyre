@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from '@wyrecc/db';
-
 import { TRPCError } from '@trpc/server';
-
 import type { ITeamSchema, IUpdateTeamSchema } from '../interfaces';
 import { ServerError } from '../utils/server-error';
 

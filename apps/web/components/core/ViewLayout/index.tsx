@@ -19,7 +19,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import type { ReactNode } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-
 import {
   BellIcon,
   ContractorsIcon,

@@ -1,7 +1,6 @@
 import { Flex, Heading, Button } from '@chakra-ui/react';
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
-
 import { WrapperInner } from '../layouts';
 
 interface Props {

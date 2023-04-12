@@ -1,7 +1,6 @@
 import type { ContainerProps, FlexProps } from '@chakra-ui/react';
 import { Flex, Container, Box, useColorModeValue } from '@chakra-ui/react';
 import * as React from 'react';
-
 import type { WrapperInnerProps, WrapperEnum } from './tokens';
 import { MAX_WIDTH, withTokenForInnerWrapperVariant } from './tokens';
 

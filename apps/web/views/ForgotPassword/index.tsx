@@ -1,6 +1,5 @@
 import { Button, Flex, Heading, Link, HStack, Stack, Text, Image } from '@chakra-ui/react';
 import * as React from 'react';
-
 import { FormInput } from '../../components';
 
 const View = ({ isSubmitting }: { isSubmitting: boolean }) => (

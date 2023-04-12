@@ -15,7 +15,6 @@ import React, { useEffect, useState } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import type { Column } from 'react-table';
 import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
-
 import { CustomTable } from '../../../components/CustomTable';
 import ViewLayout from '../../../components/core/ViewLayout';
 import { trpc } from '../../../utils/trpc';

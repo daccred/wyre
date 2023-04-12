@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 import { resetPasswordSchema, signUpSchema, verifyEmailSchema } from '../interfaces';
 import { AuthService } from '../services';
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc';

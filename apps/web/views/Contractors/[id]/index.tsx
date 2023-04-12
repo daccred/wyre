@@ -2,7 +2,6 @@ import { HStack, Stack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Skeleton } f
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FiChevronRight } from 'react-icons/fi';
-
 import ViewLayout from '../../../components/core/ViewLayout';
 import { trpc } from '../../../utils/trpc';
 import CompensationForm from './CompensationForm';

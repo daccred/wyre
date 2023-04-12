@@ -1,6 +1,5 @@
 // @ts-check
 import { z } from 'zod';
-
 import { formatErrors } from './client';
 
 /**

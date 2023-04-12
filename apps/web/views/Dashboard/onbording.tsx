@@ -1,6 +1,5 @@
 import { Stack, SimpleGrid, Text } from '@chakra-ui/react';
 import React from 'react';
-
 import { LayoutIcon, UserIcon, CreditCardIcon } from './ProviderIcons';
 import Card from './card';
 
