@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from '@wyrecc/db';
 
 import { TRPCError } from '@trpc/server';
@@ -8,13 +9,13 @@ import { ServerError } from '../utils/server-error';
 export class TeamService {
   static async createPersonnel(input: ITeamSchema) {
     try {
-      const teamExists = await prisma.team.findUnique({
+      const teamPersonnelExists = await prisma.team.findUnique({
         where: {
           email: input.email,
         },
       });
 
-      if (teamExists) {
+      if (teamPersonnelExists) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'team already exists',
@@ -76,7 +77,7 @@ export class TeamService {
       if (!personnel) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Failed to delete team',
+          message: 'Failed to update payment method',
         });
       }
       const updatedPersonnel = await prisma.team.update({
@@ -85,34 +86,55 @@ export class TeamService {
           payrollMethod,
         },
       });
-      return `Payement method updated to ${updatedPersonnel.payrollMethod}`;
+      return `Payment method updated to ${updatedPersonnel.payrollMethod}`;
     } catch (error) {
       ServerError(error);
     }
   }
-  static async updatePersonnel(teamId: string, input: ITeamSchema) {
+  static async updatePersonnel(teamMemberID: string, input: ITeamSchema) {
     try {
-      const team = await prisma.team.update({
-        where: { id: teamId },
-        data: {
-          firstName: input.name,
-          lastName: input.name,
-          email: input.email,
-          department: input.department,
-          jobRole: input.jobRole,
-          salary: input.salary,
-          status: input.status,
-          teamCategory: input.category,
-        },
-      });
+      const updatedTeamMember = await prisma.$transaction([
+        prisma.team.update({
+          where: { id: teamMemberID },
+          data: {
+            firstName: input.name,
+            lastName: input.name,
+            email: input.email,
+            department: input.department,
+            jobRole: input.jobRole,
+            salary: input.salary,
+            status: input.status,
+            teamCategory: input.category,
+          },
+        }),
 
-      if (!team)
+        /**
+         * We use the upsert method so that we can create
+         * new payment methods if we dont have any from the user
+         * */
+        prisma.mobileMoney.upsert({
+          where: { personnelId: teamMemberID },
+          create: input.mobileMoney as any,
+          update: input.mobileMoney as any,
+        }),
+        prisma.bank.upsert({
+          where: { personnelId: teamMemberID },
+          create: input.bank as any,
+          update: input.bank as any,
+        }),
+        prisma.cryptoWallet.upsert({
+          where: { personnelId: teamMemberID },
+          create: input.cryptoWallet as any,
+          update: input.cryptoWallet as any,
+        }),
+      ]);
+      if (!updatedTeamMember)
         throw new TRPCError({
           code: 'PRECONDITION_FAILED',
-          message: 'Failed to update team',
+          message: 'Failed to update TeamMember',
         });
 
-      return team;
+      return updatedTeamMember;
     } catch (error) {
       ServerError(error);
     }

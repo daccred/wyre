@@ -223,7 +223,7 @@ model CryptoWallet {
   currency    String
   address     String
   network     String
-  allocation  String
+  allocation  Int
   personnelId String @unique
   personnel   Team?  @relation(fields: [personnelId], references: [id], onDelete: Cascade)
 }

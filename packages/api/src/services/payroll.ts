@@ -212,7 +212,22 @@ export class PayrollService {
       // check for the payroll
       const payroll = await prisma.payroll.findUnique({
         where: { id },
-        include: { employees: true },
+        include: {
+          employees: {
+            include: {
+              bank: true,
+              cryptoWallet: true,
+              mobileMoney: true,
+            },
+            where: {
+              OR: [
+                { cryptoWallet: { is: { NOT: undefined } } },
+                { bank: { is: { NOT: undefined } } },
+                { mobileMoney: { is: { NOT: undefined } } },
+              ],
+            },
+          },
+        },
       });
 
       if (!payroll) {
@@ -230,42 +245,42 @@ export class PayrollService {
        * Finally, we push the queueObject into the processPayrollData array after all the database queries have been completed.
        **/
 
-      const processPayrollData: PayrollScheduleData[] = await Promise.all(
-        payroll.employees.map(async (item) => {
-          let recipientPaymentDetail = null;
-          switch (item.payrollMethod) {
-            case 'BANK':
-              recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-              break;
-            case 'CRYPTO':
-              recipientPaymentDetail = await prisma.cryptoWallet.findUnique({
-                where: { personnelId: item.id },
-              });
-              break;
-            case 'MOBILEMONEY':
-              recipientPaymentDetail = await prisma.mobileMoney.findUnique({
-                where: { personnelId: item.id },
-              });
-              break;
-            default:
-              recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          }
+      // const processPayrollData: PayrollScheduleData[] = await Promise.all(
+      //   payroll.employees.map(async (item) => {
+      //     let recipientPaymentDetail = null;
+      //     switch (item.payrollMethod) {
+      //       case 'BANK':
+      //         recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
+      //         break;
+      //       case 'CRYPTO':
+      //         recipientPaymentDetail = await prisma.cryptoWallet.findUnique({
+      //           where: { personnelId: item.id },
+      //         });
+      //         break;
+      //       case 'MOBILEMONEY':
+      //         recipientPaymentDetail = await prisma.mobileMoney.findUnique({
+      //           where: { personnelId: item.id },
+      //         });
+      //         break;
+      //       default:
+      //         recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
+      //     }
 
-          // if (!recipientPaymentDetail) {
-          //   throw new TRPCError({
-          //     code: 'NOT_FOUND',
-          //     message: `Payment details for employee with id ${item.id} not found`,
-          //   });
-          // }
+      //     // if (!recipientPaymentDetail) {
+      //     //   throw new TRPCError({
+      //     //     code: 'NOT_FOUND',
+      //     //     message: `Payment details for employee with id ${item.id} not found`,
+      //     //   });
+      //     // }
 
-          return {
-            payroll: id,
-            recipientDetails: item,
-            paymentMethod: item.payrollMethod,
-            recipientPaymentDetail,
-          };
-        })
-      );
+      //     return {
+      //       payroll: id,
+      //       recipientDetails: item,
+      //       paymentMethod: item.payrollMethod,
+      //       recipientPaymentDetail,
+      //     };
+      //   })
+      // );
 
       /* Get the delay params for scheduling */
       const now = new Date(); // current date and time
@@ -279,7 +294,7 @@ export class PayrollService {
       // added the payroll to the queue
       await createPayrollPublisher({
         name: operationName,
-        data: processPayrollData,
+        data: payroll.employees as unknown as PayrollScheduleData[],
         delay: diffInMilliseconds,
       });
       // await PayrollQueue.add(PayrollData, { attempts: 5 });
@@ -287,7 +302,7 @@ export class PayrollService {
       return {
         message: `${operationName} payroll scheduled for ${payroll.payday}`,
         scheduled: diffInMilliseconds,
-        payload: processPayrollData,
+        payload: payroll,
       };
     } catch (error) {
       ServerError(error);

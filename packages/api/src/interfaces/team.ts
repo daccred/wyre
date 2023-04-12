@@ -36,7 +36,7 @@ export const teamSchema = z.object({
       currency: z.string(),
       address: z.string(),
       network: z.string(),
-      allocation: z.string(),
+      allocation: z.number(),
       personnelId: z.string(),
     })
     .optional(),
