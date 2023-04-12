@@ -17,9 +17,13 @@
 - 📦 Enable employees to request reimbursements and get paid in any currency of choice including cryptocurrency.
 - 📦 Enable contractors to request payments and automatically generate invoices for those transactions
 
-## 📦 Managing Integrations
+## 📦 Managing Integrations & Employee Accounts
 
 <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/721c8681ff01453daa4916c8a1e68243" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+>
+
+<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/02be087267494e6997f32138c7fd93ec" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## Feature Set
 
