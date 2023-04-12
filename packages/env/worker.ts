@@ -1,6 +1,9 @@
 // @ts-check
+import * as dotenv from 'dotenv';
 import { z } from 'zod';
-import { formatErrors } from './client';
+import { formatErrors } from './internal';
+
+dotenv.config();
 
 /**
  * Specify only Worker environment variables schema here.
@@ -9,6 +12,7 @@ import { formatErrors } from './client';
 export const workerSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).optional(),
   REDIS_URL: z.string(),
+  PORT: z.number().optional(),
   ENCRYPTION_KEY: z.string().optional(),
 });
 

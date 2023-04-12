@@ -1,8 +1,9 @@
 import logger from './core/logger';
 import queue from './queue';
 import server from './server';
+import { env as secrets } from '@wyrecc/env/worker';
 
-const PORT = 8888;
+const PORT = secrets.PORT || 8888;
 
 async function main() {
   /* Instantiate the Redis Queue Here */

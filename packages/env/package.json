@@ -10,7 +10,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "yarn build:clean && tsc",
+    "dev": "tsc --watch",
     "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
     "lint:es": "TIMING=1 eslint \"*.ts\""

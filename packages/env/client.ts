@@ -1,21 +1,15 @@
 // @ts-check
+import * as dotenv from 'dotenv';
+import { formatErrors } from './internal';
 import { clientEnv, clientSchema } from './schema';
+
+dotenv.config();
 
 const _clientEnv = clientSchema.safeParse(clientEnv) as {
   success: boolean;
   data: import('zod').infer<typeof clientSchema>;
   error: import('zod').ZodError;
 };
-
-export const formatErrors = (
-  /** @type {import('zod').ZodFormattedError<Map<string,string>,string>} */
-  errors: import('zod').ZodFormattedError<Map<string, string>, string>
-) =>
-  Object.entries(errors)
-    .map(([name, value]) => {
-      if (value && '_errors' in value) return `${name}: ${value._errors.join(', ')}\n`;
-    })
-    .filter(Boolean);
 
 if (!_clientEnv.success) {
   console.error('❌ Invalid environment variables:\n', ...formatErrors(_clientEnv.error.format()));

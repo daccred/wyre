@@ -1,8 +1,8 @@
-import { env } from '@wyrecc/env';
+import { env as secrets } from '@wyrecc/env/worker';
 import type Queue from 'bull';
 import IORedis from 'ioredis';
 
-const subscriber = new IORedis(env.REDIS_URL, {
+const subscriber = new IORedis(secrets.REDIS_URL, {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
   connectionName: 'wyre:queue:subscriber',
