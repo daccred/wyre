@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-		"build:clean": "rimraf dist",
+    "build:clean": "rimraf dist",
     "build:code": "tsc",
     "build": "run-s build:clean build:code",
     "dev": "nodemon src/entry.ts",
@@ -16,6 +16,7 @@
     "test": "jest --no-cache"
   },
   "dependencies": {
+    "@wyrecc/env": "^0.1.0",
     "bull": "^4.10.2",
     "cors": "^2.8.5",
     "express": "4.18.2",

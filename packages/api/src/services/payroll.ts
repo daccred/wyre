@@ -230,85 +230,37 @@ export class PayrollService {
         },
       });
 
-      
       if (!payroll) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `Payroll with id ${id} not found`,
         });
       }
-      
-      // const processPayrollData: PayrollScheduleData[] = [];
-      
+
+      /* Get the delay params for scheduling */
+      const now = new Date(); // current date and time
+      const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
       /**
-       * In the optimized code, we use Promise.all to run the database queries for each employee in parallel.
-       * We also simplify the switch statement by defining a default case that does not modify queueObject.recipientPaymentDetail.
-       * Finally, we push the queueObject into the processPayrollData array after all the database queries have been completed.
+       * replace method with a regular expression that matches one or more whitespace characters
+       * (\s+) and replaces them with an underscore character (_).
        **/
-      
-      const processPayrollData: PayrollScheduleData[] = await Promise.all(
-        payroll.employees.map(async (item) => {
-          let recipientPaymentDetail = null;
-          switch (item.payrollMethod) {
-            case 'BANK':
-              recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-              break;
-              case 'CRYPTO':
-                recipientPaymentDetail = await prisma.cryptoWallet.findUnique({
-                  where: { personnelId: item.id },
-                });
-                break;
-                case 'MOBILEMONEY':
-                  recipientPaymentDetail = await prisma.mobileMoney.findUnique({
-                    where: { personnelId: item.id },
-                  });
-                  break;
-                  default:
-                    recipientPaymentDetail = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-                  }
-                  
-                  // if (!recipientPaymentDetail) {
-                    //   throw new TRPCError({
-                      //     code: 'NOT_FOUND',
-                      //     message: `Payment details for employee with id ${item.id} not found`,
-                      //   });
-                      // }
-                      
-                      return {
-                        payroll: id,
-                        recipientDetails: item,
-                        paymentMethod: item.payrollMethod,
-                        recipientPaymentDetail,
-                      };
-                    })
-                    );
-                    console.log({payroll, processPayrollData})
-                    
-                    /* Get the delay params for scheduling */
-                    const now = new Date(); // current date and time
-                    const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
-                    /**
-                     * replace method with a regular expression that matches one or more whitespace characters
-                     * (\s+) and replaces them with an underscore character (_).
-                     **/
-                    const operationName = payroll.title.replace(/\s+/g, '_').toLowerCase();
-                    
-                    // added the payroll to the queue
-                    await createPayrollPublisher({
-                      name: operationName,
-                      data: payroll.employees as unknown as PayrollScheduleData[],
-                      delay: diffInMilliseconds,
-                    });
-                    // await PayrollQueue.add(PayrollData, { attempts: 5 });
-                    
-                    return {
-                      message: `${operationName} payroll scheduled for ${payroll.payday}`,
-                      scheduled: diffInMilliseconds,
-                      payload: payroll,
-                    };
-                  } catch (error) {
-                    ServerError(error);
-                  }
-                }
-              }
-              
+      const operationName = payroll.title.replace(/\s+/g, '_').toLowerCase();
+
+      // added the payroll to the queue
+      await createPayrollPublisher({
+        name: operationName,
+        data: payroll.employees as unknown as PayrollScheduleData[],
+        delay: diffInMilliseconds,
+      });
+      // await PayrollQueue.add(PayrollData, { attempts: 5 });
+
+      return {
+        message: `${operationName} payroll scheduled for ${payroll.payday}`,
+        scheduled: diffInMilliseconds,
+        payload: payroll,
+      };
+    } catch (error) {
+      ServerError(error);
+    }
+  }
+}

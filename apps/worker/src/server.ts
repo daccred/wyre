@@ -1,5 +1,5 @@
 // import * as BullBoard from 'bull-board';
-import messengerRoute from './router/routes';
+import routes from './router/routes';
 import cors from 'cors';
 import express from 'express';
 
@@ -19,7 +19,7 @@ server.use(express.json());
 
 /* For the UI and API Routes*/
 // server.use('/bull-board-ui', BullBoard.UI);
-server.use('/messenger', messengerRoute);
+server.use('/v1', routes);
 server.use('/_healthcheck', (_req, res) => {
   res.status(200).json({ uptime: process.uptime() });
 });

@@ -1,72 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import secrets from './core/secrets';
-// import { _createRepeatableTask } from './helpers/tasks';
+import { queueOptions } from './core/bull';
+import { __queueStatusHook } from './helpers/queue.hooks';
+import Queue from 'bull';
 
-/* Import Producers and Consumers from Messaging Channels */
-// import { emailConsumer, emailProducer } from './channels/email';
-// import { smsConsumer, smsProducer } from './providers/sms';
-// import { voiceConsumer, voiceProducer } from './providers/voice';
-import Bull from 'bull';
-import ioredis from 'ioredis';
+export const DEFAULT_QUEUE_NAME = 'payroll:queue';
 
-// const MAX_CONCURRENCY = 3;
-// const SMS = 'SMS';
-// const VOICE = 'voice';
-// const EMAIL = 'email';
-
-// Initialize the Redis Connection Options
-// const redisConnectionOptions = {
-// 	port: secrets.REDIS_PORT,
-// 	host: secrets.REDIS_HOST,
-// 	password: secrets.REDIS_PASSWORD
-// };
-
-// const client = new ioredis(redisConnectionOptions);
-// const subscriber = new ioredis(redisConnectionOptions);
-
-// Initialize the Redis Connection Options
-const client = new ioredis(secrets.REDIS_URI, {
-  maxRetriesPerRequest: null,
-  enableReadyCheck: false,
-  connectionName: 'meta:queue:client',
-  // tls: { rejectUnauthorized: false },
-  // compatibility for heroku
-  enableTLSForSentinelMode: false,
-});
-const subscriber = new ioredis(secrets.REDIS_URI, {
-  maxRetriesPerRequest: null,
-  enableReadyCheck: false,
-  connectionName: 'meta:queue:subscriber',
-  autoResubscribe: true,
-  // tls: { rejectUnauthorized: false },
-  // compatibility for heroku
-  enableTLSForSentinelMode: false,
-});
-
-/* --------------------------------------------------------------------------------
- *
- * Re-use connection in ioredis
- * https://github.com/OptimalBits/bull/blob/master/PATTERNS.md#reusing-redis-connections
- *
- ---------------------------------------------------------------------------------*/
-const queueOptions: Bull.QueueOptions = {
-  createClient: (__type__: any) => {
-    switch (__type__) {
-      case 'client':
-        return client;
-      case 'subscriber':
-        return subscriber;
-      default:
-        /* Send a default connection out other connection types */
-        return new ioredis(secrets.REDIS_URI, {
-          maxRetriesPerRequest: null,
-          enableReadyCheck: false,
-        });
-    }
-  },
-};
-
-const messageQueue = new Bull('messenger', queueOptions);
+/**
+ * =======================================================
+ * WE LIST OUT OUR QUEUES HERE
+ * AS A CONST TO BE USED IN OUR APP PUBLISHERS
+ * =======================================================
+ */
+export const payrollQueue = new Queue(DEFAULT_QUEUE_NAME, queueOptions);
 
 export default async function queue() {
   /* Instantiate all Producers here */
@@ -82,25 +26,5 @@ export default async function queue() {
   // messageQueue.process(VOICE, (job, done) => voiceConsumer(job, done));
 
   // / Report Queue Event Listeners
-  messageQueue.on('waiting', (jobID: any) => {
-    console.info(`[ADDED] Job added with job ID ${jobID}`);
-  });
-  messageQueue.on('active', (job: { id: any }) => {
-    console.info(`[STARTED] Job ID ${job.id} has been started`);
-  });
-  messageQueue.on('completed', (job: { id: any }) => {
-    console.info(`[COMPLETED] Job ID ${job.id} has been completed`);
-  });
-  messageQueue.on('failed', (job: { id: any }) => {
-    console.error(`[FAILED] Job ID ${job.id} has been failed`);
-  });
-  messageQueue.on('error', (job: any) => {
-    console.error(`[ERROR] An error occurred by the queue, got ${job}`);
-  });
-  messageQueue.on('cleaned', function () {
-    console.info(`[CLEANED] Report queue has been cleaned`);
-  });
-  messageQueue.on('drained', function () {
-    console.info(`[WAITING] Waiting for jobs...`);
-  });
+  __queueStatusHook(payrollQueue);
 }

@@ -223,17 +223,17 @@ When we call this, the API can now authorize and add a payroll to the worker (qu
 
 ```ts
 // Request
-trpc.team.createPersonnel.mutate({ 
-    name: "Onous Ariyo", // default name
-    email: "onous@qyre.com", // default email
-    department: "Product", // default department
-    jobRole: "UX Designer", // default job role
-    category: "EMPLOYEE", 
-    salary: "4000", // default salary
-    signBonus: "1000", // default sign-on bonus
-    status: true,
-    payrollMethod: "BANK" 
-})
+trpc.team.createPersonnel.mutate({
+  name: 'Onous Ariyo', // default name
+  email: 'onous@qyre.com', // default email
+  department: 'Product', // default department
+  jobRole: 'UX Designer', // default job role
+  category: 'EMPLOYEE',
+  salary: '4000', // default salary
+  signBonus: '1000', // default sign-on bonus
+  status: true,
+  payrollMethod: 'BANK',
+});
 ```
 
 When we call this, the API can now create a new team personnel.
