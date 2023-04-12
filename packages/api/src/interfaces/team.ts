@@ -42,4 +42,8 @@ export const teamSchema = z.object({
     .optional(),
 });
 
+// create optional team schema based on the teamSchema
+export const updateTeamSchema = teamSchema.partial();
+
+export type IUpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export type ITeamSchema = z.infer<typeof teamSchema>;

@@ -3,7 +3,7 @@ import { prisma } from '@wyrecc/db';
 
 import { TRPCError } from '@trpc/server';
 
-import type { ITeamSchema } from '../interfaces';
+import type { ITeamSchema, IUpdateTeamSchema } from '../interfaces';
 import { ServerError } from '../utils/server-error';
 
 export class TeamService {
@@ -91,20 +91,22 @@ export class TeamService {
       ServerError(error);
     }
   }
-  static async updatePersonnel(teamMemberID: string, input: ITeamSchema) {
+  static async updatePersonnel(teamMemberID: string, input: IUpdateTeamSchema) {
+    const { mobileMoney, cryptoWallet, bank, ...profile } = input;
     try {
       const updatedTeamMember = await prisma.$transaction([
         prisma.team.update({
           where: { id: teamMemberID },
           data: {
-            firstName: input.name,
-            lastName: input.name,
-            email: input.email,
-            department: input.department,
-            jobRole: input.jobRole,
-            salary: input.salary,
-            status: input.status,
-            teamCategory: input.category,
+            ...profile,
+            // firstName: input.name,
+            // lastName: input.name,
+            // email: input.email,
+            // department: input.department,
+            // jobRole: input.jobRole,
+            // salary: input.salary,
+            // status: input.status,
+            // teamCategory: input.category,
           },
         }),
 
@@ -114,18 +116,36 @@ export class TeamService {
          * */
         prisma.mobileMoney.upsert({
           where: { personnelId: teamMemberID },
-          create: input.mobileMoney as any,
-          update: input.mobileMoney as any,
+          create: {
+            provider: mobileMoney?.provider as string,
+            phoneNumber: mobileMoney?.phoneNumber as string,
+            allocation: mobileMoney?.allocation as number,
+            personnelId: teamMemberID,
+          },
+          update: {
+            ...input.mobileMoney,
+            personnelId: teamMemberID,
+          },
         }),
         prisma.bank.upsert({
           where: { personnelId: teamMemberID },
-          create: input.bank as any,
-          update: input.bank as any,
+          create: {
+            name: bank?.name as string,
+            country: bank?.country as string,
+            bankCode: bank?.bankCode as string,
+            swiftCode: bank?.swiftCode as string,
+            allocation: bank?.allocation as number,
+            accountType: bank?.accountType as string,
+            routingNumber: bank?.routingNumber as string,
+            accountNumber: bank?.accountNumber as string,
+            personnelId: teamMemberID,
+          },
+          update: { ...input.bank, personnelId: teamMemberID },
         }),
         prisma.cryptoWallet.upsert({
           where: { personnelId: teamMemberID },
           create: input.cryptoWallet as any,
-          update: input.cryptoWallet as any,
+          update: { ...cryptoWallet, personnelId: teamMemberID },
         }),
       ]);
       if (!updatedTeamMember)
@@ -162,7 +182,7 @@ export class TeamService {
     try {
       const team = await prisma.team.findFirst({
         where: { teamCategory: 'EMPLOYEE', id: teamId },
-        include: { expense: true, payroll: true },
+        include: { expense: true, payrolls: true },
       });
 
       if (!team) {
@@ -181,7 +201,7 @@ export class TeamService {
     try {
       const team = await prisma.team.findFirst({
         where: { teamCategory: 'CONTRACTOR', id: teamId },
-        include: { expense: true, payroll: true },
+        include: { expense: true, payrolls: true },
       });
 
       if (!team) {

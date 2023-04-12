@@ -219,6 +219,45 @@ When we call this, the API can now authorize and add a payroll to the worker (qu
 }
 ```
 
+- create team personnel: You can create a new team personnel in the tRPC client by calling the `trpc.team.createPersonnel.mutate` function. The function takes a single argument, which is an object with the following properties:
+
+```ts
+// Request
+trpc.team.createPersonnel.mutate({ 
+    name: "Onous Ariyo", // default name
+    email: "onous@qyre.com", // default email
+    department: "Product", // default department
+    jobRole: "UX Designer", // default job role
+    category: "EMPLOYEE", 
+    salary: "4000", // default salary
+    signBonus: "1000", // default sign-on bonus
+    status: true,
+    payrollMethod: "BANK" 
+})
+```
+
+When we call this, the API can now create a new team personnel.
+
+```ts
+// Response
+{
+  id: 'clgdjml7w000eeyq85p13imj7',
+  email: 'onous@qyre.com',
+  firstName: 'Onous Ariyo',
+  lastName: 'Onous Ariyo',
+  phone: null,
+  country: null,
+  department: 'Product',
+  jobRole: 'UX Designer',
+  salary: '4000',
+  signBonus: '1000',
+  status: true,
+  teamCategory: 'EMPLOYEE',
+  payrollMethod: 'BANK',
+  payrollId: null
+}
+```
+
 ## Install
 
 If you want to use the API in your own project, you can install it from npm with `npm install @wyrecc/api` or `yarn add @wyrecc/api`.
