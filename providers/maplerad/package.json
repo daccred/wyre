@@ -2,14 +2,16 @@
   "private": true,
   "name": "@wyrecc/maplerad",
   "version": "0.1.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist/**",
-    "package.json"
+    "*.ts",
+    "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "yarn clean && tsc",
+    "dev": "tsc --watch",
     "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
     "lint:es": "TIMING=1 eslint src"

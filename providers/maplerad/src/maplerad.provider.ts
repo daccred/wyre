@@ -1,8 +1,13 @@
 import Ajv from 'ajv';
-import got from 'got';
+import { Got } from 'got';
+// import got from 'got';
 import { type JSONSchema7 } from 'json-schema';
-import type { MapleradConfigOptions } from './maplerad.schema';
+
+import { type MapleradConfigOptions } from './maplerad.schema';
 import { mapleradConfigSchema } from './maplerad.schema';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const got = require('got');
 
 // const live = "https://api.maplerad.com/v1";
 // const sandbox = "https://sandbox.api.maplerad.com/v1";
@@ -35,20 +40,24 @@ interface NairaTransferRequest {
 
 export class MapleradProvider implements FintechProviderInterface {
   private config;
-  private client;
+  private client!: Got;
   private logger = console;
   private path = '/transfers';
 
   constructor(config: MapleradConfigOptions) {
     this.config = config;
     const defaults = this.validateConfigSchema(config);
-    this.client = got.extend({
-      prefixUrl: config.default,
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${defaults.secret_key}`,
-      },
-    });
+    (async () => {
+      const got = await import('got');
+      // const response = await got.default(url);
+      this.client = got.default.extend({
+        prefixUrl: config.default,
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${defaults.secret_key}`,
+        },
+      });
+    })();
   }
 
   validateConfigSchema = (schema: JSONSchema7) => {

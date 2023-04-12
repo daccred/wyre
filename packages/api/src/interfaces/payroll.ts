@@ -14,21 +14,22 @@ export const payrollSchema = z.object({
 
 export type IPayrollSchema = z.infer<typeof payrollSchema>;
 
-export interface PayrollScheduleData {
-  payroll: string;
-  recipientDetails: ITeamSchema | unknown;
-  paymentMethod: ITeamSchema['payrollMethod'];
-  recipientPaymentDetail: unknown;
-}
+export type PayrollScheduleData = {
+  ref: string;
+  cycle: string;
+  payday: Date;
+  currency: string;
+  payload: ITeamSchema[] | unknown;
+};
 
 export interface PayrollTaskOptions {
   delay: number;
   name: string;
-  data: PayrollScheduleData[];
+  data: PayrollScheduleData;
 }
 
 export interface PayrollRepeatableTaskOptions {
   repeat: number;
-  data: PayrollScheduleData[];
+  data: PayrollScheduleData;
   name: string;
 }

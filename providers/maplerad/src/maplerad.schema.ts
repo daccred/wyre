@@ -7,6 +7,10 @@ import type { JSONSchema7 } from 'json-schema';
  * @type {JSONSchemaType<MapleradConfig>}
  * @see https://json-schema.org/understanding-json-schema/reference/object.html
  * @see https://transform.tools/ to convert JSON Schema to TypeScript
+ *
+ * @note The reason we are using the JSON Schema is so that we can easily persist
+ * the config in the database and also validate the config schema once we move away from
+ * using environment variables as the source of truth for the config
  */
 
 export const mapleradConfigSchema: JSONSchema7 = {
@@ -45,7 +49,7 @@ interface HttpProviderConfig {
   httpConfig: Partial<GotOptions>;
 }
 
-export interface MapleradConfigOptions extends HttpProviderConfig {
+export interface MapleradConfigOptions extends Partial<HttpProviderConfig> {
   name?: string;
   secret_key?: string;
   supported_currencies: 'NGN' | 'GHC' | 'USD' | 'KES';

@@ -247,10 +247,16 @@ export class PayrollService {
       // added the payroll to the queue
       await createPayrollPublisher({
         name: operationName,
-        data: payroll.employees as unknown as PayrollScheduleData[],
-        delay: diffInMilliseconds,
+        data: {
+          ref: payroll.id,
+          cycle: payroll.cycle,
+          payday: payroll.payday,
+          currency: payroll.currency,
+          payload: payroll.employees,
+        } as PayrollScheduleData,
+        // delay: diffInMilliseconds,
+        delay: 100,
       });
-      // await PayrollQueue.add(PayrollData, { attempts: 5 });
 
       return {
         message: `${operationName} payroll scheduled for ${payroll.payday}`,

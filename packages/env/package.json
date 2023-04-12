@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "yarn build:clean && tsc",
+    "build": "yarn clean && tsc",
     "dev": "tsc --watch",
     "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
