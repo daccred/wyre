@@ -1,4 +1,3 @@
-import type { Options as GotOptions } from 'got';
 import type { JSONSchema7 } from 'json-schema';
 
 /**
@@ -25,7 +24,7 @@ export const mapleradConfigSchema: JSONSchema7 = {
       type: 'string',
       default: 'mpr_sandbox_sk_b87df6cc-124c-441c-b21f-04ae72940ef3',
     },
-    base_url: {
+    live_url: {
       type: 'string',
       default: 'https://sandbox.api.maplerad.com/v1',
     },
@@ -48,13 +47,11 @@ export const mapleradConfigSchema: JSONSchema7 = {
 };
 
 interface HttpProviderConfig {
-  base_url: string;
+  live_url: string;
   sandbox_url: string;
-  default: string;
-  httpConfig: Partial<GotOptions>;
 }
 
-export interface MapleradConfigOptions extends Partial<HttpProviderConfig> {
+export interface MapleradConfigOptions extends HttpProviderConfig {
   name?: string;
   environment: 'live' | 'sandbox';
   secret_key: string;

@@ -3,9 +3,11 @@ import logger from '../../core/logger';
 import type { PayrollScheduleData, RecipientData } from '../../types';
 import type { MapleradConfigOptions } from '@wyrecc/maplerad';
 import { MapleradProvider } from '@wyrecc/maplerad';
-import Axios from 'axios';
 import type { DoneCallback } from 'bull';
 import Queue from 'bull';
+
+// import Axios from 'axios';
+// import got from 'got';
 
 const config: MapleradConfigOptions = {
   supported_currencies: 'NGN',
@@ -56,68 +58,34 @@ export const mapleradConsumer = async (
 
         /// This is the worker that will process the payment request internally to Maplerad
         queue.process(queueName, async (job, done) => {
-          const data = job.data as RecipientJobData;
+          try {
+            const data = job.data as RecipientJobData;
 
-          logger.debug(
-            `[MAPLERAD PAYMENT PROCESSING FOR RECIPIENT ---->] ${data.index}`
-          );
+            logger.debug(
+              `[MAPLERAD PAYMENT PROCESSING FOR RECIPIENT ---->] ${data.index}`
+            );
 
-          // const initiateTransfer = await got
-          //   .post(`https://sandbox.api.maplerad.com/v1/transfers`, {
-          //     headers: {
-          //       Authorization: `Bearer ${config.secret_key}`,
-          //     },
-          //     json: {
-          //       amount: Number(data.salary) * 100,
-          //       currency: 'NGN',
-          //       bank_code: data.bank?.bankCode,
-          //       account_number: data.bank?.accountNumber,
-          //       reference: data.index,
-          //       reason: 'Wyre requester funding',
-          //     },
-          //   })
-          //   .json();
+            const transactionReference = `_${Math.random()
+              .toString(36)
+              .substring(2, 8)}_${rootQueueJobData.ref.replace(':', '_')}`;
 
-          const initiateTransfer = await Axios.post(
-            `https://sandbox.api.maplerad.com/v1/transfers`,
-            {
+            const response = await maplerad.executeNairaTransfer({
+              account_number: data.bank?.accountNumber as string,
+              /// Convert to Kobo
               amount: Number(data.salary) * 100,
-              currency: 'NGN',
-              bank_code: data.bank?.bankCode,
-              account_number: data.bank?.accountNumber,
-              reference: rootQueueJobData.ref.replace(':', '_'),
               reason: queueName,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${config.secret_key}`,
-              },
-            }
-          );
-
-          console.log(initiateTransfer, '---->]---->]---->]---->]---->]');
-
-          // {
-          //   "account_number": "0148105611",
-          //   "bank_code": "159",
-          //   "amount": 10000,
-          //   "currency": "NGN",
-          //   "reason": "Savings",
-          //   "allocation": 100,
-          //   "reference": "clgdj25an0006eyq85x1q9y5e"
-          // }
-          // const response = await maplerad.executeNairaTransfer({
-          //   account_number: data.bank?.accountNumber as string,
-          //   amount: Number(data.salary),
-          //   reason: queueName,
-          //   reference: rootQueueJobData.ref,
-          //   bank_code: data.bank?.bankCode as string, // GTB
-          //   currency: 'NGN',
-          // });
-          // logger.debug(
-          //   `[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`
-          // );
-          done();
+              /** convert our redis style reference to snake_case for Maplerad Go API */
+              reference: transactionReference,
+              bank_code: data.bank?.bankCode as string,
+              currency: 'NGN',
+            });
+            logger.debug(
+              `[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`
+            );
+            done();
+          } catch (error) {
+            console.error(`[mapleradConsumer.queue.process]`, error);
+          }
         });
       }),
     ]));

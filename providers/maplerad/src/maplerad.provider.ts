@@ -2,7 +2,7 @@
 // const Maplerad = require('maplerad-node');
 import Maplerad from '@tecmie/maplerad-node';
 import Ajv from 'ajv';
-import { type JSONSchema7 } from 'json-schema';
+import Axios from 'axios';
 import { type MapleradConfigOptions } from './maplerad.schema';
 import { mapleradConfigSchema } from './maplerad.schema';
 
@@ -23,29 +23,30 @@ export class MapleradProvider implements FintechProviderInterface {
   private config: MapleradConfigOptions;
   private client;
   private logger = console;
+  private base_url: string;
 
   constructor(config: MapleradConfigOptions) {
     this.config = config;
     const defaults = this.validateConfigSchema(config);
 
     this.client = new Maplerad(defaults.secret_key, defaults.environment);
+    this.base_url = defaults[`${defaults.environment}_url`];
 
     console.log({
-      defaults,
+      config: this.config,
       client: this.client,
-      herer: '49025uitninoskdsc........===============.....................',
     });
   }
 
-  validateConfigSchema = (_schema: JSONSchema7) => {
+  validateConfigSchema = (_configOptions: MapleradConfigOptions) => {
     const ajv = new Ajv({ useDefaults: true });
     const validate = ajv.compile(mapleradConfigSchema);
 
     /**
-     * @note Ajv mutates the __schema object__ and adds the default values
+     * @note Ajv mutates the __configOptions object__ and adds the default values
      * the moment we call validate(schema);
      * */
-    const isValidSchema = validate(_schema);
+    const isValidSchema = validate(_configOptions);
     this.logger.log(`MapleradProvider.validateConfigSchema`, isValidSchema);
     if (!isValidSchema) {
       this.logger.error(validate.errors);
@@ -55,8 +56,8 @@ export class MapleradProvider implements FintechProviderInterface {
       }`);
     }
 
-    this.config = _schema as MapleradConfigOptions;
-    return _schema as MapleradConfigOptions;
+    this.config = _configOptions as MapleradConfigOptions;
+    return _configOptions as MapleradConfigOptions;
   };
 
   getConfig() {
@@ -67,6 +68,7 @@ export class MapleradProvider implements FintechProviderInterface {
    * @see https://maplerad.dev/reference/create-a-transfer
    * @param payload
    * @description This resource creates a transfer.
+   * The maplerad-node library does not handle errors well, so we default to axios
    * @example
    * {
    *  "id": "
@@ -74,19 +76,40 @@ export class MapleradProvider implements FintechProviderInterface {
    * "amount": 1000,
    * "currency": "NGN",
    * "status": "PENDING",
-   * "reason": "Salary",
+   * "reason": "Salary for December",
    * "account_number": "1234567890",
    * "bank_code": "044",
    * }
    * @returns NairaTransferResponse
    */
   async executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown> {
-    console.log(payload, '---->]---->]---->]---->]---->]');
+    console.log({ payload }, '---->]---->]---->]---->]---->]');
 
-    const transfer = await this.client.Transfers.NairaTransfer(payload);
+    try {
+      const transfer = await Axios.post(
+        this.base_url + '/transfers',
+        {
+          ...payload,
+          // amount: Number(data.salary) * 100,
+          // currency: 'NGN',
+          // bank_code: data.bank?.bankCode,
+          // account_number: data.bank?.accountNumber,
+          // reference: rootQueueJobData.ref.replace(':', '_'),
+          // reason: queueName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.secret_key}`,
+          },
+        }
+      );
 
-    this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(transfer, null, 2));
-    return transfer;
+      /// @todo: send this response somewhere
+      this.logger.log(`MapleradProvider.executeNairaTransfer`, transfer.data);
+      return transfer.data;
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 
   /**
