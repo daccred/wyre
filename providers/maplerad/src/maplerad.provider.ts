@@ -1,11 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+// const Maplerad = require('maplerad-node');
+import Maplerad from '@tecmie/maplerad-node';
 import Ajv from 'ajv';
 import { type JSONSchema7 } from 'json-schema';
-// import Maplerad  from 'maplerad-node/dist/lib/client';
 import { type MapleradConfigOptions } from './maplerad.schema';
 import { mapleradConfigSchema } from './maplerad.schema';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Maplerad = require('maplerad-node');
 
 interface FintechProviderInterface {
   executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown>;
@@ -82,6 +81,8 @@ export class MapleradProvider implements FintechProviderInterface {
    * @returns NairaTransferResponse
    */
   async executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown> {
+    console.log(payload, '---->]---->]---->]---->]---->]');
+
     const transfer = await this.client.Transfers.NairaTransfer(payload);
 
     this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(transfer, null, 2));

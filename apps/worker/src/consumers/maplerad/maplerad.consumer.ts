@@ -2,7 +2,8 @@ import { createNowTask, queueOptions } from '../../core/bull';
 import logger from '../../core/logger';
 import type { PayrollScheduleData, RecipientData } from '../../types';
 import type { MapleradConfigOptions } from '@wyrecc/maplerad';
-// import { MapleradProvider } from '@wyrecc/maplerad';
+import { MapleradProvider } from '@wyrecc/maplerad';
+import Axios from 'axios';
 import type { DoneCallback } from 'bull';
 import Queue from 'bull';
 
@@ -21,8 +22,6 @@ export const mapleradConsumer = async (
   logger.debug(`[MAPLERAD JOB STARTED ---->] ${JSON.stringify(rootQueueJob)}`);
 
   /* Setup the Maplerad provider */
-  const { MapleradProvider } = await import('@wyrecc/maplerad');
-
   const maplerad = new MapleradProvider(config);
 
   /* This is a debug call, let us see what is in config */
@@ -45,7 +44,7 @@ export const mapleradConsumer = async (
   Array.isArray(rootQueueJobData.payload) &&
     (await Promise.all([
       rootQueueJobData.payload.forEach((recipient: RecipientData, index) => {
-        const queueName = `${recipient.email}${consumerQueueName}`;
+        const queueName = `${recipient.email}_${consumerQueueName}`;
 
         logger.debug(
           `[MAPLERAD SENDING PAYMENT FOR RECIPIENT ---->] ${recipient.firstName}::${index}`
@@ -63,6 +62,41 @@ export const mapleradConsumer = async (
             `[MAPLERAD PAYMENT PROCESSING FOR RECIPIENT ---->] ${data.index}`
           );
 
+          // const initiateTransfer = await got
+          //   .post(`https://sandbox.api.maplerad.com/v1/transfers`, {
+          //     headers: {
+          //       Authorization: `Bearer ${config.secret_key}`,
+          //     },
+          //     json: {
+          //       amount: Number(data.salary) * 100,
+          //       currency: 'NGN',
+          //       bank_code: data.bank?.bankCode,
+          //       account_number: data.bank?.accountNumber,
+          //       reference: data.index,
+          //       reason: 'Wyre requester funding',
+          //     },
+          //   })
+          //   .json();
+
+          const initiateTransfer = await Axios.post(
+            `https://sandbox.api.maplerad.com/v1/transfers`,
+            {
+              amount: Number(data.salary) * 100,
+              currency: 'NGN',
+              bank_code: data.bank?.bankCode,
+              account_number: data.bank?.accountNumber,
+              reference: rootQueueJobData.ref.replace(':', '_'),
+              reason: queueName,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${config.secret_key}`,
+              },
+            }
+          );
+
+          console.log(initiateTransfer, '---->]---->]---->]---->]---->]');
+
           // {
           //   "account_number": "0148105611",
           //   "bank_code": "159",
@@ -72,17 +106,17 @@ export const mapleradConsumer = async (
           //   "allocation": 100,
           //   "reference": "clgdj25an0006eyq85x1q9y5e"
           // }
-          const response = maplerad.executeNairaTransfer({
-            account_number: data.bank?.accountNumber as string,
-            amount: Number(data.salary),
-            reason: queueName,
-            reference: rootQueueJobData.ref,
-            bank_code: '159' || data.bank?.bankCode, // GTB
-            currency: 'NGN',
-          });
-          logger.debug(
-            `[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`
-          );
+          // const response = await maplerad.executeNairaTransfer({
+          //   account_number: data.bank?.accountNumber as string,
+          //   amount: Number(data.salary),
+          //   reason: queueName,
+          //   reference: rootQueueJobData.ref,
+          //   bank_code: data.bank?.bankCode as string, // GTB
+          //   currency: 'NGN',
+          // });
+          // logger.debug(
+          //   `[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`
+          // );
           done();
         });
       }),
