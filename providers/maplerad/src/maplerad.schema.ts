@@ -38,8 +38,13 @@ export const mapleradConfigSchema: JSONSchema7 = {
       enum: ['NGN', 'GHC', 'USD', 'KES'],
       default: 'NGN',
     },
+    environment: {
+      type: 'string',
+      enum: ['live', 'sandbox'],
+      default: 'sandbox',
+    },
   },
-  required: ['name', 'secret_key', 'supported_currencies'],
+  required: ['environment', 'secret_key', 'supported_currencies'],
 };
 
 interface HttpProviderConfig {
@@ -51,7 +56,8 @@ interface HttpProviderConfig {
 
 export interface MapleradConfigOptions extends Partial<HttpProviderConfig> {
   name?: string;
-  secret_key?: string;
+  environment: 'live' | 'sandbox';
+  secret_key: string;
   supported_currencies: 'NGN' | 'GHC' | 'USD' | 'KES';
   [k: string]: unknown;
 }

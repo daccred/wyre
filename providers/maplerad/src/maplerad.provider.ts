@@ -1,27 +1,11 @@
 import Ajv from 'ajv';
-/// @see https://www.npmjs.com/package/got/v/11.8.1
-import got from 'got';
 import { type JSONSchema7 } from 'json-schema';
-
+// import Maplerad  from 'maplerad-node/dist/lib/client';
 import { type MapleradConfigOptions } from './maplerad.schema';
 import { mapleradConfigSchema } from './maplerad.schema';
 
-// const live = "https://api.maplerad.com/v1";
-// const sandbox = "https://sandbox.api.maplerad.com/v1";
-// const httpConfig: Partial<GotOptions> = {
-//   headers: {
-//     accept: "application/json",
-//     Authorization: `Bearer ${env.MAPLERAD_SECRET_KEY}`,
-//   },
-// };
-
-// const config: MapleradConfigOptions = {
-//   base_url: live,
-//   sandbox_url: sandbox,
-//   default: sandbox,
-//   httpConfig: httpConfig,
-//   supported_currencies: "NGN",
-// };
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Maplerad = require('maplerad-node');
 
 interface FintechProviderInterface {
   executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown>;
@@ -40,22 +24,16 @@ export class MapleradProvider implements FintechProviderInterface {
   private config: MapleradConfigOptions;
   private client;
   private logger = console;
-  private path = 'transfers';
 
   constructor(config: MapleradConfigOptions) {
     this.config = config;
     const defaults = this.validateConfigSchema(config);
 
-    this.client = got.extend({
-      prefixUrl: defaults.base_url,
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${defaults.secret_key}`,
-      },
-    });
+    this.client = new Maplerad(defaults.secret_key, defaults.environment);
 
     console.log({
       defaults,
+      client: this.client,
       herer: '49025uitninoskdsc........===============.....................',
     });
   }
@@ -86,58 +64,70 @@ export class MapleradProvider implements FintechProviderInterface {
     return this.config;
   }
 
+  /**
+   * @see https://maplerad.dev/reference/create-a-transfer
+   * @param payload
+   * @description This resource creates a transfer.
+   * @example
+   * {
+   *  "id": "
+   * "reference": "1234567890",
+   * "amount": 1000,
+   * "currency": "NGN",
+   * "status": "PENDING",
+   * "reason": "Salary",
+   * "account_number": "1234567890",
+   * "bank_code": "044",
+   * }
+   * @returns NairaTransferResponse
+   */
   async executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown> {
+    const transfer = await this.client.Transfers.NairaTransfer(payload);
 
-
-      const {body} = await got.post(`${this.config.base_url}/${this.path}`, {
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${this.config.secret_key}`,
-        },
-        json: {
-          amount: Number(payload.amount) * 100, // convert to kobo
-          currency: 'NGN',
-          bank_code: payload.bank_code,
-          account_number: payload.account_number,
-          reference: payload.reference,
-          reason: 'Wyre requester funding',
-        },
-        responseType: 'json',
-      })
-      console.log({ body })
-
-      // const response = await this.client
-      // .post(this.path, {
-      //   json: {
-      //     amount: Number(payload.amount) * 100, // convert to kobo
-      //     currency: 'NGN',
-      //     bank_code: payload.bank_code,
-      //     account_number: payload.account_number,
-      //     reference: payload.reference,
-      //     reason: 'Wyre requester funding',
-      //   },
-      //   responseType: 'json',
-      // })
-      // .json();
-
-
-    this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(body, null, 2));
-    return body;
+    this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(transfer, null, 2));
+    return transfer;
   }
 
+  /**
+   * @see https://maplerad.dev/reference/create-a-transfer
+   * @param transferId
+   * @description This resource returns a transfer details by its reference or ID.
+   * @returns NairaTransferResponse
+   */
   public async getTransferRecord(transferId: string): Promise<unknown> {
     try {
-      const response = await this.client.get(`${this.path}/${transferId}`).json();
-      return response;
+      return await this.client.Transfers.GetTransfer(transferId);
     } catch (error) {
       return error;
     }
   }
 
+  /**
+   * @name getTransferCollection
+   * @description This resource returns a list of transfers.
+   * @returns NairaTransferCollectionResponse[]
+   */
+
   public async getTransferCollection(): Promise<unknown> {
     try {
-      const response = await this.client.get(this.path).json();
-      return response;
+      return await this.client.Transfers.GetAllTransfers();
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
+   * @see https://maplerad.dev/reference/get-all-institutions
+   * @description Get all banks in Nigeria with their codes
+   */
+  public async getAllBankCodeNigeria(): Promise<unknown> {
+    try {
+      return await this.client.Institution.GetAllInstitutions({
+        page: '1',
+        pageSize: '100',
+        country: 'NG',
+        type: 'NUBAN', // DOM, CASHPICKUP, NUBAN, WALLET, VIRTUAL
+      });
     } catch (error) {
       return error;
     }

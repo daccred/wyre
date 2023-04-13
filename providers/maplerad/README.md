@@ -1,7 +1,7 @@
 # Maplerad provider
 
-
 below is a list of all bank codes mapped to their names
+
 ```json
 {
   "status": true,

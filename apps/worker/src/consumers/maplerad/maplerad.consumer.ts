@@ -2,12 +2,14 @@ import { createNowTask, queueOptions } from '../../core/bull';
 import logger from '../../core/logger';
 import type { PayrollScheduleData, RecipientData } from '../../types';
 import type { MapleradConfigOptions } from '@wyrecc/maplerad';
-import { MapleradProvider } from '@wyrecc/maplerad';
+// import { MapleradProvider } from '@wyrecc/maplerad';
 import type { DoneCallback } from 'bull';
 import Queue from 'bull';
 
 const config: MapleradConfigOptions = {
   supported_currencies: 'NGN',
+  environment: 'sandbox',
+  secret_key: 'mpr_sandbox_sk_b87df6cc-124c-441c-b21f-04ae72940ef3',
 };
 
 type RecipientJobData = RecipientData & { index: number };
@@ -19,7 +21,7 @@ export const mapleradConsumer = async (
   logger.debug(`[MAPLERAD JOB STARTED ---->] ${JSON.stringify(rootQueueJob)}`);
 
   /* Setup the Maplerad provider */
-  // const { MapleradProvider } = await import('@wyrecc/maplerad');
+  const { MapleradProvider } = await import('@wyrecc/maplerad');
 
   const maplerad = new MapleradProvider(config);
 
@@ -78,7 +80,9 @@ export const mapleradConsumer = async (
             bank_code: '159' || data.bank?.bankCode, // GTB
             currency: 'NGN',
           });
-          logger.debug(`[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`);
+          logger.debug(
+            `[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`
+          );
           done();
         });
       }),

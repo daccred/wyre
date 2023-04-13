@@ -1,15 +1,24 @@
-<h1 align="center">WYRE (Opensource Spend Infrastructure)</h1>
+#
 
-<div align="center">
+<h1
+  align="center"
+>
+WYRE (Opensource Spend Infrastructure)
+</h1>
+
+<div
+  align="center"
+>
 <strong>Wyre</strong> is an open-source expende and payroll infrastructure. It's a platform that allows businesses to manage their payroll and employee benefits in a single place. It's built with the goal of making spend on vendors, contractors and employees as easy as possible.
 </div>
 
 ## 🚀 Getting Started
 
-<div align="center">
-
+<div
+  align="center"
+>
+<!-- https://github.com/marcomontalbano/video-to-markdown -->
  [![WYRE - Payroll and Expense Infrastructure](https://cdn.loom.com/sessions/thumbnails/1026ff3449944ad9b276deadfe7da4f4-with-play.gif)](https://www.loom.com/share/1026ff3449944ad9b276deadfe7da4f4?t=0 "WYRE - Payroll and Expense Infrastructure")
-
  </div>
 
 ## ✨ Features
@@ -23,9 +32,9 @@
 
 ## 📦 Managing Integrations & Employee Accounts
 
-[![WYRE - Integrations Overview](https://cdn.loom.com/sessions/thumbnails/721c8681ff01453daa4916c8a1e68243-with-play.gif)](https://www.loom.com/share/721c8681ff01453daa4916c8a1e68243 "WYRE - Integrations Overview")
+[![WYRE - Integrations Overview](https://cdn.loom.com/sessions/thumbnails/721c8681ff01453daa4916c8a1e68243-with-play.gif)](https://www.loom.com/share/721c8681ff01453daa4916c8a1e68243 'WYRE - Integrations Overview')
 
-[![WYRE - Employee Payslips and Payout Methods](https://cdn.loom.com/sessions/thumbnails/02be087267494e6997f32138c7fd93ec-with-play.gif)](https://www.loom.com/share/02be087267494e6997f32138c7fd93ec "WYRE - Employee Payslips and Payout Methods")
+[![WYRE - Employee Payslips and Payout Methods](https://cdn.loom.com/sessions/thumbnails/02be087267494e6997f32138c7fd93ec-with-play.gif)](https://www.loom.com/share/02be087267494e6997f32138c7fd93ec 'WYRE - Employee Payslips and Payout Methods')
 
 ## Feature Set
 
@@ -49,8 +58,7 @@ This project is still in early alpha, so we have many features soon to come! Thi
 - Tax withholding and remmittance
 - Employee salary advance
 
-
-[![WYRE - People and Expense [Payment Links]](https://cdn.loom.com/sessions/thumbnails/d83a39d3ab394a39b466b6373db6d7d5-with-play.gif)](https://www.loom.com/embed/d83a39d3ab394a39b466b6373db6d7d5 "WYRE - People and Expense [Payment Links]")
+[![WYRE - People and Expense [Payment Links]](https://cdn.loom.com/sessions/thumbnails/d83a39d3ab394a39b466b6373db6d7d5-with-play.gif)](https://www.loom.com/embed/d83a39d3ab394a39b466b6373db6d7d5 'WYRE - People and Expense [Payment Links]')
 
 ## Repo Directory
 
