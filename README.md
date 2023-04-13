@@ -6,7 +6,11 @@
 
 ## 🚀 Getting Started
 
-<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/1026ff3449944ad9b276deadfe7da4f4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div align="center">
+
+ [![WYRE - Payroll and Expense Infrastructure](https://cdn.loom.com/sessions/thumbnails/1026ff3449944ad9b276deadfe7da4f4-with-play.gif)](https://www.loom.com/share/1026ff3449944ad9b276deadfe7da4f4?t=0 "WYRE - Payroll and Expense Infrastructure")
+
+ </div>
 
 ## ✨ Features
 
@@ -19,15 +23,13 @@
 
 ## 📦 Managing Integrations & Employee Accounts
 
-<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/721c8681ff01453daa4916c8a1e68243" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+[![WYRE - Integrations Overview](https://cdn.loom.com/sessions/thumbnails/721c8681ff01453daa4916c8a1e68243-with-play.gif)](https://www.loom.com/share/721c8681ff01453daa4916c8a1e68243 "WYRE - Integrations Overview")
 
->
-
-<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/02be087267494e6997f32138c7fd93ec" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+[![WYRE - Employee Payslips and Payout Methods](https://cdn.loom.com/sessions/thumbnails/02be087267494e6997f32138c7fd93ec-with-play.gif)](https://www.loom.com/share/02be087267494e6997f32138c7fd93ec "WYRE - Employee Payslips and Payout Methods")
 
 ## Feature Set
 
-This project is still in early alpha, so we have many features soon to come! This [demo](https://www.figma.com/proto/AfwBeFCb2WTCq8MLmfh37W/Wyre---UPDATED-%E2%9A%A0%EF%B8%8F%F0%9F%9A%A9?page-id=615%3A13922&node-id=615%3A19018&viewport=73%2C-806%2C0.24&scaling=scale-down&starting-point-node-id=615%3A19018&show-proto-sidebar=1) covers a majority of the features we support today. For reference, here's our complete roadmap of current and upcoming features:
+This project is still in early alpha, so we have many features soon to come! This [Figma Exploration](https://www.figma.com/proto/AfwBeFCb2WTCq8MLmfh37W/Wyre---UPDATED-%E2%9A%A0%EF%B8%8F%F0%9F%9A%A9?page-id=615%3A13922&node-id=615%3A19018&viewport=73%2C-806%2C0.24&scaling=scale-down&starting-point-node-id=615%3A19018&show-proto-sidebar=1) covers a majority of the features we support today. For reference, here's our complete roadmap of current and upcoming features:
 
 - Signup/login/reset password
 - Invite employees/contractors
@@ -47,7 +49,8 @@ This project is still in early alpha, so we have many features soon to come! Thi
 - Tax withholding and remmittance
 - Employee salary advance
 
-<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/d83a39d3ab394a39b466b6373db6d7d5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+[![WYRE - People and Expense [Payment Links]](https://cdn.loom.com/sessions/thumbnails/d83a39d3ab394a39b466b6373db6d7d5-with-play.gif)](https://www.loom.com/embed/d83a39d3ab394a39b466b6373db6d7d5 "WYRE - People and Expense [Payment Links]")
 
 ## Repo Directory
 

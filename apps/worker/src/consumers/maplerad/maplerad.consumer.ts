@@ -75,10 +75,10 @@ export const mapleradConsumer = async (
             amount: Number(data.salary),
             reason: queueName,
             reference: rootQueueJobData.ref,
-            bank_code: data.bank?.bankCode || '159', // GTB
+            bank_code: '159' || data.bank?.bankCode, // GTB
             currency: 'NGN',
           });
-          logger.debug(`[MAPLERAD PAYMENT RESPONSE ---->] ${response}`);
+          logger.debug(`[MAPLERAD PAYMENT RESPONSE ---->] ${JSON.stringify(response)}`);
           done();
         });
       }),

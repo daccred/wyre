@@ -37,13 +37,13 @@ interface NairaTransferRequest {
 }
 
 export class MapleradProvider implements FintechProviderInterface {
-  private config;
+  private config: MapleradConfigOptions;
   private client;
   private logger = console;
   private path = 'transfers';
 
   constructor(config: MapleradConfigOptions) {
-    this.config = {};
+    this.config = config;
     const defaults = this.validateConfigSchema(config);
 
     this.client = got.extend({
@@ -87,8 +87,13 @@ export class MapleradProvider implements FintechProviderInterface {
   }
 
   async executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown> {
-    const response = await this.client
-      .post(this.path, {
+
+
+      const {body} = await got.post(`${this.config.base_url}/${this.path}`, {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${this.config.secret_key}`,
+        },
         json: {
           amount: Number(payload.amount) * 100, // convert to kobo
           currency: 'NGN',
@@ -99,9 +104,25 @@ export class MapleradProvider implements FintechProviderInterface {
         },
         responseType: 'json',
       })
-      .json();
-    this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(response, null, 2));
-    return response;
+      console.log({ body })
+
+      // const response = await this.client
+      // .post(this.path, {
+      //   json: {
+      //     amount: Number(payload.amount) * 100, // convert to kobo
+      //     currency: 'NGN',
+      //     bank_code: payload.bank_code,
+      //     account_number: payload.account_number,
+      //     reference: payload.reference,
+      //     reason: 'Wyre requester funding',
+      //   },
+      //   responseType: 'json',
+      // })
+      // .json();
+
+
+    this.logger.log(`MapleradProvider.executeNairaTransfer`, JSON.stringify(body, null, 2));
+    return body;
   }
 
   public async getTransferRecord(transferId: string): Promise<unknown> {
