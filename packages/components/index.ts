@@ -1,3 +1,3 @@
 export * from './forms';
 export * from './hooks';
-export * from './Table';
+export * from './table/table-checkbox';
