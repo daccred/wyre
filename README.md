@@ -7,9 +7,9 @@ WYRE (Opensource Spend Infrastructure)
 </h1>
 
 <div
-  align="center"
+  align="center" style="font-family: 'Courier New', Courier, monospace;"
 >
-<strong>Wyre</strong> is an open-source expende and payroll infrastructure. It's a platform that allows businesses to manage their payroll and employee benefits in a single place. It's built with the goal of making spend on vendors, contractors and employees as easy as possible.
+<a href='https://wyre.cc'>WYRE</a> is an open-source expende and payroll infrastructure. It's a platform that allows businesses to manage their payroll and employee benefits in a single place. It's built with the goal of making spend on vendors, contractors and employees as easy as possible.
 </div>
 
 ## 🚀 Getting Started
