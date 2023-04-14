@@ -2,7 +2,7 @@ name: Lint Workflow
 on: push
 jobs:
   lint:
-    name: ESLint
+    name: TS:ES Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,8 +29,11 @@ jobs:
       - name: Install modules
         run: NOYARNPOSTINSTALL=1 yarn install --frozen-lockfile
 
+      - name: Boostrap dependencies
+        run: yarn lerna run build --ignore web --verbose
+
       - name: Run Typescript Lint
         run: yarn lint:ts
 
       - name: Run EcmaScript Lint
-        run: yarn lint:es
+        run: yarn lint:es --ignore web --verbose

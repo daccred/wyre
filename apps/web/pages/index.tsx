@@ -1,5 +1,5 @@
 import { Button, Center } from '@chakra-ui/react';
-import { type NextPage } from 'next';
+import type { NextPage, GetServerSidePropsContext } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { getServerAuthSession } from '@wyrecc/api';
@@ -31,7 +31,7 @@ const AuthShowcase: React.FC = () => {
   );
 };
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerAuthSession(context);
 
   if (session) {

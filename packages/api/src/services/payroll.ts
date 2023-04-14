@@ -1,5 +1,6 @@
 import { prisma } from '@wyrecc/db';
 import { TRPCError } from '@trpc/server';
+import { DEFAULT_PAYROLL_QUEUE } from '../common/bull';
 import type { IPayrollSchema, PayrollScheduleData } from '../interfaces/payroll';
 import { createPayrollPublisher } from '../publishers/payroll.publisher';
 import { ServerError } from '../utils/server-error';
@@ -246,14 +247,20 @@ export class PayrollService {
 
       // added the payroll to the queue
       await createPayrollPublisher({
-        name: operationName,
-        data: payroll.employees as unknown as PayrollScheduleData[],
-        delay: diffInMilliseconds,
+        name: DEFAULT_PAYROLL_QUEUE, // Queues can only process jobs with the same queue name
+        data: {
+          ref: `${operationName}:${payroll.id}`,
+          cycle: payroll.cycle,
+          payday: payroll.payday,
+          currency: payroll.currency,
+          payload: payroll.employees,
+        } as PayrollScheduleData,
+        // delay: diffInMilliseconds,
+        delay: 100,
       });
-      // await PayrollQueue.add(PayrollData, { attempts: 5 });
 
       return {
-        message: `${operationName} payroll scheduled for ${payroll.payday}`,
+        message: `${DEFAULT_PAYROLL_QUEUE} payroll scheduled for ${payroll.payday}`,
         scheduled: diffInMilliseconds,
         payload: payroll,
       };

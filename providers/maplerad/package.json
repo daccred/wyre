@@ -1,27 +1,31 @@
 {
   "private": true,
   "name": "@wyrecc/maplerad",
-  "version": "0.1.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "version": "0.1.1-alpha.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "source": "src/index.ts",
   "files": [
-    "dist/**",
-    "package.json"
+    "*.ts",
+    "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "yarn clean && tsc",
+    "dev": "tsc --watch",
     "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
     "lint:es": "TIMING=1 eslint src"
   },
   "dependencies": {
+    "@tecmie/maplerad-node": "^0.0.1",
     "ajv": "^8.12.0",
-    "got": "^12.6.0",
+    "got": "11.8.1",
     "json-schema": "^0.4.0"
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.11",
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0"
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0"
   }
 }

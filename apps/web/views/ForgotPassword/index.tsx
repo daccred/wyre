@@ -9,7 +9,7 @@ const View = ({ isSubmitting }: { isSubmitting: boolean }) => (
         <Image src="/Zayroll Logo.png" alt="wyre logo" w={24} m={12} />
       </Link>
 
-      <Flex p={12} flex={1} align="start">
+      <Flex minW="400px" p={12} flex={1} align="start">
         <Stack spacing={4} w="full" maxW="md">
           <Stack>
             <Heading color="#010C14" fontWeight="bold" lineHeight={1.1} fontSize={{ base: '3xl', md: '4xl' }}>
@@ -45,7 +45,7 @@ const View = ({ isSubmitting }: { isSubmitting: boolean }) => (
       </Flex>
     </Stack>
 
-    <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
+    <Flex bgColor="#210D35" color="white" flex={5} align="center" justify="center">
       <HStack flex={1} align="start" justify="end">
         <Stack p={8} maxW="md">
           <Heading>Zayroll</Heading>

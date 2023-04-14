@@ -1,4 +1,3 @@
-import type { Options as GotOptions } from 'got';
 import type { JSONSchema7 } from 'json-schema';
 
 /**
@@ -7,6 +6,10 @@ import type { JSONSchema7 } from 'json-schema';
  * @type {JSONSchemaType<MapleradConfig>}
  * @see https://json-schema.org/understanding-json-schema/reference/object.html
  * @see https://transform.tools/ to convert JSON Schema to TypeScript
+ *
+ * @note The reason we are using the JSON Schema is so that we can easily persist
+ * the config in the database and also validate the config schema once we move away from
+ * using environment variables as the source of truth for the config
  */
 
 export const mapleradConfigSchema: JSONSchema7 = {
@@ -21,7 +24,7 @@ export const mapleradConfigSchema: JSONSchema7 = {
       type: 'string',
       default: 'mpr_sandbox_sk_b87df6cc-124c-441c-b21f-04ae72940ef3',
     },
-    base_url: {
+    live_url: {
       type: 'string',
       default: 'https://sandbox.api.maplerad.com/v1',
     },
@@ -34,20 +37,24 @@ export const mapleradConfigSchema: JSONSchema7 = {
       enum: ['NGN', 'GHC', 'USD', 'KES'],
       default: 'NGN',
     },
+    environment: {
+      type: 'string',
+      enum: ['live', 'sandbox'],
+      default: 'sandbox',
+    },
   },
-  required: ['supported_currencies'],
+  required: ['environment', 'secret_key', 'supported_currencies'],
 };
 
 interface HttpProviderConfig {
-  base_url: string;
+  live_url: string;
   sandbox_url: string;
-  default: string;
-  httpConfig: Partial<GotOptions>;
 }
 
-export interface MapleradConfigOptions extends HttpProviderConfig {
+export interface MapleradConfigOptions extends Partial<HttpProviderConfig> {
   name?: string;
-  secret_key?: string;
+  environment: 'live' | 'sandbox';
+  secret_key: string;
   supported_currencies: 'NGN' | 'GHC' | 'USD' | 'KES';
   [k: string]: unknown;
 }

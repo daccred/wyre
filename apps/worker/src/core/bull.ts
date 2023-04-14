@@ -2,6 +2,13 @@ import { env as secrets } from '@wyrecc/env/worker';
 import type Queue from 'bull';
 import IORedis from 'ioredis';
 
+const client = new IORedis(secrets.REDIS_URL, {
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
+  connectionName: 'wyre:queue:client',
+  enableTLSForSentinelMode: false,
+});
+
 const subscriber = new IORedis(secrets.REDIS_URL, {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
@@ -9,13 +16,14 @@ const subscriber = new IORedis(secrets.REDIS_URL, {
 });
 
 export const queueOptions: Queue.QueueOptions = {
-  /** in Nextjs we are client only and produce jobs */
   createClient: (__type__) => {
     switch (__type__) {
+      case 'client':
+        return client;
       case 'subscriber':
         return subscriber;
       default:
-        return subscriber;
+        return client;
     }
   },
   defaultJobOptions: {

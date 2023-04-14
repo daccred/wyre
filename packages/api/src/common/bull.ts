@@ -33,7 +33,7 @@ export const DEFAULT_BACKOFF = {
   type: 'exponential',
   delay: 10000,
 };
-export const DEFAULT_QUEUE_NAME = 'payroll:queue';
+export const DEFAULT_PAYROLL_QUEUE = 'payroll:queue';
 
 /**
  * =======================================================
@@ -41,7 +41,7 @@ export const DEFAULT_QUEUE_NAME = 'payroll:queue';
  * AS A CONST TO BE USED IN OUR APP PUBLISHERS
  * =======================================================
  */
-export const payrollQueue = new Queue(DEFAULT_QUEUE_NAME, queueOptions);
+export const payrollQueue = new Queue(DEFAULT_PAYROLL_QUEUE, queueOptions);
 
 export type TaskQueueOptions<T> = {
   isCron: boolean;

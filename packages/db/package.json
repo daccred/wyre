@@ -1,45 +1,41 @@
 {
-  "name": "@wyrecc/db",
   "private": true,
-  "version": "0.1.0",
+  "name": "@wyrecc/db",
+  "version": "0.1.1-alpha.0",
   "license": "MIT",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**",
-    "prisma",
-    "package.json"
+    "prisma"
   ],
   "scripts": {
-    "prebuild": "npm run db-generate && npm run db-sync",
+    "prebuild": "yarn db:generate",
     "build": "tsc -p tsconfig.json",
-    "clean": "rimraf .turbo node_modules dist",
-    "db-deploy": "prisma migrate deploy",
-    "db-generate": "prisma generate",
-    "db-migrate": "prisma migrate dev --name",
-    "db-nuke": "docker-compose down --volumes --remove-orphans",
-    "db-reset": "run-s db-nuke db-setup",
-    "db-seed": "prisma db seed",
-    "db-setup": "run-s db-up db-deploy db-seed",
-    "db-studio": "prisma studio",
-    "db-sync": "prisma migrate dev",
-    "db-up": "docker-compose up -d",
+    "clean": "rimraf node_modules dist",
+    "db:deploy": "prisma migrate deploy",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev --name",
     "db:push": "prisma db push",
-    "predev": "npm run db-generate && npm run db-sync",
+    "db:reset": "run-s db:nuke db:setup",
+    "db:seed": "prisma db seed",
+    "db:setup": "run-s db:up db:deploy db:seed",
+    "db:studio": "prisma studio",
+    "db:sync": "prisma migrate dev",
+    "predev": "yarn db:generate && yarn db:sync",
     "dev": "tsc --watch",
-    "dx": "npm run db-setup",
+    "dx": "yarn db:setup",
     "format": "prisma format",
-    "generate": "prisma generate",
     "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
     "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@prisma/client": "^4.11.0",
     "prisma-zod-generator": "^0.8.11"
   },
   "devDependencies": {
-    "@wyrecc/config": "0.1.0",
-    "@wyrecc/tsconfig": "0.1.0",
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0",
     "prisma": "^4.11.0"
   }
 }
