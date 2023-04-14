@@ -6,9 +6,6 @@ import { MapleradProvider } from '@wyrecc/maplerad';
 import type { DoneCallback } from 'bull';
 import Queue from 'bull';
 
-// import Axios from 'axios';
-// import got from 'got';
-
 const config: MapleradConfigOptions = {
   supported_currencies: 'NGN',
   environment: 'sandbox',
@@ -31,8 +28,6 @@ export const mapleradConsumer = async (
   logger.debug(`[MAPLERAD CONFIG ---->] ${JSON.stringify(mapleConfig)}`);
 
   const { data: rootQueueJobData } = rootQueueJob;
-  logger.debug(`[MAPLERAD JOB DATA ---->] ${rootQueueJobData}`);
-
   const consumerQueueName = `maplerad-${rootQueueJobData.ref}_${rootQueueJobData.currency}`;
   const queue = new Queue(consumerQueueName, queueOptions);
 

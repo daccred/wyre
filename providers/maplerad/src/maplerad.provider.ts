@@ -22,15 +22,34 @@ interface NairaTransferRequest {
 export class MapleradProvider implements FintechProviderInterface {
   private config: MapleradConfigOptions;
   private client;
+  /**
+   * @todo Add custom debug flag from .env to disable logging
+   * @example
+   * if (process.env.DEBUG) {
+   * this.logger = console;
+   * } else {
+   *       this.logger = {
+   *         log: () => {},
+   *         debug: () => {},
+   *         info: () => {},
+   *         warn: () => {},
+   *         error: () => {}
+   *       } as Console;
+   *     } else {
+   *       this.logger = console;
+   *     }
+   *   }
+   * }
+   * */
   private logger = console;
   private base_url: string;
 
   constructor(config: MapleradConfigOptions) {
     this.config = config;
-    const defaults = this.validateConfigSchema(config);
+    const defaults = this.validateConfigWithSchema(config);
 
     this.client = new Maplerad(defaults.secret_key, defaults.environment);
-    this.base_url = defaults[`${defaults.environment}_url`];
+    this.base_url = defaults[`${defaults.environment}_url`] as string;
 
     console.log({
       config: this.config,
@@ -38,16 +57,17 @@ export class MapleradProvider implements FintechProviderInterface {
     });
   }
 
-  validateConfigSchema = (_configOptions: MapleradConfigOptions) => {
+  private validateConfigWithSchema = (_configOptions: MapleradConfigOptions) => {
     const ajv = new Ajv({ useDefaults: true });
     const validate = ajv.compile(mapleradConfigSchema);
 
     /**
      * @note Ajv mutates the __configOptions object__ and adds the default values
-     * the moment we call validate(schema);
+     * the moment we call validate(_configOptions);
      * */
     const isValidSchema = validate(_configOptions);
-    this.logger.log(`MapleradProvider.validateConfigSchema`, isValidSchema);
+    this.logger.log(`MapleradProvider.validateConfigWithSchema`, isValidSchema);
+
     if (!isValidSchema) {
       this.logger.error(validate.errors);
       throw new Error(`{
@@ -72,30 +92,24 @@ export class MapleradProvider implements FintechProviderInterface {
    * @example
    * {
    *  "id": "
-   * "reference": "1234567890",
+   * "reference": "uuid_xxx-uui-xxx-xxx-xxx",
    * "amount": 1000,
    * "currency": "NGN",
    * "status": "PENDING",
    * "reason": "Salary for December",
-   * "account_number": "1234567890",
+   * "account_number": "0151647888",
    * "bank_code": "044",
    * }
    * @returns NairaTransferResponse
    */
   async executeNairaTransfer(payload: NairaTransferRequest): Promise<unknown> {
-    console.log({ payload }, '---->]---->]---->]---->]---->]');
+    // console.log({ payload }, '---->]---->]---->]---->]---->]');
 
     try {
       const transfer = await Axios.post(
         this.base_url + '/transfers',
         {
           ...payload,
-          // amount: Number(data.salary) * 100,
-          // currency: 'NGN',
-          // bank_code: data.bank?.bankCode,
-          // account_number: data.bank?.accountNumber,
-          // reference: rootQueueJobData.ref.replace(':', '_'),
-          // reason: queueName,
         },
         {
           headers: {

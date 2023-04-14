@@ -51,7 +51,7 @@ interface HttpProviderConfig {
   sandbox_url: string;
 }
 
-export interface MapleradConfigOptions extends HttpProviderConfig {
+export interface MapleradConfigOptions extends Partial<HttpProviderConfig> {
   name?: string;
   environment: 'live' | 'sandbox';
   secret_key: string;
