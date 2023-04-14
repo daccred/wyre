@@ -1,8 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
-
 import Header from '@wyrecc/components/core/Header';
-
 import Transactions from './transaction';
 
 interface CardData {

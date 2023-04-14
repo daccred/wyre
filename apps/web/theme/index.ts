@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ThemeConfig, StyleFunctionProps } from '@chakra-ui/react';
 import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
-
 import * as components from './components';
 import * as foundations from './foundations';
 

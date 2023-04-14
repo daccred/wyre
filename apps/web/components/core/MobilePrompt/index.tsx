@@ -1,5 +1,4 @@
 import { Box, Center, HStack, Image, Text, VStack } from '@chakra-ui/react';
-
 import { MobilePromptImage } from './ProviderIcons';
 
 const MobilePrompt = () => {

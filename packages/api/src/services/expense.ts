@@ -1,7 +1,5 @@
 import { prisma } from '@wyrecc/db';
-
 import { TRPCError } from '@trpc/server';
-
 import type { IExpenseSchema } from '../interfaces';
 import { ServerError } from '../utils/server-error';
 

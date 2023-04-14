@@ -3,9 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { trpc } from 'utils/trpc';
 import z from 'zod';
-
 import { useForm } from '@wyrecc/components/forms';
-
 import { Meta } from '../layouts';
 import View from '../views/ForgotPassword';
 

@@ -12,7 +12,6 @@ import {
 import React from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { z } from 'zod';
-
 import { FormInput, useForm } from '../../../components/forms';
 
 interface ISuspendPayrolle {

@@ -1,7 +1,6 @@
 import { Box, CircularProgress, CircularProgressLabel, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import z from 'zod';
-
 import useHover from '../../../../../packages/components/hooks/use-hover';
 
 export const Card = ({

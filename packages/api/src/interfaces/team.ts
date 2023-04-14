@@ -36,10 +36,14 @@ export const teamSchema = z.object({
       currency: z.string(),
       address: z.string(),
       network: z.string(),
-      allocation: z.string(),
+      allocation: z.number(),
       personnelId: z.string(),
     })
     .optional(),
 });
 
+// create optional team schema based on the teamSchema
+export const updateTeamSchema = teamSchema.partial();
+
+export type IUpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export type ITeamSchema = z.infer<typeof teamSchema>;

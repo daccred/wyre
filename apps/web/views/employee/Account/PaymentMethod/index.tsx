@@ -14,10 +14,8 @@ import React from 'react';
 import { FaBitcoin } from 'react-icons/fa';
 import { FiChevronLeft } from 'react-icons/fi';
 import { HiOutlinePlusSm } from 'react-icons/hi';
-
 import Header from '@wyrecc/components/core/Header';
 import { EmptyEmployeeImage } from '@wyrecc/components/core/providerIcon';
-
 import PaymentMethodType from '../Modals/PaymentMethodType';
 
 const View = () => {

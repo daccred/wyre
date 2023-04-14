@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-
 import ManageExpenseModal from '../modals/ManageExpenseModal';
 
 export const textTruncate = (length: number, string: string) => {

@@ -1,1 +1,1 @@
-module.exports = require("@wyrecc/config");
+module.exports = require("@wyrecc/config/eslint-preset");

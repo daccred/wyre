@@ -6,7 +6,6 @@ import type { AppProps } from 'next/app';
 import { Epilogue } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import { isMobile, isBrowser, isTablet } from 'react-device-detect';
-
 import MobilePrompt from '../components/core/MobilePrompt';
 import '../styles/globals.css';
 import { theme } from '../theme/index';

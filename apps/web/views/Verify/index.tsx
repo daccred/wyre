@@ -15,7 +15,6 @@ import {
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next/types';
 import * as React from 'react';
-
 import { trpc } from '../../utils/trpc';
 
 const View = () => {

@@ -145,11 +145,7 @@ const FormRadioCard = forwardRef<HTMLInputElement, FormRadioCardProps>(
           name={name}
           control={control}
           render={({ field }) => (
-            <RadioCardGroup
-              //@ts-ignore
-              defaultValue={options[0].value}
-              spacing="3"
-              {...field}>
+            <RadioCardGroup defaultValue={options[0].value} spacing="3" {...field}>
               {options.map((option) => (
                 <RadioCard key={option.value} value={option.value}>
                   <Text color="muted" fontSize="sm">

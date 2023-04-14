@@ -25,9 +25,7 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { trpc } from 'utils/trpc';
 import SuccessModal from 'views/Payroll/modals/SuccessModal';
 import z from 'zod';
-
 import { useForm } from '@wyrecc/components';
-
 import { generateLinkColumn } from '../utils/tableColumns';
 
 const generatePaymentLinkValidationSchema = z.object({

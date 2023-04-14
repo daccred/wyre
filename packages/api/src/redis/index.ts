@@ -1,19 +1,25 @@
-import { createClient } from 'redis';
-
+import IORedis from 'ioredis';
 import { env } from '@wyrecc/env';
 
-const redisClient = createClient({
-  socket: {
-    host: env.REDIS_URL,
-    port: parseInt(env.REDIS_PORT, 10),
-  },
+// const redisClient = IORedis({
+//   socket: {
+//     host: ,
+//     port: parseInt(env.REDIS_PORT, 10),
+//   },
 
-  password: env.REDIS_PASSWORD,
+//   password: env.REDIS_PASSWORD,
+// });
+
+const redisClient = new IORedis(env.REDIS_URL, {
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
+  connectionName: 'wyre:server',
 });
-redisClient.on('error', (err) => console.warn(err));
-redisClient
-  .connect()
-  .then(() => console.log('Connected to Redis'))
-  .catch(() => console.warn('Failed to connect to Redis'));
+
+// redisClient.on('error', (err) => console.warn(err));
+// redisClient
+//   .connect()
+//   .then(() => console.log('Connected to Redis'))
+//   .catch(() => console.warn('Failed to connect to Redis'));
 
 export default redisClient;

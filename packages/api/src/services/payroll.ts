@@ -1,10 +1,8 @@
 import { prisma } from '@wyrecc/db';
-
 import { TRPCError } from '@trpc/server';
-
-import { PayrollQueue } from '../bullQueue/payroll-queue';
-import type { IPayrollSchema } from '../interfaces/payroll';
-import type { PayrollQueueSchema } from '../interfaces/payroll-queue';
+import { DEFAULT_PAYROLL_QUEUE } from '../common/bull';
+import type { IPayrollSchema, PayrollScheduleData } from '../interfaces/payroll';
+import { createPayrollPublisher } from '../publishers/payroll.publisher';
 import { ServerError } from '../utils/server-error';
 
 export class PayrollService {
@@ -209,49 +207,65 @@ export class PayrollService {
   }
 
   static async processPayRoll(id: string) {
-    // check for the payroll
-    const payroll = await prisma.payroll.findUnique({ where: { id }, include: { employees: true } });
-    if (payroll === null) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `Payroll with id ${id} not found`,
+    try {
+      // check for the payroll
+      const payroll = await prisma.payroll.findUnique({
+        where: { id },
+        include: {
+          employees: {
+            include: {
+              bank: true,
+              cryptoWallet: true,
+              mobileMoney: true,
+            },
+            where: {
+              OR: [
+                { cryptoWallet: { is: { NOT: undefined } } },
+                { bank: { is: { NOT: undefined } } },
+                { mobileMoney: { is: { NOT: undefined } } },
+              ],
+            },
+          },
+        },
       });
-    }
-    const PayrollData: Array<PayrollQueueSchema> = [];
-    // looping through the employees
-    payroll.employees.map(async (item) => {
-      const queueObject: PayrollQueueSchema = {
-        payroll: id,
-        recipientDetails: item,
-        paymentMethod: item.payrollMethod,
-        recipientPaymentDetail: null,
-      };
-      switch (item.payrollMethod) {
-        case 'BANK': {
-          const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = bank;
-          break;
-        }
-        case 'CRYPTO': {
-          const wallet = await prisma.cryptoWallet.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = wallet;
-          break;
-        }
-        case 'MOBILEMONEY': {
-          const mobileMoney = await prisma.mobileMoney.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = mobileMoney;
-          break;
-        }
-        default: {
-          const bank = await prisma.bank.findUnique({ where: { personnelId: item.id } });
-          queueObject['recipientPaymentDetail'] = bank;
-        }
-      }
-      PayrollData.push(queueObject);
-    });
-    // added the payroll to the queue
-    await PayrollQueue.add(PayrollData, { attempts: 5 });
 
-    return 'Payroll added to the queue';
+      if (!payroll) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `Payroll with id ${id} not found`,
+        });
+      }
+
+      /* Get the delay params for scheduling */
+      const now = new Date(); // current date and time
+      const diffInMilliseconds = new Date(payroll.payday).getTime() - now.getTime();
+      /**
+       * replace method with a regular expression that matches one or more whitespace characters
+       * (\s+) and replaces them with an underscore character (_).
+       **/
+      const operationName = payroll.title.replace(/\s+/g, '_').toLowerCase();
+
+      // added the payroll to the queue
+      await createPayrollPublisher({
+        name: DEFAULT_PAYROLL_QUEUE, // Queues can only process jobs with the same queue name
+        data: {
+          ref: `${operationName}:${payroll.id}`,
+          cycle: payroll.cycle,
+          payday: payroll.payday,
+          currency: payroll.currency,
+          payload: payroll.employees,
+        } as PayrollScheduleData,
+        // delay: diffInMilliseconds,
+        delay: 100,
+      });
+
+      return {
+        message: `${DEFAULT_PAYROLL_QUEUE} payroll scheduled for ${payroll.payday}`,
+        scheduled: diffInMilliseconds,
+        payload: payroll,
+      };
+    } catch (error) {
+      ServerError(error);
+    }
   }
 }

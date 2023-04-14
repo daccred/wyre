@@ -1,5 +1,4 @@
 import { Prisma } from '@prisma/client';
-
 import { TRPCError } from '@trpc/server';
 
 export function ServerError(error: unknown) {

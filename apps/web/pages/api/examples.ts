@@ -1,5 +1,4 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
-
 import { prisma } from '@wyrecc/db';
 
 const examples = async (req: NextApiRequest, res: NextApiResponse) => {

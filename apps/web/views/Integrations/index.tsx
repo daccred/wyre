@@ -1,7 +1,6 @@
 import { Box, HStack, Image, Input, Stack, Switch, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
-
 import ViewLayout from '../../components/core/ViewLayout';
 import APIForm from './APIForm';
 import {

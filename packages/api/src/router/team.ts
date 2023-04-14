@@ -1,6 +1,5 @@
 import { z } from 'zod';
-
-import { teamSchema } from '../interfaces';
+import { teamSchema, updateTeamSchema } from '../interfaces';
 import { TeamService } from '../services';
 import { createTRPCRouter, protectedProcedure } from '../trpc';
 
@@ -11,7 +10,7 @@ export const teamRouter = createTRPCRouter({
   }),
 
   updatePersonnel: protectedProcedure
-    .input(z.object({ id: z.string(), data: teamSchema }))
+    .input(z.object({ id: z.string(), data: updateTeamSchema }))
     .mutation(async ({ input }) => {
       const employee = await TeamService.updatePersonnel(input.id, input.data);
 

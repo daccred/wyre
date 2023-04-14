@@ -10,9 +10,7 @@ import {
 import { useRouter } from 'next/router';
 import React from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-
 import { Bank, CryptoWallet, Mobile } from '@wyrecc/components/core/providerIcon';
-
 import { Card } from './misc';
 
 interface IPayrollType {

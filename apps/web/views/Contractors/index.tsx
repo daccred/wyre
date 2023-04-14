@@ -36,7 +36,6 @@ import useDebounce from 'components/hooks/useDebounce';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
 import { FiSearch, FiArrowRight, FiArrowLeft } from 'react-icons/fi';
-
 import ViewLayout from '../../components/core/ViewLayout';
 import { trpc } from '../../utils/trpc';
 import TablePulse from '../TablePulse';

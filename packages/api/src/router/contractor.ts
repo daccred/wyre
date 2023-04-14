@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 import { contractorSchema } from '../interfaces';
 import { ContractorService } from '../services/contractor';
 import { createTRPCRouter, protectedProcedure } from '../trpc';

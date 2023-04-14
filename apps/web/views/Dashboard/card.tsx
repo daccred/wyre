@@ -1,6 +1,5 @@
 import { Text, Flex, Link, Icon, Stack } from '@chakra-ui/react';
 import React from 'react';
-
 import { ArrowRightIcon } from './ProviderIcons';
 
 interface StatData {

@@ -13,9 +13,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import z from 'zod';
-
 import { FormInput, FormSelect, useForm } from '@wyrecc/components';
-
 import PaymentMethodType from '../Account/Modals/PaymentMethodType';
 
 const paymentLinkValidationSchema = z.object({

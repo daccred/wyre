@@ -1,6 +1,5 @@
 import { Button, Flex, Heading, Link, Stack, HStack, Image, Text } from '@chakra-ui/react';
 import * as React from 'react';
-
 import { FormInput } from '@wyrecc/components/forms';
 
 type Props = {

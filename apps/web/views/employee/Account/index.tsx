@@ -2,7 +2,6 @@ import { Flex, Heading, Icon, Text, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FiChevronRight } from 'react-icons/fi';
-
 import Header from '@wyrecc/components/core/Header';
 import { ContractorIcon } from '@wyrecc/components/core/providerIcon';
 

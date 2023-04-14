@@ -10,7 +10,6 @@ import {
 import { useRouter } from 'next/router';
 import React from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-
 import { ContractorsIcon, EmployeesIcon } from '../../../components/core/ViewLayout/ProviderIcons';
 import { Card } from '../utils/misc';
 

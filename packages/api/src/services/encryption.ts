@@ -1,5 +1,4 @@
 import * as crypto from 'crypto';
-
 import { env } from '@wyrecc/env';
 
 const algorithm = 'aes-256-cbc';

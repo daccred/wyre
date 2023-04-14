@@ -23,7 +23,6 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
-
 import { ArrowRightIcon, CalenderIcon, TeamIcon } from './ProviderIcons';
 
 type Props = {};

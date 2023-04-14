@@ -1,5 +1,4 @@
 import { ServerClient } from 'postmark';
-
 import { POSTMARK_CLIENT_ID } from '../constants';
 
 // import queryString from "query-string";

@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import { FiUploadCloud } from 'react-icons/fi';
 import z from 'zod';
-
 import styledToast from '../../components/core/StyledToast';
 import ViewLayout from '../../components/core/ViewLayout';
 import { FormInput, useForm } from '../../components/forms';

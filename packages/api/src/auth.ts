@@ -2,11 +2,8 @@
 import type { DefaultSession, DefaultUser } from 'next-auth';
 import type { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-
 import { prisma } from '@wyrecc/db';
-
 import { TRPCError } from '@trpc/server';
-
 import { loginSchema } from './interfaces';
 import { ServerError, verifyHash } from './utils';
 

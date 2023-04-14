@@ -1,6 +1,5 @@
-import { HStack, Text, Button, Flex, Heading, Stack, Image, Link } from "@chakra-ui/react";
-import * as React from "react";
-
+import { HStack, Text, Button, Flex, Heading, Stack, Image, Link } from '@chakra-ui/react';
+import * as React from 'react';
 import { FormInput } from '@wyrecc/components/forms';
 
 const View = () => (

@@ -1,9 +1,6 @@
 import { nanoid } from 'nanoid';
-
 import { prisma } from '@wyrecc/db/src';
-
 import { TRPCError } from '@trpc/server';
-
 import type { InvitationSchemaType } from '../interfaces';
 import { ServerError } from '../utils/server-error';
 import { AuthService } from './auth';

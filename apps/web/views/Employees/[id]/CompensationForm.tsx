@@ -2,7 +2,6 @@ import { Button, Stack, Text, Flex, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import z from 'zod';
-
 import styledToast from '../../../components/core/StyledToast';
 import { FormInput, useForm } from '../../../components/forms';
 import { trpc } from '../../../utils/trpc';

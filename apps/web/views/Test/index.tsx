@@ -1,7 +1,6 @@
 import { Text, useMediaQuery } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { isMobile, isBrowser, isTablet } from 'react-device-detect';
-
 import ViewLayout from '../../components/core/ViewLayout';
 
 const Test = () => {

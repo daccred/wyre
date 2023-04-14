@@ -1,11 +1,8 @@
 import * as argon2 from 'argon2';
 import { nanoid } from 'nanoid';
-
 import { prisma } from '@wyrecc/db';
 import { getBaseUrl, sendEmail, paymentLinkEmail } from '@wyrecc/dialog';
-
 import { TRPCError } from '@trpc/server';
-
 import type { IPaymentLinkSchema, PrivateLinkAccess } from '../interfaces';
 import { generateFiveDigitCode, ServerError } from '../utils';
 import { EncryptionService } from './encryption';

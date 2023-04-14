@@ -7,7 +7,6 @@ import type { Column } from 'react-table';
 import { trpc } from 'utils/trpc';
 import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
 import { Card } from 'views/Payroll/utils/misc';
-
 import { LinkIcon, ManageExpensesIcon } from './ProviderIcons';
 import GeneratePaymentLinkModal from './modals/GeneratePaymentLinkModal';
 import { expensesColumn } from './utils/tableColumns';

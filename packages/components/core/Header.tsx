@@ -3,7 +3,6 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-
 import { LogoutIcon } from './providerIcon';
 
 interface LinkItemProps {
@@ -39,7 +38,11 @@ const NavItem = ({ href, name, ...rest }: LinkItemProps) => {
   );
 };
 
-const Header = ({ children }: { children: any }) => {
+type HeaderProps = {
+  children: React.ReactNode;
+};
+
+const Header: React.FC<HeaderProps> = ({ children }) => {
   const LinkItems = [
     { name: 'Home', href: '/employee/home' },
     { name: 'Request', href: '/employee/request' },
