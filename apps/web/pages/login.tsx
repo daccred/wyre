@@ -1,4 +1,5 @@
 import { useToast } from '@chakra-ui/react';
+import type { GetServerSidePropsContext } from 'next';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -57,7 +58,7 @@ export default function Page() {
   );
 }
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerAuthSession(context);
 
   if (session) {

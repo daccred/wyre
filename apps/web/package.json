@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "web",
+  "name": "@wyrecc/web",
   "version": "0.1.0",
   "scripts": {
     "analyze": "ANALYZE=true next build",
