@@ -8,8 +8,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "outDir": "dist",
-    "strict": true,
+    "strict": true
   },
-  "include": ["."],
+  "include": ["core/**/*"],
   "exclude": ["dist", "build", "node_modules"]
 }

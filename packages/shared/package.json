@@ -16,7 +16,7 @@
     "dev": "tsc --watch",
     "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
-    "lint:es": "TIMING=1 eslint \"*.ts\"",
+    "lint:es": "eslint --fix",
     "test": "node ./__tests__/@wyrecc/shared.test.js"
   },
   "devDependencies": {
