@@ -30,4 +30,4 @@ jobs:
         run: NOYARNPOSTINSTALL=1 yarn install --frozen-lockfile
 
       - name: Build all packages
-        run: yarn build --ignore @wyrecc/web
+        run: yarn build --ignore web

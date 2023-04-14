@@ -1,6 +1,6 @@
 {
+  "name": "worker",
   "private": true,
-  "name": "@wyrecc/worker",
   "version": "0.1.1-alpha.0",
   "scripts": {
     "build": "run-s build:clean build:code",
