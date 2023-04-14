@@ -1,6 +1,6 @@
 import { Avatar, Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import z from 'zod';
 import styledToast from '../../../components/core/StyledToast';
 import { FormInput, FormNativeSelect, useForm } from '../../../components/forms';
@@ -11,7 +11,7 @@ import Terminate from './terminateEmployee';
 const addEmployeeValidationSchema = z.object({
   name: z.string().min(1, { message: 'Name is Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: 'Defartment is Required' }),
+  department: z.string().min(1, { message: 'Department is Required' }),
   jobRole: z.string().min(1, { message: 'Job Role is Required' }),
   category: z.enum(['CONTRACTOR', 'EMPLOYEE']),
   payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
@@ -28,7 +28,7 @@ export default function EmployeeForm() {
     refetchOnMount: true,
   });
 
-  console.log(employee);
+  // console.log(employee);
   const { firstName, lastName } = employee ?? {};
 
   // mutation hook from TRPC for updating an employee's data on the server.
@@ -78,7 +78,7 @@ export default function EmployeeForm() {
     schema: addEmployeeValidationSchema,
   });
   // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (employee) {
       setFormValue('name', employee.firstName ?? '');
       setFormValue('email', employee.email ?? '');
