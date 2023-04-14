@@ -4,6 +4,6 @@
     "outDir": "dist",
     "jsx": "react"
   },
-  "include": ["."],
+  "include": [".", "table/react-table-config.d.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }
