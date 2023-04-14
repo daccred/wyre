@@ -1,14 +1,12 @@
 {
-  "name": "@wyrecc/db",
   "private": true,
+  "name": "@wyrecc/db",
   "version": "0.1.0",
   "license": "MIT",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**",
-    "prisma",
-    "package.json"
+    "prisma"
   ],
   "scripts": {
     "prebuild": "yarn db:generate",
@@ -17,20 +15,20 @@
     "db:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name",
+    "db:push": "prisma db push",
     "db:reset": "run-s db:nuke db:setup",
     "db:seed": "prisma db seed",
     "db:setup": "run-s db:up db:deploy db:seed",
     "db:studio": "prisma studio",
     "db:sync": "prisma migrate dev",
-    "db:push": "prisma db push",
     "predev": "yarn db:generate && yarn db:sync",
     "dev": "tsc --watch",
     "dx": "yarn db:setup",
     "format": "prisma format",
-    "generate": "prisma generate",
     "lint:es": "TIMING=1 eslint \"src/**/*.ts\"",
     "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@prisma/client": "^4.11.0",
     "prisma-zod-generator": "^0.8.11"

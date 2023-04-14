@@ -2,23 +2,29 @@
   "name": "@wyrecc/shared",
   "version": "0.1.0",
   "description": "shared utils, functions and code for wyre api, workers and web client",
+  "license": "MIT",
   "author": "Andrew Miracle <me@andrewmiracle.com>",
   "homepage": "https://wyre.cc",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tecmie/wyre.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tecmie/wyre/issues"
+  },
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
-    "dist/**",
-    "package.json"
+    "dist/**"
   ],
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
-    "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
+    "dev": "tsc --watch",
     "lint:es": "eslint --fix",
+    "lint:ts": "tsc --pretty --noEmit",
     "test": "node ./__tests__/@wyrecc/shared.test.js"
   },
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@types/json-schema": "^7.0.11",
     "@wyrecc/config": "^0.1.0",
@@ -26,12 +32,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tecmie/wyre.git"
-  },
-  "bugs": {
-    "url": "https://github.com/tecmie/wyre/issues"
   }
 }

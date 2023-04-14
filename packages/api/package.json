@@ -1,10 +1,9 @@
 {
+  "private": true,
   "name": "@wyrecc/api",
   "version": "0.1.0",
-  "private": true,
   "license": "MIT",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
   ],
@@ -16,6 +15,7 @@
     "lint:es": "eslint --fix",
     "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@trpc/server": "^10.9.0",
     "@wyrecc/config": "^0.1.0",

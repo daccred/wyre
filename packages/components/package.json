@@ -4,14 +4,13 @@
   "description": "shared ui components for wyre",
   "license": "MIT",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "directories": {
     "dist": "dist",
     "test": "__tests__"
   },
-  "files": [
-    "dist",
-    "package.json"
-  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf node_modules dist",
@@ -20,6 +19,12 @@
     "lint:ts": "tsc --pretty --noEmit"
   },
   "types": "./index.tsx",
+  "dependencies": {
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.39.1",
+    "react-icons": "^4.6.0",
+    "react-table": "^7.8.0"
+  },
   "devDependencies": {
     "@chakra-ui/react": "^2.3.7",
     "@hookform/resolvers": "^3.0.0",
@@ -27,11 +32,5 @@
     "@types/react-dom": "^18.0.7",
     "@wyrecc/config": "^0.1.0",
     "@wyrecc/dialog": "^0.1.0"
-  },
-  "dependencies": {
-    "react-dropzone": "^14.2.3",
-    "react-hook-form": "^7.39.1",
-    "react-icons": "^4.6.0",
-    "react-table": "^7.8.0"
   }
 }
