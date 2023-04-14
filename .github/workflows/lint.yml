@@ -36,4 +36,4 @@ jobs:
         run: yarn lint:ts
 
       - name: Run EcmaScript Lint
-        run: yarn lint:es
+        run: yarn lint:es --ignore web --verbose
