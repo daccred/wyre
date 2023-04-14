@@ -1,10 +1,8 @@
-import { prisma } from "@wyrecc/db";
-
-import { TRPCError } from "@trpc/server";
-
-import type { IUserSchema } from "../interfaces";
-import { hashString } from "../utils";
-import { ServerError } from "../utils/server-error";
+import { prisma } from '@wyrecc/db';
+import { TRPCError } from '@trpc/server';
+import type { IUserSchema } from '../interfaces';
+import { hashString } from '../utils';
+import { ServerError } from '../utils/server-error';
 
 export const i = { send_json: true, send_form: false };
 
@@ -20,8 +18,8 @@ export class UserService {
 
       if (emailExists) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Email already exists",
+          code: 'BAD_REQUEST',
+          message: 'Email already exists',
         });
       }
 
@@ -36,7 +34,7 @@ export class UserService {
           email: input.email,
           password: await hashString(input.password),
           jobRole: input.jobRole,
-          type: "USER",
+          type: 'USER',
           phone: input.phone,
           verification: {
             create: {
@@ -64,8 +62,8 @@ export class UserService {
         return getUser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
+        code: 'NOT_FOUND',
+        message: 'User not found',
       });
     } catch (error) {
       throw new Error(error as string);
@@ -77,8 +75,8 @@ export class UserService {
       const users = await prisma.user.findMany({});
       if (!users) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Users not found",
+          code: 'NOT_FOUND',
+          message: 'Users not found',
         });
       }
 
@@ -103,8 +101,8 @@ export class UserService {
         return updateUser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
+        code: 'NOT_FOUND',
+        message: 'User not found',
       });
     } catch (error) {
       ServerError(error);
@@ -122,8 +120,8 @@ export class UserService {
         return deleteUser;
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
+        code: 'NOT_FOUND',
+        message: 'User not found',
       });
     } catch (error) {
       ServerError(error);

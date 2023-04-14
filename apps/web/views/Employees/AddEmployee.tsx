@@ -9,24 +9,23 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import z from "zod";
-
-import { FormInput, useForm } from "../../components/forms";
-import { trpc } from "../../utils/trpc";
-import { PeopleIcon } from "./ProviderIcons";
+} from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import z from 'zod';
+import { FormInput, useForm, FormNativeSelect } from '../../components/forms';
+import { trpc } from '../../utils/trpc';
+import { PeopleIcon } from './ProviderIcons';
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
+  name: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: "Required" }),
-  jobRole: z.string().min(1, { message: "Required" }),
-  grossSalary: z.string().min(1, { message: "Required" }),
-  signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.enum(["CONTRACTOR", "EMPLOYEE"]).default("EMPLOYEE"),
-  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+  department: z.string().min(1, { message: 'Required' }),
+  jobRole: z.string().min(1, { message: 'Required' }),
+  grossSalary: z.string().min(1, { message: 'Required' }),
+  signingBonus: z.string().min(1, { message: 'Required' }),
+  category: z.enum(['CONTRACTOR', 'EMPLOYEE']).default('EMPLOYEE'),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
 });
 
 type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
@@ -44,27 +43,13 @@ export default function AddEmployee({
 }: addEmployeeTypes) {
   const toast = useToast();
 
-  const { mutate: addEmployee, isLoading } = trpc.team.createPersonnel.useMutation({
-    onSuccess() {
-      // Reset the form data to empty values
-
-      openAddEmployeeSuccessModal();
-      closeAddEmployeeModal();
-    },
-    onError(error: any) {
-      toast({
-        status: "error",
-        description: `${error}`,
-        isClosable: true,
-        duration: 5000,
-        position: "top-right",
-      });
-      console.log("Error creating employee:", error);
-    },
-  });
+  const abortController = new AbortController();
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
+    setTimeout(() => {
+      abortController.abort();
+    }, 5000); // set timeout for 2 seconds
 
     addEmployee({
       name: data.name,
@@ -74,14 +59,33 @@ export default function AddEmployee({
       salary: data.grossSalary,
       signBonus: data.signingBonus,
       status: true,
-      category: "EMPLOYEE",
+      category: 'EMPLOYEE',
       payrollMethod: data.payrollMethod,
     });
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, resetForm } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
     schema: addEmployeeValidationSchema,
+  });
+
+  const { mutate: addEmployee, isLoading } = trpc.team.createPersonnel.useMutation({
+    meta: { signal: abortController.signal },
+    onSuccess() {
+      // Reset the form data to empty values
+      resetForm();
+      openAddEmployeeSuccessModal();
+      closeAddEmployeeModal();
+    },
+    onError(error: any) {
+      toast({
+        status: 'error',
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: 'top-right',
+      });
+    },
   });
 
   return (
@@ -120,6 +124,16 @@ export default function AddEmployee({
                   <FormInput name="grossSalary" label="Gross Salary" placeholder="$0" />
 
                   <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
+                  <FormNativeSelect
+                    name="payrollMethod"
+                    label="Payroll Method"
+                    placeholder="Select Category"
+                    options={[
+                      { label: 'CRYPTO', value: 'CRYPTO' },
+                      { label: 'Bank', value: 'BANK' },
+                      { label: 'Mobile Money', value: 'MOBILEMONEY' },
+                    ]}
+                  />
                 </HStack>
               </Stack>
               <Text fontSize="sm">
@@ -135,9 +149,7 @@ export default function AddEmployee({
                 iconSpacing="3"
                 w="fit-content"
                 type="submit"
-                _hover={{ bg: "" }}
-                // spinner={<BeatLoader size={8} color='white' />}
-              >
+                _hover={{ bg: '' }}>
                 Add Employee
               </Button>
             </Stack>

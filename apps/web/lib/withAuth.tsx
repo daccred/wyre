@@ -1,6 +1,5 @@
-import type { GetServerSideProps, GetServerSidePropsResult } from "next";
-
-import { getServerAuthSession } from "@wyrecc/api";
+import type { GetServerSideProps, GetServerSidePropsResult } from 'next';
+import { getServerAuthSession } from '@wyrecc/api';
 
 export const withAuth = (getServerSidePropsFunc: GetServerSideProps) => {
   return async (context: any): Promise<GetServerSidePropsResult<any>> => {
@@ -9,7 +8,7 @@ export const withAuth = (getServerSidePropsFunc: GetServerSideProps) => {
     if (!session) {
       return {
         redirect: {
-          destination: "/login",
+          destination: '/login',
           permanent: false,
         },
       };

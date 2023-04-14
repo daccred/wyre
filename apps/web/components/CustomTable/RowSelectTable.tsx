@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
-import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { useMemo, useEffect, useRef, forwardRef } from "react";
-import { useTable, useRowSelect } from "react-table";
-import type { TableInstance } from "react-table";
+import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { useMemo, useEffect, useRef, forwardRef } from 'react';
+import { useTable, useRowSelect } from 'react-table';
+import type { TableInstance } from 'react-table';
 
 interface Props {
   columns: unknown[];
@@ -19,7 +19,7 @@ const IndeterminateCheckbox = forwardRef<HTMLInputElement, { indeterminate?: boo
     const resolvedRef = ref || defaultRef;
 
     useEffect(() => {
-      if (resolvedRef && "current" in resolvedRef && resolvedRef.current) {
+      if (resolvedRef && 'current' in resolvedRef && resolvedRef.current) {
         resolvedRef.current.indeterminate = indeterminate;
       }
     }, [resolvedRef, indeterminate]);
@@ -55,7 +55,7 @@ export default function RowSelectTable({
       hooks.visibleColumns.push((columns) => [
         ...columns,
         {
-          id: "selection",
+          id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
@@ -105,7 +105,7 @@ export default function RowSelectTable({
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <Th {...column.getHeaderProps()} borderTop="none" backgroundColor="transparent">
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </Th>
               ))}
             </Tr>
@@ -117,7 +117,7 @@ export default function RowSelectTable({
             return (
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
+                  return <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>;
                 })}
               </Tr>
             );

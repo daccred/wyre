@@ -13,6 +13,18 @@ const logger = winston.createLogger({
       return `[${label}:${level}] ${message} (${timestamp})`;
     })
   ),
+  /**
+   * @todo Add custom debug flag from .env to disable logging
+   * @example
+   * transports: [
+   * process.env.DEBUG ? {
+   *         new winston.transports.Console({
+   *           silent: true
+   *         }) : new winston.transports.Console({
+   *           silent: false
+   *         })
+   *      } ]
+   * */
   transports: [
     new winston.transports.Console({
       level: 'debug',

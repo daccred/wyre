@@ -8,12 +8,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
-} from "@chakra-ui/react";
-import React from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { z } from "zod";
-
-import { FormInput, useForm } from "../../../components/forms";
+} from '@chakra-ui/react';
+import React from 'react';
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import { z } from 'zod';
+import { FormInput, useForm } from '../../../components/forms';
 
 interface ISuspendPayrolle {
   closeSuspendPayrollModal: () => void;
@@ -56,7 +55,7 @@ const SuspendPayroll = ({ closeSuspendPayrollModal, suspendPayrolleModalIsOpen }
                 <FormInput type="date" name="date" label="Date" />
                 <FormInput type="time" name="time" label="Time" />
               </Stack>
-              <Button mt={4} bg="brand.700" color="white" iconSpacing="3" w="100%" _hover={{ hover: "none" }}>
+              <Button mt={4} bg="brand.700" color="white" iconSpacing="3" w="100%" _hover={{ hover: 'none' }}>
                 Schedule Payment
               </Button>
             </Box>

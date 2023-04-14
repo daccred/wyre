@@ -1,12 +1,12 @@
-import type { FormControlProps } from "@chakra-ui/form-control";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import type { ComponentWithAs, IconProps } from "@chakra-ui/react";
-import { FormErrorMessage, Icon, InputLeftElement } from "@chakra-ui/react";
-import * as React from "react";
-import type { PropsWithoutRef, ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
-import { useFormContext } from "react-hook-form";
+import type { FormControlProps } from '@chakra-ui/form-control';
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
+import type { ComponentWithAs, IconProps } from '@chakra-ui/react';
+import { FormErrorMessage, Icon, InputLeftElement } from '@chakra-ui/react';
+import * as React from 'react';
+import type { PropsWithoutRef, ComponentPropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
   /** Field name. */
@@ -14,10 +14,10 @@ export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof I
   /** Field label. */
   label?: string;
   outerProps?: PropsWithoutRef<FormControlProps>;
-  labelProps?: ComponentPropsWithoutRef<"label">;
+  labelProps?: ComponentPropsWithoutRef<'label'>;
   leftElement?: boolean;
   rightElement?: boolean;
-  icon?: ComponentWithAs<"svg", IconProps>;
+  icon?: ComponentWithAs<'svg', IconProps>;
   props?: ComponentPropsWithoutRef<typeof Input>;
 }
 
@@ -49,9 +49,9 @@ export const FormDateInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>
             bg="#F7F7F7"
             rounded="md"
             color="#210D35"
-            _placeholder={{ fontSize: "sm" }}
-            _hover={{ borderColor: "primary" }}
-            _focus={{ borderColor: "primary" }}
+            _placeholder={{ fontSize: 'sm' }}
+            _hover={{ borderColor: 'primary' }}
+            _focus={{ borderColor: 'primary' }}
             isDisabled={isSubmitting}
             type="datetime-local"
             {...register(name, {
@@ -73,6 +73,6 @@ export const FormDateInput = forwardRef<HTMLInputElement, LabeledTextFieldProps>
   }
 );
 
-FormDateInput.displayName = "FormDateInput";
+FormDateInput.displayName = 'FormDateInput';
 
 export default FormDateInput;

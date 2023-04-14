@@ -1,8 +1,7 @@
-import { Box, CircularProgress, CircularProgressLabel, Flex, Heading, Text, VStack } from "@chakra-ui/react";
-import { useRef } from "react";
-import z from "zod";
-
-import useHover from "../../../../../packages/components/hooks/use-hover";
+import { Box, CircularProgress, CircularProgressLabel, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import { useRef } from 'react';
+import z from 'zod';
+import useHover from '../../../../../packages/components/hooks/use-hover';
 
 export const Card = ({
   heading,
@@ -34,22 +33,22 @@ export const Card = ({
 
   return (
     <Flex
-      bg={bg || "white"}
+      bg={bg || 'white'}
       justify="space-between"
       align="center"
       p={padding || 3}
       rounded="xl"
-      border={border || "1px solid #D2D2D2"}
+      border={border || '1px solid #D2D2D2'}
       width="full"
       _hover={{ bg: hoverBg, color: hoverColor }}
       cursor="pointer"
       onClick={onClick}
       ref={ref}>
       <VStack align="left" spacing={0.5}>
-        <Heading as="h4" size="xs" fontSize={headingFontSize || "xl"}>
+        <Heading as="h4" size="xs" fontSize={headingFontSize || 'xl'}>
           {heading}
         </Heading>
-        <Text color={isHovered ? hoverColor : "lightgrey"} fontSize={textFontSize || "md"}>
+        <Text color={isHovered ? hoverColor : 'lightgrey'} fontSize={textFontSize || 'md'}>
           {text}
         </Text>
       </VStack>
@@ -73,7 +72,7 @@ export const PayrollTypeCard = ({
     <Flex justify="space-between">
       <Text fontWeight={700}>{type}</Text>
       <Text color="dirtywhite" fontSize="xs">
-        {date}{" "}
+        {date}{' '}
       </Text>
     </Flex>
     <Box>
@@ -114,20 +113,20 @@ export const SalaryProgress = ({
 );
 
 const cycleEnum = z
-  .enum(["daily", "bi-weekly", "monthly"])
-  .refine((value) => value != null, { message: "Cycle is required" });
+  .enum(['daily', 'bi-weekly', 'monthly'])
+  .refine((value) => value != null, { message: 'Cycle is required' });
 const currencyEnum = z
-  .enum(["USD", "GHS", "NGN", "GBP", "EUR", "KES", "RWF", "UGX", "TZS", "ZMW", "ZAR"])
-  .refine((value) => value !== undefined, { message: "Currency is required" });
+  .enum(['USD', 'GHS', 'NGN', 'GBP', 'EUR', 'KES', 'RWF', 'UGX', 'TZS', 'ZMW', 'ZAR'])
+  .refine((value) => value !== undefined, { message: 'Currency is required' });
 
 export const createPayrollValidationSchema = z.object({
-  title: z.string().nonempty("Title is required"),
+  title: z.string().nonempty('Title is required'),
   cycle: cycleEnum,
   auto: z.boolean().refine((value) => value !== undefined && value !== null, {
-    message: "Auto is required",
+    message: 'Auto is required',
   }),
   payday: z.date().refine((value) => value !== null && !isNaN(value.getTime()), {
-    message: "Payday is required",
+    message: 'Payday is required',
   }),
   currency: currencyEnum,
   burden: z.number().optional(),

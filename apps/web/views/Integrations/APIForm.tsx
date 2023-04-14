@@ -1,10 +1,9 @@
-import { Button, Stack, Text, Flex, useToast, HStack, Circle } from "@chakra-ui/react";
-import { useState } from "react";
-import z from "zod";
-
-import styledToast from "../../components/core/StyledToast";
-import { FormInput, useForm } from "../../components/forms";
-import { MonoIcon } from "./ProviderIcons";
+import { Button, Stack, Text, Flex, useToast, HStack, Circle } from '@chakra-ui/react';
+import { useState } from 'react';
+import z from 'zod';
+import styledToast from '../../components/core/StyledToast';
+import { FormInput, useForm } from '../../components/forms';
+import { MonoIcon } from './ProviderIcons';
 
 const apiFormValidationSchema = z.object({});
 
@@ -20,7 +19,7 @@ const EditedFormInput = ({ name, type }: { name: string; type?: string }) => {
       borderRadius={0}
       px="0"
       py="1"
-      style={{ height: "28px" }}
+      style={{ height: '28px' }}
       bg="transparent"
       fontSize="sm"
       type={type}
@@ -32,10 +31,9 @@ export default function APIForm() {
   const toast = useToast();
 
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
     styledToast({
-      status: "success",
-      description: !connected ? "API connected successfully" : "API disconnected successfully",
+      status: 'success',
+      description: !connected ? 'API connected successfully' : 'API disconnected successfully',
       toast: toast,
     });
     setConnected(!connected);
@@ -69,8 +67,8 @@ export default function APIForm() {
         <Stack textAlign="right" spacing="0">
           <Text>Status</Text>
           <HStack>
-            <Circle size="2" bg={connected ? "#0AAF60" : "#E71D36"} />
-            <Text color="bordergrey">{connected ? "Connected" : "Disconnected"}</Text>
+            <Circle size="2" bg={connected ? '#0AAF60' : '#E71D36'} />
+            <Text color="bordergrey">{connected ? 'Connected' : 'Disconnected'}</Text>
           </HStack>
         </Stack>
       </HStack>
@@ -96,9 +94,9 @@ export default function APIForm() {
               mt="10"
               py="15px"
               type="submit"
-              bg={connected ? "rgba(33, 13, 53, 0.15)" : "brand.700"}
-              color={connected ? "brand.700" : "white"}>
-              {!connected ? "Connect" : "Disconnect"}
+              bg={connected ? 'rgba(33, 13, 53, 0.15)' : 'brand.700'}
+              color={connected ? 'brand.700' : 'white'}>
+              {!connected ? 'Connect' : 'Disconnect'}
             </Button>
           </Stack>
         </Stack>

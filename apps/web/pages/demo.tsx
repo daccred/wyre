@@ -1,17 +1,16 @@
-import { Button, Stack, useColorModeValue } from "@chakra-ui/react";
-import { useColorMode, IconButton } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
-import Head from "next/head";
-import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { FaSun, FaMoon } from "react-icons/fa";
-
-import { FormInput, FormUpload, FormNativeSelect, FormSelect } from "../components/forms";
-import * as Layout from "../layouts";
+import { Button, Stack, useColorModeValue } from '@chakra-ui/react';
+import { useColorMode, IconButton } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
+import Head from 'next/head';
+import React from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { FaSun, FaMoon } from 'react-icons/fa';
+import { FormInput, FormUpload, FormNativeSelect, FormSelect } from '../components/forms';
+import * as Layout from '../layouts';
 
 export const DarkModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const isDark = colorMode === "dark";
+  const isDark = colorMode === 'dark';
   return (
     <IconButton
       position="fixed"
@@ -65,37 +64,37 @@ export default function Page() {
                 label="Select country"
                 name="country"
                 options={[
-                  { value: "gh", label: "Ghana" },
-                  { value: "ng", label: "Nigeria" },
+                  { value: 'gh', label: 'Ghana' },
+                  { value: 'ng', label: 'Nigeria' },
                 ]}
               />
               <FormNativeSelect
                 label="Select country"
                 name="country"
                 options={[
-                  { value: "gh", label: "Ghana" },
-                  { value: "ng", label: "Nigeria" },
+                  { value: 'gh', label: 'Ghana' },
+                  { value: 'ng', label: 'Nigeria' },
                 ]}
               />
               <FormNativeSelect
                 label="Select state"
                 name="countryState"
                 options={[
-                  { value: "acc", label: "Accra" },
-                  { value: "abu", label: "Abuja" },
+                  { value: 'acc', label: 'Accra' },
+                  { value: 'abu', label: 'Abuja' },
                 ]}
               />
               <FormInput
                 name="address"
                 label="Residential address"
                 placeholder="Enter address ..."
-                labelProps={{ color: useColorModeValue("black", "white") }}
-              />{" "}
+                labelProps={{ color: useColorModeValue('black', 'white') }}
+              />{' '}
               <FormInput
                 name="polygonWallet"
                 label="Polygon wallet address"
                 placeholder="Enter wallet address ..."
-                labelProps={{ color: useColorModeValue("black", "white") }}
+                labelProps={{ color: useColorModeValue('black', 'white') }}
               />
               <Button rounded="3xl" type="submit" fontWeight="bold">
                 Submit

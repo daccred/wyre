@@ -1,8 +1,7 @@
-import { z } from "zod";
-
-import { payrollSchema } from "../interfaces";
-import { PayrollService } from "../services";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { z } from 'zod';
+import { payrollSchema } from '../interfaces';
+import { PayrollService } from '../services';
+import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 export const payrollRouter = createTRPCRouter({
   //* *  Mutations *//
@@ -27,6 +26,13 @@ export const payrollRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const removeContractor = await PayrollService.removeEmployee(input.payrollId, input.contractorId);
       return removeContractor;
+    }),
+
+  authorizePayroll: protectedProcedure
+    .input(z.object({ id: z.string().nonempty() }))
+    .mutation(async ({ input }) => {
+      const message = await PayrollService.processPayRoll(input.id);
+      return message;
     }),
 
   //* *  Mutations *//

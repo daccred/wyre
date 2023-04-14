@@ -1,7 +1,6 @@
-import { type GetServerSidePropsContext } from "next";
-import { getServerSession } from "next-auth";
-
-import { nextAuthOptions } from "../auth";
+import { type GetServerSidePropsContext } from 'next';
+import { getServerSession } from 'next-auth';
+import { nextAuthOptions } from '../auth';
 
 // import { authOptions } from "../../pages/api/auth/[...nextauth]";
 // import { Button } from "web/pages/index";
@@ -11,8 +10,8 @@ import { nextAuthOptions } from "../auth";
  * See example usage in trpc createContext or the restricted API route
  */
 export const getServerAuthSession = async (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
+  req: GetServerSidePropsContext['req'];
+  res: GetServerSidePropsContext['res'];
 }) => {
   return await getServerSession(ctx.req, ctx.res, nextAuthOptions);
 };

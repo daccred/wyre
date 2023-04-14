@@ -1,5 +1,6 @@
-import { Checkbox } from "@chakra-ui/react";
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Checkbox } from '@chakra-ui/react';
+import React from 'react';
 
 type TableCheckboxProps = {
   checked: any;

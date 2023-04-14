@@ -1,1 +1,1 @@
-export * from "./get-server-side-auth-session";
+export * from './get-server-side-auth-session';

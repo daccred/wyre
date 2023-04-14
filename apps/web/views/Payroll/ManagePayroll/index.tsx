@@ -8,19 +8,18 @@ import {
   Spinner,
   Stack,
   Text,
-} from "@chakra-ui/react";
-import type { Payroll } from "@prisma/client";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { FiChevronRight } from "react-icons/fi";
-import type { Column } from "react-table";
-import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
-
-import { CustomTable } from "../../../components/CustomTable";
-import ViewLayout from "../../../components/core/ViewLayout";
-import { trpc } from "../../../utils/trpc";
-import { managePayrollPath } from "../routes";
-import { managePayrollColumns } from "../utils/tableColumns";
+} from '@chakra-ui/react';
+import type { Payroll } from '@prisma/client';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { FiChevronRight } from 'react-icons/fi';
+import type { Column } from 'react-table';
+import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
+import { CustomTable } from '../../../components/CustomTable';
+import ViewLayout from '../../../components/core/ViewLayout';
+import { trpc } from '../../../utils/trpc';
+import { managePayrollPath } from '../routes';
+import { managePayrollColumns } from '../utils/tableColumns';
 
 const View = () => {
   const { pathname } = useRouter();
@@ -31,17 +30,17 @@ const View = () => {
   const columns = [
     ...managePayrollColumns,
     {
-      Header: "Action",
+      Header: 'Action',
       accessor: (row: any) => (
         <Button
           bg="brand.700"
           color="white"
           iconSpacing="3"
           w="fit-content"
-          _hover={{ hover: "none" }}
+          _hover={{ hover: 'none' }}
           onClick={() =>
             router.push({
-              pathname: "/payroll/manage-payroll/monthly-employee-salary",
+              pathname: '/payroll/manage-payroll/monthly-employee-salary',
               query: { id: row?.id },
             })
           }>
@@ -75,7 +74,7 @@ const View = () => {
         <BreadcrumbItem>
           <BreadcrumbLink
             href={managePayrollPath}
-            color={pathname === managePayrollPath ? "black" : "lightgrey"}
+            color={pathname === managePayrollPath ? 'black' : 'lightgrey'}
             isCurrentPage={true}>
             Manage Payroll
           </BreadcrumbLink>

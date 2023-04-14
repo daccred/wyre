@@ -1,15 +1,15 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const teamSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   department: z.string(),
   jobRole: z.string(),
-  category: z.enum(["CONTRACTOR", "EMPLOYEE"]),
+  category: z.enum(['CONTRACTOR', 'EMPLOYEE']),
   salary: z.string(),
   signBonus: z.string(),
   status: z.boolean().default(true),
-  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
   mobileMoney: z
     .object({
       provider: z.string(),
@@ -36,10 +36,14 @@ export const teamSchema = z.object({
       currency: z.string(),
       address: z.string(),
       network: z.string(),
-      allocation: z.string(),
+      allocation: z.number(),
       personnelId: z.string(),
     })
     .optional(),
 });
 
+// create optional team schema based on the teamSchema
+export const updateTeamSchema = teamSchema.partial();
+
+export type IUpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export type ITeamSchema = z.infer<typeof teamSchema>;

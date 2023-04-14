@@ -1,6 +1,3 @@
-import * as dotenv from "dotenv";
-
-dotenv.config();
-
-export * from "./server";
-export { env as clientEnv } from "./client";
+export { env } from './server';
+export { env as clientOnlyENV } from './client';
+export { env as workerEnv } from './worker';

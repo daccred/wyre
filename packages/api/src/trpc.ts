@@ -16,10 +16,9 @@
  * processing a request
  *
  */
-import { type Session } from "next-auth";
-import superjson from "superjson";
-import { ZodError } from "zod";
-
+import { type Session } from 'next-auth';
+import superjson from 'superjson';
+import { ZodError } from 'zod';
 // import { prisma } from "@wyrecc/db";
 
 /**
@@ -29,10 +28,9 @@ import { ZodError } from "zod";
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-import { TRPCError, initTRPC } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-
-import { getServerAuthSession } from "./common/get-server-side-auth-session";
+import { TRPCError, initTRPC } from '@trpc/server';
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+import { getServerAuthSession } from './common/get-server-side-auth-session';
 
 type CreateContextOptions = {
   session: Session | null;
@@ -111,7 +109,7 @@ export const publicProcedure = t.procedure;
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
   return next({
     ctx: {

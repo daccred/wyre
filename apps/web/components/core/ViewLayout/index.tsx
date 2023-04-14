@@ -11,15 +11,14 @@ import {
   Button,
   Image,
   Center,
-} from "@chakra-ui/react";
-import type { ComponentWithAs, IconProps, FlexProps } from "@chakra-ui/react";
-import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
-import type { ReactNode } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-
+} from '@chakra-ui/react';
+import type { ComponentWithAs, IconProps, FlexProps } from '@chakra-ui/react';
+import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
+import type { ReactNode } from 'react';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import {
   BellIcon,
   ContractorsIcon,
@@ -27,46 +26,53 @@ import {
   EmployeesIcon,
   IntegrationsIcon,
   LogoutIcon,
-  PayrollIcon,
-  PeopleIcon,
+  PayrollIcon, // PeopleIcon,
   ExpensesIcon,
-} from "./ProviderIcons";
-import SidebarAccordion from "./SidebarAccordion";
+} from './ProviderIcons';
+
+// import SidebarAccordion from './SidebarAccordion';
 
 interface LinkItemProps {
   name: string;
-  icon: ComponentWithAs<"svg", IconProps>;
+  icon: ComponentWithAs<'svg', IconProps>;
   href: string;
 }
 
-interface LinkAccordionProps {
-  name: string;
-  icon: ComponentWithAs<"svg", IconProps>;
-  href: string;
-  panels?: LinkAccordionProps[];
-}
+// interface LinkAccordionProps {
+//   name: string;
+//   icon: ComponentWithAs<'svg', IconProps>;
+//   href: string;
+//   panels?: LinkAccordionProps[];
+// }
 const DashboardLinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", href: "/dashboard", icon: DashboardIcon },
+  { name: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
 ];
-const PayrollLinkItems: Array<LinkItemProps> = [{ name: "Payroll", href: "/payroll", icon: PayrollIcon }];
+const PayrollLinkItems: Array<LinkItemProps> = [{ name: 'Payroll', href: '/payroll', icon: PayrollIcon }];
 
-const PeopleAccordion: LinkAccordionProps = {
-  name: "People",
-  href: "#",
-  icon: PeopleIcon,
-  panels: [
-    { name: "Employees", href: "/employees", icon: EmployeesIcon },
-    { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
-  ],
-};
+// const PeopleAccordion: LinkAccordionProps = {
+//   name: 'People',
+//   href: '#',
+//   icon: PeopleIcon,
+//   panels: [
+//     { name: 'Employees', href: '/employees', icon: EmployeesIcon },
+//     { name: 'Contractors', href: '/contractors', icon: ContractorsIcon },
+//   ],
+// };
+
 // const PeopleLinkItems: Array<LinkItemProps> = [
 //   { name: "People", href: "", icon: PeopleIcon },
 //   { name: "Employees", href: "/employees", icon: EmployeesIcon },
 //   { name: "Contractors", href: "/contractors", icon: ContractorsIcon },
 // ];
-const ExpensesLinkItems: Array<LinkItemProps> = [{ name: "Expenses", href: "/expenses", icon: ExpensesIcon }];
+
+const PeopleAccordion: Array<LinkItemProps> = [
+  { name: 'Employees', href: '/employees', icon: EmployeesIcon },
+  { name: 'Contractors', href: '/contractors', icon: ContractorsIcon },
+];
+
+const ExpensesLinkItems: Array<LinkItemProps> = [{ name: 'Expenses', href: '/expenses', icon: ExpensesIcon }];
 const DevLinkItems: Array<LinkItemProps> = [
-  { name: "Integrations", href: "/integrations", icon: IntegrationsIcon },
+  { name: 'Integrations', href: '/integrations', icon: IntegrationsIcon },
 ];
 
 export default function ViewLayout({ children, title }: { children: ReactNode; title?: string }) {
@@ -88,18 +94,17 @@ const SidebarContent = ({ ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
-      borderRightColor={useColorModeValue("bordergrey", "gray.700")}
+      borderRightColor={useColorModeValue('bordergrey', 'gray.700')}
       w={60}
       pos="fixed"
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="Vtart">
-        <Image src="/Zayroll Logo.png" alt="" w={90} />
-        {/* <Text fontWeight={"semibold"} fontSize="xl" ml="2">
-          Wyre
-        </Text> */}
+        <Link href="/">
+          <Image src="/Zayroll Logo.png" alt="wyre" w={90} />
+        </Link>
       </Flex>
       <VStack mt="16">
         {DashboardLinkItems.map((link) => (
@@ -118,7 +123,7 @@ const SidebarContent = ({ ...rest }) => {
         ))}
 
         {/* Using an accordion for drop down nav */}
-        <SidebarAccordion menu={PeopleAccordion} />
+        {/* <SidebarAccordion menu={PeopleAccordion} /> */}
         {/* Using an accordion for drop down nav */}
 
         {/* {PeopleLinkItems.map(
@@ -142,6 +147,11 @@ const SidebarContent = ({ ...rest }) => {
               </NavItem>
             )
         )} */}
+        {PeopleAccordion.map((link) => (
+          <NavItem key={link.name} icon={link.icon} href={link.href}>
+            {link.name}
+          </NavItem>
+        ))}
         {ExpensesLinkItems.map((link) => (
           <NavItem key={link.name} icon={link.icon} href={link.href}>
             {link.name}
@@ -169,8 +179,12 @@ const SidebarContent = ({ ...rest }) => {
         bottom="0"
         justifyContent="start">
         <Icon mr="2" fontSize="24" as={LogoutIcon} />
-
-        <Button color="#E71D36" fontWeight="semibold" onClick={() => signOut()}>
+        <Button
+          colorScheme="red"
+          variant="outline"
+          color="red.600"
+          fontWeight="semibold"
+          onClick={() => signOut()}>
           Logout
         </Button>
       </HStack>
@@ -179,7 +193,7 @@ const SidebarContent = ({ ...rest }) => {
 };
 
 interface NavItemProps extends FlexProps {
-  icon: ComponentWithAs<"svg", IconProps>;
+  icon: ComponentWithAs<'svg', IconProps>;
   children: ReactNode;
   href: string;
   linkName?: string;
@@ -196,7 +210,7 @@ const NavItem = ({
   ...rest
 }: NavItemProps) => {
   const router = useRouter();
-  const isActive = router.asPath === href ? true : router.pathname.startsWith(href) && href !== "";
+  const isActive = router.asPath === href ? true : router.pathname.startsWith(href) && href !== '';
 
   // useEffect(()=>{
   //   if (linkName==='People' && setPeopleMenuVisible){
@@ -205,7 +219,7 @@ const NavItem = ({
   // },[linkName])
 
   return (
-    <Link href={href} style={{ textDecoration: "none", width: "100%", padding: "0 16px" }}>
+    <Link href={href} style={{ textDecoration: 'none', width: '100%', padding: '0 16px' }}>
       <Flex
         align="center"
         px="4"
@@ -216,25 +230,26 @@ const NavItem = ({
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "blackAlpha.100",
-          // color: 'white',
+          opacity: 0.8,
+          transition: 'ease-in',
+          color: 'accent',
         }}
         {...rest}>
         {icon && (
           <Icon
             mr="4"
             fontSize="24"
-            fill={isActive ? "brand.600" : "boldgrey"}
+            fill={isActive ? 'brand.600' : 'boldgrey'}
             _groupHover={{
-              color: "white",
+              color: 'white',
             }}
             as={icon}
           />
         )}
-        <Text color={isActive ? "brand.600" : "boldgrey"} fontWeight="semibold">
+        <Text color={isActive ? 'brand.600' : 'boldgrey'} pt="0.5" fontWeight="semibold">
           {children}
         </Text>
-        {linkName === "People" && (
+        {linkName === 'People' && (
           <Box ml="4" fontSize="20px" color="boldgrey">
             {!peopleMenuVisible ? <FiChevronDown /> : <FiChevronUp />}
           </Box>
@@ -248,9 +263,10 @@ interface HeaderNavProps extends FlexProps {
   title?: string;
 }
 
-const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
+const HeaderNav = ({ title = 'Dashboard', ...rest }: HeaderNavProps) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
+  // console.log(sessionData);
 
   return (
     <Flex
@@ -258,9 +274,9 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
       px={{ base: 4, md: 8 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("bordergrey", "gray.700")}
+      borderBottomColor={useColorModeValue('bordergrey', 'gray.700')}
       justifyContent="space-between"
       {...rest}>
       <Text display="flex" fontSize="2xl" fontWeight="medium">
@@ -306,15 +322,15 @@ const HeaderNav = ({ title = "Dashboard", ...rest }: HeaderNavProps) => {
             px={2}
             spacing={4}
             transition="all 0.3s"
-            _focus={{ boxShadow: "none" }}
-            onClick={() => router.push("/profile")}>
+            _focus={{ boxShadow: 'none' }}
+            onClick={() => router.push('/profile')}>
             <Avatar size="sm" src="" name={sessionData?.user?.name as string} />
             <VStack display="flex" alignItems="flex-start" spacing="1px" pr="4">
               <Text fontSize="sm" fontWeight="bold">
                 {sessionData?.user?.name}
               </Text>
               <Text fontSize="xs" fontWeight="medium" color="boldgrey">
-                Chief People Officer
+                {sessionData?.user?.role}
               </Text>
             </VStack>
           </HStack>

@@ -1,7 +1,6 @@
-import { HStack, Stack, Text } from "@chakra-ui/react";
-import React from "react";
-
-import ViewLayout from "../../components/core/ViewLayout";
+import { HStack, Stack, Text } from '@chakra-ui/react';
+import React from 'react';
+import ViewLayout from '../../components/core/ViewLayout';
 
 type Props = {};
 

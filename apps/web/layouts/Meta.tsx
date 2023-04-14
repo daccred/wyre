@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Head from "next/head";
-import { useRouter } from "next/router";
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-const SITE_URL = "http://localhost:3000";
+const SITE_URL = 'http://localhost:3000';
 export type OpenGraphType = {
   siteName: string;
   description: string;
@@ -11,8 +11,8 @@ export type OpenGraphType = {
 };
 
 export interface SchemaOrgJLD {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   url?: string;
   name?: string;
   alternateName?: string;
@@ -20,19 +20,19 @@ export interface SchemaOrgJLD {
   itemListElement?: any;
   description?: string;
   image?: {
-    "@type": "ImageObject";
+    '@type': 'ImageObject';
     url: string;
   };
 }
 
 const defaultMeta = {
-  title: "WYRE",
-  siteName: "Make money by predicting outcomes on the bbnaija show",
-  description: "Earn your first NFT and make money by predicting outcomes on the bbnaija show. its easy!",
+  title: 'WYRE',
+  siteName: 'Make money by predicting outcomes on the bbnaija show',
+  description: 'Earn your first NFT and make money by predicting outcomes on the bbnaija show. its easy!',
   url: `${SITE_URL}`,
   image: `https://bbnpolls.xyz/images/Webclip.png`,
-  type: "website",
-  robots: "follow, index",
+  type: 'website',
+  robots: 'follow, index',
 };
 
 type SeoProps = {
@@ -47,7 +47,7 @@ export default function Seo(props: SeoProps) {
     ...defaultMeta,
     ...props,
   };
-  meta["title"] = props.projectTitle ? `${props.projectTitle} | ${meta.siteName}` : meta.title;
+  meta['title'] = props.projectTitle ? `${props.projectTitle} | ${meta.siteName}` : meta.title;
 
   // Use siteName if there is projectTitle
   // but show full title if there is none
@@ -62,39 +62,39 @@ export default function Seo(props: SeoProps) {
   /* JSON Schema Specs */
   const schemaOrgJSONLD: SchemaOrgJLD[] = [
     {
-      "@context": "http://schema.org",
-      "@type": "WebSite",
+      '@context': 'http://schema.org',
+      '@type': 'WebSite',
       url: `${SITE_URL}`,
-      name: "WYRE",
-      alternateName: props.projectTitle ? props.title : "",
+      name: 'WYRE',
+      alternateName: props.projectTitle ? props.title : '',
     },
   ];
   if (props.isCredentialPage) {
     schemaOrgJSONLD.push(
       {
-        "@context": "http://schema.org",
-        "@type": "BreadcrumbList",
+        '@context': 'http://schema.org',
+        '@type': 'BreadcrumbList',
         itemListElement: [
           {
-            "@type": "ListItem",
+            '@type': 'ListItem',
             position: 1,
             item: {
-              "@id": `${SITE_URL}`,
-              name: "BBN Polls",
+              '@id': `${SITE_URL}`,
+              name: 'BBN Polls',
               image: props.image,
             },
           },
         ],
       },
       {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
+        '@context': 'http://schema.org',
+        '@type': 'BlogPosting',
         url: props.url,
         name: props.title,
-        alternateName: props.title ? props.projectTitle : "",
+        alternateName: props.title ? props.projectTitle : '',
         headline: props.title,
         image: {
-          "@type": "ImageObject",
+          '@type': 'ImageObject',
           url: props.image as string,
         },
         description: props.description,
@@ -173,76 +173,76 @@ type Favicons = {
 // then replace the whole /public/favicon folder
 const favicons: Array<Favicons> = [
   {
-    rel: "apple-touch-icon",
-    sizes: "57x57",
-    href: "/favicon/apple-icon-57x57.png",
+    rel: 'apple-touch-icon',
+    sizes: '57x57',
+    href: '/favicon/apple-icon-57x57.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "60x60",
-    href: "/favicon/apple-icon-60x60.png",
+    rel: 'apple-touch-icon',
+    sizes: '60x60',
+    href: '/favicon/apple-icon-60x60.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "72x72",
-    href: "/favicon/apple-icon-72x72.png",
+    rel: 'apple-touch-icon',
+    sizes: '72x72',
+    href: '/favicon/apple-icon-72x72.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "76x76",
-    href: "/favicon/apple-icon-76x76.png",
+    rel: 'apple-touch-icon',
+    sizes: '76x76',
+    href: '/favicon/apple-icon-76x76.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "114x114",
-    href: "/favicon/apple-icon-114x114.png",
+    rel: 'apple-touch-icon',
+    sizes: '114x114',
+    href: '/favicon/apple-icon-114x114.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "120x120",
-    href: "/favicon/apple-icon-120x120.png",
+    rel: 'apple-touch-icon',
+    sizes: '120x120',
+    href: '/favicon/apple-icon-120x120.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "144x144",
-    href: "/favicon/apple-icon-144x144.png",
+    rel: 'apple-touch-icon',
+    sizes: '144x144',
+    href: '/favicon/apple-icon-144x144.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "152x152",
-    href: "/favicon/apple-icon-152x152.png",
+    rel: 'apple-touch-icon',
+    sizes: '152x152',
+    href: '/favicon/apple-icon-152x152.png',
   },
   {
-    rel: "apple-touch-icon",
-    sizes: "180x180",
-    href: "/favicon/apple-icon-180x180.png",
+    rel: 'apple-touch-icon',
+    sizes: '180x180',
+    href: '/favicon/apple-icon-180x180.png',
   },
   {
-    rel: "icon",
-    type: "image/png",
-    sizes: "192x192",
-    href: "/favicon/android-icon-192x192.png",
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '192x192',
+    href: '/favicon/android-icon-192x192.png',
   },
   {
-    rel: "icon",
-    type: "image/png",
-    sizes: "32x32",
-    href: "/favicon/favicon-32x32.png",
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '32x32',
+    href: '/favicon/favicon-32x32.png',
   },
   {
-    rel: "icon",
-    type: "image/png",
-    sizes: "96x96",
-    href: "/favicon/favicon-96x96.png",
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '96x96',
+    href: '/favicon/favicon-96x96.png',
   },
   {
-    rel: "icon",
-    type: "image/png",
-    sizes: "16x16",
-    href: "/favicon/favicon-16x16.png",
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '16x16',
+    href: '/favicon/favicon-16x16.png',
   },
   {
-    rel: "manifest",
-    href: "/favicon/manifest.json",
+    rel: 'manifest',
+    href: '/favicon/manifest.json',
   },
 ];

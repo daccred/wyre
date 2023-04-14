@@ -1,8 +1,7 @@
-import { z } from "zod";
-
-import { expenseSchema } from "../interfaces";
-import { ExpenseService } from "../services";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { z } from 'zod';
+import { expenseSchema } from '../interfaces';
+import { ExpenseService } from '../services';
+import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 export const expenseRouter = createTRPCRouter({
   createExpense: protectedProcedure.input(expenseSchema).mutation(({ input }) => {

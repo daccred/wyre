@@ -8,17 +8,17 @@ import {
   Stack,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { FiChevronRight } from "react-icons/fi";
-import type { Column } from "react-table";
-import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
-
-import { CustomTable } from "../../../components/CustomTable";
-import ViewLayout from "../../../components/core/ViewLayout";
-import { expenses } from "../utils/dummyData";
-import { manageExpensesColumn } from "../utils/tableColumns";
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { FiChevronRight } from 'react-icons/fi';
+import type { Column } from 'react-table';
+import { trpc } from 'utils/trpc';
+import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
+import { manageExpensePath } from 'views/Payroll/routes';
+import { CustomTable } from '../../../components/CustomTable';
+import ViewLayout from '../../../components/core/ViewLayout';
+import { manageExpensesColumn } from '../utils/tableColumns';
 
 const View = () => {
   const {
@@ -37,8 +37,9 @@ const View = () => {
 
   const [tableData, setTableData] = useState<any[]>([]);
 
-  // TODO: Remove this after api integration
-  const isLoading = false;
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
+  const { data: expenses, isLoading, refetch } = trpc.expenses.getExpenses.useQuery();
 
   useEffect(() => {
     if (!expenses) {
@@ -46,7 +47,7 @@ const View = () => {
     }
 
     setTableData(expenses);
-  }, []);
+  }, [expenses]);
 
   return (
     <ViewLayout title="Expenses">
@@ -61,8 +62,8 @@ const View = () => {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink
-            href="/expenses/manage-expenses"
-            color={pathname === "/expenses/manage-expenses" ? "black" : "lightgrey"}
+            href={manageExpensePath}
+            color={pathname === manageExpensePath ? 'black' : 'lightgrey'}
             isCurrentPage={true}>
             Manage Expenses
           </BreadcrumbLink>
@@ -87,7 +88,10 @@ const View = () => {
                     closeViewImageModal,
                     manageExpenseModalIsOpen,
                     openManageExpenseModal,
-                    closeManageExpenseModal
+                    closeManageExpenseModal,
+                    selectedRowData,
+                    setSelectedRowData,
+                    refetch
                   ) as unknown as Column<any>[]
                 }
                 data={tableData}

@@ -1,9 +1,8 @@
-import type { GetServerSideProps } from "next";
-import React from "react";
-
-import { Meta } from "../../../layouts";
-import { withAuth } from "../../../lib/withAuth";
-import View from "../../../views/Payroll/ManagePayroll/MonthlyEmployeeSalary";
+import type { GetServerSideProps } from 'next';
+import React from 'react';
+import { Meta } from '../../../layouts';
+import { withAuth } from '../../../lib/withAuth';
+import View from '../../../views/Payroll/ManagePayroll/MonthlyEmployeeSalary';
 
 export default function Page() {
   return (

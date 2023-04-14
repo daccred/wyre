@@ -17,3 +17,4 @@ public
 packages/db/zod
 packages/*/dist
 packages/*/build
+packages/db/prisma/zod/schemas

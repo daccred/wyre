@@ -1,6 +1,5 @@
-import { type NextApiRequest, type NextApiResponse } from "next";
-
-import { prisma } from "@wyrecc/db";
+import { type NextApiRequest, type NextApiResponse } from 'next';
+import { prisma } from '@wyrecc/db';
 
 const examples = async (req: NextApiRequest, res: NextApiResponse) => {
   const result = await prisma.example.findMany();

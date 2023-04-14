@@ -1,16 +1,15 @@
-import { Box, Center, Grid, GridItem, Heading, Spinner, Stack, Text, useDisclosure } from "@chakra-ui/react";
-import { CustomTable } from "components/CustomTable";
-import ViewLayout from "components/core/ViewLayout";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import type { Column } from "react-table";
-import { EmptyEmployeeImage } from "views/Employees/ProviderIcons";
-import { Card } from "views/Payroll/utils/misc";
-
-import { LinkIcon, ManageExpensesIcon } from "./ProviderIcons";
-import GeneratePaymentLinkModal from "./modals/GeneratePaymentLinkModal";
-import { expenses } from "./utils/dummyData";
-import { expensesColumn } from "./utils/tableColumns";
+import { Box, Center, Grid, GridItem, Heading, Spinner, Stack, Text, useDisclosure } from '@chakra-ui/react';
+import { CustomTable } from 'components/CustomTable';
+import ViewLayout from 'components/core/ViewLayout';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import type { Column } from 'react-table';
+import { trpc } from 'utils/trpc';
+import { EmptyEmployeeImage } from 'views/Employees/ProviderIcons';
+import { Card } from 'views/Payroll/utils/misc';
+import { LinkIcon, ManageExpensesIcon } from './ProviderIcons';
+import GeneratePaymentLinkModal from './modals/GeneratePaymentLinkModal';
+import { expensesColumn } from './utils/tableColumns';
 
 const View = () => {
   const {
@@ -20,9 +19,9 @@ const View = () => {
   } = useDisclosure();
 
   const router = useRouter();
-  const isLoading = false;
-  // TODO: Remove this after api integration
   const [tableData, setTableData] = useState<any[]>([]);
+
+  const { data: expenses, isLoading } = trpc.expenses.getExpenses.useQuery();
 
   useEffect(() => {
     if (!expenses) {
@@ -30,7 +29,7 @@ const View = () => {
     }
 
     setTableData(expenses);
-  }, []);
+  }, [expenses]);
 
   return (
     <ViewLayout title="Expenses">
@@ -43,7 +42,7 @@ const View = () => {
               icon={<ManageExpensesIcon />}
               textFontSize="sm"
               padding={4}
-              onClick={() => router.push("/expenses/manage-expenses")}
+              onClick={() => router.push('/expenses/manage-expenses')}
             />
           </GridItem>
           <GridItem>

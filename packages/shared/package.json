@@ -1,0 +1,37 @@
+{
+  "name": "@wyrecc/shared",
+  "version": "0.1.0",
+  "description": "shared utils, functions and code for wyre api, workers and web client",
+  "author": "Andrew Miracle <me@andrewmiracle.com>",
+  "homepage": "https://wyre.cc",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint:ts": "tsc --pretty --noEmit",
+    "clean": "rimraf node_modules dist",
+    "lint:es": "eslint --fix",
+    "test": "node ./__tests__/@wyrecc/shared.test.js"
+  },
+  "devDependencies": {
+    "@types/json-schema": "^7.0.11",
+    "@wyrecc/config": "^0.1.0",
+    "@wyrecc/tsconfig": "^0.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tecmie/wyre.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tecmie/wyre/issues"
+  }
+}

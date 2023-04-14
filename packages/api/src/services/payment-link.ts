@@ -1,14 +1,11 @@
-import * as argon2 from "argon2";
-import { nanoid } from "nanoid";
-
-import { prisma } from "@wyrecc/db";
-import { getBaseUrl, sendEmail, paymentLinkEmail } from "@wyrecc/dialog";
-
-import { TRPCError } from "@trpc/server";
-
-import type { IPaymentLinkSchema, PrivateLinkAccess } from "../interfaces";
-import { generateFiveDigitCode, ServerError } from "../utils";
-import { EncryptionService } from "./encryption";
+import * as argon2 from 'argon2';
+import { nanoid } from 'nanoid';
+import { prisma } from '@wyrecc/db';
+import { getBaseUrl, sendEmail, paymentLinkEmail } from '@wyrecc/dialog';
+import { TRPCError } from '@trpc/server';
+import type { IPaymentLinkSchema, PrivateLinkAccess } from '../interfaces';
+import { generateFiveDigitCode, ServerError } from '../utils';
+import { EncryptionService } from './encryption';
 
 export class PaymentService {
   static async generateLink(employeeId: string) {
@@ -17,15 +14,15 @@ export class PaymentService {
         where: { id: employeeId },
       });
 
-      if (!employee) throw new TRPCError({ code: "NOT_FOUND", message: "Employee not found" });
+      if (!employee) throw new TRPCError({ code: 'NOT_FOUND', message: 'Employee not found' });
       const link = `${getBaseUrl()}/employees?email=${employee.email}`;
       const email = paymentLinkEmail({ link });
 
       const response = await sendEmail({
-        from: "admin@tecmie.com",
-        subject: "Make your payment request",
+        from: 'admin@tecmie.com',
+        subject: 'Make your payment request',
         to: employee.email,
-        textBody: "Email sent",
+        textBody: 'Email sent',
         htmlBody: email,
       });
 
@@ -39,13 +36,13 @@ export class PaymentService {
       const paymentLink = await prisma.paymentLink.findFirst({
         where: {
           id: paymentLinkId,
-          status: "ACTIVE",
+          status: 'ACTIVE',
         },
       });
       if (!paymentLink) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Payment link does not exist",
+          code: 'NOT_FOUND',
+          message: 'Payment link does not exist',
         });
       }
       return paymentLink;
@@ -59,7 +56,7 @@ export class PaymentService {
       const userPaymentLinks = prisma.paymentLink.findMany({ where: { userId } });
 
       if (!userPaymentLinks) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Payment links not found" });
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Payment links not found' });
       }
       return userPaymentLinks;
     } catch (error) {
@@ -76,7 +73,7 @@ export class PaymentService {
       // check if link is private
 
       switch (data.type) {
-        case "PRIVATE":
+        case 'PRIVATE':
           // generate and hash the five-digit-code
           code = generateFiveDigitCode();
           hashedPassword = await argon2.hash(code);
@@ -93,15 +90,15 @@ export class PaymentService {
 
           if (!createPaymentLink) {
             throw new TRPCError({
-              code: "INTERNAL_SERVER_ERROR",
-              message: "Failed to create payment link",
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Failed to create payment link',
             });
           }
           return {
             createPaymentLink,
             message: code,
           };
-        case "PUBLIC":
+        case 'PUBLIC':
           createPaymentLink = await prisma.paymentLink.create({
             data: {
               ...data,
@@ -110,8 +107,8 @@ export class PaymentService {
           });
           if (!createPaymentLink) {
             throw new TRPCError({
-              code: "INTERNAL_SERVER_ERROR",
-              message: "Failed to create payment link",
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Failed to create payment link',
             });
           }
           return createPaymentLink;
@@ -126,7 +123,7 @@ export class PaymentService {
       let code;
       let encrypted;
       // check if a link is private or is about to be changed to a private link
-      if (data.type && data.type === "PRIVATE") {
+      if (data.type && data.type === 'PRIVATE') {
         // generate the five digit code and hash before saving to the database
         code = generateFiveDigitCode();
         data.password = await argon2.hash(code as string);
@@ -134,9 +131,9 @@ export class PaymentService {
         data.encryptedPassword = encrypted;
       }
       // if the link is to be changed from a private link to a public link the password will be disabled
-      if (data.type == "PUBLIC") {
+      if (data.type == 'PUBLIC') {
         // hash the password
-        data.password = "";
+        data.password = '';
       }
       const updatePaymentLink = await prisma.paymentLink.update({
         where: {
@@ -151,8 +148,8 @@ export class PaymentService {
         };
       }
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Payment link not found",
+        code: 'NOT_FOUND',
+        message: 'Payment link not found',
       });
     } catch (error) {
       ServerError(error);
@@ -169,8 +166,8 @@ export class PaymentService {
 
       if (!deletePaymentLink) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to delete payment link",
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete payment link',
         });
       }
       return deletePaymentLink;
@@ -184,19 +181,19 @@ export class PaymentService {
       const paymentLink = await prisma.paymentLink.findFirst({
         where: {
           linkId: data.id,
-          status: "ACTIVE",
+          status: 'ACTIVE',
         },
       });
       if (!paymentLink?.password) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Payment link does not exist",
+          code: 'NOT_FOUND',
+          message: 'Payment link does not exist',
         });
       }
 
       const isPassValid = await argon2.verify(paymentLink.password, data.password);
       if (!isPassValid) {
-        throw new TRPCError({ code: "BAD_REQUEST", message: "Password is incorrect" });
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Password is incorrect' });
       }
       return paymentLink;
     } catch (error) {
@@ -209,13 +206,13 @@ export class PaymentService {
       const paymentLink = await prisma.paymentLink.findFirst({
         where: {
           id,
-          status: "ACTIVE",
+          status: 'ACTIVE',
         },
       });
       if (!paymentLink?.encryptedPassword) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Payment link does not exist",
+          code: 'NOT_FOUND',
+          message: 'Payment link does not exist',
         });
       }
 

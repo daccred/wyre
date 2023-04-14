@@ -1,7 +1,7 @@
 module.exports = {
     bracketSpacing: true,
     bracketSameLine: true,
-    singleQuote: false,
+    singleQuote: true,
     jsxSingleQuote: false,
     trailingComma: "es5",
     semi: true,
@@ -15,6 +15,6 @@ module.exports = {
         "^@/(.*)$",
         "^[./]",
     ],
-    importOrderSeparation: true,
+    importOrderSeparation: false,
     plugins: [require("@trivago/prettier-plugin-sort-imports")],
 };

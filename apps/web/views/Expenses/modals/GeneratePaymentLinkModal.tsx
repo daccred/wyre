@@ -14,22 +14,23 @@ import {
   Input,
   FormLabel,
   useDisclosure,
-} from "@chakra-ui/react";
-import type { Team } from "@prisma/client";
-import RowSelectTable from "components/CustomTable/RowSelectTable";
-import React, { useEffect, useMemo, useState } from "react";
-import { BiLinkAlt } from "react-icons/bi";
-import { FiSearch } from "react-icons/fi";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { trpc } from "utils/trpc";
-import SuccessModal from "views/Payroll/modals/SuccessModal";
-import z from "zod";
+  useToast,
+} from '@chakra-ui/react';
+import type { Team } from '@prisma/client';
+import RowSelectTable from 'components/CustomTable/RowSelectTable';
+import React, { useEffect, useMemo, useState } from 'react';
+import { BiLinkAlt } from 'react-icons/bi';
+import { FiSearch } from 'react-icons/fi';
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import { trpc } from 'utils/trpc';
+import SuccessModal from 'views/Payroll/modals/SuccessModal';
+import z from 'zod';
+import { useForm } from '@wyrecc/components';
+import { generateLinkColumn } from '../utils/tableColumns';
 
-import { useForm } from "@wyrecc/components";
-
-import { generateLinkColumn } from "../utils/tableColumns";
-
-const generatePaymentLinkValidationSchema = z.object({});
+const generatePaymentLinkValidationSchema = z.object({
+  employeeId: z.string(),
+});
 
 type FormInputOptions = z.infer<typeof generatePaymentLinkValidationSchema>;
 
@@ -46,9 +47,10 @@ const GeneratePaymentLinkModal = ({
     onClose: closeSuccessModal,
   } = useDisclosure();
 
+  // TODO: Ask John if an employee can be sent a link more than once
   const [tableData, setTableData] = useState<Team[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { data: contractorData } = trpc.team.getContractors.useQuery();
   const { data: employeeData } = trpc.team.getPersonnel.useQuery();
@@ -75,15 +77,41 @@ const GeneratePaymentLinkModal = ({
   }, [contractorData, searchTerm, teamData]);
 
   //   form submission
-  const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
-    console.log("sss", selectedEmployees);
+  const toast = useToast();
+
+  const { mutate: ResetPassword, isLoading } = trpc.payment.generateLink.useMutation({
+    onSuccess: (data) => {
+      if (data) {
+        openSuccessModal();
+        closeGeneratePaymnetLinkModal();
+        setSearchTerm('');
+      }
+    },
+    onError(error: unknown) {
+      toast({
+        status: 'error',
+        description: `${error}`,
+        isClosable: true,
+        duration: 5000,
+        position: 'top-right',
+      });
+    },
+  });
+
+  const Submit = (data: FormInputOptions) => {
+    ResetPassword({
+      employeeId: data?.employeeId,
+    });
   };
 
-  const { renderForm } = useForm<FormInputOptions>({
-    onSubmit: handleSubmit,
-    schema: generatePaymentLinkValidationSchema,
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
+    onSubmit: Submit,
+    defaultValues: { employeeId: '' },
   });
+
+  useEffect(() => {
+    setFormValue('employeeId', selectedEmployees?.[0] as string);
+  }, [selectedEmployees, setFormValue]);
 
   return (
     <>
@@ -117,8 +145,8 @@ const GeneratePaymentLinkModal = ({
                         color="#210D35"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        _hover={{ borderColor: "primary" }}
-                        _focus={{ borderColor: "primary" }}
+                        _hover={{ borderColor: 'primary' }}
+                        _focus={{ borderColor: 'primary' }}
                       />
                     </InputGroup>
 
@@ -146,9 +174,11 @@ const GeneratePaymentLinkModal = ({
                       bg="brand.700"
                       color="white"
                       rightIcon={<Icon as={BiLinkAlt} />}
-                      _hover={{ hover: "none" }}
-                      onClick={() => openSuccessModal()}
-                      isDisabled={selectedEmployees?.length === 0 ? true : false}>
+                      _hover={{ hover: 'none' }}
+                      type="submit"
+                      isLoading={isLoading}
+                      // onClick={() => openSuccessModal()}
+                      isDisabled={selectedEmployees?.length === 0 ? true : false || isLoading}>
                       Generate Link
                     </Button>
                   </Box>
@@ -161,8 +191,7 @@ const GeneratePaymentLinkModal = ({
       <SuccessModal
         successModalIsOpen={successModalIsOpen}
         closeSuccessModal={closeSuccessModal}
-        message="Payment link has been created and sent to employee or contractor emaily"
-        pathname="/expenses"
+        message="Payment link has been created and sent to employee or contractor via email."
       />
     </>
   );

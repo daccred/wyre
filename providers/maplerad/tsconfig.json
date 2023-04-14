@@ -1,0 +1,16 @@
+{
+  "extends": "@wyrecc/tsconfig/base.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "strict": true,
+  },
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}

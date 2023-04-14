@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const MonoIcon = (props: HTMLChakraProps<"svg">) => (
+export const MonoIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -24,7 +24,7 @@ export const MonoIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const StitchIcon = (props: HTMLChakraProps<"svg">) => (
+export const StitchIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -50,7 +50,7 @@ export const StitchIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const AnchorIcon = (props: HTMLChakraProps<"svg">) => (
+export const AnchorIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -74,7 +74,7 @@ export const AnchorIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const PaystackIcon = (props: HTMLChakraProps<"svg">) => (
+export const PaystackIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -96,7 +96,7 @@ export const PaystackIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const FlutterwaveIcon = (props: HTMLChakraProps<"svg">) => (
+export const FlutterwaveIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -130,7 +130,7 @@ export const FlutterwaveIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const FluidCoinsIcon = (props: HTMLChakraProps<"svg">) => (
+export const FluidCoinsIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -172,7 +172,7 @@ export const FluidCoinsIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const LazerPayIcon = (props: HTMLChakraProps<"svg">) => (
+export const LazerPayIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}
@@ -194,7 +194,7 @@ export const LazerPayIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const CoinProfileIcon = (props: HTMLChakraProps<"svg">) => (
+export const CoinProfileIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={30}
     height={30}

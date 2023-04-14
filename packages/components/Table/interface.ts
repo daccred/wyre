@@ -1,12 +1,13 @@
-import type { ReactNode } from "react";
-import type { UseTableOptions, UseTableInstanceProps } from "react-table";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ReactNode } from 'react';
+import type { UseTableOptions, UseTableInstanceProps } from 'react-table';
 
 type TopbarFilterOptions = {
-  filter: "download" | "actions";
+  filter: 'download' | 'actions';
 };
 
 export interface TableTopbarOptions {
-  filter: TopbarFilterOptions["filter"];
+  filter: TopbarFilterOptions['filter'];
   btnTitle?: string;
   onCreateRoute?: string;
   onBulkDelete?: () => void;
@@ -37,7 +38,7 @@ export type TableRootOptionsProps<Entity extends TD> = TableInstanceProps<Entity
   searchParams?: string[];
 };
 
-export interface TableProps<Data extends TD> extends Omit<TableRootOptionsProps<Data>, "columns"> {
+export interface TableProps<Data extends TD> extends Omit<TableRootOptionsProps<Data>, 'columns'> {
   columns: any[];
   name: string;
   search?: string;
@@ -49,7 +50,7 @@ export interface TableProps<Data extends TD> extends Omit<TableRootOptionsProps<
   variant?: string;
   emptyImage?: string;
   hasBulkImporter?: boolean;
-  filter: "download" | "actions";
+  filter: 'download' | 'actions';
   hasAddButton?: boolean;
 }
 

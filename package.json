@@ -12,7 +12,7 @@
     "dev": "nx run-many --target=dev --all --parallel",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "nx run graph",
-    "postinstall": "yarn build",
+    "postinstall": "test -n \"$NOYARNPOSTINSTALL\" || yarn run build",
     "lint:es": "lerna run lint:es",
     "lint:ts": "lerna run lint:ts",
     "pack": "nx add",
@@ -27,9 +27,9 @@
     }
   },
   "workspaces": [
-    "apps/*",
     "packages/*",
-    "providers/*"
+    "providers/*",
+    "apps/*"
   ],
   "dependencies": {
     "argon2": "^0.30.3",

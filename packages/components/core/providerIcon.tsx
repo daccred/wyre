@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
+export const LogoutIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={25}
     height={25}
@@ -20,7 +20,7 @@ export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const ContractorIcon = (props: HTMLChakraProps<"svg">) => (
+export const ContractorIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}
@@ -40,7 +40,7 @@ export const ContractorIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const EmptyEmployeeImage = (props: HTMLChakraProps<"svg">) => (
+export const EmptyEmployeeImage = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={197}
     height={175}
@@ -135,7 +135,7 @@ export const EmptyEmployeeImage = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
+export const CryptoWallet = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}
@@ -146,7 +146,7 @@ export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
     <mask
       id="mask0_1806_8384"
       style={{
-        maskType: "alpha",
+        maskType: 'alpha',
       }}
       maskUnits="userSpaceOnUse"
       x={1}
@@ -156,49 +156,49 @@ export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
       <path
         d="M20 14.9999V7.49988L13.75 3.98438M10.25 3.98438L4 7.49988V14.9999M5.5 17.3439L12 20.9999L16 18.7499L18.5 17.3434"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.5 9.375L9 10.25V13.75L10.5 14.625L12 15.5L13.5 14.625L15 13.75V10.25L13.5 9.375L12 8.5L10.5 9.375Z"
         fill="currentColor"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path d="M12 8.5V5V8.5ZM15 13.5L18.5 15.5L15 13.5ZM9 13.5L5.5 15.5L9 13.5Z" fill="currentColor" />
       <path
         d="M12 8.5V5M15 13.5L18.5 15.5M9 13.5L5.5 15.5"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 5C12.8284 5 13.5 4.32843 13.5 3.5C13.5 2.67157 12.8284 2 12 2C11.1716 2 10.5 2.67157 10.5 3.5C10.5 4.32843 11.1716 5 12 5Z"
         fill="white"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4 18C4.82843 18 5.5 17.3284 5.5 16.5C5.5 15.6716 4.82843 15 4 15C3.17157 15 2.5 15.6716 2.5 16.5C2.5 17.3284 3.17157 18 4 18Z"
         fill="white"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M20 18C20.8284 18 21.5 17.3284 21.5 16.5C21.5 15.6716 20.8284 15 20 15C19.1716 15 18.5 15.6716 18.5 16.5C18.5 17.3284 19.1716 18 20 18Z"
         fill="white"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </mask>
     <g mask="url(#mask0_1806_8384)">
@@ -207,7 +207,7 @@ export const CryptoWallet = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const Bank = (props: HTMLChakraProps<"svg">) => (
+export const Bank = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}
@@ -222,7 +222,7 @@ export const Bank = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const Mobile = (props: HTMLChakraProps<"svg">) => (
+export const Mobile = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={24}
     height={24}

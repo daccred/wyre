@@ -1,8 +1,7 @@
-import { z } from "zod";
-
-import { contractorSchema } from "../interfaces";
-import { ContractorService } from "../services/contractor";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { z } from 'zod';
+import { contractorSchema } from '../interfaces';
+import { ContractorService } from '../services/contractor';
+import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 export const contractorRouter = createTRPCRouter({
   createContractor: protectedProcedure.input(contractorSchema).mutation(async ({ input }) => {

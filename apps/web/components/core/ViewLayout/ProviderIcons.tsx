@@ -1,8 +1,8 @@
-import type { HTMLChakraProps } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
-import React from "react";
+import type { HTMLChakraProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import React from 'react';
 
-export const BellIcon = (props: HTMLChakraProps<"svg">) => (
+export const BellIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={25}
     height={25}
@@ -17,7 +17,7 @@ export const BellIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const DashboardIcon = (props: HTMLChakraProps<"svg">) => (
+export const DashboardIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={21}
     height={21}
@@ -29,7 +29,7 @@ export const DashboardIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const PayrollIcon = (props: HTMLChakraProps<"svg">) => (
+export const PayrollIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={21}
     height={21}
@@ -41,7 +41,7 @@ export const PayrollIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const PeopleIcon = (props: HTMLChakraProps<"svg">) => (
+export const PeopleIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={21}
     height={21}
@@ -53,7 +53,7 @@ export const PeopleIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const ContractorsIcon = (props: HTMLChakraProps<"svg">) => (
+export const ContractorsIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={21}
     height={21}
@@ -66,7 +66,7 @@ export const ContractorsIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const ExpensesIcon = (props: HTMLChakraProps<"svg">) => (
+export const ExpensesIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={25}
     height={25}
@@ -81,7 +81,7 @@ export const ExpensesIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const IntegrationsIcon = (props: HTMLChakraProps<"svg">) => (
+export const IntegrationsIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={21}
     height={21}
@@ -92,7 +92,7 @@ export const IntegrationsIcon = (props: HTMLChakraProps<"svg">) => (
     <mask
       id="a"
       style={{
-        maskType: "alpha",
+        maskType: 'alpha',
       }}
       maskUnits="userSpaceOnUse"
       x={1}
@@ -121,7 +121,7 @@ export const IntegrationsIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
+export const LogoutIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={25}
     height={25}
@@ -139,7 +139,7 @@ export const LogoutIcon = (props: HTMLChakraProps<"svg">) => (
   </chakra.svg>
 );
 
-export const EmployeesIcon = (props: HTMLChakraProps<"svg">) => (
+export const EmployeesIcon = (props: HTMLChakraProps<'svg'>) => (
   <chakra.svg
     width={21}
     height={21}

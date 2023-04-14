@@ -1,114 +1,65 @@
-import {
-  Avatar,
-  Button,
-  HStack,
-  Stack,
-  Text,
-  useToast, // useTab,
-  // useMultiStyleConfig,
-  Tabs,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Grid,
-  GridItem,
-  Tab,
-  Icon, // Flex,
-} from "@chakra-ui/react";
-// import type { Ref } from "react";
-import React from "react";
-import { GoPrimitiveDot } from "react-icons/go";
-import z from "zod";
-
-import styledToast from "../../../components/core/StyledToast";
-import { FormInput, FormSelect, useForm } from "../../../components/forms";
-import { trpc } from "../../../utils/trpc";
-import { ProfileIcon } from "./ProviderIcons";
-
-type ContractorFormProps = {
-  contractor: any | null; // update the type to match the employee object type
-};
+import { Avatar, Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import z from 'zod';
+import styledToast from '../../../components/core/StyledToast';
+import { FormInput, FormNativeSelect, useForm } from '../../../components/forms';
+import { trpc } from '../../../utils/trpc';
+import { ProfileIcon } from './ProviderIcons';
+import Terminate from './terminateContractor';
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: "Required" }).optional().default(""),
-  email: z.string().email().optional().default(""),
-  department: z.string().min(1, { message: "Required" }).optional().default(""),
-  jobRole: z.string().min(1, { message: "Required" }).optional().default(""),
-  // grossSalary: z.string().min(1, { message: "Required" }),
-  // signingBonus: z.string().min(1, { message: "Required" }),
-  category: z.enum(["CONTRACTOR", "EMPLOYEE"]).default("EMPLOYEE"),
-  payrollMethod: z.enum(["CRYPTO", "BANK", "MOBILEMONEY"]),
+  name: z.string().min(1, { message: 'Required' }),
+  email: z.string().email(),
+  department: z.string().min(1, { message: 'Required' }),
+  jobRole: z.string().min(1, { message: 'Required' }),
+  category: z.enum(['CONTRACTOR', 'EMPLOYEE']),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
 
-// interface CustomTabProps extends React.HTMLAttributes<HTMLButtonElement> {
-//   children: React.ReactNode;
-// }
-
-export default function ContractorForm({ contractor }: ContractorFormProps) {
+export default function ContractorForm() {
   const toast = useToast();
+  const router = useRouter();
+  const { id } = router.query;
+  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
+    refetchOnMount: true,
+  });
 
-  //   const CustomTab = React.forwardRef(({ children, ...props }: CustomTabProps, ref: Ref<HTMLElement>) => {
-  //     const tabProps = useTab({ ...props, ref });
-  //     const isSelected = !!tabProps["aria-selected"];
-
-  //     const styles = useMultiStyleConfig("Tabs", tabProps);
-
-  //     return (
-  //       <Button __css={styles.tab} {...tabProps}>
-  //         <Flex
-  //           alignItems="center"
-  //           fontWeight={isSelected ? "bold" : "normal"}
-  //           color={isSelected ? "#8D1CFF" : " #D2D2D2"}>
-  //           {children}
-  //           {isSelected ? (
-  //             <Icon as={GoPrimitiveDot} w={5} h={5} ml={2} />
-  //           ) : (
-  //             <Icon as={GoPrimitiveDot} w={5} h={5} />
-  //           )}
-  //         </Flex>
-  //       </Button>
-  //     );
-  //   });
-
-  // CustomTab.displayName = "CustomTab";
-
-  const { name, email, department, jobRole, category, salary, signBonus, payrollMethod } = contractor ?? {};
-
+  const { firstName, lastName } = contractor ?? {};
+  // hook to update the contractor data on the server API
   const { mutate: updateContractor, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
-      // Reset the form data to empty values
+      refetch();
       styledToast({
-        status: "success",
-        description: "Profile has been updated successfully",
+        status: 'success',
+        description: 'Profile has been updated successfully',
         toast: toast,
       });
     },
-    onError(error: any) {
+    onError(error: unknown) {
       toast({
-        status: "error",
+        status: 'error',
         description: `${error}`,
         isClosable: true,
         duration: 5000,
-        position: "top-right",
+        position: 'top-right',
       });
-      console.log(error);
     },
   });
-
+  // called when the form is submitted to update the contractor data on the server API
   const handleSubmit = async (data: FormInputOptions) => {
-    console.log(JSON.stringify(data));
     try {
       updateContractor({
-        id: contractor.id, // pass the ID of the contractor that you want to update
+        id: contractor?.id ?? '', // pass the ID of the contractor that you want to update
         data: {
           name: data.name,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
-          salary: contractor.salary,
-          signBonus: contractor.signBonus,
+          salary: contractor?.salary ?? '',
+          signBonus: contractor?.signBonus ?? '',
           status: true,
           category: data.category,
           payrollMethod: data.payrollMethod,
@@ -118,61 +69,21 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
       console.error(error);
     }
   };
-  const { renderForm } = useForm<FormInputOptions>({
+  const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: {
-      name: name,
-      email: email,
-      department: department,
-      jobRole: jobRole,
-      category: category,
-      payrollMethod: payrollMethod,
-      // grossSalary: "",
-      // signingBonus: ""
-    },
     schema: addContractorValidationSchema,
   });
-
-  const { mutate: terminateEmployee, isLoading: isTerminating } = trpc.team.updatePersonnel.useMutation({
-    onSuccess() {
-      styledToast({
-        status: "success",
-        description: "Employee has been terminated successfully",
-        toast: toast,
-      });
-    },
-    onError(error: any) {
-      toast({
-        status: "error",
-        description: `${error}`,
-        isClosable: true,
-        duration: 5000,
-        position: "top-right",
-      });
-      console.log(error);
-    },
-  });
-
-  const handleTerminate = async () => {
-    try {
-      terminateEmployee({
-        id: contractor.id,
-        data: {
-          name: name,
-          email: email,
-          department: department,
-          jobRole: jobRole,
-          salary: salary,
-          signBonus: signBonus,
-          status: false, // add status field with the value of false
-          category: category,
-          payrollMethod: payrollMethod,
-        },
-      });
-    } catch (error) {
-      console.error(error);
+  // hook to set the default form values when the contractor data is available.
+  useEffect(() => {
+    if (contractor) {
+      setFormValue('name', contractor.firstName ?? '');
+      setFormValue('email', contractor.email ?? '');
+      setFormValue('department', contractor.department ?? '');
+      setFormValue('jobRole', contractor.jobRole ?? '');
+      setFormValue('category', contractor.teamCategory ?? '');
+      setFormValue('payrollMethod', contractor.payrollMethod ?? '');
     }
-  };
+  }, [contractor, setFormValue]);
 
   return renderForm(
     <Stack spacing="6" pb="4" mt="-0.5rem">
@@ -181,18 +92,36 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size="xl" src="" name={name} />
+        <Avatar size="xl" src="" name={firstName ?? ''} />
         <HStack>
-          <FormInput name="name" label="First Name" placeholder="First Name" defaultValue={name} />
-          <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
+          <FormInput name="name" label="First Name" placeholder="First Name" />
+          <FormInput
+            name="lastName"
+            label="Last Name"
+            placeholder="Last Name"
+            defaultValue={lastName}
+            disabled
+          />
         </HStack>
         <HStack>
-          <FormInput name="email" label="Email Address" placeholder="Email Address" defaultValue={email} />
-          <FormInput name="phoneNumber" label="Phone Number" placeholder="Phone Number" />
+          <FormInput name="email" label="Email Address" placeholder="Email Address" />
+          <FormInput
+            name="phoneNumber"
+            label="Phone Number"
+            placeholder="Phone Number"
+            defaultValue={contractor?.phone}
+            disabled
+          />
         </HStack>
         <HStack>
-          <FormInput name="city" label="City" placeholder="City" />
-          <FormInput name="country" label="Country" placeholder="Country" />
+          <FormInput name="city" label="Address" placeholder="Address" disabled />
+          <FormInput
+            name="country"
+            label="Country"
+            placeholder="Country"
+            defaultValue={contractor?.country}
+            disabled
+          />
         </HStack>
       </Stack>
       <Stack spacing={3}>
@@ -200,166 +129,21 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           Contract Details
         </Text>
         <HStack>
-          <FormSelect
+          <FormNativeSelect
             name="category"
             label="Category"
             placeholder="Select Category"
             options={[
-              { label: "Contractor", value: "CONTRACTOR" },
-              { label: "Employee", value: "EMPLOYEE" },
+              { label: 'Contractor', value: 'CONTRACTOR' },
+              { label: 'contractor', value: 'contractor' },
             ]}
-            defaultValue={contractor}
           />
-          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" />
+          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
         </HStack>
         <HStack>
-          <FormInput
-            name="department"
-            label="Department"
-            placeholder="Select Department"
-            defaultValue={department}
-          />
-          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" defaultValue={jobRole} />
+          <FormInput name="department" label="Department" placeholder="Select Department" />
+          <FormInput name="jobRole" label="Job Role" placeholder="Job Role" />
         </HStack>
-        <Tabs variant="unstyled">
-          <Text fontWeight="bold" fontSize="18px" my={4}>
-            Payment Method
-          </Text>
-          <TabList>
-            {["Bank Payment", "Crypto Payment", "Mobile Money"].map((tab) => (
-              <Tab key={tab} color="#D2D2D2" _selected={{ color: "#8D1CFF", fontWeight: "bold" }}>
-                <HStack spacing={4}>
-                  <Text>{tab}</Text>
-                  <Icon as={GoPrimitiveDot} w={5} h={5} />
-                </HStack>
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Stack>
-                <Grid templateColumns="repeat(2, 1fr)" gap={2}>
-                  <GridItem>
-                    <FormSelect
-                      label="Select Country"
-                      name="country"
-                      options={[
-                        { value: "GH", label: "Ghana" },
-                        { value: "NIG", label: "Nigeria" },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormSelect
-                      label="Select Bank"
-                      name="bankName"
-                      options={[
-                        { value: "Access", label: "Access Bank" },
-                        { value: "Stanbic", label: "Stanbic Bank" },
-                        { value: "Ecobank", label: "EcoBank" },
-                        { value: "Fidelity", label: "Fidelity Bank" },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      name="accountNumber"
-                      type="number"
-                      label="Account Number"
-                      placeholder="e.g. 0123456789"
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormSelect
-                      label="Account Type"
-                      name="accountType"
-                      options={[
-                        { value: "Savings", label: "Savings Account" },
-                        { value: "Current", label: "Current Account" },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem colSpan={2}>
-                    <FormInput
-                      type="number"
-                      name="salaryPercentage"
-                      label="Salary Allocation in %  (no decimal)"
-                      placeholder="e.g 15"
-                    />
-                  </GridItem>
-                </Grid>
-              </Stack>
-            </TabPanel>
-            <TabPanel>
-              <Stack spacing="6" pb="4">
-                <Grid gap={4}>
-                  <GridItem>
-                    <FormSelect
-                      label="Select Cryptocurrency"
-                      name="cryptocurrency"
-                      options={[
-                        { value: "BTC", label: "Bitcoin(BTC)" },
-                        { value: "ETH", label: "Ethereum(ETH)" },
-                        { value: "USDT", label: "Tether (USDT)" },
-                        { value: "BNB", label: "Binance Coin (BNB)" },
-                        { value: "USDC", label: "U.S. Dollar Coin (USDC)" },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      name="walletAddress"
-                      type="text"
-                      label="Wallet Address"
-                      placeholder="e.g. Ox000000000000000000000000000000000..."
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      type="number"
-                      name="salaryPercentage"
-                      label="Salary Allocation in %  (no decimal)"
-                      placeholder="e.g 15"
-                    />
-                  </GridItem>
-                </Grid>
-              </Stack>
-            </TabPanel>
-            <TabPanel>
-              <Stack spacing="6" pb="4">
-                <Grid gap={4}>
-                  <GridItem>
-                    <FormSelect
-                      label="Select Mobile Money Provider"
-                      name="mobileMoneyProvider"
-                      options={[
-                        { value: "MTN", label: "MTN" },
-                        { value: "VODAFONE", label: "VODAFONE" },
-                        { value: "AIRTELTIGO", label: "AIRTELTIGO" },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      name="phoneNumber"
-                      type="number"
-                      label="Phone Number"
-                      placeholder="e.g. 0987456321"
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      type="number"
-                      name="salaryPercentage"
-                      label="Salary Allocation in %  (no decimal)"
-                      placeholder="e.g 15"
-                    />
-                  </GridItem>
-                </Grid>
-              </Stack>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
       </Stack>
 
       <HStack spacing="4" pt="4">
@@ -370,20 +154,11 @@ export default function ContractorForm({ contractor }: ContractorFormProps) {
           w="fit-content"
           type="submit"
           isLoading={isLoading}
-          _hover={{ bg: "" }}
+          _hover={{ bg: '' }}
           loadingText="Updating">
           Update Profile
         </Button>
-        <Button
-          variant="greyBtn"
-          rightIcon={<ProfileIcon fill="#210D35" stroke="#210D35" />}
-          iconSpacing="3"
-          w="fit-content"
-          _hover={{ bg: "" }}
-          onClick={handleTerminate}
-          isLoading={isTerminating}>
-          Terminate Contractor
-        </Button>
+        <Terminate />
       </HStack>
     </Stack>
   );

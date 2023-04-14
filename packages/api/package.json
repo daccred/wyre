@@ -21,6 +21,12 @@
     "@wyrecc/config": "^0.1.0",
     "@wyrecc/db": "^0.1.0",
     "@wyrecc/dialog": "^0.1.0",
+    "bull": "^4.10.4",
+    "dayjs": "^1.11.7",
+    "ioredis": "^5.3.1",
     "redis": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/bull": "^4.10.0"
   }
 }

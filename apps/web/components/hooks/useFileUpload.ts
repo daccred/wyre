@@ -1,8 +1,7 @@
-import { createStandaloneToast } from "@chakra-ui/toast";
-import * as cloudinary from "cloudinary";
-import React from "react";
-
-import { env } from "@wyrecc/env";
+import { createStandaloneToast } from '@chakra-ui/toast';
+import * as cloudinary from 'cloudinary';
+import React from 'react';
+import { env } from '@wyrecc/env';
 
 interface FileUploadProps {
   filepath: string;
@@ -43,23 +42,23 @@ export const useFileUpload = () => {
       setLoading(false);
       setImageUrl(upload.secure_url);
       toast({
-        title: "File uploaded successfully.",
+        title: 'File uploaded successfully.',
         //   description: "",
-        status: "success",
+        status: 'success',
         duration: 5000,
         isClosable: true,
       });
     } catch (error) {
       setLoading(false);
       toast({
-        title: "An error occurred.",
-        description: "Unable to create user account.",
-        status: "error",
+        title: 'An error occurred.',
+        description: 'Unable to create user account.',
+        status: 'error',
         duration: 9000,
         isClosable: true,
       });
       setError(error as string);
-      throw new Error("File upload failed");
+      throw new Error('File upload failed');
     }
   };
   return { uploadImage, imageUrl, loading, error };

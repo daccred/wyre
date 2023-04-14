@@ -1,7 +1,6 @@
-import type { RefObject } from "react";
-import { useEffect, useRef } from "react";
-
-import useIsomorphicLayoutEffect from "./use-isormophic-layout-effect";
+import type { RefObject } from 'react';
+import { useEffect, useRef } from 'react';
+import useIsomorphicLayoutEffect from './use-isormophic-layout-effect';
 
 // See: https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
 
