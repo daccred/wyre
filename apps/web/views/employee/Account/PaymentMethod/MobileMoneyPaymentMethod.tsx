@@ -1,16 +1,4 @@
-import {
-  Flex,
-  Heading,
-  Link,
-  Text,
-  Icon,
-  VStack,
-  Stack,
-  Avatar,
-  Grid,
-  GridItem,
-  Button,
-} from '@chakra-ui/react';
+import { Flex, Heading, Link, Text, Icon, VStack, Stack, Grid, GridItem, Button } from '@chakra-ui/react';
 import React from 'react';
 import { FiChevronLeft } from 'react-icons/fi';
 import z from 'zod';
@@ -28,6 +16,7 @@ type FormInputOptions = z.infer<typeof manageProfileValidationSchema>;
 const View = () => {
   const Submit = (data: FormInputOptions) => {
     // signUp({});
+    console.log(data);
   };
 
   const { renderForm } = useForm<FormInputOptions>({
