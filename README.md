@@ -14,11 +14,12 @@ WYRE (Opensource Spend Infrastructure)
 
 ## 🚀 Getting Started
 
-<div
-  align="center"
->
 <!-- https://github.com/marcomontalbano/video-to-markdown -->
- [![WYRE - Payroll and Expense Infrastructure](https://cdn.loom.com/sessions/thumbnails/1026ff3449944ad9b276deadfe7da4f4-with-play.gif)](https://www.loom.com/share/1026ff3449944ad9b276deadfe7da4f4?t=0 "WYRE - Payroll and Expense Infrastructure")
+
+<div align="center">
+
+[![WYRE - Payroll and Expense Infrastructure](https://cdn.loom.com/sessions/thumbnails/1026ff3449944ad9b276deadfe7da4f4-with-play.gif)](https://www.loom.com/share/1026ff3449944ad9b276deadfe7da4f4?t=0 'WYRE - Payroll and Expense Infrastructure')
+
  </div>
 
 ## ✨ Features
