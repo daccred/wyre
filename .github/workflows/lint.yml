@@ -2,7 +2,7 @@ name: Lint Workflow
 on: push
 jobs:
   lint:
-    name: ESLint
+    name: TS:ES Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install modules
-        run: NOYARNPOSTINSTALL=1 yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Run Typescript Lint
         run: yarn lint:ts
