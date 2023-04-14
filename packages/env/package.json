@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@wyrecc/env",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
@@ -20,8 +20,8 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0",
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0",
     "dotenv": "^16.0.3"
   }
 }

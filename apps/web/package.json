@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@wyrecc/web",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.0",
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "analyze:browser": "BUNDLE_ANALYZE=browser next build",
@@ -30,10 +30,10 @@
     "@trpc/client": "^10.9.0",
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
-    "@wyrecc/api": "^0.1.0",
-    "@wyrecc/db": "^0.1.0",
-    "@wyrecc/dialog": "^0.1.0",
-    "@wyrecc/env": "^0.1.0",
+    "@wyrecc/api": "^0.1.1-alpha.0",
+    "@wyrecc/db": "^0.1.1-alpha.0",
+    "@wyrecc/dialog": "^0.1.1-alpha.0",
+    "@wyrecc/env": "^0.1.1-alpha.0",
     "cloudinary": "^1.35.0",
     "framer-motion": "^7.6.5",
     "moment": "^2.29.4",
@@ -50,7 +50,7 @@
     "@babel/core": "^7.0.0",
     "@hookform/devtools": "^4.2.3",
     "@types/react-table": "^7.7.14",
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0"
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0"
   }
 }

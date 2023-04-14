@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@wyrecc/dialog",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.0",
   "description": "Module to handle external communications for zayroll eg: email, sms",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -16,9 +16,9 @@
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/env": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0",
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/env": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0",
     "crypt": "^0.0.2",
     "postmark": "^3.0.15",
     "query-string": "^8.1.0"

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@wyrecc/api",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.0",
   "license": "MIT",
   "main": "./dist/index.js",
   "files": [
@@ -18,9 +18,9 @@
   "types": "./dist/index.d.ts",
   "dependencies": {
     "@trpc/server": "^10.9.0",
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/db": "^0.1.0",
-    "@wyrecc/dialog": "^0.1.0",
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/db": "^0.1.1-alpha.0",
+    "@wyrecc/dialog": "^0.1.1-alpha.0",
     "bull": "^4.10.4",
     "dayjs": "^1.11.7",
     "ioredis": "^5.3.1",

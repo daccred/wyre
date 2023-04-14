@@ -1,6 +1,6 @@
 {
   "name": "@wyrecc/components",
-  "version": "1.0.0",
+  "version": "0.1.1-alpha.0",
   "description": "shared ui components for wyre",
   "license": "MIT",
   "main": "dist/index.js",
@@ -30,7 +30,7 @@
     "@hookform/resolvers": "^3.0.0",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/dialog": "^0.1.0"
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/dialog": "^0.1.1-alpha.0"
   }
 }
