@@ -1,19 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { z } from 'zod';
 import { prisma } from '@wyrecc/db';
 import { TRPCError } from '@trpc/server';
-import type { ITeamSchema, IUpdateTeamSchema } from '../interfaces';
+import type { ITeamSchema, updateTeamSchema } from '../interfaces';
 import { ServerError } from '../utils/server-error';
 
+type IUpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export class TeamService {
   static async createPersonnel(input: ITeamSchema) {
     try {
-      const teamPersonnelExists = await prisma.team.findUnique({
+      const teamExists = await prisma.team.findUnique({
         where: {
           email: input.email,
         },
       });
 
-      if (teamPersonnelExists) {
+      if (teamExists) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'team already exists',
@@ -21,8 +22,8 @@ export class TeamService {
       }
       const team = await prisma.team.create({
         data: {
-          firstName: input.name,
-          lastName: input.name,
+          firstName: input.firstName,
+          lastName: input.lastName,
           email: input.email,
           department: input.department,
           jobRole: input.jobRole,
@@ -75,7 +76,7 @@ export class TeamService {
       if (!personnel) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Failed to update payment method',
+          message: 'Failed to delete team',
         });
       }
       const updatedPersonnel = await prisma.team.update({
@@ -84,75 +85,34 @@ export class TeamService {
           payrollMethod,
         },
       });
-      return `Payment method updated to ${updatedPersonnel.payrollMethod}`;
+      return `Payement method updated to ${updatedPersonnel.payrollMethod}`;
     } catch (error) {
       ServerError(error);
     }
   }
-  static async updatePersonnel(teamMemberID: string, input: IUpdateTeamSchema) {
-    const { mobileMoney, cryptoWallet, bank, ...profile } = input;
+  static async updatePersonnel(teamId: string, input: IUpdateTeamSchema) {
     try {
-      const updatedTeamMember = await prisma.$transaction([
-        prisma.team.update({
-          where: { id: teamMemberID },
-          data: {
-            ...profile,
-            // firstName: input.name,
-            // lastName: input.name,
-            // email: input.email,
-            // department: input.department,
-            // jobRole: input.jobRole,
-            // salary: input.salary,
-            // status: input.status,
-            // teamCategory: input.category,
-          },
-        }),
+      const team = await prisma.team.update({
+        where: { id: teamId },
+        data: {
+          firstName: input.firstName,
+          lastName: input.lastName,
+          email: input.email,
+          department: input.department,
+          jobRole: input.jobRole,
+          salary: input.salary,
+          status: input.status,
+          teamCategory: input.category,
+        },
+      });
 
-        /**
-         * We use the upsert method so that we can create
-         * new payment methods if we dont have any from the user
-         * */
-        prisma.mobileMoney.upsert({
-          where: { personnelId: teamMemberID },
-          create: {
-            provider: mobileMoney?.provider as string,
-            phoneNumber: mobileMoney?.phoneNumber as string,
-            allocation: mobileMoney?.allocation as number,
-            personnelId: teamMemberID,
-          },
-          update: {
-            ...input.mobileMoney,
-            personnelId: teamMemberID,
-          },
-        }),
-        prisma.bank.upsert({
-          where: { personnelId: teamMemberID },
-          create: {
-            name: bank?.name as string,
-            country: bank?.country as string,
-            bankCode: bank?.bankCode as string,
-            swiftCode: bank?.swiftCode as string,
-            allocation: bank?.allocation as number,
-            accountType: bank?.accountType as string,
-            routingNumber: bank?.routingNumber as string,
-            accountNumber: bank?.accountNumber as string,
-            personnelId: teamMemberID,
-          },
-          update: { ...input.bank, personnelId: teamMemberID },
-        }),
-        prisma.cryptoWallet.upsert({
-          where: { personnelId: teamMemberID },
-          create: input.cryptoWallet as any,
-          update: { ...cryptoWallet, personnelId: teamMemberID },
-        }),
-      ]);
-      if (!updatedTeamMember)
+      if (!team)
         throw new TRPCError({
           code: 'PRECONDITION_FAILED',
-          message: 'Failed to update TeamMember',
+          message: 'Failed to update team',
         });
 
-      return updatedTeamMember;
+      return team;
     } catch (error) {
       ServerError(error);
     }

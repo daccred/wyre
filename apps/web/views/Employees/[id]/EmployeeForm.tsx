@@ -57,7 +57,7 @@ export default function EmployeeForm() {
       updateEmployee({
         id: employee?.id ?? '', // pass the ID of the employee that you want to update
         data: {
-          name: data.name,
+          firstName: data.name,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,

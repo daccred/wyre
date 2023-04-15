@@ -54,7 +54,8 @@ export default function ContractorForm() {
       updateContractor({
         id: contractor?.id ?? '', // pass the ID of the contractor that you want to update
         data: {
-          name: data.name,
+          firstName: data.name,
+          lastName: data.name,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,

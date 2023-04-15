@@ -52,7 +52,8 @@ export default function AddEmployee({
     }, 5000); // set timeout for 2 seconds
 
     addEmployee({
-      name: data.name,
+      firstName: data.name,
+      lastName: data.name,
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
