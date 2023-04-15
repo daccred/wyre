@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@wyrecc/maplerad",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -18,14 +18,14 @@
     "lint:es": "TIMING=1 eslint src"
   },
   "dependencies": {
+    "@tecmie/maplerad-node": "^0.0.1",
     "ajv": "^8.12.0",
     "got": "11.8.1",
-    "json-schema": "^0.4.0",
-    "@tecmie/maplerad-node": "^0.0.1"
+    "json-schema": "^0.4.0"
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.11",
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0"
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0"
   }
 }

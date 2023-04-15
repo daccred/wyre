@@ -16,7 +16,7 @@ const View: React.FC<Props> = (Props) => {
           <Image src="/Zayroll Logo.png" alt="zayroll logo" w={24} m={12} />
         </Link>
 
-        <Flex flex={1} align={{ base: '', md: 'start' }} p={12}>
+        <Flex minW="400px" flex={1} align={{ base: '', md: 'start' }} p={12}>
           <Stack spacing={8} w="full" maxW="md">
             <Stack>
               <Text color="#010C14" fontWeight="bold" fontSize={{ base: '3xl', md: '4xl' }}>
@@ -72,7 +72,7 @@ const View: React.FC<Props> = (Props) => {
         </Flex>
       </Stack>
 
-      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
+      <Flex bgColor="#210D35" color="white" flex={5} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
             <Text fontWeight="600" fontSize={{ base: '5xl', md: '6xl' }}>

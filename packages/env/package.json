@@ -1,27 +1,27 @@
 {
-  "name": "@wyrecc/env",
   "private": true,
-  "version": "0.1.0",
+  "name": "@wyrecc/env",
+  "version": "0.1.1-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "*.ts",
     "dist"
   ],
   "scripts": {
     "build": "yarn clean && tsc",
-    "dev": "tsc --watch",
-    "lint:ts": "tsc --pretty --noEmit",
     "clean": "rimraf node_modules dist",
-    "lint:es": "TIMING=1 eslint \"*.ts\""
+    "dev": "tsc --watch",
+    "lint:es": "TIMING=1 eslint \"*.ts\"",
+    "lint:ts": "tsc --pretty --noEmit"
   },
+  "types": "dist/index.d.ts",
   "dependencies": {
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "@wyrecc/config": "^0.1.0",
-    "@wyrecc/tsconfig": "^0.1.0",
+    "@wyrecc/config": "^0.1.1-alpha.0",
+    "@wyrecc/tsconfig": "^0.1.1-alpha.0",
     "dotenv": "^16.0.3"
   }
 }
