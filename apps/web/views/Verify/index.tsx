@@ -110,7 +110,7 @@ const View = () => {
         </Flex>
       </Stack>
 
-      <Flex bgColor="#210D35" color="white" flex={1} align="center" justify="center">
+      <Flex bgColor="#210D35" color="white" flex={2} align="center" justify="center">
         <HStack flex={1} align="start" justify="end">
           <Stack p={8} maxW="md">
             <Text fontWeight="600" fontSize={{ base: '5xl', md: '6xl' }}>
