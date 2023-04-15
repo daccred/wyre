@@ -9,7 +9,8 @@ import { ProfileIcon } from './ProviderIcons';
 import Terminate from './terminateEmployee';
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: 'Name is Required' }),
+  firstName: z.string().min(1, { message: 'First name is Required' }),
+  lastName: z.string().min(1, { message: 'Last name is Required' }),
   email: z.string().email(),
   department: z.string().min(1, { message: 'Department is Required' }),
   jobRole: z.string().min(1, { message: 'Job Role is Required' }),
@@ -53,18 +54,22 @@ export default function EmployeeForm() {
   });
   // asynchronous function that's called when the user submits the form. It calls the updateEmployee function with the ID of the employee being updated
   const handleSubmit = async (data: FormInputOptions) => {
+    const name = data.firstName + ' ' + data.lastName;
+    console.log(name);
     try {
       updateEmployee({
         id: employee?.id ?? '', // pass the ID of the employee that you want to update
         data: {
-          name: data.name,
+          // name: data.firstName + ' ' + data.lastName,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
+          // category: data.category,
           salary: employee?.salary ?? '',
           signBonus: employee?.signBonus ?? '',
           status: true,
-          category: data.category,
+          // teamCategory: data.teamCategory,
+          // country: 'Nigeria',
           payrollMethod: data.payrollMethod,
         },
       });
@@ -80,7 +85,8 @@ export default function EmployeeForm() {
   // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
   useLayoutEffect(() => {
     if (employee) {
-      setFormValue('name', employee.firstName ?? '');
+      setFormValue('firstName', employee.firstName ?? '');
+      setFormValue('lastName', employee.lastName ?? '');
       setFormValue('email', employee.email ?? '');
       setFormValue('department', employee.department ?? '');
       setFormValue('jobRole', employee.jobRole ?? '');
@@ -98,14 +104,8 @@ export default function EmployeeForm() {
       <Stack spacing={3}>
         <Avatar size="xl" src="" name={firstName || ''} />
         <HStack>
-          <FormInput name="name" label="First Name" placeholder="First Name" />
-          <FormInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Last Name"
-            defaultValue={lastName}
-            disabled
-          />
+          <FormInput name="firstName" label="First Name" placeholder="First Name" />
+          <FormInput name="lastName" label="Last Name" placeholder="Last Name" defaultValue={lastName} />
         </HStack>
         <HStack>
           <FormInput name="email" label="Email Address" placeholder="Email Address" />

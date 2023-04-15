@@ -17,7 +17,7 @@ const statData: StatData[] = [
     label: 'Setup payment services',
     icon: CreditCardIcon,
     desc: 'Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis',
-    link: '/',
+    link: '/integrations',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const statData: StatData[] = [
     label: 'Create first payroll',
     icon: LayoutIcon,
     desc: 'Lorem ipsum dolor sit amet consectetur. In faucibus at in amet enim est elit sit ornare. Massa tempus sagittis',
-    link: '/',
+    link: '/payroll/create-employee-payroll',
   },
 ];
 

@@ -103,7 +103,7 @@ const ManageEmployee = () => {
           payrollMethod: payrollMethod,
           bank: {
             name: data.bankName ?? '',
-            accountNumber: data.accountNumber ?? '',
+            accountNumber: data.accountNumber?.toString(),
             country: data.bankCountry ?? '',
             allocation: data.bankAllocation ?? 0,
             personnelId: employee?.id ?? '',
@@ -114,7 +114,7 @@ const ManageEmployee = () => {
           },
           mobileMoney: {
             provider: data.mobileMoneyProvider ?? '',
-            phoneNumber: data.mobileMoneyNumber ?? 0,
+            phoneNumber: data.mobileMoneyNumber?.toString(),
             allocation: data.mobileMoneyAllocation ?? 0,
             personnelId: employee?.id ?? '',
           },
@@ -133,16 +133,16 @@ const ManageEmployee = () => {
   };
   const { renderForm, setFormValue } = useForm<FormInputOptions>({
     onSubmit: handleSubmit,
-    defaultValues: {
-      mobileMoneyProvider: '',
-      mobileMoneyNumber: 0,
-      mobileMoneyAllocation: 0,
-      bankName: '',
-      accountNumber: 0,
-      bankAllocation: 0,
-      walletAddress: '',
-      crytoAllocation: 0,
-    },
+    // defaultValues: {
+    //   mobileMoneyProvider: '',
+    //   mobileMoneyNumber: 0,
+    //   mobileMoneyAllocation: 0,
+    //   bankName: '',
+    //   accountNumber: 0,
+    //   bankAllocation: 0,
+    //   walletAddress: '',
+    //   crytoAllocation: 0,
+    // },
     schema: addEmployeeValidationSchema,
   });
 
