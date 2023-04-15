@@ -57,7 +57,7 @@ const Terminate = () => {
       terminateEmployee({
         id: employee?.id ?? '',
         data: {
-          name: firstName ?? '',
+          firstName: firstName ?? '',
           email: email ?? '',
           department: department ?? '',
           jobRole: jobRole ?? '',

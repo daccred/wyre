@@ -13,7 +13,6 @@ export const teamRouter = createTRPCRouter({
     .input(z.object({ id: z.string(), data: updateTeamSchema }))
     .mutation(async ({ input }) => {
       const employee = await TeamService.updatePersonnel(input.id, input.data);
-
       return employee;
     }),
 
