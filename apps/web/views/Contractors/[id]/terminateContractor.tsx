@@ -35,6 +35,7 @@ const Terminate = () => {
         description: `Employee has been ${contractor?.status ? 'terminated' : 'activated'} successfully}`,
         toast: toast,
       });
+      onClose();
     },
     onError(error: unknown) {
       toast({

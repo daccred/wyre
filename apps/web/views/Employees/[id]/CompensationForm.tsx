@@ -59,8 +59,6 @@ export default function CompensationForm() {
     refetchOnMount: true,
   });
 
-  // console.log(employee);
-
   // mutation hook from TRPC for updating an employee's data on the server.
   const { mutate: updateEmployee, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
@@ -92,9 +90,9 @@ export default function CompensationForm() {
           email: employee?.email,
           department: employee?.department,
           jobRole: employee?.jobRole,
-          salary: data?.grossSalary ? String(data.grossSalary) : '', // convert number to string,
+          salary: data.grossSalary ? String(data.grossSalary) : '', // convert number to string,
           signBonus: data.signinBonus ? String(data.signinBonus) : '',
-          status: true,
+          status: employee?.status as boolean | undefined,
           category: employee?.teamCategory,
           payrollMethod: employee?.payrollMethod,
         },

@@ -65,7 +65,7 @@ export default function EmployeeForm() {
           jobRole: data.jobRole,
           salary: employee?.salary ?? '',
           signBonus: employee?.signBonus ?? '',
-          status: true,
+          status: employee?.status as boolean | undefined,
           category: data.category,
           payrollMethod: data.payrollMethod,
         },

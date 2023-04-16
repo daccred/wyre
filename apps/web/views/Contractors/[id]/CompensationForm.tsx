@@ -59,10 +59,8 @@ export default function CompensationForm() {
     refetchOnMount: true,
   });
 
-  console.log(contractor);
-
-  // mutation hook from TRPC for updating an employee's data on the server.
-  const { mutate: updateEmployee, isLoading } = trpc.team.updateCompensation.useMutation({
+  // mutation hook from TRPC for updating an contractor's data on the server.
+  const { mutate: updateContractor, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -84,9 +82,20 @@ export default function CompensationForm() {
 
   const handleSubmit = async (data: FormInputOptions) => {
     try {
-      updateEmployee({
-        personnelId: contractor?.id ?? '', // pass the ID of the employee that you want to update
-        salary: data?.grossSalary ? String(data.grossSalary) : '', // convert number to string,
+      updateContractor({
+        id: contractor?.id ?? '', // pass the ID of the contractor that you want to update
+        data: {
+          firstName: contractor?.firstName ?? '',
+          lastName: contractor?.lastName ?? '',
+          email: contractor?.email,
+          department: contractor?.department,
+          jobRole: contractor?.jobRole,
+          salary: data.grossSalary ? String(data.grossSalary) : '', // convert number to string,
+          signBonus: data.signinBonus ? String(data.signinBonus) : '',
+          status: contractor?.status as boolean | undefined,
+          category: contractor?.teamCategory,
+          payrollMethod: contractor?.payrollMethod,
+        },
       });
     } catch (error) {
       console.error(error);
@@ -97,7 +106,7 @@ export default function CompensationForm() {
     schema: updateContractorValidationSchema,
   });
 
-  // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
+  // hook that's called when the component mounts or when the contractor or setFormValue variables change. It sets the initial form values based on the retrieved contractor data
   useEffect(() => {
     if (contractor) {
       setFormValue('signinBonus', parseFloat(contractor.signBonus ?? ''));
@@ -126,7 +135,7 @@ export default function CompensationForm() {
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight="semibold">Bonus</Text>
-            <EditedFormInput name="signinBonus" rightElementText="USD" color="#0AAF60" disabled />
+            <EditedFormInput name="signinBonus" rightElementText="USD" color="#0AAF60" />
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight="semibold">Commission</Text>
