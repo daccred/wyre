@@ -236,18 +236,6 @@ const ManageEmployee = () => {
                     placeholder="e.g. Ox000000000000000000000000000000000..."
                   />
                 </GridItem>
-                {/* <GridItem>
-                    <FormNativeSelect
-                      name="cryptoNetwork"
-                      label="Select Network"
-                      options={[
-                        { value: 'BTC', label: 'Bitcoin(BTC)' },
-                        { value: 'ETH', label: 'Ethereum(ETH)' },
-                        { value: 'BNB', label: 'Binance Coin (BNB)' },
-                        { value: 'USDC', label: 'U.S. Dollar Coin (USDC)' },
-                      ]}
-                    />
-                  </GridItem> */}
                 <GridItem colSpan={2}>
                   <FormInput
                     type="number"
