@@ -148,7 +148,7 @@ const Contractors = () => {
     if (contractors) {
       const convertedContractors = contractors.map((contractor: any) => ({
         id: contractor.id.toString(),
-        name: contractor.firstName,
+        name: contractor.firstName + ' ' + contractor.lastName,
         email: contractor.email,
         role: contractor.jobRole,
         department: contractor.department,
@@ -166,7 +166,6 @@ const Contractors = () => {
       dispatch({ type: actionTypes.SET_SELECTED_CONTRACTOR, payload: convertedContractors[0] });
     }
   }, [contractors]);
-
   // The useDebounce hook is being used to debounce the searchTerm value. which means that there will be a delay of 500 milliseconds before the search term is updated.
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
@@ -347,7 +346,9 @@ const Contractors = () => {
                                         name={data?.name}
                                         opacity={data?.status !== 'active' ? '35%' : ''}
                                       />
-                                      <Text color={data?.status !== 'active' ? '#FF951C' : ''}>
+                                      <Text
+                                        fontWeight={data.id === selectedContractor.id ? 'bold' : 'normal'}
+                                        color={data?.status !== 'active' ? '#FF951C' : ''}>
                                         {data?.name}
                                       </Text>
                                     </HStack>
@@ -503,7 +504,9 @@ const Contractors = () => {
                 <Stack spacing={0}>
                   <Text fontWeight="semibold">Payment Method</Text>
                   <Text overflowWrap="break-word">
-                    {selectedContractor?.paymentMethod ? `${selectedContractor?.paymentMethod}` : 'Nill'}
+                    {selectedContractor?.payrollMethod === null
+                      ? 'Nill'
+                      : `${selectedContractor?.payrollMethod}`}
                   </Text>
                 </Stack>
               </Stack>

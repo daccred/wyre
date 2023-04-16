@@ -13,17 +13,19 @@ import {
 import { useToast } from '@chakra-ui/react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import z from 'zod';
-import { FormInput, useForm } from '../../components/forms';
+import { FormInput, useForm, FormNativeSelect } from '../../components/forms';
 import { trpc } from '../../utils/trpc';
 import { PeopleIcon } from './ProviderIcons';
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: 'Required' }),
+  firstName: z.string().min(1, { message: 'First name is Required' }),
+  lastName: z.string().min(1, { message: 'Last name is Required' }),
   email: z.string().email(),
   department: z.string().min(1, { message: 'Deparment is Required' }),
   jobRole: z.string().min(1, { message: 'JobRole is Required' }),
   grossSalary: z.string().min(1, { message: 'Gross salary is Required' }),
   signingBonus: z.string().min(1, { message: 'Bonus is Required' }),
+  payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
 });
 
 type FormInputOptions = z.infer<typeof addContractorValidationSchema>;
@@ -42,16 +44,17 @@ export default function AddContractor({
   const toast = useToast();
 
   const handleSubmit = async (data: FormInputOptions) => {
-    // console.log(JSON.stringify(data));
     addContractor({
-      name: data.name,
+      firstName: data.firstName,
+      lastName: data.lastName,
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
-      grossSalary: data.grossSalary,
-      signingBonus: data.signingBonus,
+      salary: data.grossSalary,
+      signBonus: data.signingBonus,
       status: true,
       category: 'CONTRACTOR',
+      payrollMethod: data.payrollMethod,
     });
   };
 
@@ -60,7 +63,7 @@ export default function AddContractor({
     schema: addContractorValidationSchema,
   });
 
-  const { mutate: addContractor, isLoading } = trpc.contractor.createContractor.useMutation({
+  const { mutate: addContractor, isLoading } = trpc.team.createPersonnel.useMutation({
     onSuccess() {
       // Reset the form data to empty values
       resetForm();
@@ -97,7 +100,10 @@ export default function AddContractor({
           {renderForm(
             <Stack spacing="6" pb="4">
               <Stack>
-                <FormInput name="name" label="Full Name" placeholder="John Doe" />
+                <HStack>
+                  <FormInput name="firstName" label="First Name" placeholder="John" />
+                  <FormInput name="lastName" label="Last Name" placeholder="Doe" />
+                </HStack>
 
                 <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>
@@ -114,6 +120,16 @@ export default function AddContractor({
                   <FormInput name="grossSalary" label="Gross Salary" placeholder="$0" />
 
                   <FormInput name="signingBonus" label="Signing Bonus" placeholder="$0" />
+                  <FormNativeSelect
+                    name="payrollMethod"
+                    label="Payroll Method"
+                    placeholder="Select Category"
+                    options={[
+                      { label: 'CRYPTO', value: 'CRYPTO' },
+                      { label: 'Bank', value: 'BANK' },
+                      { label: 'Mobile Money', value: 'MOBILEMONEY' },
+                    ]}
+                  />
                 </HStack>
               </Stack>
               <Text fontSize="sm">

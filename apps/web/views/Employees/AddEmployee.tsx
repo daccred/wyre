@@ -49,7 +49,7 @@ export default function AddEmployee({
     // console.log(JSON.stringify(data));
     setTimeout(() => {
       abortController.abort();
-    }, 5000); // set timeout for 2 seconds
+    }, 5000); // set timeout for 5 seconds
 
     addEmployee({
       firstName: data.name,
