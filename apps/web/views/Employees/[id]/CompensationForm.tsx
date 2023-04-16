@@ -62,7 +62,7 @@ export default function CompensationForm() {
   // console.log(employee);
 
   // mutation hook from TRPC for updating an employee's data on the server.
-  const { mutate: updateEmployee, isLoading } = trpc.team.updateCompensation.useMutation({
+  const { mutate: updateEmployee, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -85,8 +85,19 @@ export default function CompensationForm() {
   const handleSubmit = async (data: FormInputOptions) => {
     try {
       updateEmployee({
-        personnelId: employee?.id ?? '', // pass the ID of the employee that you want to update
-        salary: data?.grossSalary ? String(data.grossSalary) : '', // convert number to string,
+        id: employee?.id ?? '', // pass the ID of the employee that you want to update
+        data: {
+          firstName: employee?.firstName ?? '',
+          lastName: employee?.lastName ?? '',
+          email: employee?.email,
+          department: employee?.department,
+          jobRole: employee?.jobRole,
+          salary: data?.grossSalary ? String(data.grossSalary) : '', // convert number to string,
+          signBonus: data.signinBonus ? String(data.signinBonus) : '',
+          status: true,
+          category: employee?.teamCategory,
+          payrollMethod: employee?.payrollMethod,
+        },
       });
     } catch (error) {
       console.error(error);
@@ -126,7 +137,7 @@ export default function CompensationForm() {
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight="semibold">Signing Bonus</Text>
-            <EditedFormInput name="signinBonus" rightElementText="USD" color="#0AAF60" disabled />
+            <EditedFormInput name="signinBonus" rightElementText="USD" color="#0AAF60" />
           </Stack>
           <Stack spacing={0}>
             <Text fontWeight="semibold">Health Insurance</Text>
@@ -154,7 +165,13 @@ export default function CompensationForm() {
           </Stack> */}
 
           <Stack pt="6">
-            <Button isLoading={isLoading} variant="darkBtn" w="100%" py="15px" type="submit">
+            <Button
+              isLoading={isLoading}
+              variant="darkBtn"
+              w="100%"
+              py="15px"
+              type="submit"
+              _hover={{ bg: '' }}>
               Update Compensation
             </Button>
           </Stack>

@@ -146,7 +146,7 @@ const Employees = () => {
     if (employees) {
       const convertedEmployees = employees.map((employee: any) => ({
         id: employee.id.toString(),
-        name: employee.firstName,
+        name: employee.firstName + ' ' + employee.lastName,
         email: employee.email,
         role: employee.jobRole,
         department: employee.department,

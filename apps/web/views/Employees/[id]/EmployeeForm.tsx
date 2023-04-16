@@ -29,7 +29,7 @@ export default function EmployeeForm() {
     refetchOnMount: true,
   });
 
-  // console.log(employee);
+  console.log(employee);
   const { firstName, lastName } = employee ?? {};
 
   // mutation hook from TRPC for updating an employee's data on the server.
@@ -54,22 +54,19 @@ export default function EmployeeForm() {
   });
   // asynchronous function that's called when the user submits the form. It calls the updateEmployee function with the ID of the employee being updated
   const handleSubmit = async (data: FormInputOptions) => {
-    const name = data.firstName + ' ' + data.lastName;
-    console.log(name);
     try {
       updateEmployee({
         id: employee?.id ?? '', // pass the ID of the employee that you want to update
         data: {
-          firstName: data.name,
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
-          // category: data.category,
           salary: employee?.salary ?? '',
           signBonus: employee?.signBonus ?? '',
           status: true,
-          // teamCategory: data.teamCategory,
-          // country: 'Nigeria',
+          category: data.category,
           payrollMethod: data.payrollMethod,
         },
       });
@@ -102,10 +99,10 @@ export default function EmployeeForm() {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size="xl" src="" name={firstName || ''} />
+        <Avatar size="xl" src="" name={firstName + ' ' + lastName || ''} />
         <HStack>
           <FormInput name="firstName" label="First Name" placeholder="First Name" />
-          <FormInput name="lastName" label="Last Name" placeholder="Last Name" defaultValue={lastName} />
+          <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
         </HStack>
         <HStack>
           <FormInput name="email" label="Email Address" placeholder="Email Address" />

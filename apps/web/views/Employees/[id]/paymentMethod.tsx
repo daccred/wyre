@@ -19,7 +19,7 @@ import { trpc } from 'utils/trpc';
 import z from 'zod';
 import styledToast from '../../../components/core/StyledToast';
 
-const addEmployeeValidationSchema = z.object({
+const addPaymentValidationSchema = z.object({
   mobileMoneyProvider: z.string().min(1, { message: 'Mobile Money Provider is Required' }),
   mobileMoneyNumber: z.number({
     required_error: 'Mobile number is required',
@@ -51,10 +51,10 @@ const addEmployeeValidationSchema = z.object({
       invalid_type_error: 'Mobile number must be a number',
     })
     .max(100, { message: 'Crypto allocation must be less or equal to 100' }),
-  cryptoNetwork: z.string(),
+  // cryptoNetwork: z.string(),
 });
 
-type FormInputOptions = z.infer<typeof addEmployeeValidationSchema>;
+type FormInputOptions = z.infer<typeof addPaymentValidationSchema>;
 
 const ManageEmployee = () => {
   const router = useRouter();
@@ -64,8 +64,18 @@ const ManageEmployee = () => {
     refetchOnMount: true,
   });
   // console.log(employee);
-  const { firstName, status, email, department, jobRole, teamCategory, signBonus, salary, payrollMethod } =
-    employee ?? {};
+  const {
+    firstName,
+    lastName,
+    status,
+    email,
+    department,
+    jobRole,
+    teamCategory,
+    signBonus,
+    salary,
+    payrollMethod,
+  } = employee ?? {};
   const { mutate: updateEmployee, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
@@ -92,7 +102,8 @@ const ManageEmployee = () => {
       updateEmployee({
         id: employee?.id ?? '', // pass the ID of the employee that you want to update
         data: {
-          name: firstName ?? '',
+          firstName: firstName ?? '',
+          lastName: lastName ?? '',
           email: email ?? '',
           department: department ?? '',
           jobRole: jobRole ?? '',
@@ -143,7 +154,7 @@ const ManageEmployee = () => {
     //   walletAddress: '',
     //   crytoAllocation: 0,
     // },
-    schema: addEmployeeValidationSchema,
+    schema: addPaymentValidationSchema,
   });
 
   return renderForm(
