@@ -60,10 +60,9 @@ const ManageEmployee = () => {
   const router = useRouter();
   const toast = useToast();
   const { id } = router.query;
-  const { data: employee, refetch } = trpc.team.getSinglePersonnel.useQuery(id as string, {
+  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
     refetchOnMount: true,
   });
-  // console.log(employee);
   const {
     firstName,
     lastName,
@@ -75,8 +74,8 @@ const ManageEmployee = () => {
     signBonus,
     salary,
     payrollMethod,
-  } = employee ?? {};
-  const { mutate: updateEmployee, isLoading } = trpc.team.updatePersonnel.useMutation({
+  } = contractor ?? {};
+  const { mutate: updateContractor, isLoading } = trpc.team.updatePersonnel.useMutation({
     onSuccess() {
       refetch();
       styledToast({
@@ -99,8 +98,8 @@ const ManageEmployee = () => {
   const handleSubmit = async (data: FormInputOptions) => {
     // console.log(JSON.stringify(data));
     try {
-      updateEmployee({
-        id: employee?.id ?? '', // pass the ID of the employee that you want to update
+      updateContractor({
+        id: contractor?.id ?? '', // pass the ID of the employee that you want to update
         data: {
           firstName: firstName ?? '',
           lastName: lastName ?? '',
@@ -117,7 +116,7 @@ const ManageEmployee = () => {
             accountNumber: data.accountNumber?.toString(),
             country: data.bankCountry ?? '',
             allocation: data.bankAllocation ?? 0,
-            personnelId: employee?.id ?? '',
+            personnelId: contractor?.id ?? '',
             bankCode: '1234', // example value
             swiftCode: '5678', // example value
             routingNumber: '9012', // example value
@@ -127,14 +126,14 @@ const ManageEmployee = () => {
             provider: data.mobileMoneyProvider ?? '',
             phoneNumber: data.mobileMoneyNumber?.toString(),
             allocation: data.mobileMoneyAllocation ?? 0,
-            personnelId: employee?.id ?? '',
+            personnelId: contractor?.id ?? '',
           },
           cryptoWallet: {
             currency: data.cryptocurrency ?? '',
             address: data.walletAddress ?? '',
             network: 'Testnet',
             allocation: data.crytoAllocation || 0,
-            personnelId: employee?.id ?? '',
+            personnelId: contractor?.id ?? '',
           },
         },
       });
@@ -237,18 +236,6 @@ const ManageEmployee = () => {
                     placeholder="e.g. Ox000000000000000000000000000000000..."
                   />
                 </GridItem>
-                {/* <GridItem>
-                    <FormNativeSelect
-                      name="cryptoNetwork"
-                      label="Select Network"
-                      options={[
-                        { value: 'BTC', label: 'Bitcoin(BTC)' },
-                        { value: 'ETH', label: 'Ethereum(ETH)' },
-                        { value: 'BNB', label: 'Binance Coin (BNB)' },
-                        { value: 'USDC', label: 'U.S. Dollar Coin (USDC)' },
-                      ]}
-                    />
-                  </GridItem> */}
                 <GridItem colSpan={2}>
                   <FormInput
                     type="number"

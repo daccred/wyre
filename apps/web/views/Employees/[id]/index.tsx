@@ -14,7 +14,6 @@ const ManageEmployee = () => {
   const { data: employee, isLoading } = trpc.team.getSinglePersonnel.useQuery(id as string, {
     refetchOnMount: true,
   });
-
   return (
     <>
       <ViewLayout title="Employee">
@@ -31,7 +30,7 @@ const ManageEmployee = () => {
           <BreadcrumbItem>
             <BreadcrumbLink href="#">
               <Skeleton textTransform="capitalize" isLoaded={!isLoading}>
-                {employee?.firstName}
+                {employee?.firstName + ' ' + employee?.lastName}
               </Skeleton>
             </BreadcrumbLink>
           </BreadcrumbItem>

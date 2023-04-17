@@ -18,7 +18,8 @@ import { trpc } from '../../utils/trpc';
 import { PeopleIcon } from './ProviderIcons';
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: 'Required' }),
+  firstName: z.string().min(1, { message: 'First name is Required' }),
+  lastName: z.string().min(1, { message: 'Last name is Required' }),
   email: z.string().email(),
   department: z.string().min(1, { message: 'Required' }),
   jobRole: z.string().min(1, { message: 'Required' }),
@@ -49,11 +50,11 @@ export default function AddEmployee({
     // console.log(JSON.stringify(data));
     setTimeout(() => {
       abortController.abort();
-    }, 5000); // set timeout for 2 seconds
+    }, 5000); // set timeout for 5 seconds
 
     addEmployee({
-      firstName: data.name,
-      lastName: data.name,
+      firstName: data.firstName,
+      lastName: data.lastName,
       email: data.email,
       department: data.department,
       jobRole: data.jobRole,
@@ -108,7 +109,10 @@ export default function AddEmployee({
           {renderForm(
             <Stack spacing="6" pb="4">
               <Stack>
-                <FormInput name="name" label="Full Name" placeholder="John Doe" />
+                <HStack>
+                  <FormInput name="firstName" label="First Name" placeholder="John" />
+                  <FormInput name="lastName" label="Last Name" placeholder="Doe" />
+                </HStack>
 
                 <FormInput name="email" label="Email Address" placeholder="Email Address" />
                 <HStack>

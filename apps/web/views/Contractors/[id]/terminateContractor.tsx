@@ -1,4 +1,15 @@
-import { Button, useToast } from '@chakra-ui/react';
+import {
+  Button,
+  useToast,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import styledToast from '../../../components/core/StyledToast';
@@ -6,6 +17,7 @@ import { trpc } from '../../../utils/trpc';
 import { ProfileIcon } from './ProviderIcons';
 
 const Terminate = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { id } = router.query;
   const toast = useToast();
@@ -23,6 +35,7 @@ const Terminate = () => {
         description: `Employee has been ${contractor?.status ? 'terminated' : 'activated'} successfully}`,
         toast: toast,
       });
+      onClose();
     },
     onError(error: unknown) {
       toast({
@@ -60,13 +73,12 @@ const Terminate = () => {
     }
   };
 
-  const buttonText = contractor?.status ? 'Terminate Employee' : 'Activate Employee';
+  const buttonText = contractor?.status ? 'Terminate Contractor' : 'Activate Contractor';
 
   return (
     <>
       <Button
-        onClick={handleTerminate}
-        isLoading={isTerminating}
+        onClick={onOpen}
         loadingText={contractor?.status ? 'Activating' : 'Terminating'}
         variant="greyBtn"
         rightIcon={<ProfileIcon fill="#210D35" stroke="#210D35" />}
@@ -75,6 +87,30 @@ const Terminate = () => {
         _hover={{ bg: '' }}>
         {buttonText}
       </Button>
+      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} isCentered motionPreset="scale">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{buttonText}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>Are you sure you want to {buttonText}?</ModalBody>
+
+          <ModalFooter>
+            <Button
+              onClick={handleTerminate}
+              isLoading={isTerminating}
+              loadingText={contractor?.status ? 'Terminating' : 'Activating'}
+              variant="greyBtn"
+              rightIcon={<ProfileIcon fill="#210D35" stroke="#210D35" />}
+              iconSpacing="3"
+              w="fit-content"
+              mr={2}
+              _hover={{ bg: '' }}>
+              {buttonText}
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

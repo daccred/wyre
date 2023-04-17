@@ -12,7 +12,6 @@ import {
   StatHelpText,
   StatLabel,
   StatNumber,
-  Link,
   TableContainer,
   Table,
   Td,
@@ -22,12 +21,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import { trpc } from '../../utils/trpc';
 import { ArrowRightIcon, CalenderIcon, TeamIcon } from './ProviderIcons';
 
-type Props = {};
-
-const Preview = (props: Props) => {
+const Preview = () => {
   const [dummyData, setDummyData] = useState<
     {
       currency: string;
@@ -40,6 +39,8 @@ const Preview = (props: Props) => {
   const [payrollData, setPayrollData] = useState<{ [key: string]: string }[]>([]);
   const [annualData, setAnnualData] = useState<{ [key: string]: string }[]>([]);
   const [lineChart, setlineChart] = useState<{ [key: string]: string }[]>([]);
+  const { data: employee, isLoading } = trpc.team.getPersonnel.useQuery();
+  const { data: contractor } = trpc.team.getContractors.useQuery();
 
   const data = [
     {
@@ -169,9 +170,11 @@ const Preview = (props: Props) => {
               Payroll History
             </Text>
             <Flex justify="center" align="center">
-              <Text fontSize="sm" color="purple.600" fontWeight="normal">
-                See More
-              </Text>
+              <Link href="/payroll">
+                <Text fontSize="sm" color="purple.600" fontWeight="normal">
+                  See More
+                </Text>
+              </Link>
               <Icon as={ArrowRightIcon} w={3} h={3} ml="3" />
             </Flex>
           </Flex>
@@ -311,7 +314,15 @@ const Preview = (props: Props) => {
               <Text fontSize="lg" fontWeight="bold" mb={3}>
                 Team Members
               </Text>
-              <Text fontSize={12}>You have 12 employees and 5 contractors on payroll</Text>
+              <Text fontSize={12}>
+                {/* {isLoading ? (
+                  <Skeleton height="10px" rounded="6px" />
+                ) : ( */}
+                <>
+                  You have {employee?.length} employees and {contractor?.length} contractors on payroll
+                </>
+                {/* )} */}
+              </Text>
             </Flex>
             <Icon as={TeamIcon} w={10} h={6} />
           </Flex>

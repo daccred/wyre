@@ -6,6 +6,7 @@ import ViewLayout from '../../../components/core/ViewLayout';
 import { trpc } from '../../../utils/trpc';
 import CompensationForm from './CompensationForm';
 import ContractorForm from './ContractorForm';
+import PaymentMethod from './paymentMethod';
 
 const ManageContractor = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const ManageContractor = () => {
             // href='#'
             >
               <Skeleton textTransform="capitalize" isLoaded={!isLoading}>
-                {contractor?.firstName}
+                {contractor?.firstName + ' ' + contractor?.lastName}
               </Skeleton>
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -39,6 +40,7 @@ const ManageContractor = () => {
         <HStack gap="4" alignItems="flex-start">
           <Stack borderRadius="15px" border="1px solid" borderColor="bordergrey" p="4" bg="white" w="70%">
             <ContractorForm />
+            <PaymentMethod />
           </Stack>
           <CompensationForm />
         </HStack>

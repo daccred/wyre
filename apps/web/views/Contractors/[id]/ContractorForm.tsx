@@ -9,7 +9,8 @@ import { ProfileIcon } from './ProviderIcons';
 import Terminate from './terminateContractor';
 
 const addContractorValidationSchema = z.object({
-  name: z.string().min(1, { message: 'Required' }),
+  firstName: z.string().min(1, { message: 'First name is Required' }),
+  lastName: z.string().min(1, { message: 'Last name is Required' }),
   email: z.string().email(),
   department: z.string().min(1, { message: 'Required' }),
   jobRole: z.string().min(1, { message: 'Required' }),
@@ -54,14 +55,14 @@ export default function ContractorForm() {
       updateContractor({
         id: contractor?.id ?? '', // pass the ID of the contractor that you want to update
         data: {
-          firstName: data.name,
-          lastName: data.name,
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
           salary: contractor?.salary ?? '',
           signBonus: contractor?.signBonus ?? '',
-          status: true,
+          status: contractor?.status as boolean | undefined,
           category: data.category,
           payrollMethod: data.payrollMethod,
         },
@@ -77,7 +78,8 @@ export default function ContractorForm() {
   // hook to set the default form values when the contractor data is available.
   useEffect(() => {
     if (contractor) {
-      setFormValue('name', contractor.firstName ?? '');
+      setFormValue('firstName', contractor.firstName ?? '');
+      setFormValue('lastName', contractor.lastName ?? '');
       setFormValue('email', contractor.email ?? '');
       setFormValue('department', contractor.department ?? '');
       setFormValue('jobRole', contractor.jobRole ?? '');
@@ -93,16 +95,10 @@ export default function ContractorForm() {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size="xl" src="" name={firstName ?? ''} />
+        <Avatar size="xl" src="" name={firstName + ' ' + lastName || ''} />
         <HStack>
-          <FormInput name="name" label="First Name" placeholder="First Name" />
-          <FormInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Last Name"
-            defaultValue={lastName}
-            disabled
-          />
+          <FormInput name="firstName" label="First Name" placeholder="First Name" />
+          <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
         </HStack>
         <HStack>
           <FormInput name="email" label="Email Address" placeholder="Email Address" />
@@ -136,10 +132,19 @@ export default function ContractorForm() {
             placeholder="Select Category"
             options={[
               { label: 'Contractor', value: 'CONTRACTOR' },
-              { label: 'contractor', value: 'contractor' },
+              { label: 'Employee', value: 'EMPLOYEE' },
             ]}
           />
-          <FormInput name="payrollMethod" label="Payroll Method" placeholder="Payroll Method" disabled />
+          <FormNativeSelect
+            name="payrollMethod"
+            label="Payroll Method"
+            placeholder="Payroll Method"
+            options={[
+              { label: 'Crypto', value: 'CRYPTO' },
+              { label: 'Bank', value: 'BANK' },
+              { label: 'Mobile Money', value: 'MOBILEMONEY' },
+            ]}
+          />
         </HStack>
         <HStack>
           <FormInput name="department" label="Department" placeholder="Select Department" />

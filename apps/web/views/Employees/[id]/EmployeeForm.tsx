@@ -1,6 +1,6 @@
 import { Avatar, Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import z from 'zod';
 import styledToast from '../../../components/core/StyledToast';
 import { FormInput, FormNativeSelect, useForm } from '../../../components/forms';
@@ -9,9 +9,10 @@ import { ProfileIcon } from './ProviderIcons';
 import Terminate from './terminateEmployee';
 
 const addEmployeeValidationSchema = z.object({
-  name: z.string().min(1, { message: 'Name is Required' }),
+  firstName: z.string().min(1, { message: 'First name is Required' }),
+  lastName: z.string().min(1, { message: 'Last name is Required' }),
   email: z.string().email(),
-  department: z.string().min(1, { message: 'Defartment is Required' }),
+  department: z.string().min(1, { message: 'Department is Required' }),
   jobRole: z.string().min(1, { message: 'Job Role is Required' }),
   category: z.enum(['CONTRACTOR', 'EMPLOYEE']),
   payrollMethod: z.enum(['CRYPTO', 'BANK', 'MOBILEMONEY']),
@@ -57,13 +58,14 @@ export default function EmployeeForm() {
       updateEmployee({
         id: employee?.id ?? '', // pass the ID of the employee that you want to update
         data: {
-          firstName: data.name,
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
           department: data.department,
           jobRole: data.jobRole,
           salary: employee?.salary ?? '',
           signBonus: employee?.signBonus ?? '',
-          status: true,
+          status: employee?.status as boolean | undefined,
           category: data.category,
           payrollMethod: data.payrollMethod,
         },
@@ -78,9 +80,10 @@ export default function EmployeeForm() {
     schema: addEmployeeValidationSchema,
   });
   // hook that's called when the component mounts or when the employee or setFormValue variables change. It sets the initial form values based on the retrieved employee data
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (employee) {
-      setFormValue('name', employee.firstName ?? '');
+      setFormValue('firstName', employee.firstName ?? '');
+      setFormValue('lastName', employee.lastName ?? '');
       setFormValue('email', employee.email ?? '');
       setFormValue('department', employee.department ?? '');
       setFormValue('jobRole', employee.jobRole ?? '');
@@ -96,16 +99,10 @@ export default function EmployeeForm() {
       </Text>
 
       <Stack spacing={3}>
-        <Avatar size="xl" src="" name={firstName || ''} />
+        <Avatar size="xl" src="" name={firstName + ' ' + lastName || ''} />
         <HStack>
-          <FormInput name="name" label="First Name" placeholder="First Name" />
-          <FormInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Last Name"
-            defaultValue={lastName}
-            disabled
-          />
+          <FormInput name="firstName" label="First Name" placeholder="First Name" />
+          <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
         </HStack>
         <HStack>
           <FormInput name="email" label="Email Address" placeholder="Email Address" />
