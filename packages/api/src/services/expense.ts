@@ -129,6 +129,26 @@ export class ExpenseService {
     }
   }
 
+  static async getPersonnelExpenses(personnelId: string) {
+    try {
+      const expenses = await prisma.expense.findMany({
+        where: { employeeId: personnelId },
+        include: { employee: true, attachment: true },
+      });
+
+      if (!expenses) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Expense not found',
+        });
+      }
+
+      return expenses;
+    } catch (error) {
+      ServerError(error);
+    }
+  }
+
   static async getExpenses() {
     try {
       const expenses = await prisma.expense.findMany({

@@ -4,8 +4,8 @@ import { UserService } from '../services';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const userRouter = createTRPCRouter({
-  addUser: publicProcedure.input(UserSchema).mutation(({ input }) => {
-    const user = UserService.createUser(input);
+  addUser: publicProcedure.input(z.object({ id: z.string(), data: UserSchema })).mutation(({ input }) => {
+    const user = UserService.createUser(input.id, input.data);
     return user;
   }),
 

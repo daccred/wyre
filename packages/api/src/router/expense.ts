@@ -16,8 +16,8 @@ export const expenseRouter = createTRPCRouter({
       return expense;
     }),
 
-  deleteExpense: protectedProcedure.input(z.string()).mutation(({ input }) => {
-    const expense = ExpenseService.deleteExpense(input);
+  deleteExpense: protectedProcedure.input(z.object({ id: z.string() })).mutation(({ input }) => {
+    const expense = ExpenseService.deleteExpense(input.id);
     return expense;
   }),
 
@@ -26,8 +26,13 @@ export const expenseRouter = createTRPCRouter({
     return expenses;
   }),
 
-  getSingleExpense: protectedProcedure.input(z.string()).query(({ input }) => {
-    const expense = ExpenseService.getSingleExpense(input);
+  getSingleExpense: protectedProcedure.input(z.object({ id: z.string() })).query(({ input }) => {
+    const expense = ExpenseService.getSingleExpense(input.id);
     return expense;
+  }),
+
+  getEmployeeExpense: protectedProcedure.input(z.object({ userId: z.string() })).query(({ input }) => {
+    const expenses = ExpenseService.getPersonnelExpenses(input.userId);
+    return expenses;
   }),
 });

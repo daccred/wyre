@@ -14,11 +14,13 @@ export const authRouter = createTRPCRouter({
     const admin = await AuthService.adminSignUp(input);
     return admin;
   }),
-  userSignup: publicProcedure.input(UserSchema).mutation(async ({ input }) => {
-    const user = await UserService.createUser(input);
-    return user;
-  }),
-  verifyAdminEmail: publicProcedure.input(verifyEmailSchema).mutation(async ({ input }) => {
+  userSignup: publicProcedure
+    .input(z.object({ userId: z.string(), data: UserSchema }))
+    .mutation(async ({ input }) => {
+      const user = await UserService.createUser(input.userId, input.data);
+      return user;
+    }),
+  verifyEmail: publicProcedure.input(verifyEmailSchema).mutation(async ({ input }) => {
     const verified = await AuthService.verifyEmail(input);
     return verified;
   }),

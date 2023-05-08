@@ -16,20 +16,24 @@ export const teamRouter = createTRPCRouter({
       return employee;
     }),
 
-  getSinglePersonnel: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    const employee = await TeamService.getSinglePersonnel(input);
-    return employee;
-  }),
+  getSinglePersonnel: protectedProcedure
+    .input(z.object({ personnelId: z.string() }))
+    .query(async ({ input }) => {
+      const employee = await TeamService.getSinglePersonnel(input.personnelId);
+      return employee;
+    }),
 
   getPersonnel: protectedProcedure.query(async () => {
     const employees = await TeamService.getPersonnel();
     return employees;
   }),
 
-  getSingleContractor: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    const contractor = await TeamService.getSingleContractor(input);
-    return contractor;
-  }),
+  getSingleContractor: protectedProcedure
+    .input(z.object({ contractorId: z.string() }))
+    .query(async ({ input }) => {
+      const contractor = await TeamService.getSingleContractor(input.contractorId);
+      return contractor;
+    }),
   getContractors: protectedProcedure.query(async () => {
     const contractors = await TeamService.getContractors();
     return contractors;

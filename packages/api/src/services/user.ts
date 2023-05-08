@@ -8,7 +8,7 @@ import { AuthService } from './auth';
 export const i = { send_json: true, send_form: false };
 
 export class UserService {
-  static async createUser(input: IUserSchema) {
+  static async createUser(userId: string, input: IUserSchema) {
     try {
       // check if email exists
       const emailExists = await prisma.user.findFirst({
@@ -23,13 +23,16 @@ export class UserService {
           message: 'Email already exists',
         });
       }
-
+      if (input.type == 'ADMIN') {
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'User cannot be admin' });
+      }
       //Handle email verification
       const confirmCode = JSON.stringify(Math.floor(100000 + Math.random() * 900000)); // generates a random 6-digit code
 
       // create user
       const user = await prisma.user.create({
         data: {
+          id: userId,
           firstName: input.firstName,
           lastName: input.lastName,
           email: input.email,
@@ -106,6 +109,9 @@ export class UserService {
 
   static async updateUser(id: string, data: IUserSchema) {
     try {
+      if (data.type == 'ADMIN') {
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'User cannot be admin' });
+      }
       const updateUser = await prisma.user.update({
         where: {
           id,
