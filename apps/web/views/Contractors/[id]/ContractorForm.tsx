@@ -24,9 +24,12 @@ export default function ContractorForm() {
   const toast = useToast();
   const router = useRouter();
   const { id } = router.query;
-  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
-    refetchOnMount: true,
-  });
+  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(
+    { contractorId: id as string },
+    {
+      refetchOnMount: true,
+    }
+  );
 
   const { firstName, lastName } = contractor ?? {};
   // hook to update the contractor data on the server API

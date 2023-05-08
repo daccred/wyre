@@ -207,15 +207,16 @@ model ExpenseAttachment {
 }
 
 model Expense {
-  id         String             @id @default(cuid())
-  date       DateTime
-  method     PaymentMethod?     @default(Bank_Transfer)
-  type       ExpenseCategory    @default(Payment)
-  status     ExpenseStatus
-  attachment ExpenseAttachment?
-  amount     String
-  employeeId String             @unique
-  employee   Team               @relation(fields: [employeeId], references: [id])
+  id          String             @id @default(cuid())
+  date        DateTime
+  method      PaymentMethod?     @default(Bank_Transfer)
+  description String
+  type        ExpenseCategory    @default(Payment)
+  status      ExpenseStatus
+  attachment  ExpenseAttachment?
+  amount      String
+  employeeId  String             @unique
+  employee    Team               @relation(fields: [employeeId], references: [id])
 }
 
 model CryptoWallet {

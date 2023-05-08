@@ -9,7 +9,7 @@
     "prisma"
   ],
   "scripts": {
-    "prebuild": "yarn db:generate",
+    "prebuild": "yarn db:generate && yarn db:sync",
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf node_modules dist",
     "db:deploy": "prisma migrate deploy",

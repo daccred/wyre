@@ -24,7 +24,7 @@ const View = () => {
   const { id } = router.query;
 
   // console.log(id, email);
-  const { mutate: verifyEmail, isLoading } = trpc.auth.verifyAdminEmail.useMutation({
+  const { mutate: verifyEmail, isLoading } = trpc.auth.verifyEmail.useMutation({
     onSuccess() {
       toast({
         title: 'Verification code confirmed.',

@@ -12,7 +12,9 @@ const ManageContractor = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: contractor, isLoading } = trpc.team.getSingleContractor.useQuery(id as string);
+  const { data: contractor, isLoading } = trpc.team.getSingleContractor.useQuery({
+    contractorId: id as string,
+  });
 
   return (
     <>

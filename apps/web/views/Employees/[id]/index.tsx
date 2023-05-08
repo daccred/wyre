@@ -11,9 +11,12 @@ import PaymentMethod from './paymentMethod';
 const ManageEmployee = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data: employee, isLoading } = trpc.team.getSinglePersonnel.useQuery(id as string, {
-    refetchOnMount: true,
-  });
+  const { data: employee, isLoading } = trpc.team.getSinglePersonnel.useQuery(
+    { personnelId: id as string },
+    {
+      refetchOnMount: true,
+    }
+  );
   return (
     <>
       <ViewLayout title="Employee">

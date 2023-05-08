@@ -21,9 +21,12 @@ const Terminate = () => {
   const router = useRouter();
   const { id } = router.query;
   const toast = useToast();
-  const { data: employee, refetch } = trpc.team.getSinglePersonnel.useQuery(id as string, {
-    refetchOnMount: true,
-  });
+  const { data: employee, refetch } = trpc.team.getSinglePersonnel.useQuery(
+    { personnelId: id as string },
+    {
+      refetchOnMount: true,
+    }
+  );
   const { firstName, email, department, jobRole, teamCategory, signBonus, salary, payrollMethod } =
     employee ?? {};
 

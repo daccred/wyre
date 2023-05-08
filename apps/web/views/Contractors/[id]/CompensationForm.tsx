@@ -55,9 +55,12 @@ export default function CompensationForm() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(id as string, {
-    refetchOnMount: true,
-  });
+  const { data: contractor, refetch } = trpc.team.getSingleContractor.useQuery(
+    { contractorId: id as string },
+    {
+      refetchOnMount: true,
+    }
+  );
 
   // mutation hook from TRPC for updating an contractor's data on the server.
   const { mutate: updateContractor, isLoading } = trpc.team.updatePersonnel.useMutation({
