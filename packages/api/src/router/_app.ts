@@ -7,7 +7,7 @@ import { invitationRouter } from './invitation';
 import { paymentLinkRouter } from './payment-link';
 import { payrollRouter } from './payroll';
 import { teamRouter } from './team';
-import { userRouter } from './users';
+import { userRouter } from './user';
 
 export const appRouter = createTRPCRouter({
   example: exampleRouter,

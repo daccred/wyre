@@ -1,5 +1,5 @@
-import { createRealtimeTask, payrollQueue } from '../common/bull';
-import type { PayrollTaskOptions } from '../interfaces';
+import type { PayrollTaskOptions } from '..';
+import { createRealtimeTask, payrollQueue } from '../../common/bull';
 
 /**
  * @name createPayrollPublisher

@@ -5,7 +5,8 @@ import * as z from 'zod';
 // convert the interface to a zod schema
 export const UserSchema = z.object({
   // id: z.string(),
-  name: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
   email: z.string(),
   type: z.enum(['ADMIN', 'USER']),
   phone: z.string(),

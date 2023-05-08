@@ -88,7 +88,7 @@ export class AuthService {
       }
 
       //Send verification code to email address
-      const response = await AuthService.sendAdminMailVerification(admin.email, confirmCode);
+      const response = await AuthService.sendEmailVerification(admin.email, confirmCode);
 
       if (!response) {
         throw new TRPCError({
@@ -103,7 +103,7 @@ export class AuthService {
     }
   }
 
-  static async verifyAdminEmail(input: IVerifyEmail) {
+  static async verifyEmail(input: IVerifyEmail) {
     try {
       const { id, token } = input;
 
@@ -170,7 +170,7 @@ export class AuthService {
     }
   }
 
-  static async sendAdminMailVerification(email: string, verifyCode: string) {
+  static async sendEmailVerification(email: string, verifyCode: string) {
     try {
       const admin = await prisma.user.findFirst({
         where: { email: email },

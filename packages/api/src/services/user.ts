@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server';
 import type { IUserSchema } from '../interfaces';
 import { hashString } from '../utils';
 import { ServerError } from '../utils/server-error';
+import { AuthService } from './auth';
 
 export const i = { send_json: true, send_form: false };
 
@@ -29,24 +30,38 @@ export class UserService {
       // create user
       const user = await prisma.user.create({
         data: {
-          firstName: input.name,
-          lastName: input.name,
+          firstName: input.firstName,
+          lastName: input.lastName,
           email: input.email,
           password: await hashString(input.password),
           jobRole: input.jobRole,
           type: 'USER',
           phone: input.phone,
+          companyId: input.companyId,
           verification: {
             create: {
               token: confirmCode,
               expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             },
           },
-
-          // companyId: input.companyId,
         },
       });
-      return user;
+
+      if (!user) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create user',
+        });
+      }
+      const response = await AuthService.sendEmailVerification(user.email, confirmCode);
+      if (!response) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to send verification code',
+        });
+      }
+
+      return { user, emailStatus: response };
     } catch (error) {
       ServerError(error);
     }

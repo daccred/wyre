@@ -2,7 +2,7 @@ import { prisma } from '@wyrecc/db';
 import { TRPCError } from '@trpc/server';
 import { DEFAULT_PAYROLL_QUEUE } from '../common/bull';
 import type { IPayrollSchema, PayrollScheduleData } from '../interfaces/payroll';
-import { createPayrollPublisher } from '../publishers/payroll.publisher';
+import { createPayrollPublisher } from '../interfaces/publishers/payroll.publisher';
 import { ServerError } from '../utils/server-error';
 
 export class PayrollService {
