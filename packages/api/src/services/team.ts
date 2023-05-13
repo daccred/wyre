@@ -1,8 +1,10 @@
 import type { z } from 'zod';
 import { prisma } from '@wyrecc/db';
+import { getBaseUrl } from '@wyrecc/dialog';
 import { TRPCError } from '@trpc/server';
 import type { ITeamSchema, updateTeamSchema } from '../interfaces';
 import { ServerError } from '../utils/server-error';
+import { InvitationService } from './invitation';
 
 type IUpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export class TeamService {
@@ -39,7 +41,11 @@ export class TeamService {
           message: 'Failed to create team',
         });
 
-      return team;
+      const emailLink = `${getBaseUrl()}/employee/sign-up?personnelId=${team.id}`;
+
+      const response = await InvitationService.sendPersonnelInviation(emailLink, team.email);
+
+      return { personnel: team, response };
     } catch (error) {
       ServerError(error);
     }

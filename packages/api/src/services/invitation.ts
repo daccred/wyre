@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { prisma } from '@wyrecc/db/src';
+import { sendEmail, teamInvitation } from '@wyrecc/dialog';
 import { TRPCError } from '@trpc/server';
 import type { InvitationSchemaType } from '../interfaces';
 import { ServerError } from '../utils/server-error';
@@ -116,6 +117,23 @@ export class InvitationService {
         });
       }
       return invitation;
+    } catch (error) {
+      ServerError(error);
+    }
+  }
+
+  static async sendPersonnelInviation(inviteLink: string, receiverEmail: string) {
+    try {
+      const sendInvitationBody = teamInvitation({ link: inviteLink });
+
+      const response = await sendEmail({
+        from: 'admin@tecmie.com',
+        subject: `You sent you an invitation`,
+        htmlBody: sendInvitationBody,
+        to: receiverEmail,
+        textBody: 'Send Invitation',
+      });
+      return response;
     } catch (error) {
       ServerError(error);
     }

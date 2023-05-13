@@ -29,7 +29,7 @@ type FormInputOptions = z.infer<typeof signUpValidationSchema>;
 export default function Page() {
   const router = useRouter();
   const toast = useToast();
-  const { mutate: signUp, isLoading } = trpc.user.addUser.useMutation({
+  const { mutate: signUp, isLoading } = trpc.auth.userSignup.useMutation({
     onSuccess: (data: any, variables: any, context: any) => {
       const { updatedAdmin } = data;
       const { email, id } = updatedAdmin;
